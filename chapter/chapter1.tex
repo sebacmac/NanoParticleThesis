@@ -408,7 +408,7 @@ The simplest and computational efficient way to treat a Lennard--Jones function,
 
 \subsection{Electrostatic interactions}
 \label{sec:longRangeInt}
-One of the most important long range interaction is the electrostatic forces. Despite the long range characteristic, for purely computational efficient reason, most of the \acp{FF} for biomolecular applications treat them in the same way as a short range interactions by a cut--off method\footnote{In general, for computational reason, it is a common choice to consider the some cut--off for Van der Waals and electrostatic interactions.}. Of course this is an approximations and can lead to a serious issue in that proprieties or systems that strongly depend on the electrostatic interactions. Most issue due to a non well treatment of the Coulomb interactions are related to, for example, develop of a good polar solvent model (a good treatment of the electrostatic proprieties of water is really important or biological application), consider the interactions of charged particle with polar solvent, transport processes of charged moieties, calculations of the electrostatic potential inside a macromolecules and so on. The loss of computational efficiency in the calculations of the electrostatic energy contribution is that it needs to take into account \textit{all particles} in a system, but we can not forget the \ac{PBC}: even all the infinity images of all particles need to be taken. 
+One of the most important long range interaction is the electrostatic forces. Despite the long range characteristic, for purely computational efficient reason, most of the \acp{FF} for biomolecular applications treat them in the same way as a short range interactions by a cut--off method\footnote{In general, for computational reason, it is a common choice to consider the some cut--off for Van der Waals and electrostatic interactions.}. Of course this is an approximations and can lead to a serious issue in that proprieties or systems that strongly depend on the electrostatic interactions. Most issue due to a non well treatment of the Coulomb interactions are related to, for example, develop of a good polar solvent model (a good treatment of the electrostatic proprieties of water is really important or biological application), consider the interactions of charged particle with polar solvent, transport processes of charged moieties, calculations of the electrostatic potential inside a macromolecules and so on. The loss of computational efficiency in the calculations of the electrostatic energy contribution is that it needs to take into account \textit{all particles} in a system, but we can not forget the \ac{PBC}: even all the infinity images of all particles need to be taken.
 
 If we consider only the simulation box the energy contribution is
 \begin{equation}
@@ -421,7 +421,7 @@ where $q_i$ and $q_j$ are the charge, respectively, of particles $i$ and $j$ and
 	\label{eq:electrostaticImage}
 \end{equation}
 where the prime indicate that for $\vec n = 0$ i.e. the energy contribution of the simulation box, we need to exclude the self interaction term: so in third sum must be $j \ne i$.
- 
+
 As describe above, a cut--off method is a good easy way solution for solving equation~\eqref{eq:electrostatic} and some time it reproduce good results. However, the increasing of computers power can lead to develop more rigorous methods to solve equation~\eqref{eq:electrostaticImage}, even for very large system. The main problem is that the summation in equation~\eqref{eq:electrostaticImage} is \textit{conditionally convergent}\footnote{A conditionally convergent series contains both positive and negative terms such that the positive or negative term alone form both a divergent series. The sum of a conditionally convergent series depends on the order in which the positive and negative terms are considered.} and converges extremely slowly and need too terms that became too time consuming, especially for large system (of the order of $N \sim 3\cdot 10^4$). The most important methods developed for solving that problem are based on the \textit{Ewald Summation Method} (\acs{ESM}). We shall describe that used in this thesis work: the Ewald summations method itself and the \textit{Particle Mesh Ewald} (\acs{PME}) method. For a more complete discussion about the advanced methods developed to treat the electrostatic interactions the reader is addressed to the Review by Cisneros \etal\, [] and on the book by D. Frenkel and B. Smit []. Moreover for a more technical detail the reader is addressed to the work by Ewald \etal\, [] for what concern the \ac{ESM}, and to the work by Darden \etal\, [] for what concern the \ac{PME} method.
 
 \subsubsection{Ewald summation method} %Molecular Modelling, 334
@@ -432,7 +432,37 @@ The \acf{ESM} is the first method, introduced by Ewald in 1921 [], for a correct
 \end{equation}
 the trick is to choose a function $f(r)$ that will deal the rapid variation of the $1/r$ term for small $r$ and the slow decay at long $r$; in that case the two series can rapidly converge.
 
-The \ac{ESM} for electrostatic interactions is based considering each point--like charges in the system surrounded by a neutralizing charge distribution of equal magnitude but opposite sign that decay rapidly to zero. Simplify the notation for a one dimensional system, the simplest functional form is a gaussian distribution centered in the position $r_i$ of the point--like charge $q_i$, of the form
+\begin{figure}[!hb]
+	\centering
+	\subfloat[Real space]{%
+		\begin{tikzpicture}[scale=0.8, transform shape]
+			\begin{axis}[samples=1000,domain=-1:4,axis x line=center,axis y line=none,axis x line=none, xmin=-0.4,xmax=2.5,ymin=-2.5, ymax=2.5]
+				\addplot[thick]plot (\x, {0});
+				\addplot[]plot (\x, {exp(-9*\x*\x/0.1)});
+				\addplot[]plot (\x, {exp(-9*(\x-2)^2/0.1)});
+				\addplot[]plot (\x, {-exp(-9*(\x-1)^2/0.1)});
+				\addplot[smooth] plot coordinates {(0,0) (0,-1.5)};
+				\addplot[smooth] plot coordinates {(1,0) (1,1.5)};
+				\addplot[smooth] plot coordinates {(2,0) (2,-1.5)};
+			\end{axis}
+		\end{tikzpicture}
+	}%
+	\qquad
+	\subfloat[Reciprocal space]{%
+		\begin{tikzpicture}[scale=0.8, transform shape]
+			\begin{axis}[samples=1000,domain=-1:4,axis x line=center,axis y line=none,axis x line=none, xmin=-0.4,xmax=2.5,ymin=-2.5, ymax=2.5]
+				\addplot[thick]plot (\x, {0});
+				\addplot[]plot (\x, {-exp(-9*\x*\x/0.1)});
+				\addplot[]plot (\x, {-exp(-9*(\x-2)^2/0.1)});
+				\addplot[]plot (\x, {exp(-9*(\x-1)^2/0.1)});
+			\end{axis}
+		\end{tikzpicture}
+	}%
+	\caption{Schematic illustration of the \acl{ESM} charge distribution: in (a) point charges (represented by vertical lines) and the neutralizing Gaussian charge distribution; in (b) the counteracts Gaussian distribution.}
+	\label{fig:ewald}
+\end{figure}
+
+The \ac{ESM} for electrostatic interactions is based, as illustrated in figure~(\ref{fig:ewald}), considering each point--like charges in the system surrounded by a neutralizing charge distribution of equal magnitude but opposite sign that decay rapidly to zero. Simplify the notation for a one dimensional system, the simplest functional form is a Gaussian distribution centered in the position $r_i$ of the point--like charge $q_i$, of the form
 \begin{equation}
 	\rho_i(r) = \frac{q_i\alpha^3}{\pi^{3/2}}e^{-\alpha^2 (r - r_i)^2}
 \end{equation}
@@ -451,15 +481,14 @@ where $\erfc{(x)} = 1-\erf{(x)}$ is the complementary error function and $\erf{(
 	\label{eq:erf}
 \end{equation}
 The point is that the summation involving the complementary error function in equation~\eqref{eq:ewaldReal} is rapidly convergent and it need very few terms so that a cut--off method can be safety used. The rate of convergence depends on the $\alpha$ parameter, bigger is $\alpha$ more rapidly converge and shorter can be the cut--off.
-
-Thus the \ac{ESM} use the $\erfc{r}$ as a $f(r)$ function in the equation~\eqref{eq:ewaldTrick}. Of course since we have add a non physical neutralizing charge distribution in the system we must consider an other distribution of equal magnitude but opposite sign in order to restore the real charge distribution of the system. In view of the identity in the equation~\eqref{eq:ewaldTrick} that is done considering a distribution of the form $(1-f(r))/r$ so, using equation~\eqref{eq:erf}, it is of the form $\erf{r}/r$. While the former it is compute in the \textit{real space}, an other trick, is to consider the latter energy contribution due the counteracts charge distribution of the neutralizing charge, in the \textit{reciprocal space}, thus considering it Fourier transform. That energy contribution is given by
+Thus the \ac{ESM} use the $\erfc{r}$ as a $f(r)$ function in the equation~\eqref{eq:ewaldTrick}. Of course since we have add a non physical neutralizing charge distribution in the system we must consider an other distribution of equal magnitude but opposite sign in order to restore the real charge distribution of the system. In view of the identity in the equation~\eqref{eq:ewaldTrick} that is done considering a distribution of the form $(1-f(r))/r$ so, using equation~\eqref{eq:erf}, it is of the form $\erf{(r)}/r$. While the former it is compute in the \textit{real space}, an other trick, is to consider the latter energy contribution due the counteracts charge distribution of the neutralizing charge, in the \textit{reciprocal space}, thus considering its Fourier transform. That energy contribution is given by
 \begin{equation}
 	U_f = \frac{1}{2}\sum_{i=1}^N\sum_{j=1}^N\ \sum_{k_x,k_y,k_z}\ \frac{1}{4\pi\varepsilon_0}\frac{4\pi}{L^3k^2}e^{-k^2/(4\alpha^2)}e^{\mathsf{i}{\vec k \cdot (\vec r_i - \vec r_j)}}
 	\label{eq:ewaldReciprocal}
 \end{equation}
 where $\vec k = 2\pi\vec n/L$ are the reciprocal vectors. Even this reciprocal sum converge rapidly as the summation in equation~\eqref{eq:ewaldReal}; then a cut--off method can be safety used. Nevertheless, as opposite to the former, smaller is the $\alpha$ shorter can be the cut--off. Clearly it need a proper \textit{balance} between the real and reciprocal space summation.
 
-Since in equation~\eqref{eq:ewaldReal} even the self interaction with each gaussian is included we need to add another item for cancel out it; that is done by the self--term
+Since in equation~\eqref{eq:ewaldReal} even the self interaction with each Gaussian is included we need to add another item for cancel out it; that is done by the self--term
 \begin{equation}
 	U_{self} = -\frac{\alpha}{\sqrt{\pi}}\sum_{i=1}^N\frac{q_i}{4\pi\varepsilon_0}
 	\label{eq:EwaldselfTerm}
@@ -474,29 +503,75 @@ Summarizing, the energy contribution of the electrostatic interactions by the \a
 	\end{aligned}
 	\label{eq:EwaldEnergy}
 \end{equation}
-The first line is the real space contribution while the second is the Fourier energy contribution. Since the last self--interaction term is constant it does not affect forces computations. The \ac{ESM} offer a well defined method to properly treat the electrostatic interactions, nevertheless it is a quite expensive in term of computational resources. If $\alpha$ and the cut--off are constant, then the computation scales as $\sim N^2$; while if $\alpha$ and the cut--off are dynamically updated then it scales as $\sim N^{\nicefrac{3}{2}}$ but this can lead to an incompatibility between the Van der Waals interactions cut--off and the electrostatic one compromising the efficiency gain. Despite we have described that method applied to the electrostatic interactions, it can be used, with some changes, to all long--range interactions and in general to all energy contributions that decay as $r^{-d}$, for example, even with the Van der Waals energy contributions. For biomolecular applications most \ac{MD} tools set an equal cut-off radius for both Van der Waals interaction the the real part of the Ewald summation~\eqref{eq:EwaldEnergy} in order to achieve for both a scaling of the order $~N$. However in this way the computation of the reciprocal part in the Ewald summation~\eqref{eq:EwaldEnergy} will be very inefficient and scales as $~N^2$. In order to increase the efficiency on the calculation of the reciprocal part a various of advanced methods can be used. It are based on the use of the \ac{FFT} methods. In this way the reciprocal part can scales as $\sim N\ln N$. Since \ac{FFT} require discretize quantity, the idea of such method, called \textit{Particle Mesh} is to consider the charge density spread on a mesh grid and then evaluate the electrostatic potential via solving the Poisson's equation using fast Poisson solver together with \ac{FFT} method; that can be done, for example, exploiting the \ac{PBC} in order to discretize and make periodic the Poisson's equation. Such algorithm include the \textit{particle--particle particle--mesh} method, \textit{Particle mesh Ewald} method, \textit{Fast--Fourier Poisson} method and a recent methodology based on multi--scale mesh grid; the efficiency and accuracy of such mesh--based algorithms depend strongly on the way in which the charges are attributed to mesh points, different for each methods. In the latter we describe the one used in this thesis work, the \acf{PME} method.
+The first line is the real space contribution while the second is the Fourier energy contribution. Since the last self--interaction term is constant it does not affect forces computations. The \ac{ESM} offer a well defined method to properly treat the electrostatic interactions, nevertheless it is a quite expensive in term of computational resources. If $\alpha$ and the cut--off are constant, then the computation scales as $\sim N^2$; while if $\alpha$ and the cut--off are dynamically updated then it scales as $\sim N^{\nicefrac{3}{2}}$ but this can lead to an incompatibility between the Van der Waals interactions cut--off and the electrostatic one compromising the efficiency gain. Despite we have described that method applied to the electrostatic interactions, it can be used, with some changes, to all long--range interactions and in general to all energy contributions that decay as $r^{-d}$, for example, even with the Van der Waals energy contributions.
+
+For biomolecular applications most \ac{MD} tools set an equal cut-off radius for both Van der Waals interaction the the real part of the Ewald summation~\eqref{eq:EwaldEnergy} in order to achieve for both a scaling of the order $\sim N$. However in this way the computation of the reciprocal part in the Ewald summation~\eqref{eq:EwaldEnergy} will be very inefficient and scales as $\sim N^2$. In order to increase the efficiency on the calculation of the Fourier transform a various of advanced methods can be used. It are all based on the use of the \ac{FFT} methods. In this way the reciprocal part can scales as $\sim N\ln N$. Since \ac{FFT} require discretize quantity, the idea of such method, called \textit{Particle Mesh} is to consider the charge density spread on a mesh grid and then evaluate the electrostatic potential via solving the Poisson's equation using fast Poisson solver together with \ac{FFT} method; that can be done, for example, exploiting the \ac{PBC} in order to discretize and make periodic the Poisson's equation.
+Such algorithm include the \textit{particle--particle particle--mesh} method, \textit{Particle mesh Ewald} method, \textit{Fast--Fourier Poisson} method and a recent methodology based on multi--scale mesh grid; the efficiency and accuracy of such mesh--based algorithms depend strongly on the way in which the charges are attributed to mesh points, different for each methods. In the latter we describe the one used in this thesis work, the \acf{PME} method.
 
 \subsubsection{Particle mesh Ewald method}
-The \acf{PME} method developed by Darden \etal\, [] are based on the \ac{ESM} so the starting point is the equation~\eqref{eq:EwaldEnergy}. In which, as described above, the first part are computer in the real space together with the Van der Waals contributions using the same cut--off radius. Instead the reciprocal part are computed using the \ac{FFT} method. For doing this, first, we need to consider a grid mesh in which the Gaussian counteracts charge density are spread into. The basic idea, then, is to achieve the electrostatic energy solving the Poisson's equation through \ac{FFT} method. The efficiency and the accuracy depends on the way the charge are distributed into the grid. For doing this a \textit{charge assignment function}, $W(r)$ is introduced such that, considering for simplicity a one dimensional system, the fraction of a charge at position $r$ assigned to a grid point at position $r_p$ is given by $W(r_p - r)$. Hence, if we have a charge density $\rho(r)$ then the charges at the grid point $r_p$ are given by
+The \acf{PME} method developed by Darden \etal\, [] are based on the \ac{ESM} so the starting point is the equation~\eqref{eq:EwaldEnergy}. In which, as described above, the first part of the Ewals summation are computed in the real space together with the Van der Waals contributions using the same cut--off radius. While the reciprocal part are computed using \ac{FFT} methods, in order to have a gain of performance. For doing this, first, we need to consider a grid mesh in which the Gaussian counteracts charge density are spread into. The basic idea, then, is to achieve the electrostatic energy solving the Poisson's equation through \ac{FFT} methods. The efficiency and the accuracy depends on the way the charges are distributed into the grid. For doing this a \textit{charge assignment function}, $W(r)$ is introduced such that, considering for simplicity a one dimensional system, the fraction of a charge at position $r$ assigned to a grid point at position $r_p$ is given by $W(r_p - r)$. Hence, if we have a charge density $\rho(r)$ then the charges at the grid point $r_p$ are given by
 \begin{equation}
 	q_M(r_p) = \int_0^L\ W(r_p - r) \rho (r)\ dr
 	\label{eq:meshAssign}
 \end{equation}
-where $L$ is the box length and, if $h$ is the grid spacing, $M = L/h$ is the number of mesh point. The assignment function should have the following proprieties: should be an even function and the should be normalized in such a way that the sum of the fractional charges equals the total charge of the system. Moreover the best accuracy is obtained with a dense grid in order to reduce as much possible the discretization of charge density. However the computational cost increases as the number of grid points! So it clearly need a balance between efficiency and accuracy.
+where $L$ is the box length and, if $h$ is the grid spacing, $M = L/h$ is the number of mesh point. In figure~(\ref{fig:gidAssign}) is schematically represented the charge assignment. The assignment function should have the following proprieties: should be an even function and should be normalized in such a way that the sum of the fractional charges equals the total charge of the system. Moreover the best accuracy is obtained with a dense grid in order to reduce as much possible the discretization of the charges density. However the computational cost increases as the number of grid points! So it clearly need a balance between efficiency and accuracy.
+\begin{SCfigure}
+	\begin{tikzpicture}
+		\draw[gray,step=1.5] (0.1,0.1) grid (4.4,4.4);
+		\fill[fill=red] (1.5,3) circle (0.25);
+		\fill[fill=red] (3,1.5) circle (0.05);
+		\fill[fill=red] (1.5,1.5) circle (0.15);
+		\fill[fill=red] (3,3) circle (0.1);
 
-A nice way to solve the problem of charge assignment is to shift the problem in the discretization of the Fourier transform. It can be viewed as an interpolation problem. Consider the $e^{-\mathsf{i}\vec k\cdot \vec r_j}$ term in the Fourier transform of the equation~\eqref{eq:ewaldReciprocal}. In general $\vec r_j$ does not correspond to a mesh grid point, so that term is not part of a discrete Fourier transform. The idea, thus, is to interpolate it in terms of values of the complex exponential at mesh points. Switching for simplicity to a one dimensional system, if the mesh grid has $M = L/h$ point, a particle coordinate $r_j$ is located between mesh points $[r_j/h]$ and $[r_j/h] + 1$; thus a $2p$--order interpolation of the exponential is of the form
+		\fill[fill=black] (1, 3) circle (0.05);
+		\fill[fill=black] (2, 2.8) circle (0.05);
+		\fill[fill=black] (1.1, 3.5) circle (0.05);
+		\fill[fill=black] (1.3, 2.4) circle (0.05);
+		\fill[fill=black] (1.8, 3.6) circle (0.05);
+
+		\fill[fill=black] (1.2, 1.9) circle (0.05);
+		\fill[fill=black] (1.7, 1.3) circle (0.05);
+		\fill[fill=black] (1.9, 1.9) circle (0.05);
+
+		\fill[fill=black] (3.2,3.2) circle (0.05);
+		\fill[fill=black] (2.8,3.4) circle (0.05);
+
+		\fill[fill=black] (3.3,1.2) circle (0.05);
+	\end{tikzpicture}
+	\caption{A schematic representation of the charge assignment. The black filled circles are a unit particle charge, while the red one, are the charge assigned to grid points. Bigger is the circle, more is the charge.}
+	\label{fig:gidAssign}
+\end{SCfigure}
+
+A nice way to solve the problem of charge assignment is to shift the problem in the discretization of the Fourier transform. It can be viewed as an interpolation problem. Consider the $e^{-\mathsf{i}\vec k\cdot \vec r_j}$ term in the Fourier transform of the equation~\eqref{eq:ewaldReciprocal}. In general $\vec r_j$ does not correspond to a mesh grid point, so that term is not part of a discrete Fourier transform. The idea, thus, is to interpolate it in terms of values of the complex exponential at the mesh points. Switching for simplicity to a one dimensional system, if the mesh grid has $M = L/h$ points, a particle coordinate $r_j$ is located between mesh points $[r_j/h]$ and $[r_j/h] + 1$ where $[]$ denote the integer part; thus a $p$--order interpolation of the exponential is of the form
 \begin{equation*}
-	e^{-\mathsf{i}kr_j} \simeq \sum_{i=1}^M W_{2p}\left ( \frac{r_j}{h} - i \right ) e^{-\mathsf{i}khi}
+	e^{-\mathsf{i}kr_j} \simeq \sum_{i=1}^M W_{p}\left ( \frac{r_j}{h} - i \right ) e^{-\mathsf{i}khi}
 \end{equation*}
-where $W_{2p}$ denote the interpolation coefficients. A $2p$--order interpolation means that only the $2p$ mesh points nearest the $r_j$ contributes to the sum. Assuming a point--like charge distribution the Fourier transform of the charge density is therefore
+where $W_{p}$ denote the interpolation coefficients. A $p$--order interpolation means that only the $p$ mesh points nearest the $r_j$ contributes to the sum. Assuming a point--like charge distribution the Fourier transform of the charge density is therefore
 \begin{equation*}
-	\rho_k \simeq \sum_{i}e^{-\mathsf{i}khi} \sum_{j=1}^N\ q_iW_{2p} \left ( \frac{r_j}{h} - i \right ) 
+	\rho_k \simeq \sum_{i}e^{-\mathsf{i}khi} \sum_j\ q_iW_{p} \left ( \frac{r_j}{h} - i \right )
 \end{equation*}
 we can interpret the above expression as the discrete Fourier transform of the charge density
 \begin{equation*}
-	\rho(i) = \sum_{j=1}^N\ q_iW_{2p} \left ( \frac{r_j}{h} - i \right ) 
+	\rho(i) = \sum_j\ q_iW_{p} \left ( \frac{r_j}{h} - i \right )
 \end{equation*}
-but using equation~\eqref{eq:meshAssign}, it is nothing that the point--like distribution of the system's particles assigned to the mesh point $j$ through the assignment function $W_{2p}$.
+but using equation~\eqref{eq:meshAssign}, it is nothing that the point--like charge distribution assigned to the mesh point $i$ through the assignment function $W_{p}$.
+
+We clearly see that the charge assignment problem is now shifted to the complex exponential interpolation. There are two main methods to make the interpolation: the \textit{Lagrange interpolation method} and the \textit{Euler SPLINE interpolation method}. The basic idea of the first is to use, as interpolating function, a polynomial function of degree $ \le (n-1)$ where $n$ is the number of points to interpolate, that passes through all the $n$ points, and it is constructed with a summation over the \textit{Lagrange basis polynomials} as follow
+\begin{equation*}
+	P(x) = \sum_{i=1}^n y_i \prod_{\substack{k=1\\k\ne j}}^n \frac{x-x_k}{x_j - x_k}
+\end{equation*}
+where $(x_i;y_i)$ are the set of points to interpolate. The main disadvantage of that method is that, even if $P(x)$ is continuous everywhere, its derivative is not, thus can lead to some instability in \ac{MD} simulations. The second method, that is the most used in \ac{MD} tools, is based on the concept of \textit{SPLINE interpolation}. Instead of using a unique interpolating function that passes to each points, the SPLINE method use a \textit{piecewise polynomial function}, called SPLINE, in which each pieces are smoothly connected and optimized to interpolate a subset of the points. The Euler SPLINE method use the \textit{exponential Euler SPLINE} that is constructed with the basis of the Euler $n$--degree polynomials $A_n(x;\lambda)$ generated by the following equation
+\begin{equation*}
+	\frac{\lambda - 1}{\lambda - e^z}e^{xz} = \sum_{n=0}^{+\infty} \frac{A_n(x;\lambda)}{n!}z^n
+\end{equation*}
+where $\lambda$ is a complex parameter and $z$ is a complex variable. The main properties of such SPLINE is that, it is $n-1$ times continuously differentiable.
+
+Summarizing the \ac{PME} method is implemented following the latter procedure
+\begin{itemize}
+	\item Counteracts Gaussian charge density are assigned to a mesh grid of $M$ points in order to obtain a discretized charge distribution;
+	\item The Poisson's equations for the discretized charges are solved thought the \ac{FFT} methods in order to obtain the reciprocal contribution of the Ewald summation;
+	\item Electrostatic forces are calculated and assigned to the charged system's particles.
+\end{itemize}
 
 
 \subsection{Polar solvent}

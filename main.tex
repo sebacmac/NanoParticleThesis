@@ -1,0 +1,106 @@
+\documentclass[a4paper,11pt,cleardoubleempty,abstracton,titlepage,]{scrbook}
+\usepackage{setspace}
+\PassOptionsToPackage{hyperfootnotes=true}{hyperref}
+\usepackage[eulermath,pdfspacing,beramono,dottedtoc,subfig,linedheaders,eulerchapternumbers]{classicthesis}
+\usepackage{arsclassica}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[printonlyused]{acronym}
+\usepackage{mathtools}
+\usepackage{wrapfig}
+\usepackage{subfig}
+\usepackage[tableposition=bottom,figureposition=bottom,labelsep=colon,format=plain]{caption}
+\usepackage[inner=3.3cm,outer=4cm,asymmetric]{geometry}
+\usepackage{xcolor}
+\usepackage{sidecap}
+\usepackage{nicefrac}
+\usepackage{biblatex}
+ \addbibresource{biblio.bib}
+
+\usepackage{tikz,pgfplots}
+\usetikzlibrary{positioning}
+\usetikzlibrary{decorations.pathmorphing}
+
+
+% Alinea il numero di pagina sulla destra e filla con puntini
+\makeatletter
+\renewcommand*\l@section{\@dottedtocline{1}{0em}{1.5em}}
+\makeatother
+
+%numerazione equazioni per capitolo
+\renewcommand{\theequation}{\thechapter.\thesection.\arabic{equation}}
+\numberwithin{equation}{section}
+
+\newcommand{\textacr}[1]{\spacedlowsmallcaps{\large #1}\normalfont}
+\newcommand{\ave}[1]{\langle #1 \rangle}
+\newcommand{\etal}[1]{\textit{et al.}}
+\newcommand{\erf}[1]{\text{erf}#1}
+\newcommand{\erfc}[1]{\text{erfc}#1}
+
+\begin{document}
+
+\pagestyle{plain}
+\clearscrheadfoot
+\frontmatter
+%*--------------------------------------*
+%|***************TITLEPAGE**************|
+%*--------------------------------------*
+\begin{titlepage}
+\begin{center}
+	~\\[3cm]
+    \spacedallcaps{Thesis title}\\\bigskip
+    \spacedlowsmallcaps{sebastian salassi} \\
+\end{center}
+\vfill
+\noindent
+\textsc{\sffamily Supervisor: Dr. Giulia Rossi}
+~\\[0.5cm]
+\textsc{\sffamily Advisor: Prof. Annalisa Relini}%
+\end{titlepage}
+
+\newgeometry{left=4.5cm,right=4.5cm,top=5cm}
+%*--------------------------------------*
+%|***************ACROPAGE***************|
+%*--------------------------------------*
+\include{acronyms}
+
+%*--------------------------------------*
+%|*************ITRODUCTION**************|
+%*--------------------------------------*
+\include{./chapter/introduction}
+
+%*--------------------------------------*
+%|***************INDEXPAGE**************|
+%*--------------------------------------*
+\tableofcontents
+
+\restoregeometry
+
+\clearscrheadfoot
+\pagestyle{scrheadings}
+\ohead{\rightmark}
+\ohead{\leftmark}
+\renewcommand{\chaptermark}[1]{\markright{\spacedlowsmallcaps{\textcolor{gray}{\thechapter\ #1}}\normalfont\qquad\pagemark{}}}
+\renewcommand{\sectionmark}[1]{\markleft{\spacedlowsmallcaps{\hfill\textcolor{gray}{\thesection\ #1}}\normalfont\qquad\pagemark{}}}
+
+\mainmatter
+
+\include{./chapter/chapter1}
+
+\include{./chapter/chapter2}
+
+\include{./chapter/chapter3}
+
+
+%*--------------------------------------*
+%|*************BIBLIOGRAPHY*************|
+%*--------------------------------------*
+\newpage
+\clearscrheadfoot
+\addtocontents{toc}{\protect\vspace{\beforebibskip}}\addcontentsline{toc}{chapter}{\refname}
+\printbibliography
+
+\end{document}

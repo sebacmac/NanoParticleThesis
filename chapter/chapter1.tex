@@ -286,7 +286,7 @@ Nevertheless atoms or molecules interactions, such as bond formation, is mediate
 
 For biomolecular applications exist two main classes of \acp{FF}: the \textit{atomistic} \acp{FF} which the basic particles are atoms, and the \textit{coarse--grained} \acp{FF} with the basic particles represent atom groups or a small chemical moieties. In this case, even the way to do the corse--graining of the atoms in the molecules, called \textit{mapping}, is part of the \ac{FF} itself. Different \ac{CG} \acp{FF} can use different mapping method even with the same functional forms.
 
-In the latter we add some other informations about \acp{FF} and describe the principal functional forms for modeling the inter--particles interactions and how to treat it in a \ac{MD} simulation. For a more complete discussion about \acp{FF} the reader is addressed to the book by A. R. Leach in []. While in the next section we focus to the main \ac{CG} \ac{FF} used in this thesis work: the \textacr{MARTINI} \ac{CG} \ac{FF} developed by Marrink \etal\, [].
+In the latter we add some other informations about \acp{FF} and describe the principal functional forms for modeling the inter--particles interactions and how to treat it in a \ac{MD} simulation. For a more complete discussion about \acp{FF} the reader is addressed to the book by A. R. Leach \cite{Leach}. While in the next section we focus to the main \ac{CG} \ac{FF} used in this thesis work: the \textacr{MARTINI} \ac{CG} \ac{FF} developed by Marrink \etal\, [].
 
 \paragraph{\textbf{\textacr{parameterization}}} In general the functional forms for potential interactions are common to all particles in the system, then the \ac{FF} is completed by a set of empirical parameters that characterize the interaction between different types of particles, whether they are atoms or whole chemical groups. Interaction parameters are empirical in the sense that it are assigned based on the reproduction of a small set of a target properties of a small group of systems. These target properties can be derived from experimental measurements or from finer--level calculations or simulations. Nowadays, atomistic and \ac{CG} biomolecular \acp{FF} come as ``packages'' of parameters and functional forms appropriate for the description of a large variety of chemical compounds in the liquid and solid phases.
 
@@ -422,10 +422,13 @@ where $q_i$ and $q_j$ are the charge, respectively, of particles $i$ and $j$ and
 \end{equation}
 where the prime indicate that for $\vec n = 0$ i.e. the energy contribution of the simulation box, we need to exclude the self interaction term: so in third sum must be $j \ne i$.
 
-As describe above, a cut--off method is a good easy way solution for solving equation~\eqref{eq:electrostatic} and some time it reproduce good results. However, the increasing of computers power can lead to develop more rigorous methods to solve equation~\eqref{eq:electrostaticImage}, even for very large system. The main problem is that the summation in equation~\eqref{eq:electrostaticImage} is \textit{conditionally convergent}\footnote{A conditionally convergent series contains both positive and negative terms such that the positive or negative term alone form both a divergent series. The sum of a conditionally convergent series depends on the order in which the positive and negative terms are considered.} and converges extremely slowly and need too terms that became too time consuming, especially for large system (of the order of $N \sim 3\cdot 10^4$). The most important methods developed for solving that problem are based on the \textit{Ewald Summation Method} (\acs{ESM}). We shall describe that used in this thesis work: the Ewald summations method itself and the \textit{Particle Mesh Ewald} (\acs{PME}) method. For a more complete discussion about the advanced methods developed to treat the electrostatic interactions the reader is addressed to the Review by Cisneros \etal\, [] and on the book by D. Frenkel and B. Smit []. Moreover for a more technical detail the reader is addressed to the work by Ewald \etal\, [] for what concern the \ac{ESM}, and to the work by Darden \etal\, [] for what concern the \ac{PME} method.
+As describe above, a cut--off method is a good easy way solution for solving equation~\eqref{eq:electrostatic} and some time it reproduce good results. However, the increasing of computers power can lead to develop more rigorous methods to solve equation~\eqref{eq:electrostaticImage}, even for very large system. The main problem is that the summation in equation~\eqref{eq:electrostaticImage} is \textit{conditionally convergent}\footnote{A conditionally convergent series contains both positive and negative terms such that the positive or negative term alone form both a divergent series. The sum of a conditionally convergent series depends on the order in which the positive and negative terms are considered.} and converges extremely slowly and need too terms that became too time consuming, especially for large system (of the order of $N \sim 3\cdot 10^4$). The most important methods developed for solving that problem are based on the \textit{Ewald Summation Method} (\acs{ESM}). We shall describe that used in this thesis work: the Ewald summations method itself and the \textit{Particle Mesh Ewald} (\acs{PME}) method. For a more complete discussion about the advanced methods developed to treat the electrostatic interactions for biological applications the reader is addressed to the Review by Cisneros \etal\, \cite{Cisneros} and for more technical detail to the book by D. Frenkel and B. Smit \cite{Frenkel}.
+%Moreover for a more technical detail the reader is addressed to the work by Ewald \etal\, [] for what concern the \ac{ESM}, and to the work by Darden \etal\, [] for what concern the \ac{PME} method.
 
 \subsubsection{Ewald summation method} %Molecular Modelling, 334
-The \acf{ESM} is the first method, introduced by Ewald in 1921 [], for a correct treatment of the electrostatic energy contribution in an ionic crystal that ca be extended in the electrostatic interactions of a periodic charge density. The basic idea is to split the summation in equation~\eqref{eq:electrostaticImage} in two series both rapidly convergent. The method is based on the following identity
+The \acf{ESM} is the first method, introduced by Ewald \etal
+%L'articolo è in tedesco... Lo devo citare?
+, for a correct treatment of the electrostatic energy contribution in an ionic crystal that ca be extended in the electrostatic interactions of a periodic charge density. The basic idea is to split the summation in equation~\eqref{eq:electrostaticImage} in two series both rapidly convergent. The method is based on the following identity
 \begin{equation}
 	\frac{1}{r} = \frac{f(r)}{r} + \frac{1 - f(r)}{r}
 	\label{eq:ewaldTrick}
@@ -509,7 +512,7 @@ For biomolecular applications most \ac{MD} tools set an equal cut-off radius for
 Such algorithm include the \textit{particle--particle particle--mesh} method, \textit{Particle mesh Ewald} method, \textit{Fast--Fourier Poisson} method and a recent methodology based on multi--scale mesh grid; the efficiency and accuracy of such mesh--based algorithms depend strongly on the way in which the charges are attributed to mesh points, different for each methods. In the latter we describe the one used in this thesis work, the \acf{PME} method.
 
 \subsubsection{Particle mesh Ewald method}
-The \acf{PME} method developed by Darden \etal\, [] are based on the \ac{ESM} so the starting point is the equation~\eqref{eq:EwaldEnergy}. In which, as described above, the first part of the Ewals summation are computed in the real space together with the Van der Waals contributions using the same cut--off radius. While the reciprocal part are computed using \ac{FFT} methods, in order to have a gain of performance. For doing this, first, we need to consider a grid mesh in which the Gaussian counteracts charge density are spread into. The basic idea, then, is to achieve the electrostatic energy solving the Poisson's equation through \ac{FFT} methods. The efficiency and the accuracy depends on the way the charges are distributed into the grid. For doing this a \textit{charge assignment function}, $W(r)$ is introduced such that, considering for simplicity a one dimensional system, the fraction of a charge at position $r$ assigned to a grid point at position $r_p$ is given by $W(r_p - r)$. Hence, if we have a charge density $\rho(r)$ then the charges at the grid point $r_p$ are given by
+The \acf{PME} method developed by Darden \etal\, \cite{DardenPME} are based on the \ac{ESM} so the starting point is the equation~\eqref{eq:EwaldEnergy}. In which, as described above, the first part of the Ewals summation are computed in the real space together with the Van der Waals contributions using the same cut--off radius. While the reciprocal part are computed using \ac{FFT} methods, in order to have a gain of performance. For doing this, first, we need to consider a grid mesh in which the Gaussian counteracts charge density are spread into. The basic idea, then, is to achieve the electrostatic energy solving the Poisson's equation through \ac{FFT} methods. The efficiency and the accuracy depends on the way the charges are distributed into the grid. For doing this a \textit{charge assignment function}, $W(r)$ is introduced such that, considering for simplicity a one dimensional system, the fraction of a charge at position $r$ assigned to a grid point at position $r_p$ is given by $W(r_p - r)$. Hence, if we have a charge density $\rho(r)$ then the charges at the grid point $r_p$ are given by
 \begin{equation}
 	q_M(r_p) = \int_0^L\ W(r_p - r) \rho (r)\ dr
 	\label{eq:meshAssign}
@@ -564,16 +567,18 @@ where $(x_i;y_i)$ are the set of points to interpolate. The main disadvantage of
 \begin{equation*}
 	\frac{\lambda - 1}{\lambda - e^z}e^{xz} = \sum_{n=0}^{+\infty} \frac{A_n(x;\lambda)}{n!}z^n
 \end{equation*}
-where $\lambda$ is a complex parameter and $z$ is a complex variable. The main properties of such SPLINE is that, it is $n-1$ times continuously differentiable.
+where $\lambda$ is a complex parameter and $z$ is a complex variable. The main properties of such SPLINE is that, it is $n-1$ times analytic continuously differentiable and then can solve the instability problem of the Lagrange interpolation method. In literature the former Euler SPLINE method is refers to \textit{smooth} \acl{PME} and the reader is addressed to the article by Essmann, Darder \etal\, \cite{EssmannSPME} for more technical detail about the interpolation procedure. 
 
 Summarizing the \ac{PME} method is implemented following the latter procedure
 \begin{itemize}
-	\item Counteracts Gaussian charge density are assigned to a mesh grid of $M$ points in order to obtain a discretized charge distribution;
-	\item The Poisson's equations for the discretized charges are solved thought the \ac{FFT} methods in order to obtain the reciprocal contribution of the Ewald summation;
-	\item Electrostatic forces are calculated and assigned to the charged system's particles.
+	\item By the interpolation of the complex exponential in the Fourier transform of the Ewald summation, the Gaussian counteracts charge distribution are spread into the mesh grid and a discretize Fourier transform are obtained;
+	\item The Poisson's equations for the discretized charges are solved thought the \ac{FFT} methods;
+	\item The reciprocal energy contribution are obtained considering the inverse Fourier transform; 
+	\item Electrostatic forces are computed and assigned to the charged system's particles.
 \end{itemize}
+The main advantages of the \ac{PME} algorithm is that the potential energy and forces are smooth functions of the particles positions, offers a good energies conservations, offers a very well balance between accuracy and computational efficiency since it scales as $\sim N\ln N$ and it is easily generalizable to interaction potentials that decay as $r^{-d}$ such the Lennard--Jones potential. Nevertheless it not conserve very well the particles momentum due to \ac{RMS} errors in the forces calculations that have to be cancel out by removing the forces averages. 
 
-
+\subsection{Charge assignment}
 \subsection{Polar solvent}
 
 \subsection{Atomistic model}
@@ -592,3 +597,6 @@ Summarizing the \ac{PME} method is implemented following the latter procedure
 	\subsection{Metadynamics}
 
 	\subsection{Umbrella sampling} %Molecular Modelling, 581
+	
+	
+%Manuale GROMACS 3.17.5 PP/PME ranks

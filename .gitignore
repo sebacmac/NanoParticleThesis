@@ -18,3 +18,7 @@
 *.lb
 
 chapter/.tm_properties
+
+*.bbl
+
+*.blg

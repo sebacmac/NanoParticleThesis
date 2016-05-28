@@ -280,6 +280,7 @@ An other advantage is that the velocities are part of the algorithm itself and t
 		\subsubsection{Parrinello--Rahman algorithm}
 
 \section{Empirical Force--Field model}
+\label{sec:EmpiricalFF}
 As we have seen in the previous section \ac{MD} provides a variety of tools for solving the time evolution of a $N$--particle system to obtain its dynamics. Due to the possibility to capture different length and time scales \ac{MD} simulations can be used in a variety of systems, such a set of atoms, molecules or more complex system such as protein and macromolecules systems. In each of it systems, depending on the \textit{interaction model} and its \textit{parametrization}, we will be able to describe crucial molecular--level processes, such as hydrogen bond formation in organic molecules, which happen on the picoseconds time scale; or study slow processes such as the diffusion of massive colloidal particles, taking place on time scales of milliseconds if not seconds. When we study a soft or condensed matter system or, in general, a system composed by a large number of atoms (of the order of $N \gg 1000$), a crucial role play the \textit{Born--Oppenheimer approximation}. It says that we can separate the motion of the electrons by the motion of the atomic nuclei. That is done for integrating out the high frequency electrons' motions in order to remove some \ac{DOF}. Moreover the main interesting processes of soft and condensed matter, ranging from protein folding to glass transitions, from surface diffusion to ligand--receptor binding take place on longer time scales and involve larger number of atoms. Father if we want to know precisely the dynamics of the electrons in the system we have to introduce quantum mechanical methods that are, even for a small number of particles (of the order of $N\sim 100$), to much computationally time consuming, thus the Born--Oppenheimer approximation is indispensable. In the following, when we speak about atoms or chemical moieties we refer to it as for nuclei coordinates only without considering electrons at all.
 
 Nevertheless atoms or molecules interactions, such as bond formation, is mediated by the electrons interactions. Thus, for describe the dynamics of such a system with a classical \ac{MD} tools and the Born--Oppenheimer approximation, it is necessary to develop an \textit{empirical model of the inter--atoms interactions} that mimic correctly the ``real'' interactions. Since forces are derived from the \ac{PEF} we need a model composed by the set of the simplest pairwise addictive potentials that mimic the inter--particles interactions. The model, the set of functional forms of the inter--particles interactions potential and its parametrization are collected in to the so called empirical \acf{FF}. The meaning of \textit{empirical} is that most of the functional forms of the inter--atoms interaction has no ``first principle'' justification and they are only an approximation to reality: there is not a correct way it are chosen as a compromise between accuracy and computational efficiency. Father it is necessary to stress out that a \ac{FF} is a well defined single entity containing the functional models of the interactions and also its parameterizations (and the way to obtain it). All the parameters of a \ac{FF} are in harmony to each other, change some parameters without retesting all the \ac{FF} is not allowed because, maybe, one can destroy the whole \ac{FF}.
@@ -306,7 +307,7 @@ The first two terms in equation~\eqref{eq:FFPEF} are harmonic potentials which m
 torsional angle. It involve four particles in the same molecule and mimic the energy barrier needed to rotate the bond angle along the bond axis. $\gamma$ is a phase factor, $V_n$ qualitatively describe the energy barrier for each $n$--th components and $n$ is defined as the number of minima for each components. The last line in equation~\eqref{eq:FFPEF} contains the energy contribution due to the non--bonded interactions: the Van der Waals modeled by a Lennard--Jones $12-6$ potential, fully characterized by the constants $\sigma_{ij}$ and $\epsilon_{ij}$ proper for each particles' pair; and the electrostatic potential described by the particles' charge $q$. The non--bonded interactions involve obviously all particles in the system, but for particles belonging to same molecule they are computed only if they  are separated by at least three bonds, i.e. if their interactions are not described by bonded terms. The various contributions described above are schematically represented in the figure~(\ref{fig:FFInteraction}).
 
 \begin{figure}[!ht]
-	\begin{tikzpicture}
+	\begin{tikzpicture}[scale=0.8,transform shape]
 		%\draw[thin, gray!25] (0,0) grid (15,8);
 		\node[fill=red!70, circle, radius=0.15] (1) at (0,6) {};
 		\node[fill=red!70, circle, radius=0.15] (2) at (2,8) {};
@@ -390,7 +391,7 @@ The common model to treat the Van der Waals interactions is to use a Lennard--Jo
 	v(r) = 4\epsilon\left ( \left ( \frac{\sigma}{r}\right )^{12}  - \left ( \frac{\sigma}{r} \right )^6 \right ) = \frac{C_{12}}{r^{12}} - \frac{C_{6}}{r^{6}}
 	\label{eq:lj126}
 \end{equation}
-where $C_{12} = 4\epsilon\sigma^{12}$, $C_{6} = 4\epsilon\sigma^{6}$ and $r$ is the pairwise particles distance. $\epsilon$ is related to the absolute value of minimum while $\sigma$ is relented to distance at the minimum: $r_{\text{min}} = 2^{\nicefrac{1}{6}}\sigma$. That constant are proper for each particles pair type. The attractive contribution is due to the negative part proportional to $r^{-6}$; while the repulsive one is due to the positive part proportional to $r^{-12}$. In figure~(\ref{fig:LG12511}) there is a example plot of the function~()\eqref{eq:lj126} with $\epsilon = \sigma = 1$.
+where $C_{12} = 4\epsilon\sigma^{12}$, $C_{6} = 4\epsilon\sigma^{6}$ and $r$ is the pairwise particles distance. $\epsilon$ is related to the absolute value of minimum while $\sigma$ is relented to distance at the minimum: $r_{\text{min}} = 2^{\nicefrac{1}{6}}\sigma$. That constant are proper for each particles pair type. The attractive contribution is due to the negative part proportional to $r^{-6}$; while the repulsive one is due to the positive part proportional to $r^{-12}$. In figure~(\ref{fig:LG12511}) there is a example plot of the function~\eqref{eq:lj126} with $\epsilon = \sigma = 1$.
 \begin{figure}[!ht]
 \centering
 	\begin{tikzpicture}
@@ -579,29 +580,79 @@ Summarizing the \ac{PME} method is implemented following the latter procedure
 The main advantages of the \ac{PME} algorithm is that the potential energy and forces are smooth functions of the particles positions, offers a good energies conservations, offers a very well balance between accuracy and computational efficiency since it scales as $\sim N\ln N$ and it is easily generalizable to interaction potentials that decay as $r^{-d}$ such the Lennard--Jones potential. Nevertheless it not conserve very well the particles momentum due to \ac{RMS} errors in the forces calculations that have to be cancel out by removing the forces averages. 
 
 \subsection{Charge representation}
+\label{sec:chargeRep}
 Even if some methods are developed to speed up the electrostatic energy contribution such us the \ac{PME}, one of the main problem, related to the electrostatic interactions, of the \acp{FF} for biomolecular applications remains the \textit{charge representation}: the way that the charges of atoms or molecules are assigned to the system's particles. The problem arise from the representation of the negatively charged distribution due to the electrons cloud, that is, for instance a purely quantum effect, and the way that interactions of molecular electronic cloud can be achieved. Nevertheless that is crucial for a better description of the most electrostatic phenomena such us polarizability effect of molecules and polar solvent, solvation shell of charged ions, protein--ligands interaction, ion transport through polar and non--polar medium, self assembly processes and so on.
 
 The mostly used solution is the \textit{atom--centered ``partial charge'' approximation} in which the full charge density of the molecule is replaced by a fractional point--like charges assigned to every atom. But now, one has to decide how much of the molecular charge density should be assigned to each atom. Traditionally most \acp{FF} assigned to each atom of a molecule a fixed partial--charge. The most used procedure for extracting the partial--charges from molecular wave functions are based on fitting that atomic charges with the molecular electrostatic potential, computed with \textit{ab initio} calculation such as \textit{density functional theory}. The fitting procedure consist of minimizing the deviation between the electrostatic potential produced by the charge assigned and the molecular electrostatic potential. Such representation are believed to be a an important source of error in the electrostatic treatment. Moreover with fixed charge assignment it is more challenging to take into account such phenomena that involve a transfer of charge inside the molecule, as polarization effect. The use of off--centered charges and/or higher order atomic multiples can significantly increase the treatment of electrostatic but of course it is necessary a good balance between accuracy and performance since the electrostatic problem can arise rapidly a loss of efficiency sometimes without a really gain in the accuracy.
 
 \subsection{Polarization}
+\label{sec:polarization}
 Polarization refers to the redistribution of the electron density of a molecule in the presences of an external electric field, generated, for example, by charged ions or an other molecule. The polarization effect generate non--addictive, attractive, inter-- or intra--molecular interactions that rapidly became a many--body interactions with even the induced polarization effect. It is recognized as an important physical effect and an increasing number of studies shows that the lack this effect can be a serious limitation, particularly, for ionic systems and chemical process that involve different environment such us water--protein or water--lipid membrane environment. In \ac{MD} simulations the polarization effect are included using either \textit{implicit} or \textit{explicit} method.
 
 The implicit methods completely avoids the many--body calculation by including a mean polarization effect in the functional form of the interactions potential. The general idea is to surround all the simulation box by a transparent medium with a constant electrical permittivity $\varepsilon_r$. In this way the polarization effect is take into account considering a mean field theory and solving the Poisson's equation, for determine the electrostatic potential due to system's charges, by the substitution $\varepsilon_0\rightarrow\varepsilon_0\varepsilon_r$. If that method give an incomparable gain in performance, must be carefully used. The main disadvantage is that the mean polarization effect is add to all system's particles. That can be interesting, for example, when our system is composed principally by water; but if the simulation box is composed by a different chemical environments such as water and lipids or other organic matters, the electrical permittivity can not be the same, that can lead to a serious incorrect results of the proprieties of the organic matters and maybe of the simulation etall.
 
 The way to correct the above behavior is to use an explicit methods. As the name suggest, the polarization effect is take into account for every molecules or solvent in the system by an its proper model included in the \ac{FF}. The general idea is to add to a molecule or atom some more internal \ac{DOF} for take into account the movement of charges and/or split the point--like charge assigned, for example, to a chemical group, to a partial charge assigned to each particles of the chemical group itself. That can be done for every molecules or atoms in the system and thus it is an optimum for better describe systems with different chemical environments.
 
-
-\subsection{Atomistic model}
+%\subsection{Atomistic model}
 \subsection{Coarse--Grained model}
+As we have introduced at the beginning of this section, for biomolecular applications exist two main classes of \acp{FF}: atomistic \acp{FF} and \ac{CG} \acp{FF}. Since the atomistic model take into account all the atoms in a molecule it is obviously the most real and accurate \ac{FF}. Nevertheless as the molecule's size also the \ac{DOF} of the simulation increases and thus lead into a loss of performance. Moreover, basically, the atomistic \acp{FF} are efficient until the physical proprieties can be properly sampled on a time scale of a few microseconds over a length scales of a few nanometers. As the time and length scales increase more and more time are need for carry out a complete simulation. Unfortunately many biological processes involving lipid membranes and other organic matters, including the interactions with synthetic compounds, take place on much longer time and length scales.
+
+One possible solution is to \textit{integrate out} some \ac{DOF}, preserving those are relevant for the problem in exam: this procedure is so called \textit{coarse--graining}. The basic units of a \ac{CG} \acp{FF} are called \textit{beads}, each representing a group of atoms or a well defined chemical moieties. The size of the group of atoms that is represented by a single bead determines the degree of coarsening of the \ac{FF}. Even in this case, all the general features described above, apply: a functional forms need to be chosen and their parameterization need to be adjusted so as to reproduce the desired target properties. Moreover, in this case, even a \textit{mapping} procedure should be define that is the first step in the development of a \ac{CG} model: it establish a link between the atomistic model and the coarse--grain beads. There is not a unique or correct procedure to obtain the mapping because it depends on the desired coarse--graining level, on the time and length scales that one wants to correct sample and on the properties one wants to reproduce. For biological applications \ac{CG} \acp{FF} are often designed to reproduced specific thermodynamics properties such surface tension, free energy of partitioning, free energy of hydration and so on, instead of, for example, the structural properties.
+
+In general a \ac{CG} \ac{FF} are more computationally efficient then an atomistic \ac{FF} for the following reason: the \ac{DOF} of the system is reduced due to the \ac{CG} procedure and a smaller number of interactions and forces has to be take into account; bead--bead interactions, which result from cancel out the fine structural details, are softer than the atom--atom interactions. Thus, vibrational modes are slower, and their sampling can be achieved using larger \ac{MD} time steps than in atomistic simulations; softer interactions imply a smoother \ac{PEF}, and this lead to a faster diffusion.
 
 \section{MARTINI: a Coarse--Grained Force--Field}
-	\subsection{Mapping}
-	\subsection{Parametrization}
-	\subsection{Bonded interaction}
-	\subsection{Non--bonded interactions}
-	\subsection{Simulation parameters}
-	\subsection{Polarizable Water model}
-	\subsection{Applications}
+\martini is a \ac{CG} \ac{FF} originally developed by Marrink \etal\, \cite{Martini} for organic solvents and lipids and then extended to proteins \cite{MartiniProtein}, carbohydrates \cite{MartiniCarbo} and a broad class of polymers \cite{MartiniPolymers}. The original aim was to improve the description of the physico--chemical properties of the lipids membranes in a \ac{CG} model. But the power of the model is made immediately clear and soon the philosophy behind the model was changed to develop a \ac{FF} applicable to a broad range of organic applications providing a set of extensively calibrated building block for make a large variety of organic molecule without reparametrizing all the \ac{FF}. That is possible, because, instead of focusing on the accurate reproducing of structural detail of a particular system, it is based on the reproducing accurately the interaction between polar and non--polar chemical compounds. That is the main target properties: the \textit{partitioning free energy} between water and a large number of organic system, i.e. the free energy of transfer of these chemical moieties from polar and non--polar solvents. These building blocks are representative of the main chemical moieties in a organic system that has been the guide for the mapping procedure.
+
+\subsection{Mapping}
+The mapping for the \martini beads, is based on a four--to--one scheme that groups for heavy atoms like C, S, O and so on, plus their associated hydrogen atoms, into a single interacting site. Consistently four water molecules is modeling with one \martini bead. There four main beads type: polar (P), non--polar (N), apolar (A) and charged (Q). Each beads type has a number of subtypes for take into account a more accurate representation of the chemical nature of moieties due to the specific atomistic structures. These subtype are distinguished by the hydrogen bonding capabilities: donor (d), acceptor (a), both donor and acceptor (da) and none ($0$) and/or by a degree of polarity: lowest polarity ($1$), $\cdots$, highest polarity ($5$).
+
+\subsection{Interactions potential}
+\paragraph{\textbf{van der waals interactions}} The functional form describing the pairwise Van der Walls interactions is a Lennard--Jones $12-6$ potential as in equation~\eqref{eq:lj126}. 
+%The $\epsilon$ and $\sigma$ parameters are first obtained for a same--type interactions and then the inter--type parameters are computed as follow
+%\begin{equation*}
+%	\epsilon_{ij} = \sqrt{\esilon_{ii}\epsilon_{jj}} \qquad \sigma_{ij} = \frac{1}{2}(\sigma_{ii} + \sigma_{jj})
+%\end{equation*} 
+For the most beads the $\sigma$ parameter is set equal to $0.47~$nm except for the Q--C$_1$ and Q--C$_2$ interactions that are set to $\sigma = 0.62$~nm. This is consistent for reproducing the hydration shel when a charged beads (Q) is dragged into an apolar medium. The strength of the interactions is instead dived into ten levels, reported in table~(\ref{tab:martiniEpsilon})
+\begin{SCtable}\footnotesize
+\begin{tabular}{lc}
+	\toprule
+	Level  & $\epsilon$\,[kJ/mol] \\ \midrule
+	O	   & $5.6$	 \\ \midrule
+	I      & $5.0$	 \\ \midrule
+	II	   & $4.5$	 \\ \midrule
+	III	   & $4.0$	 \\ \midrule
+	IV	   & $3.5$	 \\ \midrule
+	V	   & $3.1$	 \\ \midrule
+	VI	   & $2.7$	 \\ \midrule
+	VII	   & $2.3$	 \\ \midrule
+	VIII   & $2.0$	 \\ \midrule
+	IX     & $2.0$	 \\ \bottomrule
+\end{tabular}
+\caption{Interactions strength parameter ($\epsilon$). The last one is for the special case of $\sigma=0.62$~nm.}
+\label{tab:martiniEpsilon}
+\end{SCtable}
+The association of the interactions strength with the \martini beads is shown in figure~(\ref{fig:martiniInteractions}).
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=1\textwidth]{img/martiniInteractions.pdf}
+	\caption{Interactions strength associations matrix for the \martini beads type and subtype. Taken from \cite{Martini}.}
+	\label{fig:martiniInteractions}
+\end{figure}
+
+\paragraph{\textbf{electrostatic interactions}} The electrostatic charges are assigned using the atom--centered approximation, as described in~\ref{sec:chargeRep}. But, in this case, the charges are no more fractional and it are empirically assigned at the center of the beads trying to following as much possible the net charge of the associated chemical moieties. A special case is the water, modeled as a P$_4$ bead, because it interact only with the Van der Waals interactions thus the polarizability effect is not very well take into account. For repair this lack it is used an implicit medium with a dielectric constant $\varepsilon_r = 15$. However, as we will see later in~\ref{sec:pw}, for avoid the problem of the implicit medium, described in~\ref{sec:polarization}, especially for the main aim of the \martini \ac{FF}, the lipids membranes, Yesylevskyy \etal \cite{PW} have developed a more sophisticated water model.
+
+\paragraph{\textbf{bonded interactions}} It include only a bond length and an angle harmonic contributions. The first use an harmonic potential as the first term in equation~\eqref{eq:FFPEF}. With the same bond constant for all beds type: $k^b = 1250$~kJ/(mol\ nm$^2$) and an equilibrium distance of $l_0 = 0.47$~nm. Instead the angle contribution is modeled as a cine--type harmonic potential
+\begin{equation*}
+	U = \frac{1}{2}k^a (\cos(\theta) - \cos(\theta_0))^2
+\end{equation*}
+and the parameters are: $k^a = 25$~kJ/mol and $\theta_0 = 180^\circ$ for aliphatic chains; $k^a = 45$~kJ/mol and $\theta_0 = 120^\circ$ for \texttt{cis} double bonds and $k^a = 45$~kJ/mol and $\theta_0 = 180^\circ$ for \texttt{trans} unsaturated bonds.
+
+\subsection{Parametrization}
+\subsection{Simulation parameters}
+\subsection{Polarizable Water model}
+\label{sec:pw}
+\subsection{Applications}
 
 \section{Advanced sampling methods}
 	\subsection{Metadynamics}

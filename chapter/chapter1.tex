@@ -271,7 +271,8 @@ The velocities at a time $t$ can be calculated by
 An other advantage is that the velocities are part of the algorithm itself and that it does not require the calculation of the difference between two large number, with an increasing of precision. The obviously disadvantage is that the positions and velocities are not synchronized and it require equation~\eqref{eq:lfVelocitiesSync} for calculating the velocities at a time $t$. The need to have velocities at the same time of positions, as for the Verlet algorithm, derived from the calculation of the kinetics energy contribution at the total energy: it must be computed with positions and velocities at the same time.
 %Discorso energia cinetica nello stesso tempo delle posizioni
 
-	\subsection{Neighbor list}
+\subsection{Neighbor list}
+
 	\subsection{Thermostats algorithms} %Molecular Modelling, 382
 			%Berendesen --> velocity rescale
 	\subsection{Barostats algorithms} %Molecular Modelling, 382
@@ -352,7 +353,8 @@ torsional angle. It involve four particles in the same molecule and mimic the en
 \end{figure}
 
 \subsection{Non--bonded interactions}
-The bonded interactions, as we can see in equation~\eqref{eq:FFPEF}, are at \textit{fixed range}, meaning that it depended, for example, on equilibrium bond's length that is fixed. That is not for the non--bonded interactions because they depends on the inter--particles distance $r_{ij}$ and they decay to zero as a power of $r_{ij}^{-d}$. Depending on the power order $d$ compared to the system's size they are split into \textit{short range} and \textit{long range} interactions. Obviously the Lennard--Jones potential decay more rapidly then the electrostatic one; then, it is a short range interactions, while the electrostatic is a long range interactions.
+\label{sec:nonbonded}
+The bonded interactions, as we can see in equation~\eqref{eq:FFPEF}, are at \textit{fixed range}, meaning that it depended, for example, on equilibrium bond's length that is fixed. That is not for the non--bonded interactions because they depends on the inter--particles distance $r_{ij}$ and they decay to zero as a power of $r_{ij}^{-d}$. Depending on the power order $d$ compared to the dimensionality of system they are split into \textit{short range} and \textit{long range} interactions. For example, as we shall see, the Lennard--Jones $12--6$ potential decay to zero more rapidly then the electrostatic one, then the first is a short range interactions, while the later is a long range interactions.
 
 \subsubsection{Cut--off and shift method}
 Calculations of the non--bonded energy contributions is the most time consuming part of an \ac{MD} simulations. Moreover, they are pairwise interactions and scale as $N^2$. Especially for the short range interactions, various method are developed in order to speed--up the simulations. The \textit{cut--off} method is the most used to treat the short range interactions, but in same cases even the long range. Taking one particle, the general idea, is to evaluate the non--bonded interactions with all other particles that are closer to the first for a distance of $r_c$, called \textit{cut--off}, otherwise the interactions is set to $0$. That means that the new potential is of the form
@@ -572,16 +574,16 @@ where $(x_i;y_i)$ are the set of points to interpolate. The main disadvantage of
 \begin{equation*}
 	\frac{\lambda - 1}{\lambda - e^z}e^{xz} = \sum_{n=0}^{+\infty} \frac{A_n(x;\lambda)}{n!}z^n
 \end{equation*}
-where $\lambda$ is a complex parameter and $z$ is a complex variable. The main properties of such SPLINE is that, it is $n-1$ times analytic continuously differentiable and then can solve the instability problem of the Lagrange interpolation method. In literature the former Euler SPLINE method is refers to \textit{smooth} \acl{PME} and the reader is addressed to the article by Essmann, Darder \etal\, \cite{EssmannSPME} for more technical detail about the interpolation procedure. 
+where $\lambda$ is a complex parameter and $z$ is a complex variable. The main properties of such SPLINE is that, it is $n-1$ times analytic continuously differentiable and then can solve the instability problem of the Lagrange interpolation method. In literature the former Euler SPLINE method is refers to \textit{smooth} \acl{PME} and the reader is addressed to the article by Essmann, Darder \etal\, \cite{EssmannSPME} for more technical detail about the interpolation procedure.
 
 Summarizing the \ac{PME} method is implemented following the latter procedure
 \begin{itemize}
 	\item By the interpolation of the complex exponential in the Fourier transform of the Ewald summation, the Gaussian counteracts charge distribution are spread into the mesh grid and a discretize Fourier transform are obtained;
 	\item The Poisson's equations for the discretized charges are solved thought the \ac{FFT} methods;
-	\item The reciprocal energy contribution are obtained considering the inverse Fourier transform; 
+	\item The reciprocal energy contribution are obtained considering the inverse Fourier transform;
 	\item Electrostatic forces are computed and assigned to the charged system's particles.
 \end{itemize}
-The main advantages of the \ac{PME} algorithm is that the potential energy and forces are smooth functions of the particles positions, offers a good energies conservations, offers a very well balance between accuracy and computational efficiency since it scales as $\sim N\ln N$ and it is easily generalizable to interaction potentials that decay as $r^{-d}$ such the Lennard--Jones potential. Nevertheless it not conserve very well the particles momentum due to \ac{RMS} errors in the forces calculations that have to be cancel out by removing the forces averages. 
+The main advantages of the \ac{PME} algorithm is that the potential energy and forces are smooth functions of the particles positions, offers a good energies conservations, offers a very well balance between accuracy and computational efficiency since it scales as $\sim N\ln N$ and it is easily generalizable to interaction potentials that decay as $r^{-d}$ such the Lennard--Jones potential. Nevertheless it not conserve very well the particles momentum due to \ac{RMS} errors in the forces calculations that have to be cancel out by removing the forces averages.
 
 \subsection{Charge representation}
 \label{sec:chargeRep}
@@ -612,11 +614,11 @@ In general a \ac{CG} \ac{FF} are more computationally efficient then an atomisti
 The mapping for the \martini beads, is based on a four--to--one scheme that groups for heavy atoms like C, S, O and so on, plus their associated hydrogen atoms, into a single interacting site. Consistently four water molecules is modeling with one \martini bead. There are four main beads type: polar (P), non--polar (N), apolar (A) and charged (Q). Each beads type has a number of subtypes for take into account a more accurate representation of the chemical nature of the moieties due to the specific atomistic structures. These subtype are distinguished by the hydrogen bonding capabilities: donor (d), acceptor (a), both donor and acceptor (da) and none ($0$) and/or by a degree of polarity: lowest polarity ($1$), $\cdots$, highest polarity ($5$).
 
 \subsection{Interactions potential}
-\paragraph{\textbf{van der waals interactions}} The functional form describing the pairwise Van der Walls interactions is a Lennard--Jones $12-6$ potential as in equation~\eqref{eq:lj126}. 
+\paragraph{\textbf{van der waals interactions}} The functional form describing the pairwise Van der Walls interactions is a Lennard--Jones $12-6$ potential as in equation~\eqref{eq:lj126}.
 %The $\epsilon$ and $\sigma$ parameters are first obtained for a same--type interactions and then the inter--type parameters are computed as follow
 %\begin{equation*}
 %	\epsilon_{ij} = \sqrt{\esilon_{ii}\epsilon_{jj}} \qquad \sigma_{ij} = \frac{1}{2}(\sigma_{ii} + \sigma_{jj})
-%\end{equation*} 
+%\end{equation*}
 For the most beads the $\sigma$ parameter is set equal to $0.47~$nm except for the Q--C$_1$ and Q--C$_2$ interactions that are set to $\sigma = 0.62$~nm. This is consistent for reproducing the hydration shel when a charged beads (Q) is dragged into an apolar medium. The strength of the interactions is instead dived into ten levels, reported in table~(\ref{tab:martiniEpsilon})
 \begin{SCtable}\footnotesize
 \begin{tabular}{lc}
@@ -662,7 +664,7 @@ The \martini \ac{FF} was originally developed using a group shifted cut--off sch
 \subsection{Parametrization}
 In order to parametrize the \martini \ac{CG} \ac{FF} a set of thermodynamics properties, obtained from \ac{MD} simulations are compared and fitted among those experimentally measured. These properties are the \textit{free energies of vaporization}, \textit{hydration} and \textit{partitioning} between water and a set of organic compounds such as hexadecane (H), chloroform (C), ether (E) and octanol (O). The free energy of hydration was obtained from the partitioning of the \ac{CG} compounds between bulk water in equilibrium with its vapor. Similarity the free energy of vaporization was obtained considering a simulation box with the selected \ac{CG} compounds in equilibrium with its vapor. From the equilibrium densities of the particles in both the phases the related free energy can be computed from
 \begin{equation*}
-	\Delta F = k_B T\ln \left ( \frac{\rho_{\text{vap}}}{\rho_{\text{bulk}}} \right ) 
+	\Delta G = k_B T\ln \left ( \frac{\rho_{\text{vap}}}{\rho_{\text{bulk}}} \right )
 \end{equation*}
 That simulations was performed in a canonical $NVT$ ensemble.
 
@@ -672,7 +674,14 @@ Instead the partitioning free energy between water and an organic solvent was ob
 \end{equation*}
 where $S$ indicate the organic solvent.
 
-A summary of the results is reported in figure~(\ref{}). As one can see the model has a bad performance for what concern the free energies of vaporization and hydration, which are too high with respect to the experimental data. Instead the partitioning free energy match very well. Thus the model is not very accurate for vapour--liquid system, but as long as one does not study that systems, the partitioning free energy is much important then the other.
+A summary of the results is reported in figure~(\ref{fig:martiniTarget}). As one can see the model has a bad performance for what concern the free energies of vaporization and hydration, which are too high with respect to the experimental data. Instead the partitioning free energy match very well. Thus the model is not very accurate for vapor--liquid system, but as long as one does not study that systems, the partitioning free energy is much important then the other.
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=\textwidth]{img/martiniTarget}
+	\caption{Results summary: free energies of vaporization $\Delta G^\text{vap}$, hydration $\Delta G^\text{hydr}$ and partitioning $\Delta G^\text{part}$ between water (W) and organic solvents (hexadecane (H), chloroform (C), ether (E) and octanol(O)) compared to experimental values. Experimental properties between parentheses are estimates obtained from comparison to similar compounds. The statistical accuracy of the free energies obtained from the simulations is $\pm 1$~kJ/mol. $^b$ The temperature for the experimental data is $273$~K. Taken from \cite{Martini}.}
+	\label{fig:martiniTarget}
+\end{figure}
 
 \subsection{Polarizable Water model}
 \label{sec:pw}
@@ -682,6 +691,6 @@ A summary of the results is reported in figure~(\ref{}). As one can see the mode
 	\subsection{Metadynamics}
 
 	\subsection{Umbrella sampling} %Molecular Modelling, 581
-	
-	
+
+
 %Manuale GROMACS 3.17.5 PP/PME ranks

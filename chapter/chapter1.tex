@@ -4,10 +4,9 @@ For macroscopic bodies, the motion of a system in time and space is governed by 
 
 In order to predict the time evolution of a complete system, such as the biomolecular system we will treat in this thesis, Newton’s equations of motion need to be integrated numerically. The necessity of a numerical integration arises from the complexity of the interactions involved in realistic systems, often nonlinear functions of positions and momenta of the particles making up the system, which makes it impossible to obtain an analytical solution for the equations of motion.
 
-In the first part of this Chapter the laws of classical and statistical mechanics will be briefly summarized. Then we introduce the computational \ac{MD} method and analyze the main aspect of this technique.
+In the first part of this Chapter the laws of Classical and Statistical mechanics will be briefly summarized. Then we introduce the computational \acf{MD} method and analyze the main aspect of this technique. Following some details about how the system under study is modeled are given: the \textit{empirical Force--Field} (\acs{FF}). This includes the way to consider and treat the inter--particle interactions at the \ac{MD} level with some methods to increase the computational efficiency such as the \textit{cut--off} methods for the so called \textit{short range} interactions and the \ac{PME} technique for treatment of the \textit{long range} interactions. Then \martini \ac{FF}, the main \ac{FF} used in this thesis work, are summarized. Lastly some advanced sampling techniques are introduced: the \textit{Umbrella Sampling} and \textit{Metadynamics}. Some parts of this introductory Chapter are based on the books of Tuckerman \cite{Tuckerman}, Leach \cite{Leach}, Frenkel and Smit \cite{Frenkel} and Allen and Tildesley \cite{Allen} to which the reader is addressed for a more complete discussion.
 
-\section{Review of classical and statistical mechanics}
-\subsection{Classical mechanics}
+\section{Review of classical mechanics}
 The classical behavior of a system of $N$ particles with mass $m_i$ and coordinates $\vec r_1,\cdots,\vec r_N$, is described by the Newton's second law. Each particle in the system will experience the total force $\vec F_i$ and the then the second law for particle $i$ yield
 \begin{equation}
 	m_i \ddot{\vec{r}}_i = \vec F_i(\vec r_1,\cdots,\vec r_N)
@@ -15,9 +14,9 @@ The classical behavior of a system of $N$ particles with mass $m_i$ and coordina
 \end{equation}
 
 The total force is defined as
-\begin{equation}
+\begin{equation*}
 	\vec F_i(\vec r_1,\cdots,\vec r_N) = \vec{f}_i^{\ (e)}(\vec r_i) + \sum_{i\ne j}^N \vec{f}_{ij}^{\ (i)}(\vec r_i - \vec r_j )
-\end{equation}
+\end{equation*}
 where $\vec{f}_i^{\ (e)}$ is the external force acting on particle $i$; while $\vec{f}_{ij}^{\ (i)}$ is the inter-particle force that $i$ exerts on $j$ and \textit{vice-versa}, in general it depends only on the distance between the particles. The equations~\eqref{eq:newtonLaw} is refereed to as \textit{the equations of motion} of the system; integrating them, with the sets of the \textit{initial conditions} at start time $t_0$: $\vec r_1(t_0),\cdots,\vec r_N(t_0)$ and $\dot{\vec{r}}_1(t_0),\cdots,\dot{\vec{r}}_N(t_0)$, the positions and the velocities of all the particles in the system at any time it is known.
 
 An other way to write the equations of motion is to use the particles momenta $\vec p_i = m_i \dot{\vec{r}}_i$ and then the equations~\eqref{eq:newtonLaw} became
@@ -69,14 +68,14 @@ so we can express particles velocities as a function of particle momenta. Equati
 \end{equation}
 
 For describing the system we can define an other scalar function, called \textit{Hamiltonian} of the system
-\begin{align}
+\begin{align*}
 	\mathcal{H}(\vec r_1,\cdots,\vec r_N, \vec p_1, \cdots, \vec p_N) = &\sum_{i=0}^N \vec p_i \cdot \dot{\vec r}_i(\vec p_i) + \nonumber \\
 	&-\mathcal{L}(\vec r_1, \cdots, \vec r_N, \dot{\vec r}_1(\vec p_1),\cdots,\dot{\vec r}_N(\vec p_N))
-\end{align}
+\end{align*}
 substituting~\eqref{eq:lagrangian} and using~\eqref{eq:kineticsP} the Hamiltonian of the system is nothing that
-\begin{equation}
+\begin{equation*}
 	\mathcal{H} = K + U
-\end{equation}
+\end{equation*}
 or \textit{the total energy of the system}. To obtain the equations of motion we have to solve the \textit{Hamilton's equations}
 \begin{equation*}
 	\begin{aligned}
@@ -86,7 +85,7 @@ or \textit{the total energy of the system}. To obtain the equations of motion we
 \end{equation*}
 Describing the system with the Hamiltonian formalism, in some cases, is most useful than Lagrangian one, first of all because the Hamiltonian of a system is directly related to a physical quantity well know: the total energy.
 
-\subsection{Statistical mechanics}
+\section{Review of statistical mechanics}
 With the classical mechanics described above we have a good and sophisticated machinery that allow us, knowing some informations about the system in exams, i.e. initial positions and velocities of all particles and how it interact each other, to solve completely the equations of motion in order to get the dynamics of the system at every time. So classical mechanics encode all the informations about the \textit{microscopic} view of a system and, in principle, we can extract all the informations we want about the \textit{macroscopic} proprieties of such system. The main task of such process is to obtain the thermodynamics proprieties of a system (temperature, pressure end so on) from the complete sets of positions and velocities of all particles and thus it is necessary to have a link between microscopic and macroscopic world. In principle this can be done, but if we consider a real system we should solve a set of $6N$ equations where $N$ is of the order of the Avogadro number ($\mathcal{N}_A = 6.022 \cdot 10^{23}~\text{mol}^{-1}$); we can not think to solve a such number of equations analytically even if we consider to solve it numerically: that it is almost impossible. Thus the problem is to extract the macroscopic informations from the classical mechanics and to establish a well computable link between microscopic and macroscopic for obtain ``easily'' the thermodynamics informations required.
 
 The solution of that problems comes from the \textit{statistical mechanics} developed, principally, by Boltzmann and Gibbs. Statistical mechanics involves all the rules and methods through witch the microscopic world and macroscopic one are related to each other; this make also a stable derivation of thermodynamics from the microscopic proprieties: without that thermodynamics wold be only a phenomenological theory. The main contribution at the solution of the problems is to recognize that \textit{a macroscopic observable of a system do not strongly depend on the complete dynamics of every particles in the system, but rather on an \textit{average} that cancel out all the details of the microscopic features}. Now it is intuitively true; if we consider to set up an experiment, in principle, we can prepare the system in a specific microscopic state that generate a specific macroscopic state; certainly we can do the contrary and for sure, if the system is real, we do not find the same microscopic state! Then we can iterate the experiment and we find that for a specific macroscopic state of a system there exist some number of microscopic state that yield the same properties.
@@ -105,13 +104,13 @@ Giving the ensemble distribution function, the ensemble average of a observable 
 	\ave{A}(t) = \int_\Omega A(\vec x)\rho(\vec x, t)\ dx
 \end{equation*}
 For an ensemble at thermodynamic equilibrium the macroscopic state is fixed and so, if $A$ is an equilibrium observable, it must be time--independent: this let us to define a scalar function of the Hamiltonian of the system such that
-\begin{equation}
+\begin{equation*}
 	\ave{A} = \frac{1}{\mathcal{Z}} \int_\Omega A(\vec x, t) \mathit{f}(\mathcal{H}(\vec x))\ dx
-\end{equation}
+\end{equation*}
 where $\mathcal{Z}$, known as \textit{partition function}, is specific for the ensemble in exams and it is defined as follow
-\begin{equation}
+\begin{equation*}
 	\mathcal{Z} = \int_\Omega \mathit{f}(\mathcal{H}(\vec x))\ dx
-\end{equation}
+\end{equation*}
 
 In order to compute the partition function we need to specified the thermodynamic observables, called \textit{control variables}, that characterize the ensemble it self; for definition of an ensemble at thermodynamic equilibrium that control variables must be constant in time. The main ensembles used in statistical mechanics and the related control variables, are summarized as follow
 \begin{itemize}
@@ -128,9 +127,9 @@ We have defined the ensemble averages and how to compute it but we need also a l
 	\label{eq:timeAve}
 \end{equation*}
 In order for a comparison to be made, an identity between ensemble and time averages must be established. This link is provided by \textit{ergodic theorem} and the \textit{ergodic hypothesis}. A system is says to be ergodic if, for long period of time, all the microstate in the phase space with the same energy are equiprobablly accessible. Then the ergodic theorem says that the time and ensemble averages are equal \textit{almost everywhere} in the space space. So we can write the follow identity
-\begin{equation}
+\begin{equation*}
 	\overline{A} = \lim_{\tau\to +\infty}\frac{1}{\tau}\int_{t_0}^\tau A(\vec x_t)\ dt = \int_\Omega A(\vec x)\rho(\vec x, t)\ dx = \ave{A}(t)
-\end{equation}
+\end{equation*}
 
 The most important ensembles are the microcanonical and the isothermal--isobaric. In the follow we describe it briefly with particular attention to the isothermal--isobaric one, the most relevant for this thesis work.
 
@@ -147,17 +146,17 @@ where the normalization factor $N!$ take into account the particle's indistingui
 
 \subsection{Isothermal--isobaric ensemble}
 The isothermal--isobaric ensemble contains those systems with constant particle's number ($N$), pressure ($p$) and temperature ($T$). This is useful in many chemical, biological and physical systems since its proprieties are reported in conditions of standard temperature and pressure. For maintain the system at constant temperature and pressure it is necessary to couple it with an external \textit{temperature bath} and a \textit{pressure bath}. The first one can be considered simply a very big system at constant temperature with an high thermal capacity. The second can be idealized like a piston connected to the system: changing the volume for adjusting the pressure. The instantaneous work done by the system against the external piston is defined by $pV$, where $V$ is the instantaneous system's volume. Then we have to correct the Hamiltonian of the system: $\mathcal{H}(\vec x) \rightarrow \mathcal{H}(\vec x) + pV$. The partition function is then defined considering the Boltzmann ensemble distribution function
-\begin{equation}
+\begin{equation*}
 	\mathcal{Z}_{NPT} = \frac{1}{N!h^{3N}}\int_0^{+\infty}\ dV \ \int_\Omega e^{-\beta(\mathcal{H}(\vec x) + pV)}\ dx
-\end{equation}
+\end{equation*}
 where $\beta^{-1} \equiv k_B T$, $k_B = 1.3806505(24) \cdot 10^{-23}$~JK$^{-1}$ is the Boltzmann constant and the normalization factor is like above. The right thermodynamic potential for obtain all the macroscopic observable is the Gibbs free energy $G$ defined by
-\begin{equation}
+\begin{equation*}
 	G = -k_B T\ln \mathcal{Z}_{NpT}
-\end{equation}
+\end{equation*}
 it describe the maximum reversible work that may be performed by the system. The other thermodynamic quantities can be obtained by derivative
-\begin{equation}
+\begin{equation*}
 	\mu = \left ( \frac{\partial G}{\partial N}\right )_{pT} \qquad \ave{V} = \left ( \frac{\partial G}{\partial P}\right )_{NT} \qquad S = \left ( \frac{\partial G}{\partial T}\right )_{Np}
-\end{equation}
+\end{equation*}
 where $S$ is the system's entropy.
 
 %eventualmente vedere se mettere le fluttuazioeni di energia e volume
@@ -185,7 +184,7 @@ where $M\Delta \tau$ is the total averaged time, of course must be $M \le D/i$ i
 	\draw[thick,-] (4.5,1.25) -- (4.5, 8.75) node[pos=0.5, fill=white] {$D$ Times};
 	\draw[thick,->] (4.5, 8.75) -- (0, 8.75);
 \end{tikzpicture}
-\caption{Schematic representation of an MD simulation.}
+\caption{Schematic representation of an \acs{MD} simulation.}
 \label{fig:MDscheme}
 \end{figure}
 
@@ -214,7 +213,7 @@ In all experiment our systems is necessarily confined in to a box with some init
 		\foreach \y in {0.9,2.4,3.9,5.4}
 			\fill[fill=green] (\x,\y) circle (0.15);
 \end{tikzpicture}
-\caption{Schematic view of a two--dimensional box with PBC imposed. The central, red contoured, box is the simulation box and it si replicated along each side.}
+\caption{Schematic view of a two--dimensional box with \acs{PBC} imposed. The central, red contoured, box is the simulation box and it is replicated along each side.}
 \label{fig:pbc}
 \end{SCfigure}
 To give a better idea, in figure~(\ref{fig:pbc}) is shown an example of a two--dimensional box with the \ac{PBC} imposed. The central, red contoured, box is the simulation box, the idea is to replicate that box in space along each sides so that there are no surface particles nor walls in the central box. When a particle moves in the central box, all its images virtually move the same way in the copies of the box so that if a particle leave the virtual boundary of the central box, then, its nearest image enters the box and the number density of particles in the simulation box is conserved. This virtual movement of image particles is achieved adjusting the positions of the simulation box particles which have left the main box. For example, is one use a cubic box and a particle crosses its boundary in one direction, say the $x$ direction, then its coordinate is corrected by subtracting (if leave the box in the positive direction) or adding the box side length parallel to $x$ direction. Even if the most used shape is the cubic one, not all the shapes are accessible to impose the \ac{PBC}, the most useful example is a spherical shape. When it is possible one have to use the most appropriate shape due to better describe the symmetry of the system, otherwise a closest approximation, compatible with \ac{PBC}, must be used.
@@ -316,9 +315,8 @@ As we have seen in the previous section \ac{MD} provides a variety of tools for 
 
 Nevertheless atoms or molecules interactions, such as bond formation, is mediated by the electrons interactions. Thus, for describe the dynamics of such a system with a classical \ac{MD} tools and the Born--Oppenheimer approximation, it is necessary to develop an \textit{empirical model of the inter--atoms interactions} that mimic correctly the ``real'' interactions. Since forces are derived from the \ac{PEF} we need a model composed by the set of the simplest pairwise addictive potentials that mimic the inter--particles interactions. The model, the set of simulation parameters, such as the time step, the set of functional forms of the inter--particles interactions potential and its parameterizations are collected in to the so called empirical \acf{FF}. The meaning of \textit{empirical} is that most of the functional forms of the inter--atoms interaction has no ``first principle'' justification and they are only an approximation to reality: there is not a correct way it are chosen as a compromise between accuracy and computational efficiency. Father it is necessary to stress out that a \ac{FF} is a well defined single entity containing the simulation parameters, the functional models of the interactions and also its parameterizations (and the way to obtain it). All the parameters of a \ac{FF} are in harmony to each other, change some parameters without retesting all the \ac{FF} is not allowed because, maybe, one can destroy the whole \ac{FF}.
 
-For biomolecular applications exist two main classes of \acp{FF}: the \textit{atomistic} \acp{FF} which the basic particles are atoms, and the \textit{coarse--grained} \acp{FF} with the basic particles represent atom groups or a small chemical moieties. In this case, even the way to do the corse--graining of the atoms in the molecules, called \textit{mapping}, is part of the \ac{FF} itself. Different \ac{CG} \acp{FF} can use different mapping method even with the same functional forms.
-
-In the latter we add some other informations about \acp{FF} and describe the principal functional forms for modeling the inter--particles interactions and how to treat it in a \ac{MD} simulation. For a more complete discussion about \acp{FF} the reader is addressed to the book by A. R. Leach \cite{Leach}. While in the next section we focus to the main \ac{CG} \ac{FF} used in this thesis work: the \textacr{MARTINI} \ac{CG} \ac{FF} developed by Marrink \etal\, \cite{Martini}.
+For biomolecular applications exist two main classes of \acp{FF}: the \textit{atomistic} \acp{FF} which the basic particles are atoms, and the \textit{coarse--grained} \acp{FF} with the basic particles represent atom groups or a small chemical moieties. In this case, even the way to do the corse--graining of the atoms in the molecules, called \textit{mapping}, is part of the \ac{FF} itself. Different \ac{CG} \acp{FF} can use different mapping method even with the same functional forms. In the latter we add some other informations about \acp{FF} and describe the principal functional forms for modeling the inter--particles interactions and how to treat it in a \ac{MD} simulation.
+%While in the next section we focus to the main \ac{CG} \ac{FF} used in this thesis work: the \textacr{MARTINI} \ac{CG} \ac{FF} developed by Marrink \etal\, \cite{Martini}.
 
 \paragraph{\textbf{\textacr{parameterization}}} In general the functional forms for potential interactions are common to all particles in the system, then the \ac{FF} is completed by a set of empirical parameters that characterize the interaction between different types of particles, whether they are atoms or whole chemical groups. Interaction parameters are empirical in the sense that they are assigned based on the reproduction of a small set of a target properties of a small group of systems. These target properties can be derived from experimental measurements or from finer--level calculations or simulations. Nowadays, atomistic and \ac{CG} biomolecular \acp{FF} come as ``packages'' of parameters and functional forms appropriate for the description of a large variety of chemical compounds in the liquid and solid phases.
 
@@ -459,8 +457,7 @@ where $q_i$ and $q_j$ are the charge, respectively, of particles $i$ and $j$ and
 \end{equation}
 where the prime indicate that for $\vec n = 0$ i.e. the energy contribution of the simulation box, we need to exclude the self interaction term: so in third sum must be $j \ne i$.
 
-As describe above, a cut--off method is a good easy way solution for solving equation~\eqref{eq:electrostatic} and some time it reproduce good results. However, the increasing of computers power can lead to develop more rigorous methods to solve equation~\eqref{eq:electrostaticImage}, even for very large system. The main problem is that the summation in equation~\eqref{eq:electrostaticImage} is \textit{conditionally convergent}\footnote{A conditionally convergent series contains both positive and negative terms such that the positive or negative term alone form both a divergent series. The sum of a conditionally convergent series depends on the order in which the positive and negative terms are considered.} and converges extremely slowly and need too terms that became too time consuming, especially for large system (of the order of $N \sim 3\cdot 10^4$). The most important methods developed for solving that problem are based on the \textit{Ewald Summation Method} (\acs{ESM}). We shall describe that used in this thesis work: the Ewald summations method itself and the \textit{Particle Mesh Ewald} (\acs{PME}) method. For a more complete discussion about the advanced methods developed to treat the electrostatic interactions for biological applications the reader is addressed to the Review by Cisneros \etal\, \cite{Cisneros} and for more technical detail to the book by D. Frenkel and B. Smit \cite{Frenkel}.
-%Moreover for a more technical detail the reader is addressed to the work by Ewald \etal\, [] for what concern the \ac{ESM}, and to the work by Darden \etal\, [] for what concern the \ac{PME} method.
+As describe above, a cut--off method is a good easy way solution for solving equation~\eqref{eq:electrostatic} and some time it reproduce good results. However, the increasing of computers power can lead to develop more rigorous methods to solve equation~\eqref{eq:electrostaticImage}, even for very large system. The main problem is that the summation in equation~\eqref{eq:electrostaticImage} is \textit{conditionally convergent}\footnote{A conditionally convergent series contains both positive and negative terms such that the positive or negative term alone form both a divergent series. The sum of a conditionally convergent series depends on the order in which the positive and negative terms are considered.} and converges extremely slowly and need too terms that became too time consuming, especially for large system (of the order of $N \sim 3\cdot 10^4$). The most important methods developed for solving that problem are based on the \textit{Ewald Summation Method} (\acs{ESM}). We shall describe that used in this thesis work: the Ewald summations method itself and the \textit{Particle Mesh Ewald} (\acs{PME}) method. For a more complete discussion about the advanced methods developed to treat the electrostatic interactions for biological applications the reader is addressed to the Review by Cisneros \etal\, \cite{Cisneros}.
 
 \subsubsection{Ewald summation method} %Molecular Modelling, 334
 The \acf{ESM} is the first method, introduced by Ewald \etal
@@ -604,7 +601,7 @@ where $(x_i;y_i)$ are the set of points to interpolate. The main disadvantage of
 \begin{equation*}
 	\frac{\lambda - 1}{\lambda - e^z}e^{xz} = \sum_{n=0}^{+\infty} \frac{A_n(x;\lambda)}{n!}z^n
 \end{equation*}
-where $\lambda$ is a complex parameter and $z$ is a complex variable. The main properties of such SPLINE is that, it is $n-1$ times analytic continuously differentiable and then can solve the instability problem of the Lagrange interpolation method. In literature the former Euler SPLINE method is refers to \textit{smooth} \acl{PME} and the reader is addressed to the article by Essmann, Darder \etal\, \cite{EssmannSPME} for more technical detail about the interpolation procedure.
+where $\lambda$ is a complex parameter and $z$ is a complex variable. The main properties of such SPLINE is that, it is $n-1$ times analytic continuously differentiable and then can solve the instability problem of the Lagrange interpolation method. In literature the former Euler SPLINE method is refers to \textit{smooth} \acl{PME} and the reader is addressed to the article by Essmann \etal\, \cite{EssmannSPME} for more technical detail about the interpolation procedure.
 
 Summarizing the \ac{PME} method is implemented following the latter procedure
 \begin{itemize}
@@ -645,8 +642,8 @@ The mapping for the \martini beads, is based on a four--to--one scheme that grou
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[width=0.7\textwidth]{img/martiniMapping.pdf}
-	\caption{\martini mapping and atomistic structures compares of some molecules: (A) Standard water bead, (B) polarizable water, (C) DMPC lipid, (D) Polysaccharide fragment, (E) Peptide, (F) DNA fragment, (G) Polystyrene fragment and (H) Fullerene molecule. In all cases \martini CG beads are shown as cyan transparent beads overlaying the atomistic structure. Taken from \cite{MartiniReview}.}
-	\label{{fig:martiniMapping}}
+	\caption{\martini mapping and atomistic structures compares of some molecules: (A) Standard water bead, (B) polarizable water, (C) \acs{DMPC} lipid, (D) Polysaccharide fragment, (E) Peptide, (F) \acs{DNA} fragment, (G) Polystyrene fragment and (H) Fullerene molecule. In all cases \martini \acs{CG} beads are shown as cyan transparent beads overlaying the atomistic structure. Taken from \cite{MartiniReview}.}
+	\label{fig:martiniMapping}
 \end{figure}
 There are four main beads type: polar (P), non--polar (N), apolar (A) and charged (Q). Each beads type has a number of subtypes for take into account a more accurate representation of the chemical nature of the moieties due to the specific atomistic structures. These subtype are distinguished by the hydrogen bonding capabilities: donor (d), acceptor (a), both donor and acceptor (da) and none ($0$) and/or by a degree of polarity: lowest polarity ($1$), $\cdots$, highest polarity ($5$).
 

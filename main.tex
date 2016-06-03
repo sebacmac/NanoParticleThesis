@@ -1,4 +1,4 @@
-\documentclass[a4paper,11pt,cleardoubleempty,abstracton,titlepage,]{scrbook}
+\documentclass[a4paper,11pt,cleardoubleempty,abstracton]{scrbook}
 \usepackage{setspace}
 \PassOptionsToPackage{hyperfootnotes=true}{hyperref}
 \usepackage[eulermath,pdfspacing,beramono,dottedtoc,subfig,linedheaders,eulerchapternumbers]{classicthesis}
@@ -13,8 +13,10 @@
 \usepackage{wrapfig}
 \usepackage{subfig}
 \usepackage[tableposition=bottom,figureposition=bottom,labelsep=colon,format=plain]{caption}
-\usepackage[inner=3.8cm,outer=4.2cm,asymmetric]{geometry}
+\usepackage[inner=3cm,outer=5cm,bottom=4cm,top=3cm]{geometry}
 \usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{changepage}
 \usepackage{sidecap}
 \usepackage{nicefrac}
 \usepackage{biblatex}
@@ -43,12 +45,14 @@
 
 \begin{document}
 
-\pagestyle{plain}
+\pagestyle{empty}
 \clearscrheadfoot
 \frontmatter
+
 %*--------------------------------------*
 %|***************TITLEPAGE**************|
 %*--------------------------------------*
+\newgeometry{left=3cm,right=3cm,top=5cm}
 \begin{titlepage}
 \begin{center}
 	~\\[3cm]
@@ -61,8 +65,9 @@
 ~\\[0.5cm]
 \textsc{\sffamily Advisor: Prof. Annalisa Relini}%
 \end{titlepage}
+\restoregeometry
 
-\newgeometry{left=4.5cm,right=4.5cm,top=5cm}
+%\newgeometry{left=4.5cm,right=4.5cm,top=5cm}
 %*--------------------------------------*
 %|***************ACROPAGE***************|
 %*--------------------------------------*
@@ -78,7 +83,7 @@
 %*--------------------------------------*
 \tableofcontents
 
-\restoregeometry
+%\restoregeometry
 
 \clearscrheadfoot
 \pagestyle{scrheadings}

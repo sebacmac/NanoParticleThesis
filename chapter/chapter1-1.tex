@@ -50,13 +50,13 @@ exist a scalar function $U = U(\vec r_1, \cdots, \vec r_N)$ called \ac{PEF}, so 
 \end{equation}
 thus we have only to know the \ac{PEF} of the system at any time and the initial conditions to solve Newton's Law.
 
-The kinetics energy of the system is defined as
+The kinetic energy of the system is defined as
 \begin{equation}
 	K(\dot{\vec r}_1,\cdots,\dot{\vec r}_N) = \sum_{i=0}^N\frac{1}{2}m_i\vec r_i \cdot \vec r_i
-	\label{eq:kinetics}
+	\label{eq:kinetic}
 \end{equation}
 
-Supposing the system to be conservative, using the \ac{PEF} and the kinetics energy, we can define a scalar
+Supposing the system to be conservative, using the \ac{PEF} and the kinetic energy, we can define a scalar
 function, called \textit{Lagrangian} of the system
 \begin{equation}
 	\mathcal{L}(\vec r_1, \cdots, \vec r_N, \dot{\vec r}_1,\cdots,\dot{\vec r}_N) = K(\dot{\vec r}_1,\cdots,\dot{\vec r}_N) - U(\vec r_1, \cdots, \vec r_N)
@@ -76,11 +76,11 @@ Using the definition of $\mathcal{L}$ \eqref{eq:lagrangian} we have
 	p_{i\alpha} = \frac{\partial\mathcal{L}}{\partial \dot{\vec r}_{i\alpha}} = m_i\dot{\vec r}_{i\alpha}
 	\label{eq:momentaLagrangian}
 \end{equation}
-thus we can express particles velocities as a function of particles momenta. Equations~\eqref{eq:kinetics}
-and~\eqref{eq:momentaLagrangian} let us to express the kinetics energy in the form
+thus we can express particles velocities as a function of particles momenta. Equations~\eqref{eq:kinetic}
+and~\eqref{eq:momentaLagrangian} let us to express the kinetic energy in the form
 \begin{equation}
 	K = \sum_{i=0}^N \frac{\vec p_i \cdot \vec p_i}{2m_i}
-	\label{eq:kineticsP}
+	\label{eq:kineticP}
 \end{equation}
 
 To describe the system we can define another scalar function, called \textit{Hamiltonian} of the system
@@ -88,17 +88,19 @@ To describe the system we can define another scalar function, called \textit{Ham
 	\mathcal{H}(\vec r_1,\cdots,\vec r_N, \vec p_1, \cdots, \vec p_N) = &\sum_{i=0}^N \vec p_i \cdot \dot{\vec r}_i(\vec p_i) + \nonumber \\
 	&-\mathcal{L}(\vec r_1, \cdots, \vec r_N, \dot{\vec r}_1(\vec p_1),\cdots,\dot{\vec r}_N(\vec p_N))
 \end{align*}
-Substituting~\eqref{eq:lagrangian} and using~\eqref{eq:kineticsP} the Hamiltonian of the system is nothing that
-\begin{equation*}
-	\mathcal{H} = K + U
-\end{equation*}
+Substituting~\eqref{eq:lagrangian} and using~\eqref{eq:kineticP} the Hamiltonian of the system is nothing that
+\begin{equation}
+	\mathcal{H}(\vec r_1,\cdots,\vec r_N, \vec p_1, \cdots, \vec p_N) = K(\vec p_1, \cdots, \vec p_N) + U(\vec r_1,\cdots,\vec r_N)
+	\label{eq:hamiltonian}
+\end{equation}
 or \textit{the total energy of the system}. To obtain the equations of motion we have to solve \textit{Hamilton's equations}
-\begin{equation*}
+\begin{equation}
 	\begin{aligned}
 		\dot r_{i\alpha} &=& &\frac{\partial\mathcal{H}}{\partial p_{i\alpha}} \\
-		\dot p_{i\alpha} &=&-&\frac{\partial\mathcal{H}}{\partial q_{i\alpha}}
+		\dot p_{i\alpha} &=&-&\frac{\partial\mathcal{H}}{\partial r_{i\alpha}}
 	\end{aligned}
-\end{equation*}
+	\label{eq:eqhamilton}
+\end{equation}
 Describing the system with the Hamiltonian formalism, in some cases, is more useful than Lagrangian one, first of
 all because the Hamiltonian of a system is directly related to a well know physical quantity, the total energy.
 
@@ -169,7 +171,50 @@ this let us define the partition function as follow
 	\mathcal{Z}_{NVE} = \frac{1}{N!h^{3N}}\int_\Omega \delta(\mathcal{H}(\vec x) - E)\ dx
 	\label{eq:micropartition}
 \end{equation}
-where the normalization factor $N!$ takes into account the particles indistinguishability and $h^{3N}$ is for compatibility of statistical mechanics with quantum mechanics: It comes from Heisenberg’s uncertainty principle and it is the smallest phase space volume element.
+where the normalization factor $N!$ takes into account the particles indistinguishability and $h^{3N}$ is for compatibility of statistical mechanics with quantum mechanics: It comes from Heisenberg’s uncertainty principle and it is the smallest phase space volume element. The right thermodynamic potential to obtain all the macroscopic observables is the entropy $S$ given by
+\begin{equation*}
+	S = k_B \ln \mathcal{Z}_{NVE}
+\end{equation*}
+where $k_B = 1.3806505(24) \cdot 10^{-23}$~J/K is the Boltzmann constant. The other thermodynamic quantities can be obtained by
+\begin{equation*}
+	\frac{1}{T} = \left ( \frac{\partial S}{\partial E}\right )_{NV} \qquad \frac{P}{T} = \left ( \frac{\partial S}{\partial V}\right )_{NE} \qquad \frac{\mu}{T} = \left ( \frac{\partial S}{\partial N}\right )_{VE}
+\end{equation*}
+
+The link between microscopic functions of phase space points and macroscopic observables, like kinetic energy or pressure, is provided by the \textit{classical virial theorem} which states that
+\begin{equation}
+	\ave{x_i\frac{\partial\mathcal{H}}{\partial x_k}} = k_B T \delta_{ik}
+	\label{eq:virial}
+\end{equation}
+% often the virial theorem is written in a slightly different form
+% \begin{equation}
+% 	\ave{K} = - \frac{1}{2}\sum_{i=1}^{3N} \ave{F_ir_i}
+% \end{equation}
+% where $\ave{K}$ is the average kinetic energy, not necessary at equilibrium and $F_i$ is the total forces acting on particle $i$. Both are valid even if the system is not at the equilibrium.
+
+\paragraph{\textbf{Kinetic energy}} Since a system in a microcanonical ensemble is defined to be Hamiltonian, from equations~\eqref{eq:hamiltonian} and~\eqref{eq:kineticP} according to the virial theorem with the choice $x_i = p_i$ we obtain
+\begin{equation*}
+	\ave{\frac{p^2_i}{m}} = k_bT
+\end{equation*}
+then summing both side over all the particles we obtain the average kinetic energy at equilibrium
+\begin{equation}
+	\ave{K} = \sum_{i=1}^{3N} \ave{\frac{p_i^2}{2m}} = \frac{3}{2}Nk_B T
+	\label{eq:kineticT}
+\end{equation}
+that is like the well know equipartition theorem.
+
+\paragraph{\textbf{Pressure}} Choosing $x_i = r_i$ in equation~\eqref{eq:virial} and summing both side over all particles and substituting equation~\eqref{eq:eqhamilton}, we obtain
+\begin{equation*}
+	W = \sum_{i=1}^{3N} \ave{r_i\dot p_i} = -3Nk_B T = 2 \ave{K}
+\end{equation*}
+this is is often called \textit{virial}. For a $N$--particle non--interacting system we know that $pV = Nk_B T$ thus the virial is $W = -3pV$. For a real interacting system we need to include in the virial the contribution due to the inter--particles interactions, thus the virial become
+\begin{equation*}
+	W = -3pV + \sum_{i=1}^N\sum_{j=i+1}^Nr_{ij}f_{ij} = 2 \ave{K}
+\end{equation*}
+where $r_{ij}$ is the distance between particles $i$ and $j$ and $f_{ij}$ is the force between particles $i$ and $j$. Thus the pressure of the system is given by
+\begin{equation}
+	p = \frac{2}{3V}\left (2 \ave{K} - \sum_{i=1}^N\sum_{j=i+1}^Nr_{ij}f_{ij}\right )
+	\label{eq:pressure}
+\end{equation}
 
 \subsection{Isothermal--isobaric ensemble}
 The isothermal--isobaric ensemble contains those systems with constant particles number ($N$), pressure ($p$) and temperature ($T$). This is useful in many chemical, biological and physical systems since their proprieties are reported in conditions of standard temperature and pressure. To maintain the system at constant temperature and pressure it is necessary to couple it with an external \textit{temperature bath} and a \textit{pressure bath}.
@@ -179,11 +224,11 @@ The instantaneous work done by the system against the external piston is defined
 \begin{equation*}
 	\mathcal{Z}_{NPT} = \frac{1}{N!h^{3N}}\int_0^{+\infty}\ dV \ \int_\Omega e^{-\beta(\mathcal{H}(\vec x) + pV)}\ dx
 \end{equation*}
-where $\beta^{-1} \equiv k_B T$, $k_B = 1.3806505(24) \cdot 10^{-23}$~JK$^{-1}$ is the Boltzmann constant and the normalization factor is the same as equation~\eqref{eq:micropartition}. The right thermodynamic potential to obtain all the macroscopic observables is the Gibbs free energy $G$ defined by
+where $\beta^{-1} \equiv k_B T$ and the normalization factor is the same as equation~\eqref{eq:micropartition}. The right thermodynamic potential to obtain the other thermodynamic quantities is the Gibbs free energy $G$ defined by
 \begin{equation*}
 	G = -k_B T\ln \mathcal{Z}_{NpT}
 \end{equation*}
-it describes the maximum reversible work that may be performed by the system. The other thermodynamic quantities can be obtained deriving $G$
+it describes the maximum reversible work that may be performed by the system. The other thermodynamic quantities can be obtained by
 \begin{equation*}
 	\mu = \left ( \frac{\partial G}{\partial N}\right )_{pT} \qquad \ave{V} = \left ( \frac{\partial G}{\partial P}\right )_{NT} \qquad S = \left ( \frac{\partial G}{\partial T}\right )_{Np}
 \end{equation*}
@@ -300,7 +345,7 @@ The velocities at a time $t$ can be calculated by
 	\label{eq:lfVelocitiesSync}
 \end{equation}
 
-Another advantage is that the velocities are part of the algorithm itself and moreover it does not require the calculation of the difference between two large numbers, with an increasing of precision. The obvious disadvantage is that the positions and velocities are not synchronized so the equation~\eqref{eq:lfVelocitiesSync} is necessary to calculate the velocities at a time $t$. The need to have velocities at the same time of positions, as for the Verlet algorithm, derives from the calculation of the kinetics energy contribution to the total energy: It must be computed with positions and velocities at the same time.
+Another advantage is that the velocities are part of the algorithm itself and moreover it does not require the calculation of the difference between two large numbers, with an increasing of precision. The obvious disadvantage is that the positions and velocities are not synchronized so the equation~\eqref{eq:lfVelocitiesSync} is necessary to calculate the velocities at a time $t$. The need to have velocities at the same time of positions, as for the Verlet algorithm, derives from the calculation of the kinetic energy contribution to the total energy: It must be computed with positions and velocities at the same time.
 %Discorso energia cinetica nello stesso tempo delle posizioni
 
 \subsection{Neighbor list}
@@ -339,7 +384,7 @@ time and have a chance to cross the boundary of the buffered pair--list $r_l$. T
 A better performance can be achieved adding a dynamic update algorithm of the pair--list refresh rate during the simulation. A nice way is considering the maximum distances traveled by a particles in the pair--list: if this distance is greater than $r_b = r_l - r_c$ then the pair--list is certainly updated. From this one can fix the refresh rate to a higher value increasing the performance.
 
 \subsection{Thermostat algorithms} %Molecular Modelling, 382
-A thermostat is a external tool that allow us to maintain a system at a constant temperature. In \ac{MD} simulations if one want to use isothermal ensemble, so with constant temperature, some algorithms have to be developed in order to mimics the thermostat effect on the system and which generates the correct ensemble. One way to impose a constant temperature is acting on the particles velocities. A common practice, as suggested by Bussi \etal\, \cite{Bussi} is related to a \textit{velocity rescale} algorithm in which the velocities of all particles are scaled by some factor. The simplest way is to consider the total kinetic energy $K$ of the system as in equation~\eqref{eq:kinetics} and the average kinetic energy $\ave{K}$. This is obtained from the \textit{equipartition theorem} as follow
+A thermostat is a external tool that allow us to maintain a system at a constant temperature. In \ac{MD} simulations if one want to use isothermal ensemble, so with constant temperature, some algorithms have to be developed in order to mimics the thermostat effect on the system and which generates the correct ensemble. One way to impose a constant temperature is acting on the particles velocities. A common practice, as suggested by Bussi \etal\, \cite{Bussi} is related to a \textit{velocity rescale} algorithm in which the velocities of all particles are scaled by some factor. The simplest way is to consider the total kinetic energy $K$ of the system as in equation~\eqref{eq:kinetic} and the average kinetic energy $\ave{K}$ obtained from equation~\eqref{eq:kineticT} with the substitution $3N\rightarrow N_f$
 \begin{equation*}
 	\ave{K} = \frac{1}{2}N_f k_B T
 \end{equation*}
@@ -367,15 +412,30 @@ Since velocities are scaled only after some \ac{MD} steps this can cause a disco
 \end{itemize}
 The authors have shown that an auxiliary dynamics for the kinetic energy of the form
 \begin{equation*}
-	dK = \frac{\ave{K} - K}{\tau}\ dt + 2 \sqrt{\frac{K\ave{K}}{N_f\tau}}\ dW
+	dK = \frac{\ave{K} - K}{\tau_T}\ dt + 2 \sqrt{\frac{K\ave{K}}{N_f\tau_T}}\ dW
 \end{equation*}
-can do the job. Where $dW$ is a Wiener stochastic noise and $\tau$ is an arbitrary parameter which is related to the response time of the thermostat. In fact it reduces to the simple velocity rescale if $\tau\rightarrow 0$ and to an Hamiltonian dynamics (as an $NVE$ ensemble) if $\tau\rightarrow +\infty$. Until the system is at non--equilibrium the first determinist part is dominant an drives the system to equilibrium with a characteristic time $\tau$. Then the stochastic contribution sample the canonical distribution.
+can do the job. Where $dW$ is a Wiener stochastic noise and $\tau_T$ is an arbitrary parameter which is related to the response time of the thermostat. In fact it reduces to the simple velocity rescale if $\tau_T\rightarrow 0$ and to an Hamiltonian dynamics (as an $NVE$ ensemble) if $\tau_T\rightarrow +\infty$. Until the system is at non--equilibrium the first determinist part is dominant an drives the system to equilibrium with a characteristic time $\tau_T$. Then the stochastic contribution sample the canonical distribution.
  
 
-\subsection{Barostats algorithms} %Molecular Modelling, 382
-		\subsubsection{Berendesen algorithm}
+\subsection{Barostat algorithms} %Molecular Modelling, 382
+As the thermostat maintain the system at a constant temperature $T$, a barostat is needed for maintain the system at a constant pressure $p$. To do this the system is coupled to a sort of piston so that changing the volume will adjust the pressure. Thus the system volume must allowed to fluctuate. 
 
-		\subsubsection{Parrinello--Rahman algorithm}
+\subsubsection{Berendsen algorithm}
+The simplest way, as proposed by Berendsen, is a scaling of both particle coordinates and volume. The rate of change of pressure is given by
+\begin{equation*}
+	\frac{dp}{dt} = \frac{p_0 - p}{\tau_p}
+\end{equation*}
+where $p_0$ is the target pressure, $p$ is the instantaneous system pressure given by equation~\eqref{eq:pressure} and $\tau_p$ is a coupling constant related to the response time of the barostat. Thus if we consider a time step $\delta t$ then the volume scaling factor $\lambda$ is given by
+\begin{equation*}
+	\lambda = 1- k_T (p_0 - p) \frac{\delta t}{\tau_p}
+\end{equation*}
+where $k_t$ is the isothermal compressibility defined as
+\begin{equation*}
+	k_T = -\frac{1}{V}\left ( \frac{\partial V}{\partial p}\right )_{T}
+\end{equation*}
+while the factor $\nicefrac{\delta t}{\tau_p}$ give a scaling factor for the isothermal compressibility that allow us to take into account the finite response time of the barostat. If $\tau_p \rightarrow 0$ it is like the system has an infinity isothermal compressibility so it is necessary a really small change in volume to achieve the correct pressure; on the contrary if $\tau_p \rightarrow +\infty$ the system is reduced an Hamiltonian dynamics. The particle coordinates is scaled by the factor $\lambda^{\nicefrac{1}{3}}$. 
+
+\subsubsection{Parrinello--Rahman algorithm}
 
 
 

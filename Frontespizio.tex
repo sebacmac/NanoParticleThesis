@@ -1,0 +1,51 @@
+% Originariamente era http://www.latextemplates.com/template/university-assignment-title-page
+% Poi modificato estensivamente 
+
+\begin{titlepage}
+
+\newcommand{\HRule}{\rule{\textwidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+
+\center % Center everything on the page
+
+%----------------------------------------------------------------------------------------
+%	MARGINS SECTION \setlength and \addtolength
+%----------------------------------------------------------------------------------------
+
+%\setlength{\marginparwidth}{1pt}
+\addtolength{\textwidth}{30pt}
+\setlength{\oddsidemargin}{18pt}
+\setlength{\hoffset}{-5pt}
+\setlength{\voffset}{-60pt}
+%\setlength{\marginpar{right}}{1pt}
+
+%----------------------------------------------------------------------------------------
+%	TEXT SECTION
+%----------------------------------------------------------------------------------------
+
+\begin{minipage}{\textwidth}
+\center
+\textsc{}\\[5.25cm]
+\HRule \\[0.5cm]
+{\LARGE \bfseries Appunti di \emph{Misure e Strumentazione per l'Automazione}}\\[0.3cm]
+{\large \bfseries Corso tenuto dal prof.~A.~Freddi}\\[0.3cm]
+{\normalsize \bfseries A.~A.~2015/2016}\\[0.3cm]
+\HRule \\[0.5cm]
+\textsc{}\\[3cm]
+\textsc{}
+\end{minipage}
+ 
+%----------------------------------------------------------------------------------------
+%	AUTHOR SECTION
+%----------------------------------------------------------------------------------------
+
+\begin{minipage}{\textwidth}
+\emph{Appunti realizzati da:}
+\begin{itemize}%\TabPositions{4cm}
+ \item Davide~Benedetti  s1065588@studenti.univpm.it
+\end{itemize}
+{\footnotesize Aggiornati in data \today}
+\end{minipage}\\[0.5cm]
+
+\vfill % Fill the rest of the page with whitespace
+
+\end{titlepage}

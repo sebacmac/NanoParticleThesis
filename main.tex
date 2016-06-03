@@ -52,6 +52,7 @@
 %*--------------------------------------*
 %|***************TITLEPAGE**************|
 %*--------------------------------------*
+%\include{Frontespizio}
 \newgeometry{left=3cm,right=3cm,top=5cm}
 \begin{titlepage}
 \begin{center}
@@ -67,16 +68,29 @@
 \end{titlepage}
 \restoregeometry
 
-%\newgeometry{left=4.5cm,right=4.5cm,top=5cm}
 %*--------------------------------------*
-%|***************ACROPAGE***************|
+%|*************DEDICATION***************|
 %*--------------------------------------*
-\include{acronyms}
+\clearpage
+~\\[3cm]
+\begin{flushright}\footnotesize
+	\textsl{What do you get if you multiply six by nine?}\\
+	\textsl{Six by nine. Forty two.}\\
+	\textsl{That's it. That's all there is.}\\
+	\textsl{I always thought something was fundamentally wrong with the universe.}\\\medskip
+	\textsc{\sffamily Douglas Adams}\,--\,\textsf{The Restaurant at the End of the Universe}
+\end{flushright}
+\vfill
 
 %*--------------------------------------*
 %|*************ITRODUCTION**************|
 %*--------------------------------------*
 \include{./chapter/introduction}
+
+%*--------------------------------------*
+%|***************ACROPAGE***************|
+%*--------------------------------------*
+\include{acronyms}
 
 %*--------------------------------------*
 %|***************INDEXPAGE**************|

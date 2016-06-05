@@ -6,8 +6,8 @@ In order to predict the time evolution of a complete system, such as the biomole
 
 In the first part of this Chapter the laws of Classical and Statistical mechanics will be briefly summarized.
 Then we will introduce the computational \acf{MD} method and analyze the main aspects of this technique.
-Following some details about how the system under study is modeled are given: the \textit{empirical Force--Field} (\acs{FF}). This includes the way to consider and treat the inter--particle interactions at the \ac{MD} level with some methods to increase the computational efficiency such as the \textit{cut--off} methods for the so called \textit{short range} interactions and the \ac{PME} technique for treatment of the \textit{long range} interactions.
-Then \martini \ac{FF}, the main \ac{FF} used in this thesis work, are summarized. Lastly some advanced sampling techniques are introduced: the \textit{Umbrella Sampling} and \textit{Metadynamics}. Some parts of this introductory Chapter are based on the books of Tuckerman \cite{Tuckerman}, Leach \cite{Leach}, Frenkel and Smit \cite{Frenkel} and Allen and Tildesley \cite{Allen} to which the reader is addressed for a more complete discussion.
+Following some details about how the system under study is modeled are given: the \textit{empirical Force--Field} (\acs{FF}). This includes the way to consider and treat the inter--particle interactions at the \ac{MD} level with some methods to increase the computational efficiency such as the \textit{cut--off} method for the so called \textit{short range} interactions and the \ac{PME} method for treatment of the electrostatic \textit{long range} interaction.
+Then the \martini \ac{FF}, the main \ac{FF} used in this thesis work, are summarized. Lastly some advanced sampling techniques are introduced: the \textit{Umbrella Sampling} and \textit{Metadynamics}. Some parts of this introductory Chapter are based on the books of Tuckerman \cite{Tuckerman}, Leach \cite{Leach}, Frenkel and Smit \cite{Frenkel} and Allen and Tildesley \cite{Allen} to which the reader is addressed for a more complete discussion.
 
 \section{Review of classical mechanics}
 The classical behavior of a system of $N$ particles with mass $m_i$ and coordinates $\vec r_1,\cdots,\vec r_N$ is described by the Newton's second law. Each particle in the system will experience a total force $\vec F_i$ and the so that second law for particle $i$ reads
@@ -171,13 +171,13 @@ this let us define the partition function as follow
 	\mathcal{Z}_{NVE} = \frac{1}{N!h^{3N}}\int_\Omega \delta(\mathcal{H}(\vec x) - E)\ dx
 	\label{eq:micropartition}
 \end{equation}
-where the normalization factor $N!$ takes into account the particles indistinguishability and $h^{3N}$ is for compatibility of statistical mechanics with quantum mechanics: It comes from Heisenberg’s uncertainty principle and it is the smallest phase space volume element. The right thermodynamic potential to obtain all the macroscopic observables is the entropy $S$ given by
+where the normalization factor $N!$ takes into account the particles indistinguishability and $h^{3N}$ is for compatibility of statistical mechanics with quantum mechanics: It comes from Heisenberg’s uncertainty principle and it is the smallest phase space volume element. The right thermodynamic potential, i.e. the constant of motion, to obtain all the macroscopic observables is the entropy $S$ given by
 \begin{equation*}
 	S = k_B \ln \mathcal{Z}_{NVE}
 \end{equation*}
 where $k_B = 1.3806505(24) \cdot 10^{-23}$~J/K is the Boltzmann constant. The other thermodynamic quantities can be obtained by
 \begin{equation*}
-	\frac{1}{T} = \left ( \frac{\partial S}{\partial E}\right )_{NV} \qquad \frac{P}{T} = \left ( \frac{\partial S}{\partial V}\right )_{NE} \qquad \frac{\mu}{T} = \left ( \frac{\partial S}{\partial N}\right )_{VE}
+	\frac{1}{T} = \left ( \frac{\partial S}{\partial E}\right )_{NV} \qquad \frac{p}{T} = \left ( \frac{\partial S}{\partial V}\right )_{NE} \qquad \frac{\mu}{T} = \left ( \frac{\partial S}{\partial N}\right )_{VE}
 \end{equation*}
 
 The link between microscopic functions of phase space points and macroscopic observables, like kinetic energy or pressure, is provided by the \textit{classical virial theorem} which states that
@@ -185,34 +185,39 @@ The link between microscopic functions of phase space points and macroscopic obs
 	\ave{x_i\frac{\partial\mathcal{H}}{\partial x_k}} = k_B T \delta_{ik}
 	\label{eq:virial}
 \end{equation}
+where $x_i$ is some phase space variable.
 % often the virial theorem is written in a slightly different form
 % \begin{equation}
 % 	\ave{K} = - \frac{1}{2}\sum_{i=1}^{3N} \ave{F_ir_i}
 % \end{equation}
 % where $\ave{K}$ is the average kinetic energy, not necessary at equilibrium and $F_i$ is the total forces acting on particle $i$. Both are valid even if the system is not at the equilibrium.
 
-\paragraph{\textbf{Kinetic energy}} Since a system in a microcanonical ensemble is defined to be Hamiltonian, from equations~\eqref{eq:hamiltonian} and~\eqref{eq:kineticP} according to the virial theorem with the choice $x_i = p_i$ we obtain
+\paragraph{\textbf{Kinetic energy}} Since a system in a microcanonical ensemble is defined to be Hamiltonian, from equations~\eqref{eq:hamiltonian} and~\eqref{eq:kineticP} according to the virial theorem with the choice $x_i = p_{i\alpha}$ we obtain
 \begin{equation*}
-	\ave{\frac{p^2_i}{m}} = k_bT
+	\ave{\frac{p^2_{i\alpha}}{m_i}} = k_bT
 \end{equation*}
-then summing both side over all the particles we obtain the average kinetic energy at equilibrium
+then summing both side over all particles and over the three coordinates we obtain the average kinetic energy at equilibrium
 \begin{equation}
-	\ave{K} = \sum_{i=1}^{3N} \ave{\frac{p_i^2}{2m}} = \frac{3}{2}Nk_B T
+	\ave{K} = \ave{ \sum_{i=1}^{N}\sum_{\alpha=1}^{3}\frac{p_{i\alpha}^2}{2m_i} } = \ave{\sum_{i=1}^{N}\frac{\vec p_i\cdot \vec p_i}{2m_i}} = \frac{3}{2}Nk_B T
 	\label{eq:kineticT}
 \end{equation}
-that is like the well know equipartition theorem.
+this is like the well know equipartition theorem in which $3N$ is the number of \ac{DOF}.
 
-\paragraph{\textbf{Pressure}} Choosing $x_i = r_i$ in equation~\eqref{eq:virial} and summing both side over all particles and substituting equation~\eqref{eq:eqhamilton}, we obtain
+\paragraph{\textbf{Pressure}} Choosing $x_i = r_i$ in equation~\eqref{eq:virial} and summing both side over all particles and substituting equations~\eqref{eq:eqhamilton} and~\eqref{eq:kineticT}, we obtain
 \begin{equation*}
-	W = \sum_{i=1}^{3N} \ave{r_i\dot p_i} = -3Nk_B T = 2 \ave{K}
+	W = \ave{\sum_{i=1}^{3N} r_i\dot p_i} = -3Nk_B T = - 2 \ave{K}
 \end{equation*}
-this is is often called \textit{virial}. For a $N$--particle non--interacting system we know that $pV = Nk_B T$ thus the virial is $W = -3pV$. For a real interacting system we need to include in the virial the contribution due to the inter--particles interactions, thus the virial become
+the quantity $W$ is often called \textit{virial}. For a $N$--particle non--interacting system it is well known that $pV = Nk_B T$ thus the virial is $W = -3pV$. For a real interacting system we need to include in the virial the contribution due to the inter--particles interactions $U(\vec r_1,\dots,\vec r_N)$, thus the virial become\footnote{We assume that the inter--particles interactions are pairwise addictive which they depends only on distances between particles $i$ and $j$.}
 \begin{equation*}
-	W = -3pV + \sum_{i=1}^N\sum_{j=i+1}^Nr_{ij}f_{ij} = 2 \ave{K}
+	W = -3pV + \ave{ \sum_{i=1}^N\sum_{j=i+1}^Nr_{ij}f_{ij} } = - 2 \ave{K}
 \end{equation*}
 where $r_{ij}$ is the distance between particles $i$ and $j$ and $f_{ij}$ is the force between particles $i$ and $j$. Thus the pressure of the system is given by
+\begin{equation*}
+	p = \frac{1}{3V}\left (2 \ave{K} + \ave{ \sum_{i=1}^N\sum_{j=i+1}^Nr_{ij}f_{ij} } \right )	
+\end{equation*}
+the instantaneous pressure in terms of the phase space points $\vec x_t$ is obtained substituting equation~\eqref{eq:kineticT} and getting the quantity in the average bracket, so
 \begin{equation}
-	p = \frac{2}{3V}\left (2 \ave{K} - \sum_{i=1}^N\sum_{j=i+1}^Nr_{ij}f_{ij}\right )
+	p(\vec x_t) = \frac{1}{3V} \sum_{i=1}^{N} \left ( \frac{\vec p_i \cdot \vec p_i}{m_i} +  \sum_{j=i+1}^Nr_{ij}f_{ij}  \right )
 	\label{eq:pressure}
 \end{equation}
 
@@ -224,15 +229,33 @@ The instantaneous work done by the system against the external piston is defined
 \begin{equation*}
 	\mathcal{Z}_{NPT} = \frac{1}{N!h^{3N}}\int_0^{+\infty}\ dV \ \int_\Omega e^{-\beta(\mathcal{H}(\vec x) + pV)}\ dx
 \end{equation*}
-where $\beta^{-1} \equiv k_B T$ and the normalization factor is the same as equation~\eqref{eq:micropartition}. The right thermodynamic potential to obtain the other thermodynamic quantities is the Gibbs free energy $G$ defined by
+where $\beta^{-1} \equiv k_B T$ and the normalization factor is the same as equation~\eqref{eq:micropartition}. The right thermodynamic potential, i.e. the constant of motion, to obtain the other thermodynamic quantities is the Gibbs free energy $G = H - TS$ (where $H$ is the enthalpy) defined by
 \begin{equation*}
 	G = -k_B T\ln \mathcal{Z}_{NpT}
 \end{equation*}
 it describes the maximum reversible work that may be performed by the system. The other thermodynamic quantities can be obtained by
 \begin{equation*}
-	\mu = \left ( \frac{\partial G}{\partial N}\right )_{pT} \qquad \ave{V} = \left ( \frac{\partial G}{\partial P}\right )_{NT} \qquad S = \left ( \frac{\partial G}{\partial T}\right )_{Np}
+	\mu = \left ( \frac{\partial G}{\partial N}\right )_{pT} \qquad \ave{V} = \left ( \frac{\partial G}{\partial p}\right )_{NT} \qquad S = \left ( \frac{\partial G}{\partial T}\right )_{Np}
 \end{equation*}
-where $S$ is the system entropy.
+
+For anisotropic system, volume can undergo different changes in the three Cartesian directories even if external pressure is applied isotropically. In these cases it is necessary to take this into account in the partition function. The way is to define a matrix formed by the three basis vectors of the system box, $\vec a$, $\vec b$ and $\vec c$
+\begin{equation}
+	 \mathbold{H} = 
+	\begin{pmatrix}
+		a_1 & b_1 & c_1 \\
+		a_2 & b_2 & c_2 \\
+		a_3 & b_3 & c_3 \\
+	\end{pmatrix}
+	\label{eq:volumeMatrix}
+\end{equation}
+so that its volume is $V = \vec a\cdot \vec b\times \vec c = |\det{ \mathbold{H}}|$. The partition function become
+\begin{equation*}
+	Z_{NpT} = \frac{1}{N!h^{3N}}\int\ d \mathbold{H} \ \int_\Omega \frac{1}{(\det{H})^2} e^{-\beta(\mathcal{H}(\vec x) + p|\det{ \mathbold{H}}|)}\ dx
+\end{equation*}
+where $\int\ d\mathbold{H}$ is an integral over all nine components of $\mathbold{H}$. Hence, the instantaneous pressure can no longer be described by a single quantity. Instead a $3\times 3$ pressure matrix $ \mathbold{P}$ is needed. What one find, if the system is isotropically coupled, is that on average, this pressure matrix reduces to a diagonal pressure matrix such that
+\begin{equation*}
+	\text{Tr}\ave{ \mathbold{P}} = 3p
+\end{equation*}
 
 %eventualmente vedere se mettere le fluttuazioeni di energia e volume
 
@@ -392,7 +415,7 @@ where $N_f$ is the \textit{total} \ac{DOF} of the system and $T$ is the target t
 \begin{equation*}
 	\alpha_{T} = \sqrt{\frac{\ave{K}}{K}}
 \end{equation*}
-The scaling operation is usually performed at a fixed rate during the simulation, or when the kinetic energy exceeds the limits of an interval centered around the target value. However the sampled ensemble is not explicitly known but, since in the thermodynamic limit the average properties do not depend on the ensemble chosen, even this very simple algorithm can be used to produce useful results. Despite this, for small systems or when the observables of interest are dependent on the fluctuations rather than on the averages or when other methods assume a canonical sampling, this method cannot be safely used.
+The scaling operation is usually performed at a fixed rate during the simulation, or when the kinetic energy exceeds the limits of an interval centered around the target value. However the sampled ensemble is not explicitly known but, since in the thermodynamic limit the average properties do not depend on the ensemble chosen, even this very simple algorithm, often called \textit{week coupling thermostat}, can be used to produce useful results. Despite this, for small systems or when the observables of interest are dependent on the fluctuations rather than on the averages or when other methods assume a canonical sampling, this method cannot be safely used.
 
 In order to obtain the correct canonical sampling Bussi \etal\, modify the way to calculate $\alpha_T$ so as to enforce a canonical distribution for the kinetic energy. The new scaling factor is obtained from
 \begin{equation*}
@@ -414,7 +437,7 @@ The authors have shown that an auxiliary dynamics for the kinetic energy of the 
 \begin{equation*}
 	dK = \frac{\ave{K} - K}{\tau_T}\ dt + 2 \sqrt{\frac{K\ave{K}}{N_f\tau_T}}\ dW
 \end{equation*}
-can do the job. Where $dW$ is a Wiener stochastic noise and $\tau_T$ is an arbitrary parameter which is related to the response time of the thermostat. In fact it reduces to the simple velocity rescale if $\tau_T\rightarrow 0$ and to an Hamiltonian dynamics (as an $NVE$ ensemble) if $\tau_T\rightarrow +\infty$. Until the system is at non--equilibrium the first determinist part is dominant an drives the system to equilibrium with a characteristic time $\tau_T$. Then the stochastic contribution sample the canonical distribution.
+can do the job. Where $dW$ is a Wiener stochastic noise and $\tau_T$ is an arbitrary parameter which is related to the response time of the thermostat. In fact it reduces to the simple week coupling rescale if $\tau_T\rightarrow 0$ and to the Hamiltonian dynamics (as an $NVE$ ensemble) if $\tau_T\rightarrow +\infty$. Until the system is at non--equilibrium the first determinist part is dominant an drives the system to equilibrium with a characteristic time $\tau_T$. Then the stochastic contribution sample the canonical distribution.
  
 
 \subsection{Barostat algorithms} %Molecular Modelling, 382
@@ -433,11 +456,36 @@ where $k_t$ is the isothermal compressibility defined as
 \begin{equation*}
 	k_T = -\frac{1}{V}\left ( \frac{\partial V}{\partial p}\right )_{T}
 \end{equation*}
-while the factor $\nicefrac{\delta t}{\tau_p}$ give a scaling factor for the isothermal compressibility that allow us to take into account the finite response time of the barostat. If $\tau_p \rightarrow 0$ it is like the system has an infinity isothermal compressibility so it is necessary a really small change in volume to achieve the correct pressure; on the contrary if $\tau_p \rightarrow +\infty$ the system is reduced an Hamiltonian dynamics. The particle coordinates is scaled by the factor $\lambda^{\nicefrac{1}{3}}$. 
+while the factor $\nicefrac{\delta t}{\tau_p}$ give a scaling factor for the isothermal compressibility that allow us to take into account the finite response time of the barostat. If $\tau_p \rightarrow 0$ it is like the system has an infinity isothermal compressibility so it is necessary a really small change in volume to achieve the correct pressure; on the contrary if $\tau_p \rightarrow +\infty$ the system reduces to the Hamiltonian dynamics\footnote{If the system is coupled even with a thermostat thus it reduces to the canonical $NVT$ dynamics.}. The particle coordinates is scaled by the factor $\lambda^{\nicefrac{1}{3}}$.  
+
+In the case of anisotropic system the pressure matrix $\mathbold{P}$ and the volume matrix $\mathbold{H}$ are to be considered and the Berendsen algorithm can be generalized such that even $\lambda$ becomes a $3\times 3$ matrix. However the main problem, as the week coupling thermostat, is that the sampled ensemble is not known. Thus a new approach, in order to correct sample the isobaric ensemble, is derived by Parrinello and Rahman \cite{ParinelloBarostat}.  
 
 \subsubsection{Parrinello--Rahman algorithm}
+Parrinello--Rahman barostat \cite{ParinelloBarostat} is based on genuinely treat the coupling of the system to an external piston of ``mass'' $M_h$ through a Lagrangian method in which the volume become a Lagrangian variable of the system and its time evolution can be computed solving the Euler--Lagrange equations. Moreover the main aspect is that both size and shape of the simulation box are allowed to fluctuate. So it is perfectly compatible with anisotropic system. The shape and size of the simulation box are described by the volume matrix $ \mathbold{H}$ such that $V = |\det\mathbold{H}|$ as in equation~\eqref{eq:volumeMatrix}, this is the Lagrangian coordinate of the external piston. If the external pressure $p_0$ is applied to the piston then its potential energy is given by
+\begin{equation*}
+	U_p = p_0 |\det  \mathbold{H}|
+\end{equation*}
+instead, if $ \mathbold{H}$ varies in time then a ``kinetic energy'' is associated to the piston as follow
+\begin{equation*}
+	K_p = \frac{1}{2}M_h \text{Tr}(\leftidx{^t}{\dot{ \mathbold{H}}}{} \dot{ \mathbold{H}} )
+\end{equation*}
+where $\leftidx{^t}{(.)}{}$ denote the transpose operation. In order to write the Lagrangian of the system the particles coordinates must be expressed in terms of $ \mathbold{H}$. This can be done defining the vector $\vec s_i$ so that $\vec r_i =  \mathbold{H} \vec s_i$. The square displacement can be obtained as $\vec r_i \cdot \vec r_i = \leftidx{^t}{ (\mathbold{H} \vec s_i)}{}  \mathbold{H} \vec s_i = \leftidx{^t}{\vec s_i}{} \leftidx{^t}{ \mathbold{H}}{}  \mathbold{H} \vec s_i$, often $ \mathbold{G} = \leftidx{^t}{ \mathbold{H}}{} \mathbold{H}$. Parrinello \etal\, write the Lagrangian as follow
+\begin{equation*}
+	\mathcal{L} = \frac{1}{2}\sum_{i=1}^N m_i \dot{\vec s}_i \leftidx{^t}{\mathbold{G}}{} \dot{\vec s}_i - \sum_{i=1}^N \sum_{j=i+1}^N U(r_{ij}) +  \frac{1}{2} M_h \text{Tr}(\leftidx{^t}{\mathbold{\dot H}}{} \mathbold{\dot H} ) -  p_0 |\det \mathbold{H}|
+\end{equation*}
+thus the equations of motion for $ \mathbold{H}$ and $\vec s_i$ can be computed solving the Euler--Lagrange equations. Despite the details can be shown that those equations of motion correct sample an isobaric ensemble. The Hamiltonian of the system can be computed using equation~\eqref{eq:hamiltonian} so
+\begin{equation*}
+	\mathcal{H} = \frac{1}{2}\sum_{i=1}^N m_i \dot{\vec s}_i \leftidx{^t}{\mathbold{G}}{} \dot{\vec s}_i + \sum_{i=1}^N \sum_{j=i+1}^N U(r_{ij}) +  \frac{1}{2} M_h \text{Tr}( \leftidx{^t}{\mathbold{\dot H}}{} \mathbold{\dot H} ) +  p_0 |\det\mathbold{H}|
+\end{equation*}
+if the system is in equilibrium at temperature $T$, using the equipartition theorem, the kinetic term of the system particles contributes to the energy by $3Nk_BT/2$ while the kinetic term of the piston by $9k_BT/2$. Thus since $3N \gg 9$ the Hamiltonian can be approximated by
+\begin{equation*}
+	\mathcal{H} \simeq \ave{K} + U + p_0 V = H
+\end{equation*}
+that is the enthalpy. Since the Hamiltonian is a constant of motion the correct isobaric ensemble is sampled. If the system is also coupled to a thermostat, the $-TS$ term must be added, so the constant of motion become the Gibbs free energy $G = H - TS$ and the isobaric--isotherm ensemble is correctly sampled.
 
-
-
-
+In order to understand the meaning of the $M_h$ parameter (the piston ``mass'') we report the dynamic equation of $\mathbold H$
+\begin{equation*}
+	M_h \mathbold{\ddot H} =  (p - p_0) V (\leftidx{^t}{\mathbold{H}}{})^{-1}
+\end{equation*}
+thus Parrinello--Rahman barostat is just a second order system in which, as expedited, the parameter $M_h$ control the relaxation time for recovery the system from an imbalance between the external pressure $p_0$ and the internal instantaneous pressure $p$ (see equation~\eqref{eq:pressure}). Since in equilibrium the properties of a system are independent of the masses of its constituent parts, $M_h$ can be arbitrarily chosen if one is interest only in static averages, otherwise a more appropriate choice can be made to obtain accurate dynamical properties. In this case, the authors suggest a choice of $M_h$ such that this relaxation time is of the order of $L/c$ where $L$ is simulation box size and $c$ is the sound velocity. An interesting think is that such algorithm can be generalized to a anisotropic pressure coupling making use of the theory of elasticity. Differently from the Berendsen algorithm, Parrinello--Rahman method is much slower in changing the volume until the equilibrium value is reached and it is less stable such that if the system is not well equilibrated can lead to a large volume fluctuation with can compromise the simulation success. On the other hand the latter samples correctly the isobaric ensemble. Thus the trick is to use the Berendsen barostat to reach equilibrium then switch to the Parrinello--Rahman algorithm to correctly samples the phase space region associated to the isobaric ensemble. 
 

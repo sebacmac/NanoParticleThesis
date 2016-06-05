@@ -13,12 +13,13 @@
 \usepackage{wrapfig}
 \usepackage{subfig}
 \usepackage[tableposition=bottom,figureposition=bottom,labelsep=colon,format=plain]{caption}
-\usepackage[inner=3cm,outer=5cm,bottom=4cm,top=3cm]{geometry}
+\usepackage[inner=3cm,outer=4cm,bottom=4cm,top=3cm]{geometry}
 \usepackage{xcolor}
 \usepackage{graphicx}
 \usepackage{changepage}
 \usepackage{sidecap}
 \usepackage{nicefrac}
+\usepackage{leftidx}
 \usepackage{biblatex}
  \addbibresource{biblio.bib}
 
@@ -37,7 +38,7 @@
 \numberwithin{equation}{section}
 
 \newcommand{\textacr}[1]{\spacedlowsmallcaps{\large #1}\normalfont}
-\newcommand{\ave}[1]{\langle #1 \rangle}
+\newcommand{\ave}[1]{\left \langle #1 \right \rangle}
 \newcommand{\etal}[1]{\textit{et al.}}
 \newcommand{\erf}[1]{\text{erf}#1}
 \newcommand{\erfc}[1]{\text{erfc}#1}
@@ -53,7 +54,7 @@
 %|***************TITLEPAGE**************|
 %*--------------------------------------*
 %\include{Frontespizio}
-\newgeometry{left=3cm,right=3cm,top=5cm}
+\newgeometry{left=3cm,right=3cm,top=5cm,bottom=5cm}
 \begin{titlepage}
 \begin{center}
 	~\\[3cm]

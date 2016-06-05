@@ -346,40 +346,47 @@ The mapping of the \martini beads, is based on a four--to--one scheme that group
 
 There are four main bead types: polar (P), non--polar (N), apolar (A) and charged (Q). Each bead type has a number of subtypes to take into account a more accurate representation of the chemical nature of the moieties due to underlying the specific atomistic structure. These subtypes are distinguished by the hydrogen bonding capabilities: donor (d), acceptor (a), both donor and acceptor (da) and none ($0$) and/or by their degree of polarity: lowest polarity ($1$), $\cdots$, highest polarity ($5$).
 
+\begin{SCtable}\footnotesize
+	\begin{tabular}{lc}
+		\toprule
+		Level  & $\epsilon$\,[kJ/mol] \\ \midrule
+		O	   & $5.6$	 \\ \midrule
+		I      & $5.0$	 \\ \midrule
+		II	   & $4.5$	 \\ \midrule
+		III	   & $4.0$	 \\ \midrule
+		IV	   & $3.5$	 \\ \midrule
+		V	   & $3.1$	 \\ \midrule
+		VI	   & $2.7$	 \\ \midrule
+		VII	   & $2.3$	 \\ \midrule
+		VIII   & $2.0$	 \\ \midrule
+		IX     & $2.0$	 \\ \bottomrule
+	\end{tabular}
+	\caption{Interaction strength parameter ($\epsilon$). The last one is for the special case $\sigma=0.62$~nm.}
+	\label{tab:martiniEpsilon}
+\end{SCtable}
+
 \subsection{Interactions potential}
 \paragraph{\textbf{van der waals interactions}} The functional form describing pairwise Van der Waals interaction is a Lennard--Jones $12-6$ potential as in equation~\eqref{eq:lj126}.
 %The $\epsilon$ and $\sigma$ parameters are first obtained for a same--type interactions and then the inter--type parameters are computed as follow
 %\begin{equation*}
 %	\epsilon_{ij} = \sqrt{\esilon_{ii}\epsilon_{jj}} \qquad \sigma_{ij} = \frac{1}{2}(\sigma_{ii} + \sigma_{jj})
 %\end{equation*}
-For most beads the $\sigma$ parameter is set equal to $0.47~$nm except for the Q--C$_1$ and Q--C$_2$ interactions for which $\sigma = 0.62$~nm. This is consistent with reproducing the hydration shell when a charged bead (Q) is dragged into an apolar medium. The strength of the interactions is instead dived into ten levels, reported in table~(\ref{tab:martiniEpsilon}).
-\begin{SCtable}\footnotesize
-\begin{tabular}{lc}
-	\toprule
-	Level  & $\epsilon$\,[kJ/mol] \\ \midrule
-	O	   & $5.6$	 \\ \midrule
-	I      & $5.0$	 \\ \midrule
-	II	   & $4.5$	 \\ \midrule
-	III	   & $4.0$	 \\ \midrule
-	IV	   & $3.5$	 \\ \midrule
-	V	   & $3.1$	 \\ \midrule
-	VI	   & $2.7$	 \\ \midrule
-	VII	   & $2.3$	 \\ \midrule
-	VIII   & $2.0$	 \\ \midrule
-	IX     & $2.0$	 \\ \bottomrule
-\end{tabular}
-\caption{Interaction strength parameter ($\epsilon$). The last one is for the special case $\sigma=0.62$~nm.}
-\label{tab:martiniEpsilon}
-\end{SCtable}
-The association of the interactions strength with the \martini beads is shown in figure~(\ref{fig:martiniInteractions}).
-\begin{adjustwidth}{-3cm}{-5cm}%
-\centering
-\begin{minipage}[c]{1.2\textwidth}%
+For most beads the $\sigma$ parameter is set equal to $0.47~$nm except for the Q--C$_1$ and Q--C$_2$ interactions for which $\sigma = 0.62$~nm. This is consistent with reproducing the hydration shell when a charged bead (Q) is dragged into an apolar medium. The strength of the interactions is instead dived into ten levels, reported in table~(\ref{tab:martiniEpsilon}). The association of the interactions strength with the \martini beads is shown in figure~(\ref{fig:martiniInteractions}).
+\begin{figure}[h!t]%
+	\center
 	\includegraphics[width=\textwidth]{img/martiniInteractions.pdf}%
-	\captionof{figure}{Interaction strength association matrix for the \martini bead types and subtypes. Taken from \cite{Martini}.}
+	\caption{Interaction strength association matrix for the \martini bead types and subtypes. Taken from \cite{Martini}.}
 	\label{fig:martiniInteractions}
-\end{minipage}
-\end{adjustwidth}
+\end{figure}
+
+% \begin{adjustwidth}{-3cm}{-5cm}%
+% \centering
+% \begin{minipage}[c]{1.2\textwidth}%
+% 	\includegraphics[width=\textwidth]{img/martiniInteractions.pdf}%
+% 	\captionof{figure}{Interaction strength association matrix for the \martini bead types and subtypes. Taken from \cite{Martini}.}
+% 	\label{fig:martiniInteractions}
+% \end{minipage}
+% \end{adjustwidth}
 
 \paragraph{\textbf{electrostatic interactions}} Electrostatic charges are assigned using the atom--centered approximation, as described in~\ref{sec:chargeRep}. In this case, charges are no more fractional but are empirically assigned at the center of the beads trying to follow as much as possible the net charge of the associated chemical moieties. A special case is water, modeled as a P$_4$ bead, since it interacts only with Van der Waals interaction so that the polarizability effect is not very well described. To fill this lack it is used an implicit medium with a dielectric constant $\varepsilon_r = 15$. However, as we will see later in~\ref{sec:pw}, to avoid the problems with the implicit medium described in~\ref{sec:polarization}, especially for lipid membranes for which the dielectric constant in the hydrophobic region is much smaller, Yesylevskyy \etal\, \cite{PW} have developed a more sophisticated \ac{CG} water model, called \ac{PW}, to take into account a better water behavior.
 
@@ -410,21 +417,25 @@ Instead, the partitioning free energy between water and an organic solvent was o
 where $S$ indicate the organic solvent.
 
 In figure~(\ref{fig:martiniTarget}) a summary of the results is reported. As one can see the model has bad performances for what concerns the free energies of vaporization and hydration, which are too high with respect to experimental data. Instead, the partitioning free energies match very well. Thus the model is not very accurate for vapor--liquid systems, but as long as one does not study those systems, the partitioning free energy is much more important than the other free energy contributions.
-\begin{adjustwidth}{-3cm}{-5cm}%
-	\centering%
-	\begin{minipage}[c]{1.3\textwidth}%
-		\includegraphics[width=\textwidth]{img/martiniTarget}%
-		\captionof{figure}{Results summary: free energies of vaporization $\Delta G^\text{vap}$, hydration $\Delta G^\text{hydr}$ and partitioning $\Delta G^\text{part}$ between water (W) and organic solvents (hexadecane (H), chloroform (C), ether (E) and octanol(O)) compared to experimental values. Experimental properties in parentheses are estimates obtained from comparison to similar compounds. The statistical accuracy of the free energies obtained from the simulations is $\pm 1$~kJ/mol. $^b$ The temperature for the experimental data is $273$~K. Taken from \cite{Martini}.}
-		\label{fig:martiniTarget}
-	\end{minipage}
-\end{adjustwidth}
+\begin{figure}[h!t]%
+	\center
+	\includegraphics[width=\textwidth]{img/martiniTarget}%
+	\caption{Results summary: free energies of vaporization $\Delta G^\text{vap}$, hydration $\Delta G^\text{hydr}$ and partitioning $\Delta G^\text{part}$ between water (W) and organic solvents (hexadecane (H), chloroform (C), ether (E) and octanol(O)) compared to experimental values. Experimental properties in parentheses are estimates obtained from comparison to similar compounds. The statistical accuracy of the free energies obtained from the simulations is $\pm 1$~kJ/mol. $^b$ The temperature for the experimental data is $273$~K. Taken from \cite{Martini}.}
+	\label{fig:martiniTarget}
+\end{figure}
+% \begin{adjustwidth}{-3cm}{-5cm}%%
+% 	\begin{minipage}[c]{1.4\textwidth}%
+% 		\includegraphics[width=\textwidth]{img/martiniTarget}%
+% 		\captionof{figure}{Results summary: free energies of vaporization $\Delta G^\text{vap}$, hydration $\Delta G^\text{hydr}$ and partitioning $\Delta G^\text{part}$ between water (W) and organic solvents (hexadecane (H), chloroform (C), ether (E) and octanol(O)) compared to experimental values. Experimental properties in parentheses are estimates obtained from comparison to similar compounds. The statistical accuracy of the free energies obtained from the simulations is $\pm 1$~kJ/mol. $^b$ The temperature for the experimental data is $273$~K. Taken from \cite{Martini}.}
+% 		\label{fig:martiniTarget}
+% 	\end{minipage}
+% \end{adjustwidth}
 
 \subsection{Polarizable Water model}
 \label{sec:pw}
 Water play a crucial role in any biomolecular systems thus it is important to correctly describe its behavior. 
 Since the \martini water model does not directly take into account the electrostatic interaction between water and the other molecules because it does not have any charge and it interact only via Van der Waals interaction, thus a simple implicit medium is used to take into account the main effects of water, screening and polarizability. However any biomolecular process involve charged species moving between regions of different dielectric constant. Due to the change in electrostatic screening between those environments, the strength of the interaction between the moving charges and the surrounding molecules also changes, but this effect can not be consider in an implicit medium model. Thus can have important consequences for the way biological activity is controlled. In order to capture the inhomogeneous nature of the dielectric response an explicit medium has to be used. 
-
-\begin{figure}[ht]
+\begin{figure}[!ht]
 	\center
 	\begin{tikzpicture}
 		%\draw[gray,step=1] (-6,-3) grid (6,3);
@@ -444,6 +455,7 @@ Since the \martini water model does not directly take into account the electrost
 	\caption{Schematic representation of the \acs{PW} bead. Shaded orange spheres correspond to the Van der Walls radii of the central neutral particle $W$. The blue particle is the positively charged while the red is the negatively charged.}
 	\label{fig:PW}
 \end{figure}
+
 In the same fashion of the \martini philosophy, Yesylevskyy \etal\, \cite{PW} have developed a \acf{PW} model that better describe the real behavior of water. As before four water molecules is associated to one \ac{PW} bead. The new water bead actually consists of three particles instead of one in the standard \martini model. 
 In figure~(\ref{fig:PW}) the topology of the \ac{PW} and a comparison between the old model is shown. The central particle $W$ is neutral and interacts with other particles in the system with only Lennard--Jones potential, just like the standard water bead thus as a $P_4$ \martini bead (see figure~(\ref{fig:martiniInteractions}) for the interactions matrix). There are two additional particles, namely $WP$ and $WM$, that are bound to the central particle and carry a positive and negative charge $|q| = 0.46\mathsf{e}$ respectively, where $\mathsf{e} = 1.60217653(14) \cdot 10^{-19}$~C is the unit electron charge. They interact with other particles in the system by the Coulomb interaction only. The bonds $W-WP$ and $W-WM$ are constrained to have a fixed distance $l = 0.14$~nm. 
 The electrostatic interaction between $WP$ and $WM$ inside the same bead are exclude thus they are transparent toward each other and they can rotate around the $W$ particle. As a consequence the dipole momentum of the water bead depends on the relative angular position $\theta$ of $WP$ and $WM$: It can vary from zero ($\theta = 0$), to $2ql$ ($\theta = \pi$). A harmonic angle potential with equilibrium angle fixed to $\theta_0 = 0$ and a force constant $k_\theta = 4.2$~kJ/(mol$\cdot$rad$^2$) is added to control the rotation of $WP$ and $WM$ particles around the $W$ particle so to adjust the distribution of the dipole momentum. The value of the equilibrium angle is consistent with the fact that in an apolar medium the total dipole momentum of a water molecule is zero. 

@@ -105,6 +105,7 @@ Describing the system with the Hamiltonian formalism, in some cases, is more use
 all because the Hamiltonian of a system is directly related to a well know physical quantity, the total energy.
 
 \section{Review of statistical mechanics}
+\label{sec:statmec}
 Using the picture of the classical mechanics described above we have a good and sophisticated machinery that allows us, knowing some information about the system in exame, i.e. initial positions and velocities of all particles and their interactions, to completely solve the equations of motion in order to get the dynamics of the system at every time. So classical mechanics encodes all the information about the \textit{microscopic} view of a system and, in principle, we can extract all the information we want about the \textit{macroscopic} proprieties of such system.
 The main task of this process is to obtain the thermodynamics proprieties of a system (temperature, pressure and so on) from the complete sets of positions and velocities of all particles and thus it is necessary to have a link between microscopic and macroscopic world. In principle this can be done, but if we consider a real system we should solve a set of $6N$ equations where $N$ is of the order of the Avogadro number ($\mathcal{N}_A = 6.022 \cdot 10^{23}~\text{mol}^{-1}$); we can not think of solving such a number of equations analytically even if we consider to solve it numerically: that is almost impossible. Thus the problem is to extract the macroscopic information from classical mechanics and to establish a well computable link between microscopic and macroscopic to obtain ``easily'' the thermodynamics information required.
 
@@ -155,9 +156,10 @@ If, in principle, the time for average is infinity then we have the ``real'' mea
 \end{equation*}
 In order for a comparison to be made, an identity between ensemble and time averages must be established.
 This link is provided by the \textit{ergodic theorem} and the \textit{ergodic hypothesis}. A system is said to be ergodic if, over a long period of time, all the microstates in the phase space with the same energy are accessible with the same probability. Then the ergodic theorem says that the time and ensemble averages are equal \textit{almost everywhere} in the phase space. So we can write the follow identity
-\begin{equation*}
+\begin{equation}
 	\overline{A} = \lim_{\tau\to +\infty}\frac{1}{\tau}\int_{t_0}^\tau A(\vec x_t)\ dt = \int_\Omega A(\vec x)\rho(\vec x, t)\ dx = \ave{A}(t)
-\end{equation*}
+	\label{eq:ergotic}
+\end{equation}
 
 The most important ensembles are the microcanonical and the isothermal--isobaric. In the following we will describe them briefly with particular attention to the isothermal--isobaric ensemble, the most relevant for this thesis work.
 
@@ -226,9 +228,10 @@ The isothermal--isobaric ensemble contains those systems with constant particles
 The first one can be considered simply a very big system at constant temperature with a high thermal capacity.
 The second can be idealized like a piston connected to the system changing the volume will adjust the pressure.
 The instantaneous work done by the system against the external piston is defined by $pV$, where $V$ is the instantaneous system volume. Then we have to correct the Hamiltonian of the system: $\mathcal{H}(\vec x) \rightarrow \mathcal{H}(\vec x) + pV$. The partition function is then defined considering the Boltzmann ensemble distribution function
-\begin{equation*}
+\begin{equation}
 	\mathcal{Z}_{NPT} = \frac{1}{N!h^{3N}}\int_0^{+\infty}\ dV \ \int_\Omega e^{-\beta(\mathcal{H}(\vec x) + pV)}\ dx
-\end{equation*}
+	\label{eq:nptPartition}
+\end{equation}
 where $\beta^{-1} \equiv k_B T$ and the normalization factor is the same as equation~\eqref{eq:micropartition}. The right thermodynamic potential, i.e. the constant of motion, to obtain the other thermodynamic quantities is the Gibbs free energy $G = H - TS$ (where $H$ is the enthalpy) defined by
 \begin{equation*}
 	G = -k_B T\ln \mathcal{Z}_{NpT}
@@ -260,6 +263,7 @@ where $\int\ d\mathbold{H}$ is an integral over all nine components of $\mathbol
 %eventualmente vedere se mettere le fluttuazioeni di energia e volume
 
 \section{Molecular Dynamics simulation}
+\label{sec:MD}
 \acf{MD} is a set of techniques that allow us to prepare a ``computer experiments'' in which we have a virtual system set with some initial conditions, i.e. some microstates of all system particles. Then, solving numerically the classical equations of motion we will be able to know the time evolution of that system. Obviously that experiment is carried out using a model that approximates a real physical, chemical or biological system. Such virtual experiment approach has the advantage that many experiments can be easily set up with different initial conditions and/or with different control parameters, such as temperature or pressure, in a straightforward and safer manner.
 The model system model contains all the information to obtain an approximation of the interactions among all system particles or, most commonly, to compute the \ac{PEF} from which the forces are derived by equation~\eqref{eq:pefForces}. Solving the equations of motion With a numerical integrator, an \ac{MD} simulation generates a set of phase space vectors, a \textit{trajectory}, at discrete times that are multiples of the fundamental time discretization parameter, called \textit{MD time step}: $\delta t$. Staring from an initial phase space vector $\vec x_0$, at each step, the forces are computed from the \ac{PEF}. Then the equations of motion are
 integrated and a new phase space vector $\vec x_{\delta t}$ is generated, thus a new set of forces is computed and so on. In order to compute time averages we need to discretize equation~\eqref{eq:timeAve} so the time integration is substituted with a summation over the collected data at certain time step $\Delta \tau = i \delta t$, $i=1,2,3,\cdots$. If $i > 1$ only a subset of the collected data is used to compute time averages. The formula become
@@ -833,9 +837,48 @@ Another consequence of \ac{CG} \acp{FF} is related to the \ac{PEF} that becomes 
 A problem involving the Lennard--Jones potential as a model of Van der Waals interaction in \martini, is that the steep repulsion leads to an over--structuring of fluids compared to atomistic models. The direct and most evident implication is the melting point of the water that is $290 \pm 5$~K. A practical partial solution is the use of the so called ``anti--freeze'' particles named BP$_4$ type. The Lennard--Jones interaction between these particles and water is modified with a slightly larger Van der Waals radius parameter, $\sigma = 0.57$~nm and a stronger interaction to be a level $O$ (see table~(\ref{tab:martiniEpsilon}) for the interaction level). Marrink \etal\, suggest that a mole fraction of $n_{\text{af}} = 0.1$ is sufficient to prevent freezing without affecting the other properties of water. Some other properties of water are not accurate described such us the surface tension of air/water interface that leads in problem to water/oil interfaces formation. Using the \ac{PW} model these properties improve slightly. For a more comprehensive discussion about the limitations of the \martini \ac{FF} the reader is addressed to the review by Marrink \etal\, \cite{MartiniReview}.
 
 \section{Advanced sampling methods}
+The quantity of particular importance for the equilibrium statistical mechanics of which we are interested to obtain with \ac{MD} technique is the free energy function: the Gibbs free energy $G$ for the isobaric--isothermal ensemble and $A$ the Helmholtz free energy for the canonical ensemble. Being related to the partition function of an ensemble, the free energy is the generator through which other thermodynamic quantities are obtained via differentiation. However often we are particularly interested in the free energy difference between two thermodynamic states, instead of the absolute value. This because free energy differences are the driving force of any process and they tell us, for example, if a chemical reaction occurs spontaneously, whether a given solute is hydrophobic or hydrophilic, if a protein conformational change take place or whether some molecules in water solution are able to self--assembles into a more complex system and so forth. Moreover, often, we are interested also in the \ac{FES}: the free energy in function of some generalized coordinates, called \acp{CV} of the system. These small set of variables can describe, in a simple and useful manner, some chemical, thermodynamic or mechanical process that take place in the system, for example, the free energy in function of the distance between the \ac{COM} of two molecules give us information about their attraction or repulsion and if they form a bound state; or in function of a rotational angle of a molecule bond to obtain the more stable configuration and so on. Thus the \ac{FES} provides a map of the stable conformations, the relative stability of these conformations and the barrier heights that must be crossed for the process to take place. It is necessary to stress out that in many cases one do not know exactly \textit{a priori} the \ac{FES} about a certain process and so one want to know it also for understand if other minima energy configurations exist, in addition to those known, how stable they are and what are the energy barriers to go from one minima state to an other. Despite this, the calculation of free energy difference of two thermodynamic states (that leads an \textit{a priori} knowledge of the two stable states) and the calculation of the \ac{FES} are one of the main challenges in \ac{MD} simulations for biomolecular applications.
+
+Lets us suppose that we are interested in the \ac{FES} of the \ac{CV} $s(\vec r)$ and we are working in a isobaric--isothermal ensemble with an isotropic system. Following section~\ref{sec:statmec}, the Gibbs free energy along the \ac{CV} is obtained as
+\begin{equation*}
+	G(s) = -k_BT \ln Q(s)
+\end{equation*}
+where $Q(s)$ is the partition function with all other \ac{DOF} expect for $s(\vec r)$, integrated out. This leads as follow
+\begin{equation*}
+	Q(s) = \frac{1}{\mathcal{Z}_{NpT}} \int_0^{+\infty}\ dV \ \int_\Omega e^{-\beta(\mathcal{H}(\vec x) + pV)}\delta(s(\vec r) - S)\ dx
+\end{equation*}
+since $s(\vec r)$ do not depends on particles momenta, from equations~\eqref{eq:hamiltonian} and~\eqref{eq:nptPartition}, it can be rewritten as
+\begin{equation}
+	Q(s) =  \frac{ \int_\Omega e^{-\beta U(\vec r)}\delta(s(\vec r) - s)\ dr }{\int_\Omega e^{-\beta U(\vec r)}\ dr}
+	\label{eq:CVprobability}
+\end{equation}
+where $U(\vec r)$ is the \ac{PEF}. $Q(s)ds$ can be interpreted as the probability of finding the system with $s(\vec x)$ between $s$ and $s + ds$. Since this equation contains a direct phase space integration can be rewritten in a more useful manner using the ensemble averages then, using the ergodic theorem in equation~\eqref{eq:ergotic}, as a time averages:
+\begin{equation}
+	Q(s) = \ave{\delta(s(\vec r) - s)} = \lim_{t\to +\infty}\frac{1}{\tau}\int_0^\tau \delta(s(\vec r(t)) - s)\ dt
+	\label{eq:CVprobabilityAve}
+\end{equation}
+
+\ac{MD} simulations give us the possibility to sample a given ensemble via computational methods, in principle, in order to calculate the integrals in equation~\eqref{eq:CVprobabilityAve}. Unfortunately, since the time can not be infinity, the main problem related to \ac{MD} simulations is whether we are able to correctly sample \textit{all} the phase space of an ensemble in order to compute the ensemble average. Clearly the answer depends on the system in exam, if it is really simple maybe we can do that, otherwise probably no or it takes too time and/or we are not able to collect sufficiently data. This sampling problem is summarized as follow: Regions in phase space around a local minimum of the \ac{PEF} (then a local minimum even in the \ac{FES}) are typically sampled well, whereas regions of higher energy are sampled rarely. Despite they leads with a small contribution to the partition function, due to Boltzmann factor, a bigger challenge, related to overcome regions of higher energy, is to sample other minima of the \ac{PEF}, that can be of lower or same energy and instead can leads to a important contribution to the ensemble averages. This is the \textit{rare events problem}. When the system is moving in the \ac{PEF} landscape the only way to escape from a local minimum is due to thermal fluctuations and so energy barriers that are higher then $\sim k_B T$ have a small probability of being overcame. Then the sampling problem! Moreover the energy landscape, even for a small molecule, it is extremely wrinkled and the large number of free energy minima is far more than can be sampled in a typical \ac{MD} simulation. Thus the principal reason for the use of the just introduced \acp{CV}, they can limit the sampling necessity to those regions of phase space that are most important to the process under study, hoping that, as the \ac{DOF} reduction, the limited sampled regions are sufficient to correctly describe the process.
+
+Several methods are developed and are still in development in order to solve the just described sampling problem. This method are all based on advanced sampling techniques that allow us to
+\begin{itemize}
+	\item Escape from a local energy minima, in order to explore other regions of the phase space;
+	\item Calculate free energy difference between two thermodynamic states;
+	\item Compute the \ac{FES} along one or a small set of \acp{CV}.
+\end{itemize}
+We describe only those methods used in this thesis work: \textit{Umbrella sampling method} and \textit{Metadynamics}. For a more comprehensive discussion the reader is addressed to the review by Kästner \cite{Umbrella} for the former and to the review by Laio and Gervasio \cite{MetadReview} and the article by Parrinello and Laio \cite{MetadParrinello} for the latter. 
+
+
+%It is clear, from the previous sections, that if we are able to correctly sample an ensemble, the law of statistical mechanics (\ref{sec:stamec}) leads the way to obtain thermodynamic properties and macroscopic observables of a system that is part of the ensemble; while \ac{MD} simulations (\ref{sec:MD}) give us the possibility to sample a given ensemble via computational methods. Unfortunately the main problem related to \ac{MD} simulations is whether we are really able to correctly sample \textit{all} the phase space of an ensemble. Clearly the answer depends on the system in exam, if it is really simple maybe we can do that, otherwise probably no or it takes too time and/or we are not able to collect sufficiently data. Let us to focus more in detail about the problem.
+
 	\subsection{Metadynamics}
 
 	\subsection{Umbrella sampling} %Molecular Modelling, 581
 
 
 %Manuale GROMACS 3.17.5 PP/PME ranks
+
+
+
+
+

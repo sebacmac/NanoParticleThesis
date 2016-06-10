@@ -1,0 +1,45 @@
+\documentclass[]{report}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{euler}
+\usepackage{subfig}
+
+\usepackage[inner=0cm,outer=0cm,top=0cm,bottom=0cm,paperwidth=15cm,paperheight=7cm]{geometry}
+
+\usepackage{tikz,pgfplots}
+\usetikzlibrary{positioning}
+\usetikzlibrary{decorations.pathmorphing}
+
+\begin{document}
+\begin{figure}
+\centering
+	\subfloat[Real space]{%
+		\begin{tikzpicture}
+			\begin{axis}[samples=1000,domain=-1:4,axis x line=center,axis y line=none,axis x line=none, xmin=-0.4,xmax=2.5,ymin=-2, ymax=2]
+				\addplot[thick]plot (\x, {0});
+				\addplot[]plot (\x, {exp(-9*\x*\x/0.1)});
+				\addplot[]plot (\x, {exp(-9*(\x-2)^2/0.1)});
+				\addplot[]plot (\x, {-exp(-9*(\x-1)^2/0.1)});
+				\addplot[smooth] plot coordinates {(0,0) (0,-1.5)};
+				\addplot[smooth] plot coordinates {(1,0) (1,1.5)};
+				\addplot[smooth] plot coordinates {(2,0) (2,-1.5)};
+			\end{axis}
+		\end{tikzpicture}
+	}%
+	\qquad
+	\subfloat[Reciprocal space]{%
+		\begin{tikzpicture}
+			\begin{axis}[samples=1000,domain=-1:4,axis x line=center,axis y line=none,axis x line=none, xmin=-0.4,xmax=2.5,ymin=-2, ymax=2]
+				\addplot[thick]plot (\x, {0});
+				\addplot[]plot (\x, {-exp(-9*\x*\x/0.1)});
+				\addplot[]plot (\x, {-exp(-9*(\x-2)^2/0.1)});
+				\addplot[]plot (\x, {exp(-9*(\x-1)^2/0.1)});
+			\end{axis}
+		\end{tikzpicture}
+	}%
+\end{figure}
+\end{document}
+	

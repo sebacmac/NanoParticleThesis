@@ -1,0 +1,20 @@
+set lmargin 0
+set rmargin 0
+set tmargin 0
+set bmargin 0
+
+set isosamples 100
+set view map
+unset surface
+set hidden3d
+set key off
+set contour base
+set cntrparam levels 12
+
+unset xtics
+unset ytics
+
+set xrange[-1.8:1.8]
+set yrange[-0.5:0.5]
+
+splot x**4 + 50*y**4 -3*x**2 - 1.5*x

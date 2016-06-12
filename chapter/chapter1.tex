@@ -869,7 +869,7 @@ Several methods are developed and are still in development in order to solve the
 	\item Compute the \ac{FES} along one or a small set of \acp{CV};
 	\item Try to capture and study the transition state of a process (in function of some \acp{CV}).
 \end{itemize}
-The common basic idea is to introduce additional \ac{DOF} along the \acp{CV} in order to modify or add some potential energy, to the \ac{PEF} that drive the system from one state to another. This additional potential is called \textit{biased potential} and those advanced sampling methods are grouped in the so called \textit{biased} \ac{MD} to distinguish from the \textit{un--biased} \ac{MD} in which the system is not driven. In particular we describe only those methods used in this thesis work: \textit{Umbrella sampling method} and \textit{Metadynamics}. For a more comprehensive discussion the reader is addressed to the review by Kästner \cite{Umbrella} for the former and to the review by Laio and Gervasio \cite{MetadReview} and the article by Parrinello and Laio \cite{MetadParrinello} for the latter. Moreover in the books of Tuckerman \cite{Tuckerman} other methods are described.
+The common basic idea is to introduce additional \ac{DOF} along the \acp{CV} in order to modify or add some potential energy, to the \ac{PEF} that drive the system from one state to another. This additional potential is called \textit{biased potential} and those advanced sampling methods are grouped in the so called \textit{biased} \ac{MD} to distinguish from the \textit{un--biased} \ac{MD} in which the system is not driven. In particular we describe only those methods used in this thesis work: \textit{Umbrella sampling method} and \textit{Metadynamics}. For a more comprehensive discussion the reader is addressed to the review by Kästner \cite{Umbrella} for the former and to the review by Laio and Gervasio \cite{MetadReview} for the latter. Moreover in the books of Tuckerman \cite{Tuckerman} other methods are described.
 
 %It is clear, from the previous sections, that if we are able to correctly sample an ensemble, the law of statistical mechanics (\ref{sec:stamec}) leads the way to obtain thermodynamic properties and macroscopic observables of a system that is part of the ensemble; while \ac{MD} simulations (\ref{sec:MD}) give us the possibility to sample a given ensemble via computational methods. Unfortunately the main problem related to \ac{MD} simulations is whether we are really able to correctly sample \textit{all} the phase space of an ensemble. Clearly the answer depends on the system in exam, if it is really simple maybe we can do that, otherwise probably no or it takes too time and/or we are not able to collect sufficiently data. Let us to focus more in detail about the problem.
 
@@ -927,6 +927,41 @@ The umbrella sampling method can be summarized in the following procedure
 
  
 \subsection{Metadynamics}
+The metadynamics method was originally developed by Parrinello and Laio \cite{MetadParrinello} with the first aim to accelerate the escaping from a free energy minima in order to explore other phase space regions. Soon the success of the methods leads a creation of an unified framework for computing free energies in function of few \acp{CV} and accelerating rare events. The main advantages respect to umbrella sampling method is that several \acp{CV}, instead of only one, can be simultaneously used without affecting the simulation performance. The basic idea of the metadynamics is to enhance the dynamics of the system along some \acp{CV} simply by filling the corresponding energy minimum which an history--dependent bias potential, in order to samples a larger and larger portion of the phase space. If the deposited energy is sufficient the system is favorably disposed to overcome the energy barrier to go to another meta--stable state. This novel idea is moreover supported by the assumption of Parrinello and Laio, based on experimental and heuristic results, that iteratively summing the deposited potential during the biased \ac{MD} simulation leads to an estimator of the \ac{FES} along the chosen \acp{CV} in the region explored. If $\vec s(\vec r) = (s_1(\vec r), \cdots, s_n(\vec r))$ is the \acp{CV} vector, where $n$ is a small number, and $w(\vec s, t)$ is the bias potential deposited every $\tau$ \ac{MD} time steps the ``metadynamics'' history--dependent potential acting on the system at a time $t$ is given by
+\begin{equation*}
+	w_M(\vec s, t) = \sum_{\substack{i=0 \\ i\tau < t}} w(\vec s, i\tau)
+\end{equation*}
+where $t$ is the time in unit of \ac{MD} time step. The time dependence in the bias potential $w(\vec s, t)$ is needed since it have to depend on the values assumed by the \acp{CV} at some previous \ac{MD} steps. The Parrinello and Laio assumption yields to the following expression
+\begin{equation}
+	\lim_{t\to + \infty} w_M(\vec s, t)  \simeq -G(\vec s) + C
+	\label{eq:metadfes}
+\end{equation} 
+where $C$ is an addictive constant. Since the history--dependent potential iteratively compensates the underlying \ac{FES}, the system evolved with metadynamics \textit{tends to escape from any energy minima via the lowest saddle point}. Thus, to the contrary of umbrella sampling metadynamics is suitable, not only to compute efficiently \ac{FES}, but also to explore new reaction path and accelerate the observation of rare events. If the \acp{CV} are chosen sensibly the system will quickly find its way over the lowest free energy saddle point and evolve over the next minimum as it would do in a \textit{very long} \ac{MD} simulation.
+
+An intrigued bias potential can be deduced considering equation~\eqref{eq:CVprobabilityAve}. The Dirac delta function can be expressed by an its simple approximant:  
+\begin{equation*}
+	\delta(x-a) = \lim_{\sigma\to 0}\ \frac{1}{\sqrt{2 \pi \sigma^2}}e^{-(x-a)^2/(2\sigma^2)}
+\end{equation*}
+then substituting in equation~\eqref{eq:CVprobabilityAve} we have
+\begin{equation*}
+	Q(s) = \frac{1}{\sqrt{2\pi}}\lim_{t\to +\infty}\ \lim_{\sigma\to 0} \frac{1}{\sigma t}\int_0^t \exp{ \left ( -\frac{(s(\vec r(\tau))-s)^2}{2\sigma^2} \right )} \ d\tau
+\end{equation*}
+the equation above suggest as a component of the history--dependent bias potential the use of a Gaussian function centered around the values assumed by the \acp{CV}. Then the bias potential component, extended to multiple \acp{CV}, is chosen as follow
+\begin{equation*}
+	w(\vec s, t) = w\ \exp\left ({-\sum_{i=0}^n \frac{(s_i - s_i(\vec r(t)))^2}{2{\delta s_i}^2} }\right )
+\end{equation*}
+where $w$ is the height of the deposited Gaussians.
+
+For setting up a metadynamics simulation, thus there are three parameters to carefully choose: the height $w$ and the width $\delta s_i$ of the deposited Gaussian and the stride of deposition $\tau$. All these parameters affect the accuracy and the efficiency of the free energy profile reconstruction. Clearly if the Gaussians are big and large or placed quickly the \ac{FES} will be explored at a fast pace but the reconstructed profile will be affected by large errors. Instead if they are small or placed infrequently the reconstruction will be accurate but will take a longer time. Moreover the time required to escape from a local minimum is determined by the number of Gaussians necessary to fill the well. This number is proportional to $(1/\delta s)^n$ \cite{MetadReview}, then the necessity to maintain the number $n$ of \acp{CV} as small as possible or increase the Gaussian width. On the other hand the history--dependent potential can only reproduce features of the \ac{FES} on a scale larger then $\sim \delta s$. Does not exist an universal recipe to choose these parameters, but some knowledge of the system and process under study can revel the right way and they can be fine tuned in successive steps.
+
+In figure~(\ref{fig:metadEs}) an example of the time evolution of a metadynamics simulation is shown. We can see that as the deposited Gaussians increases the system is able to visit more regions of the phase space. Moreover as the simulation time increases, when the energy landscape (lower panel) become flat then the system become diffusive (upper panel) on the whole energy profile. Thus we can stop the metadynamics simulation obtaining the right \ac{FES} less then a constant as in equation~\eqref{eq:metadfes}. 
+\begin{figure}
+	\centering
+	\includegraphics[width=0.6\textwidth]{./img/metadEs}
+	\caption{Example of a time evolution of a metadynamics simulation. Upper panel: time evolution of the \acs{CV} of a system evolved on the 3--minima \acs{FES} represented by the black thick line in the lower panel. Middle panel: time evolution of $w_M$ the history--dependent bias potential i.e. minus \acs{FES} as the Gaussians deposited increase. Blue line: $w_M$ as when the first minimum is filled and the system escapes to the second minimum; red line: as when also the second minimum is filled; orange line: when the entire profile is filled and the dynamics becomes diffusive on the whole energy landscape. Lower panel: time evolution of the sum of $w_M$ (same color scheme). Taken from \cite{MetadReview}.}
+	\label{fig:metadEs}
+\end{figure}
+    
 
 
 %Manuale GROMACS 3.17.5 PP/PME ranks

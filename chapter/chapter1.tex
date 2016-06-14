@@ -971,12 +971,28 @@ In figure~(\ref{fig:metadEs}) an example of the time evolution of a metadynamics
 \end{SCfigure}
 
 Keeping in mind figure~(\ref{fig:metadEs}) a summary of the behavior of metadynamics and the validity of equation~\eqref{eq:metadfes} can be qualitatively understood in the limit of slow deposition. This means that $w_M(\vec s, t)$ varies slowly and the probability to observe $\vec s$ is approximately proportional to the Boltzmann factor $e^{-\beta(G(\vec s) - w_M(\vec s, t))}$ then if the function in the exponential has some local minimum due to $G(\vec s)$, $\vec s$ will preferentially be localized in the neighborhood of this minimum and an increasing number of Gaussians 
-have to be added until it is completely filled. When the minimum is filled the system reach the condition $G(\vec s) \sim w_M(\vec s, t)$ then the probability distribution would be approximately flat and we can say that the system become diffusive. Thus the location of new Gaussians is no more affected by the difference between $G(\vec s)$ and $w_M(\vec s, t)$ and they are deposited randomly over the flat free energy profile. Hence the \acp{FES} reconstructed after that point, as visible in figure~(\ref{fig:metadEs}), are affected by some corrugations due to newly deposited Gaussians of the order of $w$.
+have to be added until it is completely filled. When the minimum is filled the system reach the condition $G(\vec s) \sim w_M(\vec s, t)$ then the probability distribution would be approximately flat and we can say that the system become diffusive in the region explored by the simulation. Thus, in this regions, the location of new Gaussians is no more affected by the difference between $G(\vec s)$ and $w_M(\vec s, t)$ and they are deposited randomly over the flat free energy profile. Hence the \acp{FES} reconstructed after that point, as visible in figure~(\ref{fig:metadEs}), are affected by some corrugations due to newly deposited Gaussians of the order of $w$; it says that the metadynamics has reached the \textit{convergence} in the sampled region: the \ac{FES}, as the Gaussians deposition increase, do not change its shape but it is only shifted along the energy axes.
 
-\paragraph{\textbf{error estimation}}
+\paragraph{\textbf{convergence}} As just explained before, the convergence of the metadynamics in a specific region of the \acp{CV} space is reached when the system become diffusive in this region, i.e. when the \acp{CV} can assume all the possible values compatible to the sampled region. This is a crucial point for the metadynamics method in order to obtain a \textit{true} estimator of the \ac{FES}, in the sampled region. Clearly, in order to save computational time, if one want only to give the possibility to the system to escape from an energy minimum is not necessary to reach the convergence otherwise it is an important point. Unfortunately in most system is not trivial to identify precisely when the diffusive regime has been reached. For biomolecular application a practical method to assess the convergence of metadynamics simulations is based on monitoring the free energy difference between to reference point.
+
+\paragraph{\textbf{error estimation}} After the proper convergence is reached the error on the \ac{FES} estimator is clearly dependent on the chosen parameters. The best way to estimate the statistical error introduced by the metadynamics is to perform several statistically independent metadynamics runs. Clearly the arithmetic average of all the history--dependent potentials taken at the same time, after the convergence is reached, is still equal to the \ac{FES}. The statistical error can be considered as the standard deviation between the history--dependent potential $w_M(s,t)$ of a run and the averaged \ac{FES} $G(\vec s) \sim - \overline{w_M(\vec s,t)}$ and average it over the whole \acp{CV} space, as follow
+\begin{equation*}
+\overline{\epsilon}^2 = \frac{1}{\Omega_s} \int_{\Omega_s}  \overline{(w_M(\vec s,t) - \overline{w_M(\vec s,t)})^2}\ ds
+\end{equation*}
+where $\Omega_s$ is the whole \acp{CV} space. Laio \etal\, in \cite{MetadError}, by performing extensive numerical simulations of a Langevin stochastic system, have derived an approximate expression for the error estimator in function of the system and metadynamics parameters, as follow
+\begin{equation*}
+	\overline{\epsilon}^2 \propto \frac{LT}{D}\frac{w}{\tau} \delta s 
+\end{equation*}
+where $L$ is the size of the simulation box, $D$ is the system diffusion coefficient and $T$ is the system temperature. Since $\delta s$ is approximately fixed by the fluctuation of the \acp{CV} in a unbiased \ac{MD} run and/or by the granularity to be achieved in the \ac{FES} estimator, the error is dominated by the ration $w/\tau$. Thus a fine tuning of the Gaussians height and deposition pace is often needed in order to minimize the statistical error. Despite this, is commonly accepted to follow a procedure for the \ac{FES} estimator:
+\begin{itemize}
+	\item Several statistically independent metadynamics simulations are performed;
+	\item The estimator of the \ac{FES} is the arithmetic average of the history--dependent potentials (each appropriately normalized) after the convergence is reached;
+	\item The statistical error on the averaged \ac{FES} is performed considering the standard error of the above history--dependent potentials. 
+\end{itemize}
+Alternatively one can perform a very long metadynamics run in which, for example, the system is diffusive for half simulation, then one can chose as statistically independent history--dependent potentials some of them computed at different times in the diffusive region and follow the above procedure from the second point. Clearly one have to be careful about the decorrelation time between the chosen profiles, otherwise they are not statistically independent due the continuos nature of the metadynamics algorithm.
 
 \paragraph{\textbf{performance optimization}}
-    
+
 
 
 %Manuale GROMACS 3.17.5 PP/PME ranks

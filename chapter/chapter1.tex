@@ -714,44 +714,114 @@ associated to the isobaric ensemble.
 As we have seen in the previous section \ac{MD} provides a variety of tools for solving the time evolution of a $N$--particles system to obtain its dynamics. Due to the possibility to capture different length and time scales \ac{MD} simulations can be used in a variety of systems, such as set of atoms, molecules or more complex system such as protein and macromolecules systems. In each of these systems, depending on the \textit{interaction model} and its \textit{parametrization}, we will be able to describe crucial molecular--level processes, such as hydrogen bond formation in organic molecules, which happen on the picoseconds time scale; or study slow processes such as the diffusion of massive colloidal particles, taking place on time scales of milliseconds if not seconds.
 When we study a soft or condensed matter system or, in general, a system composed by a large number of atoms (of the order of $N \gg 1000$), a crucial role is played by the \textit{Born--Oppenheimer approximation}. It says that we can separate the motion of the electrons by the motion of the atomic nuclei. That is done for integrating out the high frequency electrons' motions in order to remove some \ac{DOF}. Moreover the main interesting processes of soft and condensed matter, ranging from protein folding to glass transitions, from surface diffusion to ligand--receptor binding take place on longer time scales and involve larger number of atoms. Further if we want to know precisely the dynamics of the electrons in the system we have to introduce quantum mechanical methods that are, even for a small number of particles (of the order of $N\sim 100$), to much computationally time consuming, thus the Born--Oppenheimer approximation is indispensable. In the following, when we speak about atoms or chemical moieties we refer to it as for nuclei coordinates only without considering electrons at all.
 
-Nevertheless atoms or molecules interactions, such as bond formation, are mediated by the electrons interactions.
-Thus, to describe the dynamics of such a system with a classical \ac{MD} tools and the Born--Oppenheimer approximation, it is necessary to develop an \textit{empirical model of the inter--atoms interactions} that mimic correctly the ``real'' interactions. Since forces are derived from the \ac{PEF} we need a model composed by the set of the simplest pairwise addictive potentials that mimic the inter--particles interactions.
-The model, the set of simulation parameters, such as the time step, the set of functional forms of the inter--particles interactions potential and its parameterizations are collected into the so called empirical \acf{FF}.
-The meaning of \textit{empirical} is that most of the functional forms of the inter--atoms interaction has no ``first principle'' justification and they are only an approximation to reality: There is not a correct expression of them and they are chosen as a compromise between accuracy and computational efficiency. Further it is necessary to stress out that a \ac{FF} is a well defined single entity containing the simulation parameters, the functional models of the interactions and also its parameterizations (and the way to obtain it). All the parameters of a \ac{FF} are in harmony to each other thus changing some parameters without retesting whole \ac{FF} is not allowed because, maybe, one can destroy the whole \ac{FF}.
+Nevertheless atom or molecule interactions, such as bond formation, are mediated by the electron interactions. 
+Thus, to describe the dynamics of such a system with a classical \ac{MD} tools and the Born--Oppenheimer 
+approximation, it is necessary to develop an \textit{empirical model of the inter--atom interactions} that mimics 
+the interactions behavior. Since forces are derived from the \ac{PEF}, a typical choice, when it is possible, for 
+example with organic systems, is to model the inter--particle interactions by a set of pairwise addictive 
+potentials that avoid any many--body calculations. Nevertheless for some systems this is impracticable, for 
+example, for metal cores we need to consider the many--body calculations or an effective many--body potential 
+that take into account the behavior of all metal atoms in the core. A typical solution is to use the many--body 
+potential developed by Gupta (see \cite{Leach} for more details about metals treatment at \ac{MD} level). The set 
+of functional forms of the inter--particle interaction potentials and its parameterization are collected into the 
+so called empirical \acf{FF}. The meaning of \textit{empirical} is that most of the functional forms of the 
+interactions has no ``first principle'' justification: they are chosen as a compromise between accuracy and 
+computational efficiency. 
+%Further it is necessary to stress out that a \ac{FF} is a well defined single entity containing the simulation parameters, the functional models of the interactions and also its parameterizations (and the way to obtain it). All the parameters of a \ac{FF} are in harmony to each other thus changing some parameters without retesting whole \ac{FF} is not allowed because, maybe, one can destroy the whole \ac{FF}.
 
-For biomolecular applications two main classes of \acp{FF} exist: The \textit{atomistic} \acp{FF} in which basic particles are atoms, and the \textit{coarse--grained} \acp{FF} in which the basic particles represent atom groups or small chemical moieties. In this case, even the way to do the corse--graining of the atoms in the molecules, called \textit{mapping}, is part of the \ac{FF} itself. Different \ac{CG} \acp{FF} can use different mapping methods even with the same functional forms. In the following we will add some other information about \acp{FF} and describe the principal functional forms for modeling the inter--particles interactions and how to treat them in a \ac{MD} simulation. While in the next section we will focus on the main \ac{CG} \ac{FF} used in this thesis work: The \textacr{MARTINI} \ac{CG} \ac{FF} developed by Marrink \etal\, \cite{Martini}.
+For biomolecular applications two main classes of \acp{FF} exist: the \textit{atomistic} \acp{FF} in which basic 
+particles are atoms, and the \textit{\ac{CG}} \acp{FF} in which the basic particles represent atom groups or 
+small chemical moieties. In this case, even the way to realize the grouping, called \textit{mapping}, is part of 
+the \ac{FF} itself. Different \ac{CG} \acp{FF} can use different mapping methods even with the same functional forms. 
 
-\paragraph{\textbf{\textacr{parameterization}}} In general the functional forms for potential interactions are common to all particles in the system, then the \ac{FF} is completed by a set of empirical parameters that characterize the interaction between different types of particles, whether they are atoms or whole chemical groups.
-Interaction parameters are empirical in the sense that they are assigned to reproduce a small set of target properties on a small group of systems. These target properties can be derived from experimental measurements or from finer--level calculations or simulations. Nowadays, atomistic and \ac{CG} biomolecular \acp{FF} come as ``packages'' of parameters and functional forms appropriate for the description of a large variety of chemical compounds in the liquid and solid phases.
+In the following we will add some other information about \acp{FF} and describe the principal functional forms 
+for modeling the inter--particle interactions and how to treat them in an \ac{MD} simulation. While in the next 
+section we will focus on the main \ac{CG} \ac{FF} used in this thesis work: the \textacr{MARTINI} \ac{FF} 
+developed by Marrink \etal\, \cite{Martini}.
 
-\paragraph{\textbf{\textacr{transferability}}} As described above the parameterization of a \ac{FF} involves a small set of test systems for which some set of target proprieties are reproduced. The main characteristic of a \ac{FF} is the \textit{transferability} that means the ability of the model to describe different situations that differ from those used at the parameterization stage. Of course one would expect to be able to make some predictions for a bigger variety of systems and for other proprieties not used in the parametrization stage. Common faults of organic \acp{FF} concern, for example, phase transitions of organic compounds and phase transitions temperatures.
+\paragraph{\textbf{\textacr{parameterization}}} In general the functional forms for potential interactions are 
+common to all particles in the system. The \ac{FF} is completed by a set of empirical parameters that 
+characterize the interaction between different types of particles, whether they are atoms or whole chemical 
+groups. Interaction parameters are empirical in the sense that they are assigned to reproduce a small set of 
+target properties on a small group of systems. These target properties can be derived from experimental 
+measurements or from finer--level calculations or simulations. Nowadays, atomistic and \ac{CG} biomolecular 
+\acp{FF} come as ``packages'' of parameters and functional forms appropriate for the description of a large 
+variety of chemical compounds in the liquid and solid phases.
+
+\paragraph{\textbf{\textacr{transferability}}} As described above the parameterization of a \ac{FF} involves a 
+small set of test systems for which some set of target proprieties are reproduced. The main characteristic of a 
+\ac{FF} is the \textit{transferability} that means the ability of the model to describe different situations that 
+differ from those used at the parameterization stage. Of course one would expect to be able to make some 
+predictions for a bigger variety of systems and for other proprieties not used in the parametrization stage. 
+Common faults of organic \acp{FF} concern, for example, phase transitions of organic compounds and phase 
+transition temperatures.
 
 \subsection{Inter--particles interactions}
-For biomolecular applications the inter--particles interaction potentials are divided into two main classes: The \textit{bonded interactions} involving particles within the same molecules and the \textit{non--bonded interactions} engaging all particles in the system and which usually represent the Van der Waals and the electrostatic interactions. The most common and general functional form for the \ac{PEF} is the following one
+For biomolecular applications the inter--particle interaction potentials are divided into two main classes: the 
+\textit{bonded interactions} involving particles within the same molecules and the \textit{non--bonded 
+interactions} engaging all particles in the system and which usually represent the Van der Waals and the 
+electrostatic interactions. In the following the most common and general functional form for the \ac{PEF} is descried. In general the \ac{PEF} can be always splitted in a bonded and non--bonded contributions.
+\begin{equation*}
+	U(\vec r) = U_{\text{b}}(\vec r) + U_\text{nb}(\vec r)
+	\label{eq:FFPEF}
+\end{equation*}
+
+The bonded contribution is generally described by the following terms
 \begin{equation}
 	\begin{aligned}
-		U(\vec r_1, \cdots \vec r_N) = &\quad \frac{1}{2}\sum_{\text{bonds}} \frac{1}{2}k_i^b(l_i - l_{i0})^2\ + \frac{1}{2}\sum_{\text{angles}} k_i^a (\theta_i - \theta_{i0})^2\ +\\
-		&+ \frac{1}{2}\sum_{\text{torsions}} V_n(1+\cos (n\omega - \gamma))\ + \\
-		&+ \sum_{i=1}^N \sum_{j>i} \left ( {4\epsilon_{ij} \left ( \left ( \frac{\sigma_{ij}}{r_{ij}} \right )^{12} - \left ( \frac{\sigma_{ij}}{r_{ij}} \right )^6 \right )  + \frac{q_iq_j}{4\pi\varepsilon_0 r_{ij}}} \right )
+	U_{\text{b}}(\vec r) = &\frac{1}{2}\sum_{\text{bonds}} \frac{1}{2}k_i^b(l_i - l_{i0})^2\ + \frac{1}{2}\sum_{\text{angles}} k_i^a (\theta_i - \theta_{i0})^2 +\\
+		 	& +\frac{1}{2}\sum_{\text{torsions}} V_n(1+\cos (n\omega - \gamma))
 	\end{aligned}
-	\label{eq:FFPEF}
-\end{equation}
-The first two terms in equation~\eqref{eq:FFPEF} are harmonic potentials which model respectively the energy contribution due to deviation from reference bond length $l_{i0}$ and bond angle $\theta_{i0}$. Together with the bond and angle elastic constants, $k_{bi}$ and $k_{ia}$ respectively, they constitutes the set of parameters for bond and angle contributions. The angle contribution involves a set of three particles in the same molecule.  The middle line of equation~\eqref{eq:FFPEF} concerns the energy contribution due to the bond torsional change where $\omega$ is the
-torsional angle. It involves four particles in the same molecule and mimic the energy barrier needed to rotate the bond angle along the bond axis. $\gamma$ is a phase factor, $V_n$ qualitatively describes the energy barrier for each $n$--th components and $n$ is defined as the number of minima for each components. The last line in equation~\eqref{eq:FFPEF} contains the energy contribution due to the non--bonded interactions: the Van der Waals modeled by a Lennard--Jones $12-6$ potential, fully characterized by the constants $\sigma_{ij}$ and $\epsilon_{ij}$ proper for each particles pair; and the electrostatic potential described by the particles charge $q$. The non--bonded interactions involve obviously all particles in the system, but for particles belonging to same molecule they are computed only if they  are separated by at least three bonds, i.e. if their interactions are not described by bonded terms. The various contributions described above are schematically represented in figure~(\ref{fig:FFInteraction}).
+	\label{eq:bondPEF}
+\end{equation} 
+the first two terms are harmonic potentials which model respectively the energy contribution due to the deviation 
+from reference bond length $l_{i0}$ and a bond angle $\theta_{i0}$. $k_{bi}$ and $k_{ia}$ are the bond and angle 
+elastic constants. The bond contribution involve a set of two particles in the some molecule while the angle 
+contribution a set of three particles in the same molecule. The last term in equation~\eqref{eq:bondPEF} concerns 
+the energy contribution due to the bond torsional change. It involves four particles in the same molecule and 
+mimic the energy barrier needed to rotate the bond angle along the bond axis. $\omega$ is the torsional angle, 
+$\gamma$ is a phase factor, $V_n$ qualitatively describes the energy barrier for each $n$--th components and $n$ 
+is defined as the number of minima for each components.
 
+The non--bonded contribution is described by the following terms
+\begin{equation}
+	U_\text{nb}(\vec r) = \sum_{i=1}^N \sum_{j>i} \left ( {4\epsilon_{ij} \left ( \left ( \frac{\sigma_{ij}}{r_{ij}} \right )^{12} - \left ( \frac{\sigma_{ij}}{r_{ij}} \right )^6 \right )  + \frac{q_iq_j}{4\pi\varepsilon_0 r_{ij}}} \right )
+	\label{eq:nonbonPEF}
+\end{equation}
+The first term is the energy contribution due to the Van der Waals interactions modeled as a Lennard--Jones 
+$12-6$ potential, fully characterized by the constants $\sigma_{ij}$ and $\epsilon_{ij}$ proper for each 
+particles pair. The last term is the electrostatic energy contribution described by the particle charge $q$. The 
+non--bonded interactions involve obviously all particles in the system, but for particles belonging to same 
+molecule they are computed only if they are separated by at least three bonds, i.e. if their interactions are not 
+described by bonded terms. The various contributions described above are schematically represented in 
+figure~(\ref{fig:FFInteraction}).
 \begin{figure}[!ht]
 	\centering
-	\includegraphics[width=0.9\textwidth]{./img/interPartInt/interPartInt}
-	\caption{Schematic representation of the common inter--atoms interactions for biomolecular applications: bond stretching, angle bending, torsional term, Van der Waals and electrostatic interactions.}
+	\includegraphics[width=0.8\textwidth]{./img/interPartInt/interPartInt}
+	\caption{Schematic representation of the common inter--atom interactions for biomolecular applications: bond stretching, angle bending, torsional term, Van der Waals and electrostatic interactions.}
 	\label{fig:FFInteraction}
 \end{figure}
 
 \subsection{Non--bonded interactions}
 \label{sec:nonbonded}
-The bonded interactions, as we can see in equation~\eqref{eq:FFPEF}, are at \textit{fixed range}, meaning that they depend, for example, on the equilibrium bond length that is fixed. The same does not hold for the non--bonded interactions because they depend on the inter--particles distance $r_{ij}$ and they decay to zero as a power of $r_{ij}^{-d}$. Depending on the power order $d$ compared to the dimensionality $s$ of the system they are split into \textit{short range} if $d>s$ and \textit{long range} interactions if $1 \le d < s$. For example, as we shall see later, the Lennard--Jones $12-6$ potential decays to zero as $r^{-6}$ then it is a short range interaction, while the electrostatic is a long range interaction since it decays to zero as $r$.
+The bonded interactions, as we can see in equation~\eqref{eq:bondPEF}, are at \textit{fixed range}, meaning that 
+they depend, for example, on the equilibrium bond length that is fixed. Moreover, usually in standard \ac{MD} 
+simulations the bond break is not taken into account. The same does not hold for the non--bonded interactions 
+because they depend on the inter--particles distance $r_{ij}$ and they decay to zero as a power of $r_{ij}^{-d}$. 
+Depending on the power order $d$ compared to the dimensionality $s$ of the system they are split into 
+\textit{short range} if $d>s$ and \textit{long range} interactions if $1 \le d < s$. For example, as we shall see 
+later, the Lennard--Jones $12-6$ potential decays to zero as $r^{-6}$ then it is a short range interaction, while 
+the electrostatic is a long range interaction since it decays to zero as $r$.
 
 \subsubsection{Cut--off, shift and switch methods}
-As we have mentioned in~\ref{sec:neighbor} the calculations of the non--bonded interactions energy contributions is one of the most time consuming part of an \ac{MD} simulations. Since they are pairwise interactions their calculation scale as $\sim N^2$. Especially for the short range interactions, various methods were developed in order to speed--up the simulations. The \textit{cut--off} method is the most used to treat the short range interactions and, in same cases, even the long range one. Obviously this is strictly connected to the way neighbor list are computed as we have seen a cut--off method alone is not enough to speed up the simulation. Taking one particle into account, the general idea is to evaluate the non--bonded interactions with all other particles that are closer to the first for a distance $r_c$, called \textit{cut--off} radius, otherwise the interactions is set to $0$. This means that the new potential is of the form
+As we have mentioned in section~\ref{sec:neighbor} the calculations of non--bonded interaction energy 
+contributions is one of the most time consuming part of an \ac{MD} simulation. Even if we use a simple pairwise 
+additive potential their calculation scale as $\sim N^2$. Thus, especially for short range interactions, various 
+methods were developed in order to speed--up the simulation. The \textit{cut--off} method is the most used to 
+treat the short range interactions and, in some cases, even the long range ones. Taking one particle into 
+account, the general idea is to evaluate the non--bonded interactions with all other particles that are closer to 
+the first for a distance $r_c$, called \textit{cut--off} radius, otherwise the interactions is set to $0$. This 
+means that the new potential is of the form
 \begin{equation*}
 v^*(r) = \left \{
 	\begin{aligned}
@@ -760,7 +830,10 @@ v^*(r) = \left \{
 	\end{aligned} \right .
 \end{equation*}
 
-This generates a discontinuity in the potential and in its first derivative, i.e. in the forces: This is bad for energy conservation. A trick for solving the discontinuity of the potential and to improve the energy conservation is to apply also a \textit{shift} of the potential value at $r_c$, since it is a constant it does not affect the forces. We have
+This generates a discontinuity in the potential and in its first derivatives, i.e. in the forces: this is bad for 
+energy conservation. A trick for solving the discontinuity of the potential and to improve the energy 
+conservation is to apply also a \textit{shift} of the potential value at $r_c$ so that $v^*(r_c) = 0$. Adding a 
+constant will not affect the force calculations. The potential becomes
 \begin{equation*}
 v^*(r) = \left \{
 	\begin{aligned}
@@ -768,7 +841,9 @@ v^*(r) = \left \{
 &0    & \quad  & r >   r_c
 	\end{aligned} \right .
 \end{equation*}
-Moreover to solve the discontinuity of the forces, that can cause some instability in a simulation, we need to consider a linear term proportional to the first derivative of the potential, such as
+
+Moreover, to solve the discontinuity of the forces, that can cause some instability, a simple possibility is to  
+consider a linear term proportional to the first derivative of the potential, such as
 \begin{equation*}
 v^*(r) = \left \{
 	\begin{aligned}
@@ -776,68 +851,122 @@ v^*(r) = \left \{
 &0    & \quad  & r >   r_c
 	\end{aligned} \right .
 \end{equation*}
-Although, the shift methods make the potential quite different from the ``true'' one and this makes difficult to retrieve the correct thermodynamics proprieties. Thus, even if it can solve some instabilities, it must be carefully used.
+The shift methods can make the potential quite different from the original one. So this have to be properly taken 
+into account in order to retrieve the correct thermodynamics proprieties.
 
-Another powerful method is the \textit{switch} method. The general idea is to consider two cut--off radii  $r_{c1}$ and $r_{c2}$. If $r \le r_{c1}$ the ``true'' forms are used; while for $r > r_{c2}$ the potential is set to zero. For $r_{c1} < r \le r_{c2}$ a \textit{switching function} is considered in order to \textit{smoothly} switch the potential to zero.
+Another powerful method to solve the discontinuity problem of the potential and forces is the \textit{switch} 
+method. The general idea is to consider two cut--off radii  $r_{c1}$ and $r_{c2}$. If $r \le r_{c1}$ the original 
+form is used; while if $r > r_{c2}$ the potential is set to zero. If $r_{c1} < r \le r_{c2}$ a \textit{switching 
+function} is considered in order to \textit{smoothly} switch the potential to zero.
 
-It is important to stress out that even the method used to treat the interactions, as the cut--off radii and eventually the switching function, are part of the simulation parameters that are still part of the \ac{FF}. So they are interdependent with the model parameterizations, and should never be changed without retesting some target properties.
-
+It is important to stress out that even the method used to treat the interactions, as the cut--off radii and 
+eventually the switching function, are part of the simulation parameters that are, in turn, part of the \ac{FF}. 
+So they are interdependent with the model parameterization, and should never be changed without retesting the 
+target properties of the parameterization.
 
 \subsection{Van der Waals interactions}
-Van der Waals forces are a set of interactions that are divided into two main contributions: an attracting interaction and a repulsive one. The main contribution to both is due to quantum dynamics effect of the electron cloud interactions through the Pauli exclusion principle and to the instantaneous electrostatic interactions, even if both atoms are neutral, such as dipole--dipole, induced dipole--dipole and induced dipole--induced dipole interactions which, in a more rigorous description should be treated quantum mechanically. Both London dispersion forces, involving polar and non-polar atoms and related to instantaneous multipoles interactions, and hydrogen bonding, due to quantum effects, instantaneous electrostatics interactions and entropy effects, contribute to the attractive part of the potential. 
-%To the attractive contribution there are also the London dispersion forces that involves polar and non--polar atoms and is due to the instantaneous multipoles interactions, and the hydrogen--bonding that is due to quantum effect, instantaneous electrostatic interactions and an entropic contribution.
+Van der Waals forces are a set of interactions that can be ascribed to quantum dynamic effects. In general they 
+are described by a sum of a repulsive and an attracting term. The former effectually takes into account the Pauli 
+exclusion principle between electron clouds; the latter is related to the dipole--dipole interactions (Keesom 
+forces), dipole--induce dipole interactions (Debye forces), induced dipole--induced dipole interactions, London 
+dispersion forces, hydrogen bonding and entropy effects, that involves both polar and non--polar atoms. 
 
-The usual model to treat Van der Waals interactions is a Lennard--Jones potential. The most common exponents for the attractive and repulsive contributions to the potential are $6$ and $12$, respectively, although $6$ and $9$ can also be found depending on the system. The general form for a $12-6$ Lennard--Jones potential is the following
+The usual way to treat the Van der Waals interactions is to use a pairwise Lennard--Jones potential. The most 
+common exponents for the attractive and repulsive contributions are $6$ and $12$, respectively. The former has 
+physical meaning: calculating the repulsive part of the Van der Waals interaction for a simple system in a 
+semi--classical approximation gives a potential energy contribution that vanishes as $r^{-6}$. While the latter 
+is only for computational reason: giving the $r^{-6}$ term it is efficiency to calculate $r^{-12}$ as the square 
+of $r^{-6}$. Thus it is just a common choice and other exponents can do the job, depending on the system in 
+study. The general form for a $12-6$ Lennard--Jones potential is the following
 \begin{equation}
 	v(r) = 4\epsilon\left ( \left ( \frac{\sigma}{r}\right )^{12}  - \left ( \frac{\sigma}{r} \right )^6 \right ) = \frac{C_{12}}{r^{12}} - \frac{C_{6}}{r^{6}}
 	\label{eq:lj126}
 \end{equation}
-where $C_{12} = 4\epsilon\sigma^{12}$, $C_{6} = 4\epsilon\sigma^{6}$ and $r$ is the pairwise particles distance. $\epsilon$ is related to the absolute value of minimum while $\sigma$ is relented to the position of the minimum of the potential: $r_{\text{min}} = 2^{\nicefrac{1}{6}}\sigma$, often referred to by Van der Waals radius. These constants are proper for each particle pair. The attractive contribution is due to the negative part proportional to $r^{-6}$ while the repulsive one is due to the positive part proportional to $r^{-12}$. In figure~(\ref{fig:LG12511}) there is a example plot of the function~\eqref{eq:lj126} with $\epsilon = \sigma = 1$.
+where $C_{12} = 4\epsilon\sigma^{12}$, $C_{6} = 4\epsilon\sigma^{6}$ and $r$ is the pairwise particles distance. 
+$\epsilon$ is related to the absolute value of minimum while $\sigma$ is related to the position of the minimum 
+of the potential: $r_{\text{min}} = 2^{\nicefrac{1}{6}}\sigma$, often referred to by Van der Waals radius. These 
+constants are proper for each particle pair. The attractive contribution is due to the negative part proportional 
+to $r^{-6}$ while the repulsive one is due to the positive part proportional to $r^{-12}$. In 
+figure~(\ref{fig:LG12511}) a plot of the function~\eqref{eq:lj126} with $\epsilon = \sigma = 1$ is shown.
 \begin{figure}[!ht]
 \centering
 	\includegraphics[width=0.6\textwidth]{./img/LJ126/LJ126}
-	\caption{Example plot of a Lennard--Jones function with $\epsilon = \sigma = 1$.}
+	\caption{Plot of a Lennard--Jones interaction potential with $\epsilon = \sigma = 1$.}
 	\label{fig:LG12511}
 \end{figure}
 
-The simplest and computationally most efficient way to treat a Lennard--Jones function, and in general all the short range interactions, is to use the cut--off method together with the shift or switch methods in order to obtain a continuous potential and/or a continuous forces. As we can see from figure~(\ref{fig:LG12511}) the Lennard--Jones potential go to zero rapidly with distance: at $r \sim 2\sigma$ its value is less then $1\%$ of the value in $r \sim \sigma$. A good choice for the cut--off is then of the order of $r_c \sim 2\sigma \div 3\sigma$.
+The simplest and computationally most efficient way to treat a Lennard--Jones function, and in general all the 
+short range interactions, is to use the cut--off method together with the shift or switch methods in order to 
+obtain a continuous potential and/or a continuous forces. As we can see from figure~(\ref{fig:LG12511}) the 
+Lennard--Jones potential vanishes rapidly with distance: at $r \sim 2\sigma$ its value is less then $1\%$ of the 
+value in $r \sim \sigma$. A good choice for the cut--off is then of the order of $r_c \sim 2\sigma \div 3\sigma$.
 
 \subsection{Electrostatic interactions}
 \label{sec:longRangeInt}
-One of the most important long range interaction is the electrostatic one. Despite the long range characteristic, for purely computational efficient reason, most of the \acp{FF} for biomolecular applications treat them in the same way as a short range interaction by a cut--off method\footnote{In general, for computational reason, a common choice is to consider the some cut--off for Van der Waals and electrostatic interactions.}. Of course this is an approximation and can lead to a serious issues in those proprieties or systems that strongly depend on the electrostatic interaction. Most issues due to a bad treatment of the Coulomb interactions are related to the development of a good polar solvent model (a good treatment of the electrostatic proprieties of water is really important for biological applications), as well as to the study of the interactions of charged particles with polar solvents, transport processes of charged moieties, calculations of the electrostatic potential inside macromolecules and so on. The loss of computational efficiency in the calculations of the electrostatic energy contribution is that it needs to take into account \textit{all particles} in a system, but we can not forget \ac{PBC}: even all the infinity images of all particles need to be taken into account.
+Despite the long range characteristic of the electrostatic interaction, for computational efficient reason, most 
+of the \acp{FF} for biomolecular applications treat them in the same way as a short range interaction by a 
+cut--off method\footnote{In general, for computational reason, a common choice is to consider the same cut--off 
+for Van der Waals and electrostatic interactions.}. Of course this is an approximation and can lead to serious 
+issues in those proprieties or systems that strongly depend on the electrostatic interactions. As an example we 
+report some situations in which the use of the short--range electrostatics can lead to artifacts: they are 
+related to the development of a good polar solvent model (a good treatment of the electrostatic proprieties of 
+water is really important for biological applications), as well as to the study of the interactions of charged 
+particles with polar solvents, transport processes of charged moieties, calculations of the electrostatic 
+potential inside macromolecules and so on. The calculation of the electrostatic energy contribution requires to 
+take into account \textit{all particles} in a system, even all the periodic images due to the \ac{PBC}. This 
+leads to a loss of computational efficiency.
 
-If we consider only the simulation box the energy contribution is
+If we consider only the simulation box the electrostatic energy contribution is
 \begin{equation}
 	U = \frac{1}{2}\sum_{i=1}^N\sum_{j\ne i}^N\frac{1}{4\pi\varepsilon_0}\frac{q_iq_j}{r_{ij}}
 	\label{eq:electrostatic}
 \end{equation}
-where $q_i$ and $q_j$ are the charge of particles $i$ and $j$, respectively, and $r_{ij}$ is the distance between $i$ and $j$. But we need also all image boxes. Supposing, for simplicity, that the box is a cube of size $L$, then we can define a tern of integer numbers $(n_x,\ n_y,\ n_z)$, $n_i=0,1,2,\cdots$ so that the position of all other image boxes, with respect to the central simulation box, is $\vec n = L (n_x,\ n_y,\ n_z)$. Then the energy contribution becomes
+where $q_i$ and $q_j$ are the charge of particles $i$ and $j$ and $r_{ij}$ is the distance between $i$ and $j$. 
+But we need also all image boxes. Supposing, for simplicity, that the box is a cube of size $L$, then we can 
+define a tern of integer numbers $(n_x,\ n_y,\ n_z)$, $n_i=0,1,2,\cdots$ so that the position of all other image 
+boxes, with respect to the central simulation box, is $\vec n = L (n_x,\ n_y,\ n_z)$. Then the energy 
+contribution becomes
 \begin{equation}
 	U = \frac{1}{2}\ \sideset{}{'}\sum_{n_x,n_y,n_z}^{+\infty}\ \sum_{i=1}^N\sum_{j=1}^N\frac{1}{4\pi\varepsilon_0}\frac{q_iq_j}{\|\vec r_i - \vec r_j + \vec n \|}
 	\label{eq:electrostaticImage}
 \end{equation}
-where the prime indicates that for $\vec n = 0$, i.e. the energy contribution of the simulation box, we need to exclude the self interaction term: So in inner sum it must be $j \ne i$.
+where the prime indicates that for $\vec n = 0$, i.e. the energy contribution of the simulation box, we need to 
+exclude the self interaction term: in the inner sum it must be $j \ne i$.
 
-As described above, a cut--off method is a good easy way to solve equation~\eqref{eq:electrostatic} and sometimes it produces good results. However, the increasing of computer power can lead to develop more rigorous methods to solve equation~\eqref{eq:electrostaticImage}, even for very large systems. The main problem is that the summation in equation~\eqref{eq:electrostaticImage} is \textit{conditionally convergent}\footnote{A conditionally convergent series contains both positive and negative terms such that the positive or negative term alone form both a divergent series. The sum of a conditionally convergent series depends on the order in which the positive and negative terms are considered.} and converges extremely slowly so that it would need so many terms to converge that its computational cost would be too high, especially for large systems (of the order of $N \sim 3\cdot 10^4$). The most important methods developed to solve this problem are based on the \textit{Ewald Summation Method} (\acs{ESM}). We shall describe those used in this thesis work: the \ac{ESM} itself and the \textit{Particle Mesh Ewald} (\acs{PME}) method. For a more complete discussion about the advanced methods developed to treat the electrostatic interactions for biological applications the reader is addressed to the Review by Cisneros \etal\, \cite{Cisneros}.
+As described above, a cut--off method is a good easy way to solve equation~\eqref{eq:electrostatic} and sometimes 
+it produces sufficiently good results. However, the increasing of computer power can lead to develop more 
+rigorous methods to solve equation~\eqref{eq:electrostaticImage}, even for very large systems. The main problem 
+is that the summation in equation~\eqref{eq:electrostaticImage} is \textit{conditionally convergent}\footnote{A 
+conditionally convergent series contains both positive and negative terms such that the positive or negative term 
+alone form both a divergent series. The sum of a conditionally convergent series depends on the order in which 
+the positive and negative terms are considered.} and converges extremely slowly so that it would need so many 
+terms to converge that its computational cost would be too high, especially for large systems (of the order of 
+$N > 10^4$). The most important methods developed to solve this problem are based on the \ac{ESM}. We shall 
+describe those used in this thesis work: the \ac{ESM} itself and the \ac{PME} method. For a more complete 
+discussion about the advanced methods developed to treat the electrostatic interactions for biological 
+applications the reader is addressed to the review by Cisneros \etal\, \cite{Cisneros}.
 
 \subsubsection{Ewald summation method} %Molecular Modelling, 334
-The \acf{ESM} is the first method introduced by Ewald
-%L'articolo è in tedesco... Lo devo citare?, in realtà è citato nel Leach
-for a correct treatment of the electrostatic energy contribution in an ionic crystal that can be modeled as the electrostatic interactions of a periodic charge density. The basic idea is to split the summation in equation~\eqref{eq:electrostaticImage} in two series both rapidly convergent. The method is based on the following identity
+The \acf{ESM} is the first method introduced by Ewald for a correct treatment of the electrostatic energy 
+contribution in an ionic crystal. The basic idea is to split the summation in equation~ 
+\eqref{eq:electrostaticImage} in two series both rapidly convergent. The method is based on the following identity
 \begin{equation}
 	\frac{1}{r} = \frac{f(r)}{r} + \frac{1 - f(r)}{r}
 	\label{eq:ewaldTrick}
 \end{equation}
-the trick is to choose a function $f(r)$ that will deal with the rapid variation of the $1/r$ term for small $r$ and the slow decay at long $r$; in that case the two series can rapidly converge.
-
-\begin{figure}[!hb]
+the trick is to choose a function $f(r)$ that will deal with the rapid variation of the $1/r$ term for small $r$ 
+and the slow decay at long $r$; in that case the two series can rapidly converge.
+\begin{figure}[!ht]
 	\centering
 	\includegraphics[width=0.8\textwidth]{./img/EwaldSum/EwaldSum}
-	\caption{Schematic illustration of the \acl{ESM} charge distribution: in (a) point charges (represented by vertical lines) and the neutralizing Gaussian charge distribution; in (b) the counteracts Gaussian distribution.}
+	\caption{Schematic illustration of the \acs{ESM} charge distribution: in (a) point charges (represented by vertical lines) and the neutralizing Gaussian charge distribution; in (b) the counteracting Gaussian distribution.}
 	\label{fig:ewald}
 \end{figure}
 
-The \ac{ESM} for electrostatic interactions works, as illustrated in figure~(\ref{fig:ewald}), considering each point--like charge in the system surrounded by a neutralizing charge distribution of equal magnitude but opposite sign that decays rapidly to zero. Simplifying the notation for a one dimensional system, the simplest functional form is a Gaussian distribution centered in the position $r_i$ of the point--like charge $q_i$, of the form
+The \ac{ESM} for electrostatic interactions works, as illustrated in figure~(\ref{fig:ewald}), considering each 
+point--like charge in the system surrounded by a neutralizing charge distribution of equal magnitude but opposite 
+sign that decays rapidly to zero. Simplifying the notation for a one dimensional system, the simplest functional 
+form is a Gaussian distribution centered in the position $r_i$ of the point--like charge $q_i$, of the form
 \begin{equation}
 	\rho_i(r) = \frac{q_i\alpha^3}{\pi^{3/2}}e^{-\alpha^2 (r - r_i)^2}
 \end{equation}
@@ -845,32 +974,47 @@ that obeys the relation
 \begin{equation*}
 	\frac{q_i\alpha^3}{\pi^{3/2}}\int_{r_i-\epsilon}^{r_i+\epsilon}e^{-\alpha^2 (r - r_i)^2}\ dr \simeq q_i
 \end{equation*}
-where $(r_i-\epsilon; r_i+\epsilon)$ is a small interval around $r_i$. The energy contribution due to this set up, the point--like charge \textit{and} the gaussian charge distribution, is given by
+where $(r_i-\epsilon; r_i+\epsilon)$ is a small interval around $r_i$. The energy contribution due to this set 
+up, the point--like charge \textit{and} the gaussian charge distribution, is given by
 \begin{equation}
 	U_r = \frac{1}{2}\sum_{i=1}^N\sum_{j=1}^N\ \sideset{}{'}\sum_{n_x,n_y,n_z}\ \frac{q_iq_j}{4 \pi \varepsilon_0} \frac{\erfc{(\alpha \| \vec r_i - \vec r_j + \vec n \|)}}{\| \vec r_i - \vec r_j + \vec n \|}
 	\label{eq:ewaldReal}
 \end{equation}
-where $\erfc{(x)} = 1-\erf{(x)}$ is the complementary error function and $\erf{(x)}$ is the error function. They are given by
+where the prime indicate that for $\vec n = 0$ must be $i\ne j$, $\erfc{(x)} = 1-\erf{(x)}$ is the complementary 
+error function and $\erf{(x)}$ is the error function. They are given by
 \begin{equation}
 	\erfc{(x)} = \frac{2}{\sqrt{\pi}}\int_{x}^{+\infty} e^{-t^2}\ dt, \qquad \erf{(x)} = \frac{2}{\sqrt{\pi}}\int_{0}^{x} e^{-t^2}\ dt
 	\label{eq:erf}
 \end{equation}
 
-The point is that the summation involving the complementary error function in equation~\eqref{eq:ewaldReal} is rapidly convergent and it needs very few terms so that a cut--off method can be safely used. The rate of convergence depends on the $\alpha$ parameter, the bigger is $\alpha$ the more rapidly converge and the shorter can be the cut--off radius.
-Thus the \ac{ESM} use the $\erfc{(r)}$ as $f(r)$ function in equation~\eqref{eq:ewaldTrick}. Of course since we added a non physical neutralizing charge in the system, in order to restore the real charge distribution, we must consider another distribution, called counteracts charge distribution, of equal magnitude but opposite sign. Considering the identity in equation~\eqref{eq:ewaldTrick} this lead to an energy contribution of the form $(1-f(r))/r$, so, using equation~\eqref{eq:erf}, it is of the form $\erf{(r)}/r$. Another trick is to compute the former in the \textit{real space}, the latter in the \textit{reciprocal space}, thus considering its Fourier transform. This energy contribution is given by
+The point is that the summation involving the complementary error function in equation~\eqref{eq:ewaldReal} is 
+rapidly convergent and it needs very few terms so that a cut--off method can be safely used. The rate of 
+convergence depends on the $\alpha$ parameter: the bigger is $\alpha$, the more rapidly the series converges and 
+the shorter the cut--off radius can be. Thus the \ac{ESM} use the $\erfc{(r)}$ as $f(r)$ function in 
+equation~\eqref{eq:ewaldTrick}. Of course since we added a non physical neutralizing charge in the system, in 
+order to restore the real charge distribution, we must consider another distribution, called counteracting charge 
+distribution, of equal magnitude but opposite sign. Considering the identity in equation~\eqref{eq:ewaldTrick} 
+this lead to an energy contribution $U_f$ of the form $(1-f(r))/r$. But using equation~\eqref{eq:erf}, it becomes 
+of the form $\erf{(r)}/r$. Another important trick is to compute $U_r$ in the \textit{real space} while $U_f$ in 
+the \textit{reciprocal space}, thus considering its Fourier transform. This energy contribution is given by
 \begin{equation}
 	U_f = \frac{1}{2}\sum_{i=1}^N\sum_{j=1}^N\ \sum_{k_x,k_y,k_z}\ \frac{1}{4\pi\varepsilon_0}\frac{4\pi}{L^3k^2}e^{-k^2/(4\alpha^2)}e^{\mathsf{i}{\vec k \cdot (\vec r_i - \vec r_j)}}
 	\label{eq:ewaldReciprocal}
 \end{equation}
-where $\vec k = 2\pi\vec n/L$ are the reciprocal lattice vectors. Even $U_f$ converges rapidly as $U_r$ in equation~\eqref{eq:ewaldReal}; then a cut--off method can be safely used. Nevertheless, as opposite to $U_r$, the smaller is $\alpha$ the shorter can be the cut--off. Clearly a proper \textit{balance} between the real and reciprocal space summation is needed.
+where $\vec k = 2\pi\vec n/L$ are the reciprocal lattice vectors. Even $U_f$ converges rapidly as $U_r$ in 
+equation~\eqref{eq:ewaldReal}; then a cut--off method can be safely used. Nevertheless, opposite to $U_r$, the 
+smaller is $\alpha$, the shorter the cut--off can be. Clearly a proper \textit{balance} between the real and 
+reciprocal space summation is needed.
 
-Since in equation~\eqref{eq:ewaldReal} even the self interaction with each Gaussian is included we need to add another item for cancel it out; this is done by the self--term
+Since in equation~\eqref{eq:ewaldReal} even the self interaction with each Gaussian is included we need to add 
+another item for cancel it out; this is done by the self--term
 \begin{equation}
-	U_{self} = -\frac{\alpha}{\sqrt{\pi}}\sum_{i=1}^N\frac{q_i}{4\pi\varepsilon_0}
+	U_\text{self} = -\frac{\alpha}{\sqrt{\pi}}\sum_{i=1}^N\frac{q_i}{4\pi\varepsilon_0}
 	\label{eq:EwaldselfTerm}
 \end{equation}
 
-Summarizing, the energy contribution of the electrostatic interactions by the \ac{ESM}, is computed summing equations~\eqref{eq:ewaldReal},\eqref{eq:ewaldReciprocal} and~\eqref{eq:EwaldselfTerm} to obtain
+Summarizing, the energy contribution of the electrostatic interactions by the \ac{ESM} is computed summing 
+equations~\eqref{eq:ewaldReal},\eqref{eq:ewaldReciprocal} and~\eqref{eq:EwaldselfTerm} to obtain
 \begin{equation}
 	\begin{aligned}
 		U =&\quad\frac{1}{2}\sum_{i=1}^N\sum_{j=1}^N\ \sideset{}{'}\sum_{n_x,n_y,n_z}\ \frac{q_iq_j}{4 \pi \varepsilon_0} \frac{\erfc{(\alpha \| \vec r_i - \vec r_j + \vec n \|)}}{\| \vec r_i - \vec r_j + \vec n \|}\ + \\
@@ -879,31 +1023,62 @@ Summarizing, the energy contribution of the electrostatic interactions by the \a
 	\end{aligned}
 	\label{eq:EwaldEnergy}
 \end{equation}
-The first line is the real space contribution while the second is the Fourier energy contribution. Since the last self--interaction term is constant it does not affect forces computation. The \ac{ESM} offers a well defined method to properly treat electrostatic interactions, nevertheless it is quite expensive in term of computational resources. If $\alpha$ and the cut--off are constant, then the computation scales as $\sim N^2$; while if $\alpha$ and the cut--off are dynamically updated it scales as $\sim N^{\nicefrac{3}{2}}$; this can lead to an incompatibility between the Van der Waals interactions cut--off and the electrostatic one thus compromising the efficiency gain. Despite we have described \ac{ESM} applying it to the electrostatic interactions, it can be used, with some changes, with all long--range interactions and in general to all energy contributions that decay as $r^{-d}$, for example, even with the Van der Waals energy contribution.
+The first line is the real space contribution while the second is the Fourier energy contribution. Since the last 
+self--interaction term is constant it does not affect forces computation. The \ac{ESM} offers a well defined 
+method to properly treat electrostatic interactions, nevertheless it is quite expensive in term of computational 
+resources. If $\alpha$ and the cut--off are constant, then the computation scales as $\sim N^2$.
 
-For biomolecular applications most \ac{MD} tools set an equal cut-off radius for both Van der Waals interaction and the real part of the Ewald summation~\eqref{eq:EwaldEnergy} in order to achieve for both a scaling of the order $\sim N$. However in this way the computation of the reciprocal part in the Ewald summation~\eqref{eq:EwaldEnergy} will be very inefficient as it scales as $\sim N^2$. In order to increase the efficiency of the calculation of the Fourier transform various of advanced methods can be used. They are all based on the use of the \ac{FFT} method. In this way the reciprocal part can scale as $\sim N\ln N$. Since \ac{FFT} requires discretized quantities, the idea of such methods, called \textit{Particle Mesh} is to consider the charge density spread on a mesh grid and then evaluate the electrostatic potential via solving the Poisson's equation\footnote{Given a charge distribution $\rho(\vec r)$ then the associated electrostatic potential $\phi(\vec r)$ can be calculated solving the Poisson's equation $\displaystyle \nabla^2\phi(\vec r) = -\frac{1}{\varepsilon_0} \rho(\vec r)$. If a charge $q$ is at position $\vec r$ its electrostatic potential energy is given by $U = q\phi(\vec r)$.}
-using fast Poisson solver together with the \ac{FFT} method; this can be done, for example, exploiting the \ac{PBC} in order to discretize and make periodic the Poisson's equation
+For biomolecular applications most \ac{MD} tools set an equal cut-off radius for both Van der Waals interaction and the real part of the Ewald summation~\eqref{eq:EwaldEnergy} in order to achieve for both a scaling of the order $\sim N$. However in this way the computation of the reciprocal part in the Ewald summation~\eqref{eq:EwaldEnergy} will be very inefficient as it scales as $\sim N^2$. In order to increase the efficiency of the calculation of the Fourier transform various of advanced methods can be used. They are all based on the use of the \ac{FFT} method. In this way the reciprocal part can scale as $\sim N\ln N$. Since \ac{FFT} requires discretized quantities, the idea of such methods, called \textit{particle mesh} is to consider the charge density spread on a mesh grid and then evaluate the electrostatic potential via solving the Poisson's equation\footnote{Given a charge distribution $\rho(\vec r)$ then the associated electrostatic potential $\phi(\vec r)$ can be calculated solving the Poisson's equation $\displaystyle \nabla^2\phi(\vec r) = -\frac{1}{\varepsilon_0} \rho(\vec r)$. If a charge $q$ is at position $\vec r$ its electrostatic potential energy is given by $U = q\phi(\vec r)$.} using fast Poisson solver together with the \ac{FFT} method; this can be done, for example, exploiting the \ac{PBC} in order to discretize and make periodic the Poisson's equation.
 %\footnote{It is generally true that the Poisson's equation become ``easily'' solvable in Fourier space. Considering a one dimensional Poisson's equation, its Fourier transform is $k^2\varepsilon_0\tilde\phi(k) = \tilde \rho(k)$ where $\tilde\phi(k)$ and $\tilde\rho(k)$ are, respectively, the Fourier transform of the electrostatic potential and charge distribution.}.
-Such algorithms include the \textit{particle--particle particle--mesh} method, \textit{Particle mesh Ewald} method, \textit{Fast--Fourier Poisson} method and a recent methodology based on multi--scale mesh grid; the efficiency and accuracy of such mesh--based algorithms depends strongly on the way in which the charges are attributed to mesh points, this makes the methods different. In the following we will describe the one used in this thesis work, the \acf{PME} method.
+Such algorithms include the \textit{particle--particle particle--mesh} method, \textit{particle mesh Ewald} 
+method, \textit{fast--Fourier Poisson} method and a recent methodology based on multi--scale mesh grid. The 
+efficiency and accuracy of such mesh--based algorithms depends strongly on the way in which the charges are 
+attributed to the mesh points, this makes the methods different. In the following we will describe the one used 
+in this thesis work, the \acf{PME} method.
 
 \subsubsection{Particle mesh Ewald method}
-\acf{PME} method developed by Darden \etal\, \cite{DardenPME} is based on the \ac{ESM} so that the starting point is equation~\eqref{eq:EwaldEnergy} in which, as described above, the first part of the Ewald summation is computed in the real space together with the Van der Waals contribution using the same cut--off radius while the reciprocal part is computed using \ac{FFT} method, in order to have a gain of performance. To do this, first, we need to consider a grid mesh onto which the Gaussian counteracts charge distribution is spread. The basic idea, then, is to calculate the electrostatic energy solving Poisson's equation through \ac{FFT} methods. The efficiency and accuracy depend on the way the charges are distributed onto the grid. To do this a \textit{charge assignment function}, $W(r)$ is introduced such that, considering for simplicity a one dimensional system, the fraction of a charge at position $r$ assigned to a grid point at position $r_p$ is given by $W(r_p - r)$. Hence, if we have a charge density $\rho(r)$ then the charges at the grid point $r_p$ are given by
+\acf{PME} method developed by Darden \etal\, \cite{DardenPME} is based on the \ac{ESM} so the starting point is 
+equation~\eqref{eq:EwaldEnergy}. As described above, the first part of the Ewald summation is computed in the 
+real space together with the Van der Waals contribution using the same cut--off radius. The reciprocal part 
+instead, is computed using \ac{FFT} method, in order to have a gain of performance. First, we need to 
+consider a grid mesh onto which the Gaussian counteracting charge distribution is spread. The basic idea, then, 
+is to calculate the electrostatic energy solving Poisson's equation through \ac{FFT} methods. The efficiency and 
+accuracy depend on the way the charges are distributed onto the grid. To do this a \textit{charge assignment 
+function}, $W(r)$ is introduced such that, considering for simplicity a one dimensional system, the fraction of a 
+charge at position $r$ assigned to a grid point at position $r_p$ is given by $W(r_p - r)$. Hence, if we have a 
+charge density $\rho(r)$ then the charges at the grid point $r_p$ are given by
 \begin{equation}
 	q_M(r_p) = \int_0^L\ W(r_p - r) \rho (r)\ dr
 	\label{eq:meshAssign}
 \end{equation}
-where $L$ is the box length and, if $h$ is the grid spacing, $M = L/h$ is the number of mesh point. In figure~(\ref{fig:gidAssign}) the charges assignment is schematically represented. The assignment function should have the following proprieties: should be an even function and should be normalized in such a way that the sum of the fractional charges equals the total charge of the system. Moreover the best accuracy is obtained with a dense grid in order to reduce as much as possible the discretization of the charge density. However the computational cost increases as the number of grid points! So a balance between efficiency and accuracy is clearly needed.
+where $L$ is the box length and, if $h$ is the grid spacing, $M = L/h$ is the number of mesh point. In 
+figure~(\ref{fig:gidAssign}) the charges assignment is schematically represented. 
+
+The assignment function should have the following proprieties: it should be an even function and it should be 
+normalized in such a way that the sum of the fractional charges equals the total charge of the system. Moreover 
+the best accuracy is obtained with a dense grid in order to reduce as much as possible the discretization of the 
+charge density. However the computational cost increases as the number of grid points: a balance between 
+efficiency and accuracy is clearly needed.
 \begin{SCfigure}
 	\includegraphics[width=0.35\textwidth]{./img/gridCharge/gridCharge}
 	\caption{A schematic representation of the charge assignment. The black filled circles are a unit particle charge, while the red ones, are the charges assigned to grid points. The bigger is the circle, the more is the charge.}
 	\label{fig:gidAssign}
 \end{SCfigure}
 
-A nice way to solve the problem of charge assignment is to shift the problem to the discretization of the Fourier transform. This can be viewed as an interpolation problem. Consider the $e^{-\mathsf{i}\vec k\cdot \vec r_j}$ term in the Fourier transform of equation~\eqref{eq:ewaldReciprocal}. In general $\vec r_j$ does not correspond to a mesh grid point, so that term is not part of a discrete Fourier transform. The idea, thus, is to interpolate it in terms of values of the complex exponential at the mesh points. Switching for simplicity to a one dimensional system, if the mesh grid has $M = L/h$ points, a particle coordinate $r_j$ is located between mesh points $[r_j/h]$ and $[r_j/h] + 1$ where $[ ]$ denotes the integer part; thus a $p$--order interpolation of the exponential is of the form
+A nice way to solve the problem of charge assignment is to shift the problem to the discretization of the Fourier 
+transform. This can be viewed as an interpolation problem. Consider the $e^{-\mathsf{i}\vec k\cdot \vec r_j}$ 
+term in the Fourier transform of equation~\eqref{eq:ewaldReciprocal}. In general $\vec r_j$ does not correspond 
+to a mesh grid point, so that term is not part of a discrete Fourier transform. The idea, thus, is to interpolate 
+it in terms of values of the complex exponential at the mesh points. Switching for simplicity to a one 
+dimensional system, if the mesh grid has $M = L/h$ points, a particle coordinate $r_j$ is located between mesh 
+points $[r_j/h]$ and $[r_j/h] + 1$ where $[\cdot]$ denotes the integer part; thus a $p$--order interpolation of 
+the exponential is of the form
 \begin{equation*}
 	e^{-\mathsf{i}kr_j} \simeq \sum_{i=1}^M W_{p}\left ( \frac{r_j}{h} - i \right ) e^{-\mathsf{i}khi}
 \end{equation*}
-where $W_{p}$ denotes the interpolation coefficient. A $p$--order interpolation means that only the $p$ mesh points nearest to $r_j$ contribute to the sum. Assuming a point--like charge distribution the Fourier transform of the charge density is therefore
+where $W_{p}$ denotes the interpolation coefficient. A $p$--order interpolation means that only the $p$ mesh 
+points nearest to $r_j$ contribute to the sum. Assuming a point--like charge distribution the Fourier transform 
+of the charge density is therefore
 \begin{equation*}
 	\rho_k \simeq \sum_{i}e^{-\mathsf{i}khi} \sum_j\ q_iW_{p} \left ( \frac{r_j}{h} - i \right )
 \end{equation*}
@@ -911,36 +1086,79 @@ we can interpret the above expression as the discrete Fourier transform of the c
 \begin{equation*}
 	\rho(i) = \sum_j\ q_iW_{p} \left ( \frac{r_j}{h} - i \right )
 \end{equation*}
-but using equation~\eqref{eq:meshAssign}, it is nothing that the point--like charge distribution assigned to the mesh point $i$ through the assignment function $W_{p}$.
+but using equation~\eqref{eq:meshAssign}, it is nothing that the point--like charge distribution assigned to the 
+mesh point $i$ through the assignment function $W_{p}$.
 
-We clearly see that the charge assignment problem is now shifted to the complex exponential interpolation. There are two main methods to make the interpolation: the \textit{Lagrange interpolation method} and the \textit{Euler SPLINE interpolation method}. The basic idea of the former is to use, as interpolating function, a polynomial function of degree $ \le (n-1)$ where $n$ is the number of points to interpolate, that passes through all the $n$ points, and which is constructed with a summation over the \textit{Lagrange basis polynomials} as follow
+We clearly see that the charge assignment problem is now shifted to the complex exponential interpolation. There 
+are two main methods to make the interpolation: the \textit{Lagrange interpolation method} and the \textit{Euler 
+SPLINE interpolation method}. The basic idea of the former is to use, as interpolating function, a polynomial 
+function of degree $ \le (n-1)$ where $n$ is the number of points to interpolate, that passes through all the $n$ 
+points, and which is constructed with a summation over the \textit{Lagrange basis polynomials} as follow
 \begin{equation*}
 	P(x) = \sum_{i=1}^n y_i \prod_{\substack{k=1\\k\ne i}}^n \frac{x-x_k}{x_i - x_k}
 \end{equation*}
-where $(x_i;y_i)$ are the sets of points to interpolate. The main disadvantage of this method is that, even if $P(x)$ is continuous everywhere, its derivative is not, thus it can lead to some instability in \ac{MD} simulations. The latter method, that is the most used in \ac{MD} tools, is based on the concept of \textit{SPLINE interpolation}. Instead of using a unique interpolating function that passes through each point, the SPLINE method uses a \textit{piecewise polynomial function}, called SPLINE, in which each piece is smoothly connected and optimized to interpolate a subset of the points. The Euler SPLINE method use the \textit{exponential Euler SPLINE} that is constructed with the basis of the Euler $n$--degree polynomials $A_n(x;\lambda)$ generated by the following equation
+where $(x_i;y_i)$ are the sets of points to interpolate. The main disadvantage of this method is that, even if 
+$P(x)$ is continuous everywhere, its derivative is not, thus it can lead to some instability in \ac{MD} 
+simulations.
+
+The latter method, that is the most used in \ac{MD} tools, is based on the concept of \textit{SPLINE 
+interpolation}. Instead of using a unique interpolating function that passes through each point, the SPLINE 
+method uses a \textit{piecewise polynomial function}, called SPLINE, in which each piece is smoothly connected 
+and optimized to interpolate a subset of the points. The Euler SPLINE method use the \textit{exponential Euler 
+SPLINE} that is constructed with the basis of the Euler $n$--degree polynomials $A_n(x;\lambda)$ generated by the 
+following equation
 \begin{equation*}
 	\frac{\lambda - 1}{\lambda - e^z}e^{xz} = \sum_{n=0}^{+\infty} \frac{A_n(x;\lambda)}{n!}z^n
 \end{equation*}
-where $\lambda$ is a complex parameter and $z$ is a complex variable. The main properties of such SPLINE is that, it is $n-1$ times analytic, continuously differentiable and then can solve the instability problem of the Lagrange interpolation method. In literature the Euler SPLINE method is referred to as \textit{smooth} \acl{PME} and the reader is addressed to the article by Essmann \etal\, \cite{EssmannSPME} for more technical details about the interpolation procedure.
+where $\lambda$ is a complex parameter and $z$ is a complex variable. The main properties of such SPLINE is that, 
+it is $n-1$ times analytic, continuously differentiable and then can solve the instability problem of the 
+Lagrange interpolation method. In literature the Euler SPLINE method is referred to as \textit{smooth} \ac{PME} 
+and the reader is addressed to the article by Essmann \etal\, \cite{EssmannSPME} for more technical details about 
+the interpolation procedure.
 
 Summarizing, the \ac{PME} method is implemented with the following scheme
 \begin{itemize}
-	\item By the interpolation of the complex exponential in the Fourier transform of the Ewald summation, the Gaussian counteracts charge distribution are spread onto the mesh grid and a discretized Fourier transform is obtained;
+	\item By the interpolation of the complex exponential in the Fourier transform of the Ewald summation, the 
+		  Gaussian counteracting charge distribution are spread onto the mesh grid;
 	\item Poisson's equation for the discretized charges are solved through the \ac{FFT} methods;
-	\item The reciprocal energy contribution is obtained considering the inverse Fourier transform;
+	\item The $U_f$ energy contribution is obtained considering the inverse Fourier transform;
 	\item Electrostatic forces are computed and assigned to the charged system particles.
 \end{itemize}
-The main advantages of the \ac{PME} algorithm are that the potential energy and forces are smooth functions of the particles positions, offers a good energy conservations, offers a very well balance between accuracy and computational efficiency since it scales as $\sim N\ln N$ and it is easily generalizable to interaction potentials that decay as $r^{-d}$ such as the Lennard--Jones potential. Nevertheless it does not conserve very well the particles momentum due to \ac{RMS} errors in the forces calculations that have to be cancelled out by removing the forces averages.
+
+The main advantages of the \ac{PME} algorithm are that the potential energy and forces are smooth functions of 
+the particles positions. The method offers a good energy conservation and offers a good balance between accuracy 
+and computational efficiency since it scales as $\sim N\ln N$. Moreover, despite we have described \ac{ESM} and 
+\ac{PME} applied to the electrostatic interaction, they can be used, with some changes, with all long--range 
+interactions and in general to all energy contributions that decay as $r^{-d}$, for example, even with the Van 
+der Waals energy contribution.
 
 \subsection{Charge representation}
 \label{sec:chargeRep}
-Even if some methods, such as the \ac{PME} one, have been developed to speed up the computation of electrostatic energy contribution one of the main problems of \acp{FF} for biomolecular applications which are related to the electrostatic interactions, remains the \textit{charge representation}: The way that the charges of atoms or molecules are assigned to the system particles. The problem arises from the necessity to represent the electrons clouds of atoms and molecules in the system an the interactions which they generate, that is, for instance a purely quantum effect. Nevertheless this is crucial for a better description of most electrostatic phenomena such as polarizability of molecules and polar solvent, solvation shell of charged ions, protein--ligands interaction, ion transport through polar and non--polar medium, self assembly processes and so on.
+Even if some methods, such as the \ac{PME} one, have been developed to speed up the computation of electrostatic 
+energy contribution one of the main problems of \acp{FF} for biomolecular applications remains the \textit{charge 
+representation}: the way in which the charges of atoms or molecules are assigned to the system particles. The 
+problem arises from the necessity to represent the electron clouds and the interactions that generate. 
+Nevertheless this is crucial for a better description of most electrostatic phenomena such as polarizability of 
+molecules and polar solvent, solvation shell of charged ions, protein--ligand interactions, ion transport through 
+polar and non--polar medium, self assembly processes and so on.
 
-The mostly used solution is the \textit{atom--centered ``partial charge'' approximation} in which the full charge density of the molecule is replaced by fractional point--like charges assigned to each atom of the molecule. But now, one has to decide how much of the molecular charge density should be assigned to each atom. Traditionally most \acp{FF} assign each atom of a molecule a fixed partial--charge. The most used procedure for extracting partial--charges from molecular wave functions is based on fitting atomic charges with the molecular electrostatic potential, computed with \textit{ab initio} calculation such as \textit{density functional theory}. The fitting procedure consists in minimizing the deviation between the electrostatic potential produced by the assigned charge and the molecular electrostatic potential. Such representation is believed to be an important source of error in the electrostatics treatment. Moreover with fixed charge assignment it is more challenging to take into account those phenomena that involve a transfer of charge inside the molecule, as polarization effect. The use of off--centered charges and/or higher order atomic multipoles can significantly improve the treatment of electrostatics but of course it is necessary a good balance between accuracy and performances since the electrostatic problem can rapidly drive to a loss of efficiency sometimes without a really gain in accuracy.
+The most common solution is the \textit{atom--centered ``partial charge'' approximation} in which the full charge 
+density of the molecule is replaced by fractional point--like charges assigned to each atom of the molecule. 
+Traditionally most non--polarizable \acp{FF} (as those we will use in this thesis work) assign to each atom of a 
+molecule a fixed partial--charge. The most used procedure for extracting partial--charges from molecular wave 
+functions is based on fitting atomic charges with the molecular electrostatic potential, computed with \textit{ab 
+initio} calculation such as \textit{density functional theory}. The fitting procedure consists in minimizing the 
+deviation between the electrostatic potential produced by the assigned charge and the molecular electrostatic 
+potential. Such representation is believed to be an important source of error in the electrostatics treatment. 
+Moreover with fixed charge assignment it is impossible to take into account those phenomena that involve a 
+transfer of charge inside the molecule, as polarization effect. The use of off--centered charges and/or higher 
+order atomic multipoles can significantly improve the treatment of electrostatics but of course it is necessary a 
+good balance between accuracy and performances since the electrostatic problem can rapidly drive to a loss of 
+computational efficiency.
 
 \subsection{Polarization}
 \label{sec:polarization}
-Polarization refers to the redistribution of the electron charge density of a molecule in presence of an external electric field, generated, for example, by charged ions or another molecule. Polarization is responsible for non--addictive attractive inter-- or intra--molecular interactions which have many--body characteristics. Induced polarization effects should also be included. These effects have been recognized to have an important role in many biological interactions in which different compounds are present. An increasing number of studies show that the lack of these effects can lead to a serious limitations, particularly, for ionic systems and chemical process that involve different environments such us water and proteins or water and lipids. In \ac{MD} simulations polarization effects are included using either \textit{implicit} or \textit{explicit} methods.
+Polarization refers to the redistribution of the electron charge density of a molecule in presence of an external electric field, generated, for example, by charged ions or by another molecule. Polarization is responsible to non--additive attractive inter-- or intra--molecular interactions which have many--body characteristics. These effects have been recognized to have an important role in many biological interactions in which different compounds are present. An increasing number of studies show that the lack of these effects can lead to serious limitations, particularly, for systems that involve different environments such us water and proteins or water and lipids. In \ac{MD} simulations polarization effects are included using either \textit{implicit} or \textit{explicit} methods.
 
 The implicit method completely avoids the many--body calculation by including a mean polarization effect in the functional form of the interaction potential. The general idea is to surround all the simulation box by a transparent medium with a relative dielectric constant $\varepsilon_r$. In this way the polarization effect is taken into account considering a mean field theory and solving the Poisson's equation to determine the electrostatic potential due to system charges by the substitution $\varepsilon_0\rightarrow\varepsilon_0\varepsilon_r$. Since it avoids many--body calculations, this method gives an incomparable gain in performances bust it must be carefully used. The main disadvantage is that the mean polarization effect is added to all system particles and this wash out all the details about a possible polarization effect in a molecule, for example a protein or a piece of protein. This method can be safely used, for example, when our system is composed principally of one kind of solvent, for example water; but if the simulation box is composed of different chemical environments such as water and lipids or other organic compounds, using the same dielectric constant would lead to seriously incorrect results of the proprieties of the organic component and maybe affect the whole simulation.
 

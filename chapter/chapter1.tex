@@ -120,12 +120,34 @@ all because the Hamiltonian of a system is directly related to a well know physi
 
 \section{Review of statistical mechanics}
 \label{sec:statmec}
-Using the picture of the classical mechanics described above we have a good and sophisticated machinery that allows us, knowing some information about the system in exam, i.e. initial positions and velocities of all particles and their interactions, to completely solve the equations of motion in order to get the dynamics of the system at every time. So classical mechanics encodes all the information about the \textit{microscopic} view of a system and, in principle, we can extract all the information we want about the \textit{macroscopic} proprieties of such system.
-The main task of this process is to obtain the thermodynamics proprieties of a system (temperature, pressure and so on) from the complete sets of positions and velocities of all particles and thus it is necessary to have a link between microscopic and macroscopic world. In principle this can be done, but if we consider a real system we should solve a set of $6N$ equations where $N$ is of the order of the Avogadro number ($\mathcal{N}_A = 6.022 \cdot 10^{23}~\text{mol}^{-1}$); we can not think of solving such a number of equations analytically even if we consider to solve it numerically: that is almost impossible. Thus the problem is to extract the macroscopic information from classical mechanics and to establish a well computable link between microscopic and macroscopic to obtain ``easily'' the thermodynamics information required.
+Using the picture of the classical mechanics described above we have a good and sophisticated machinery that 
+allows us, knowing some information about the system in exam, i.e. initial positions and velocities of all 
+particles and their interactions, to completely solve the equations of motion in order to get the dynamics of the 
+system at every time. So classical mechanics encodes all the information about the \textit{microscopic} view of a 
+system and, in principle, we can extract all the information we want about the \textit{macroscopic} proprieties 
+of such system. The main task of this process is to obtain the thermodynamics proprieties of a system 
+(temperature, pressure and so on) from the complete sets of positions and velocities of all particles and thus it 
+is necessary to have a link between microscopic and macroscopic world.
 
-The solution of that problem comes from \textit{statistical mechanics} developed, principally, by Boltzmann and Gibbs. Statistical mechanics involves all the rules and methods through which the microscopic and macroscopic worlds are related to each other; this provides also a rigorous derivation of thermodynamics from the microscopic proprieties: without that thermodynamics would be only a phenomenological theory. The first step to the solution of the problem is to recognize that \textit{a macroscopic observable of a system does not strongly depend on the complete dynamics of each particle in the system, but rather on an average that cancels out all the details of the microscopic features}. This it is intuitively true. We can think to set up an experiment with a system in a specific microscopic state that corresponds a macroscopic state. Certainly we can do the contrary and for sure we will not find the same microscopic state! Then we can iterate the experiment and we will find that for a specific macroscopic state of a system there exists a number of microscopic states that yield to the same properties.
+The solution of that problem comes from \textit{statistical mechanics} developed, principally, by Boltzmann and 
+Gibbs. Statistical mechanics involves all the rules and methods through which the microscopic and macroscopic 
+worlds are related to each other. This provides also a rigorous derivation of thermodynamics from the microscopic 
+proprieties: without that thermodynamics would be only a phenomenological theory. The first step to the solution 
+of the problem is to recognize that \textit{a macroscopic observable of a system does not strongly depend on the 
+complete dynamics of each particle in the system, but rather on an average that cancels out all the details of 
+the microscopic features}. This it is intuitively true. We can think to set up an experiment with a system in a 
+specific microscopic state that corresponds to a macroscopic state. Certainly we can do the contrary and for sure 
+we wont find the same microscopic state. Then we can iterate the experiment and we will find that for a specific 
+macroscopic state of a system there exists a number of microscopic states that yield to the same properties.
 
-The most important concept that makes this idea practicable is the \textit{statistical ensemble}. Based on the previous considerations, a general definition of an ensemble is \textit{a collection of systems subject to a set of common interactions and sharing the same macroscopic properties}. This concept lays the foundations of thermodynamics and suggests a procedure for computing many macroscopic observable. In more details a $N$--particle system in a specific microscopic state is described by its microstate $\vec x$, then \textit{an ensemble is a set of points in the phase space that are subject to the constraint to be part of the ensemble itself}. Each system evolves in time with the equations of motion, so the time evolution of an ensemble is described by the flow of a set of points in the phase space according to the classical mechanics.
+The most important concept that makes this idea practicable is the \textit{statistical ensemble}. Based on the 
+previous considerations, a general definition of an ensemble is \textit{a collection of systems subject to a set 
+of common interactions and sharing the same macroscopic properties}. This concept lays the foundations of 
+thermodynamics and suggests a procedure to compute many macroscopic observables. In more details a 
+$N$--particle system in a specific microscopic state is described by its microstate $\vec x$, then \textit{an 
+ensemble is a set of points in the phase space that are subject to the constraint to be part of the ensemble 
+itself}. Each system evolves in time with the equations of motion, so the time evolution of an ensemble is 
+described by the flow of a set of points in the phase space according to the classical mechanics.
 
 Once an ensemble is defined we are able to compute, at every time, the macroscopic observables simply averaging 
 over all systems in the ensemble. To do this we have to know, at every time, which microstates of the phase space 
@@ -711,8 +733,24 @@ associated to the isobaric ensemble.
 
 \section{Empirical Force--Field model}
 \label{sec:EmpiricalFF}
-As we have seen in the previous section \ac{MD} provides a variety of tools for solving the time evolution of a $N$--particles system to obtain its dynamics. Due to the possibility to capture different length and time scales \ac{MD} simulations can be used in a variety of systems, such as set of atoms, molecules or more complex system such as protein and macromolecules systems. In each of these systems, depending on the \textit{interaction model} and its \textit{parametrization}, we will be able to describe crucial molecular--level processes, such as hydrogen bond formation in organic molecules, which happen on the picoseconds time scale; or study slow processes such as the diffusion of massive colloidal particles, taking place on time scales of milliseconds if not seconds.
-When we study a soft or condensed matter system or, in general, a system composed by a large number of atoms (of the order of $N \gg 1000$), a crucial role is played by the \textit{Born--Oppenheimer approximation}. It says that we can separate the motion of the electrons by the motion of the atomic nuclei. That is done for integrating out the high frequency electrons' motions in order to remove some \ac{DOF}. Moreover the main interesting processes of soft and condensed matter, ranging from protein folding to glass transitions, from surface diffusion to ligand--receptor binding take place on longer time scales and involve larger number of atoms. Further if we want to know precisely the dynamics of the electrons in the system we have to introduce quantum mechanical methods that are, even for a small number of particles (of the order of $N\sim 100$), to much computationally time consuming, thus the Born--Oppenheimer approximation is indispensable. In the following, when we speak about atoms or chemical moieties we refer to it as for nuclei coordinates only without considering electrons at all.
+As we have seen in the previous section \ac{MD} provides a variety of tools for solving the time evolution of a 
+$N$--particle system. Due to the possibility to capture different length and time scales \ac{MD} simulations can 
+be used in a variety of systems, such as set of atoms, molecules or more complex system such as protein and 
+macromolecules systems. In each of these systems, depending on the \textit{interaction model} and its 
+\textit{parametrization}, we will be able to describe crucial molecular--level processes, such as hydrogen bond 
+formation in organic molecules, which happen on the picoseconds time scale; or study slow processes such as the 
+diffusion of massive colloidal particles, taking place on time scales of milliseconds if not seconds.
+
+Considering soft or condensed mater, the most relevant for this thesis work, the main processes of interest 
+ranging from protein folding to glass transitions, from surface diffusion to ligand--receptor binding take place 
+on longer time scales (several ns) and involve a larger number of atoms ($N \gg 10^4$). In this case a crucial 
+role is played by the \textit{Born--Oppenheimer approximation}. It says that we can separate the motion of the 
+electrons by the motion of the atomic nuclei. This is done in order to integrate out the high frequency 
+electrons' motions and to remove some \ac{DOF} due to the necessity to increase the time step and speed up the 
+simulation. If, for some particular system, we want to know precisely the dynamics of the electrons we have to 
+introduce quantum mechanical methods that are, even for a small number of particles ($N\sim 10^2$), very 
+computationally time consuming. In the following, when we speak about atoms or chemical moieties we refer to it 
+as for nuclei coordinates only without considering electrons at all.
 
 Nevertheless atom or molecule interactions, such as bond formation, are mediated by the electron interactions. 
 Thus, to describe the dynamics of such a system with a classical \ac{MD} tools and the Born--Oppenheimer 
@@ -1158,11 +1196,37 @@ computational efficiency.
 
 \subsection{Polarization}
 \label{sec:polarization}
-Polarization refers to the redistribution of the electron charge density of a molecule in presence of an external electric field, generated, for example, by charged ions or by another molecule. Polarization is responsible to non--additive attractive inter-- or intra--molecular interactions which have many--body characteristics. These effects have been recognized to have an important role in many biological interactions in which different compounds are present. An increasing number of studies show that the lack of these effects can lead to serious limitations, particularly, for systems that involve different environments such us water and proteins or water and lipids. In \ac{MD} simulations polarization effects are included using either \textit{implicit} or \textit{explicit} methods.
+Polarization refers to the redistribution of the electron charge density of a molecule in presence of an external 
+electric field, generated, for example, by charged ions or by another molecule. Polarization is responsible to 
+non--additive attractive inter-- or intra--molecular interactions which have many--body characteristics. These 
+effects have been recognized to have an important role in many biological interactions in which different 
+compounds are present. An increasing number of studies show that the lack of these effects can lead to serious 
+limitations, particularly, for systems that involve different environments such us water and proteins or water 
+and lipids. In \ac{MD} simulations polarization effects are included using either \textit{implicit} or 
+\textit{explicit} methods.
 
-The implicit method completely avoids the many--body calculation by including a mean polarization effect in the functional form of the interaction potential. The general idea is to surround all the simulation box by a transparent medium with a relative dielectric constant $\varepsilon_r$. In this way the polarization effect is taken into account considering a mean field theory and solving the Poisson's equation to determine the electrostatic potential due to system charges by the substitution $\varepsilon_0\rightarrow\varepsilon_0\varepsilon_r$. Since it avoids many--body calculations, this method gives an incomparable gain in performances bust it must be carefully used. The main disadvantage is that the mean polarization effect is added to all system particles and this wash out all the details about a possible polarization effect in a molecule, for example a protein or a piece of protein. This method can be safely used, for example, when our system is composed principally of one kind of solvent, for example water; but if the simulation box is composed of different chemical environments such as water and lipids or other organic compounds, using the same dielectric constant would lead to seriously incorrect results of the proprieties of the organic component and maybe affect the whole simulation.
+The implicit method completely avoids the many--body calculations by including a mean polarization effect in the 
+functional form of the interaction potential. The general idea is to surround all the simulation box by a 
+transparent medium with a relative dielectric constant $\varepsilon_r$. In this way the polarization effect is 
+taken into account considering a mean field theory and solving the Poisson's equation to determine the 
+electrostatic potential due to system charges by the substitution 
+$\varepsilon_0\rightarrow\varepsilon_0\varepsilon_r$. Since it avoids many--body calculations, this method gives 
+an incomparable gain in performances but it must be carefully used. The main disadvantage is that the mean 
+polarization effect is added to all system particles and this wash out all the details about a possible 
+polarization effect in a molecule. Moreover the electrostatic interaction between charged particles is affected 
+by the mean field effect. This produce a correct electrostatic interaction for particles inside the same solvent 
+for which the implicit medium is parameterized. Otherwise, if the simulation box is composed by different 
+chemical environments such as a polar and non--polar compounds, using the same dielectric constant would lead to 
+badly calculate the electrostatic interactions for particles in the non--polar environment. Thus, this method can 
+be safely used when our system is composed principally by one kind of solvent, for example water. 
 
-The way to correct the above behavior is to use an explicit method. As the name suggests, the polarization effect is taken into account for every molecules in the system by a it proper model included in the \ac{FF}. The general idea is to add some more internal \ac{DOF} to a molecule or atom to take into account the movement of charges and/or split the point--like charge assigned, for example, to a chemical group, to a partial charge assigned to each particles of the chemical group itself. This can be done for every molecule or atom in the system and thus it is the optimum to better describe systems with different chemical environments.
+The way to correct the above behavior is to use an explicit method. As the name suggests, the polarization effect 
+is taken into account for every molecule in the system by an its proper model included in the \ac{FF}. The 
+general idea is to add some more internal \ac{DOF} to a molecule or atom to take into account the movement of 
+charges and/or split the point--like charge assigned, for example, to a chemical group, to a partial-charge 
+assigned to each particles of the chemical group itself. This can be done for every molecule or atom in the 
+system and thus it is the optimum to better describe systems with different chemical environments. Obviously this 
+method is more time consuming compared to the first. 
 
 %\subsection{Atomistic model}
 \subsection{Coarse--Grained model}
@@ -1465,8 +1529,3 @@ In a recent work by Davide Bochicchio \etal\, \cite{metaUSComparison} both metho
 
 
 %Manuale GROMACS 3.17.5 PP/PME ranks
-
-
-
-
-

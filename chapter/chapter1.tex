@@ -1238,10 +1238,20 @@ One possible solution is to \textit{integrate out} some \ac{DOF}, preserving tho
 In general a \ac{CG} \ac{FF} is more computationally efficient than an atomistic one for the following reasons: the \ac{DOF} of the system are reduced due to the \ac{CG} procedure and a smaller number of interactions and forces has to be taken into account; bead--bead interactions, which result from the removal of finer structural details, are softer than atom--atom interactions. Thus, vibrational modes are slower, and their sampling can be achieved using larger \ac{MD} time steps than in atomistic simulations; softer interactions imply a smoother \ac{PEF} which leads to faster diffusion.
 
 \section{MARTINI: a Coarse--Grained Force--Field}
-\martini is a \ac{CG} \ac{FF} originally developed by Marrink \etal\, \cite{Martini} for organic solvents and lipids and then extended to proteins \cite{MartiniProtein}, carbohydrates \cite{MartiniCarbo} and a broad class of polymers \cite{MartiniPolymers}. The original aim was to improve the description of the physical and chemical properties of lipid membranes using a \ac{CG} model. The power of the model was immediately clear and soon its philosophy was changed to develop a \ac{FF} applicable to a broad range of organic system providing a set of extensively calibrated building blocks to construct a large variety of organic molecules without reparametrizing the \ac{FF}. This is possible, because, instead of focusing on accurately reproducing structural details of a particular system, the \ac{FF} is based on accurately reproducing the interaction between polar and non--polar chemical compounds. This is the main target property: The \textit{partitioning free energy} between water and a large number of organic solvents, i.e. the free energy of transfer of chemical moieties from polar and non--polar solvents. These building blocks are representative of the main chemical moieties in an organic system, this is the guide for the mapping procedure.
+\martini is a \ac{CG} \ac{FF} developed by Marrink \etal\, \cite{Martini} for organic solvents and lipids and 
+then extended to proteins \cite{MartiniProtein}, carbohydrates \cite{MartiniCarbo} and a broad class of polymers 
+\cite{MartiniPolymers}. \martini is based on a chemical building block approach. Such \martini blocks or beads 
+represent small chemical moieties and they are extensively calibrated in order to construct a large variety of 
+organic molecules. As we shall see in section~\ref{sec:martiniParam}, the \ac{FF} is based on accurately 
+reproducing the interaction between polar and non--polar chemical compounds. The main target property is intact 
+the \textit{partitioning free energy} between water and a large number of organic solvents, i.e. the free energy 
+of transfer of chemical moieties from polar and non--polar solvents.
 
 \subsection{Mapping}
-The mapping of the \martini beads, is based on a four--to--one scheme that groups four heavy atoms like C, S, O and so on, plus their associated hydrogen atoms, into a single interaction site. Consistently four water molecules are modeled with one \martini bead. An example of the coarse-graining procedure including both atomistic and \ac{CG} descriptions is shown in figure~(\ref{fig:martiniMapping}).
+The mapping of the \martini beads is based on a four--to--one scheme that groups four heavy atoms like C, S, O 
+and so on, plus their associated hydrogen atoms, into a single interaction site. Consistently four water 
+molecules are modeled with one \martini bead. An example of the mapping procedure including both atomistic and 
+\ac{CG} descriptions is shown in figure~(\ref{fig:martiniMapping}).
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[width=0.5\textwidth]{img/martiniMapping}
@@ -1249,7 +1259,11 @@ The mapping of the \martini beads, is based on a four--to--one scheme that group
 	\label{fig:martiniMapping}
 \end{figure}
 
-There are four main bead types: polar (P), non--polar (N), apolar (A) and charged (Q). Each bead type has a number of subtypes to take into account a more accurate representation of the chemical nature of the moieties due to underlying the specific atomistic structure. These subtypes are distinguished by the hydrogen bonding capabilities: donor (d), acceptor (a), both donor and acceptor (da) and none ($0$) and/or by their degree of polarity: lowest polarity ($1$), $\cdots$, highest polarity ($5$).
+There are four main bead types: polar (P), non--polar (N), apolar (A) and charged (Q). Each bead type has a 
+number of subtypes to take into account a more accurate representation of the chemical nature of the moieties due 
+to the underlying specific atomistic structure. These subtypes are distinguished by the hydrogen bonding 
+capabilities: donor (d), acceptor (a), both donor and acceptor (da) and none ($0$) and/or by their degree of 
+polarity: lowest polarity ($1$), $\dots$, highest polarity ($5$).
 
 \begin{SCtable}\footnotesize
 	\begin{tabular}{lc}
@@ -1271,12 +1285,13 @@ There are four main bead types: polar (P), non--polar (N), apolar (A) and charge
 \end{SCtable}
 
 \subsection{Interactions potential}
-\paragraph{\textbf{van der waals interactions}} The functional form describing pairwise Van der Waals interaction is a Lennard--Jones $12-6$ potential as in equation~\eqref{eq:lj126}.
-%The $\epsilon$ and $\sigma$ parameters are first obtained for a same--type interactions and then the inter--type parameters are computed as follow
-%\begin{equation*}
-%	\epsilon_{ij} = \sqrt{\esilon_{ii}\epsilon_{jj}} \qquad \sigma_{ij} = \frac{1}{2}(\sigma_{ii} + \sigma_{jj})
-%\end{equation*}
-For most beads the $\sigma$ parameter is set equal to $0.47~$nm except for the Q--C$_1$ and Q--C$_2$ interactions for which $\sigma = 0.62$~nm. This is consistent with reproducing the hydration shell when a charged bead (Q) is dragged into an apolar medium. The strength of the interactions is instead dived into ten levels, reported in table~(\ref{tab:martiniEpsilon}). The association of the interactions strength with the \martini beads is shown in figure~(\ref{fig:martiniInteractions}).
+\paragraph{\textbf{van der waals interactions}} The functional form describing pairwise Van der Waals interaction 
+is a Lennard--Jones $12-6$ potential as in equation~\eqref{eq:lj126}. For most beads the $\sigma$ parameter is 
+set equal to $0.47~$nm except for the Q--C$_1$ and Q--C$_2$ interactions for which $\sigma = 0.62$~nm. This is 
+consistent with reproducing the hydration shell when a charged bead (Q) is dragged into an apolar medium. The 
+strength of the interactions is instead dived into ten levels, reported in table~(\ref{tab:martiniEpsilon}). The 
+association of the interaction strength with each \martini beads is shown in 
+figure~(\ref{fig:martiniInteractions}).
 \begin{figure}[h!t]%
 	\center
 	\includegraphics[width=\textwidth]{img/martiniInteractions.pdf}%
@@ -1293,53 +1308,91 @@ For most beads the $\sigma$ parameter is set equal to $0.47~$nm except for the Q
 % \end{minipage}
 % \end{adjustwidth}
 
-\paragraph{\textbf{electrostatic interactions}} Electrostatic charges are assigned using the atom--centered approximation, as described in~\ref{sec:chargeRep}. In this case, charges are no more fractional but are empirically assigned at the center of the beads trying to follow as much as possible the net charge of the associated chemical moieties. A special case is water, modeled as a P$_4$ bead, since it interacts only with Van der Waals interaction so that the polarizability effect is not very well described. To fill this lack it is used an implicit medium with a dielectric constant $\varepsilon_r = 15$. However, as we will see later in~\ref{sec:pw}, to avoid the problems with the implicit medium described in~\ref{sec:polarization}, especially for lipid membranes for which the dielectric constant in the hydrophobic region is much smaller, Yesylevskyy \etal\, \cite{PW} have developed a more sophisticated \ac{CG} water model, called \ac{PW}, to take into account a better water behavior.
+\paragraph{\textbf{electrostatic interactions}} Electrostatic charges are assigned using the atom--centered 
+approximation, as described in~\ref{sec:chargeRep}. The charges of the \martini beads are empirically assigned at 
+the center of the beads and correspond to the net charge of the chemical moiety they represent. Water, for 
+example, is described by a neutral P$_4$ beads. Van der Waals interactions are responsible for take into account, 
+effectively, the effects of polarizability together with the use of an implicit medium with a dielectric constant 
+$\varepsilon_r = 15$. However, as we shall see in section~\ref{sec:pw}, to avoid the problems with the implicit 
+medium described in~\ref{sec:polarization}, especially for lipid membranes for which the dielectric constant in 
+the hydrophobic region is much smaller, Yesylevskyy \etal\, \cite{PW} have developed a more sophisticated \ac{CG} 
+water model, called \ac{PW}, to take into account a better water behavior.
 
-\paragraph{\textbf{bonded interactions}} They includes only bond length and an angle harmonic contributions. The former is modeled with a harmonic potential as the first term in equation~\eqref{eq:FFPEF}, with the same bond constant for all bead types: $k^b = 1250$~kJ/(mol\ nm$^2$) and an equilibrium distance of $l_0 = 0.47$~nm. The later is modeled as a cosine--type harmonic potential
+\paragraph{\textbf{bonded interactions}} They include only bond length and an angle harmonic contributions. The 
+former is modeled with a harmonic potential as the first term in equation~\eqref{eq:bondPEF}, with the same bond 
+constant for all bead types: $k^b = 1250$~kJ/(mol\ nm$^2$) and an equilibrium distance of $l_0 = 0.47$~nm. The 
+latter is modeled as a cosine--type harmonic potential
 \begin{equation*}
 	U = \frac{1}{2}k^a (\cos(\theta) - \cos(\theta_0))^2
 \end{equation*}
-whose parameters are: $k^a = 25$~kJ/mol and $\theta_0 = 180^\circ$ for aliphatic chains; $k^a = 45$~kJ/mol and $\theta_0 = 120^\circ$ for \texttt{cis} double bonds and $k^a = 45$~kJ/mol and $\theta_0 = 180^\circ$ for \texttt{trans} unsaturated bonds. Moreover, especially for ring systems, an improper dihedral angle harmonic potential can be used to prevent out of plane distortion. The form is
+whose parameters are: $k^a = 25$~kJ/mol and $\theta_0 = 180^\circ$ for aliphatic chains; $k^a = 45$~kJ/mol and 
+$\theta_0 = 120^\circ$ for \texttt{cis} double bonds and $k^a = 45$~kJ/mol and $\theta_0 = 180^\circ$ for 
+\texttt{trans} unsaturated bonds. Moreover, especially for ring systems, an improper dihedral angle harmonic 
+potential can be used to prevent out of plane distortion. The form is
 \begin{equation*}
 	U = k_{id} (\theta_{ijkl} - \theta_0)^2
 \end{equation*}
-where $\theta_{ijkl}$ denotes the angle between the planes described by atoms $i,j,k$ and $j,k,l$; $k_{id}$ and $\theta_0$ are, as usual, the force constant and equilibrium angle.
+where $\theta_{ijkl}$ denotes the angle between the planes described by atoms $i,j,k$ and $j,k,l$; $k_{id}$ and 
+$\theta_0$ are, as usual, the force constant and equilibrium angle.
 
 \subsection{Simulation parameters}
-\martini \ac{FF} was originally developed using a shifted cut--off scheme for both Lennard--Jones and electrostatic potentials with a cut--off radius $r_c = 1.2$~nm. The Lennard--Jones potential was shifted from $r_s = 0.9$~nm to $r_c$ while from $r_s = 0.0$~nm to $r_c$ for the electrostatic potential. The neighbor list is constructed as described in the first part of~\ref{sec:neighbor} with a refresh rate of $10$ \ac{MD} steps. Recently the more efficient Verlet cut--off scheme was tested by Marrink \etal\, \cite{MartiniReview} and used with the \martini \ac{FF} with a cut--off radius of $r_c = 1.1$~nm, a Verlet buffer tolerance of $0.005$~kJ/(mol$\cdot$ps) and a minimum refresh rate of $10$ \ac{MD} steps (often, depending on the hardware, it can be dynamically increased to $30$ or $40$ \ac{MD} steps getting better performances).  Moreover, the treatment of the electrostatic interaction can be safely updated to the \ac{PME} method together with the Verlet cut--off scheme. This new set--up was largely tested by Yesylevskyy \etal\, \cite{PW}. In this case the cut--off radius was set to $r_c = 1.2$~nm with the same Verlet buffer tolerance; the \ac{PME} grid spacing was set to have a lower bound of $0.12$~nm and the interpolation was set to a fourth-order. Moreover, with the use of \ac{PW}, as we shall see, the dielectric constant should be reduced to $\varepsilon_r = 2.5$. In all cases a time step up to $40$~fs is suitable for a great number of applications, but $20$~fs is the most powerful choice in terms of performance and accuracy balancing. It should be clear that changing these simulation parameters must be followed by a retest of the main properties of the \martini \ac{FF}.
+The \martini \ac{FF} was originally developed using a shifted cut--off scheme for both Lennard--Jones and 
+electrostatic potentials with a cut--off radius $r_c = 1.2$~nm. The Lennard--Jones potential was shifted from 
+$r_s = 0.9$~nm to $r_c$ while from $r_s = 0.0$~nm to $r_c$ for the electrostatic potential. The neighbor list is 
+constructed as described in the first part of~\ref{sec:neighbor} with a refresh rate of $10$ \ac{MD} steps. 
+Recently the more efficient Verlet cut--off scheme was tested by Marrink \etal\, \cite{MartiniReview} and used 
+with the \martini \ac{FF} with a cut--off radius of $r_c = 1.1$~nm, a Verlet buffer tolerance of $0.005$~kJ/(mol\ 
+ps) and a minimum refresh rate of $10$ \ac{MD} steps (often, depending on the hardware, it can be dynamically 
+increased to $30$ or $40$ \ac{MD} steps getting better performances).  Moreover, the treatment of the 
+electrostatic interaction can be safely updated to the \ac{PME} method together with the Verlet cut--off scheme. 
+This new set--up was largely tested by Yesylevskyy \etal\, \cite{PW}. In this case the cut--off radius was set to 
+$r_c = 1.2$~nm with the same Verlet buffer tolerance; the \ac{PME} grid spacing was set to have a lower bound of 
+$0.12$~nm and the interpolation was set to a fourth-order. Moreover, with the use of \ac{PW}, as we shall see, 
+the dielectric constant should be reduced to $\varepsilon_r = 2.5$. In all cases a time step 
+$20\le\delta t\le 40$ is suitable for a great number of applications. It should be clear that changing these 
+simulation parameters must be followed by a retest of the main properties of the \martini \ac{FF}.
 
 \subsection{Parametrization}
-In order to parametrize the \martini \ac{CG} \ac{FF} a set of thermodynamics properties, obtained from \ac{MD} simulations are compared and fitted against those experimentally measured. These properties are the \textit{free energies of vaporization}, \textit{hydration} and \textit{partitioning} between water and a set of organic compounds such as hexadecane (H), chloroform (C), ether (E) and octanol (O). The free energy of hydration was obtained from the partitioning of \ac{CG} compounds between bulk water in equilibrium with its vapor. Similarly the free energy of vaporization was obtained considering a simulation box with the selected \ac{CG} compounds in equilibrium with their vapor. From the equilibrium densities of the particles in both the phases the related free energies can be computed from
+\label{sec:martiniParam}
+In order to parametrize the \martini \ac{CG} \ac{FF} a set of thermodynamics properties, obtained from \ac{MD} 
+simulations, are compared and fitted against those experimentally measured. These properties are the \textit{free 
+energies of vaporization}, \textit{hydration} and \textit{partitioning} between water and a set of organic 
+compounds such as hexadecane (H), chloroform (C), ether (E) and octanol (O). The free energy of hydration was 
+obtained from the partitioning of \ac{CG} beads between bulk water in equilibrium with its vapor. Similarly the 
+free energy of vaporization was obtained considering a simulation box with the selected \ac{CG} bead in a liquid 
+phase in equilibrium with its vapor. From the equilibrium densities of the particles in both phases the related 
+free energies can be computed from
 \begin{equation*}
 	\Delta G = k_B T\ln \left ( \frac{\rho_{\text{vap}}}{\rho_{\text{bulk}}} \right )
 \end{equation*}
 All the simulations were performed in a canonical $NVT$ ensemble.
 
-Instead, the partitioning free energy between water and an organic solvent was obtained in a $NPT$ ensemble, considering a simulation box half filled of water and half of the organic solvent. Then a small fraction of the \ac{CG} particle for which the partitioning free energy is to be computed, was placed in the simulation box. From the equilibrium densities of the particles in water $\rho_{\text{wat}}$ and in organic solvent $\rho_{\text{oil}}$, the free energy of transfer can be computed from
+The partitioning free energy between water and an organic solvent was obtained in a $NPT$ ensemble, considering a 
+simulation box half filled of water and half of the organic solvent. Then a small fraction of the \ac{CG} 
+particle for which the partitioning free energy is to be computed, was placed in the simulation box. From the 
+equilibrium densities of the particles in water $\rho_{\text{wat}}$ and in organic solvent $\rho_{\text{oil}}$, 
+the free energy of transfer can be computed from
 \begin{equation*}
 	\Delta G_{SW}^{\text{part}} = k_B T \ln \left ( \frac{\rho_{\text{oil}}}{\rho_{\text{wat}}}\right )
 \end{equation*}
 where $S$ indicate the organic solvent.
 
-In figure~(\ref{fig:martiniTarget}) a summary of the results is reported. As one can see the model has bad performances for what concerns the free energies of vaporization and hydration, which are too high with respect to experimental data. Instead, the partitioning free energies match very well. Thus the model is not very accurate for vapor--liquid systems, but as long as one does not study those systems, the partitioning free energy is much more important than the other free energy contributions.
+In figure~(\ref{fig:martiniTarget}) a summary of the results is reported. As one can see the model has bad 
+performances for what concerns the free energies of vaporization and hydration, which are too high with respect 
+to experimental data. Instead, the partitioning free energies match very well. Thus the model is not very 
+accurate for vapor--liquid systems but it is reliable at describing the behavior of liquid phases with 
+different degrees of hydrophobicity.
 \begin{figure}[h!t]%
 	\center
 	\includegraphics[width=\textwidth]{img/martiniTarget}%
 	\caption{Results summary: free energies of vaporization $\Delta G^\text{vap}$, hydration $\Delta G^\text{hydr}$ and partitioning $\Delta G^\text{part}$ between water (W) and organic solvents (hexadecane (H), chloroform (C), ether (E) and octanol(O)) compared to experimental values. Experimental properties in parentheses are estimates obtained from comparison to similar compounds. The statistical accuracy of the free energies obtained from the simulations is $\pm 1$~kJ/mol. $^b$ The temperature for the experimental data is $273$~K. Taken from \cite{Martini}.}
 	\label{fig:martiniTarget}
 \end{figure}
-% \begin{adjustwidth}{-3cm}{-5cm}%%
-% 	\begin{minipage}[c]{1.4\textwidth}%
-% 		\includegraphics[width=\textwidth]{img/martiniTarget}%
-% 		\captionof{figure}{Results summary: free energies of vaporization $\Delta G^\text{vap}$, hydration $\Delta G^\text{hydr}$ and partitioning $\Delta G^\text{part}$ between water (W) and organic solvents (hexadecane (H), chloroform (C), ether (E) and octanol(O)) compared to experimental values. Experimental properties in parentheses are estimates obtained from comparison to similar compounds. The statistical accuracy of the free energies obtained from the simulations is $\pm 1$~kJ/mol. $^b$ The temperature for the experimental data is $273$~K. Taken from \cite{Martini}.}
-% 		\label{fig:martiniTarget}
-% 	\end{minipage}
-% \end{adjustwidth}
 
 \subsection{Polarizable Water model}
 \label{sec:pw}
-Water play a crucial role in any biomolecular systems thus it is important to correctly describe its behavior. 
-Since the \martini water model does not directly take into account the electrostatic interaction between water and the other molecules because it does not have any charge and it interact only via Van der Waals interaction, thus a simple implicit medium is used to take into account the main effects of water, screening and polarizability. However any biomolecular process involve charged species moving between regions of different dielectric constant. Due to the change in electrostatic screening between those environments, the strength of the interaction between the moving charges and the surrounding molecules also changes, but this effect can not be consider in an implicit medium model. Thus can have important consequences for the way biological activity is controlled. In order to capture the inhomogeneous nature of the dielectric response an explicit medium has to be used. 
+Water plays a crucial role in any biomolecular system. It is important thus to correctly describe its behavior. 
+Since the \martini water model does not directly take into account the electrostatic interaction between water and water and other environment because it does not have any charge and it interact only via Van der Waals interaction, a simple implicit medium is used to take into account the main electrostatic effects of water, screening and polarizability. In reality, however, any biomolecular process involves charged species moving between regions of different dielectric constant. Due to the change in electrostatic screening between those environments, the strength of the interaction between the moving charges and the surrounding molecules also changes. This effect can not be taken into account in an implicit medium models. In order to capture the inhomogeneous nature of the dielectric response an explicit medium has to be used. 
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[width=0.8\textwidth]{./img/PWModel/PWModel}
@@ -1347,18 +1400,21 @@ Since the \martini water model does not directly take into account the electrost
 	\label{fig:PW}
 \end{figure}
 
-In the same fashion of the \martini philosophy, Yesylevskyy \etal\, \cite{PW} have developed a \acf{PW} model that better describe the real behavior of water. As before four water molecules is associated to one \ac{PW} bead. The new water bead actually consists of three particles instead of one in the standard \martini model. 
-In figure~(\ref{fig:PW}) the topology of the \ac{PW} and a comparison between the old model is shown. The central particle $W$ is neutral and interacts with other particles in the system with only Lennard--Jones potential, just like the standard water bead thus as a $P_4$ \martini bead (see figure~(\ref{fig:martiniInteractions}) for the interactions matrix). There are two additional particles, namely $WP$ and $WM$, that are bound to the central particle and carry a positive and negative charge $|q| = 0.46\mathsf{e}$ respectively, where $\mathsf{e} = 1.60217653(14) \cdot 10^{-19}$~C is the unit electron charge. They interact with other particles in the system by the Coulomb interaction only. The bonds $W-WP$ and $W-WM$ are constrained to have a fixed distance $l = 0.14$~nm. 
-The electrostatic interaction between $WP$ and $WM$ inside the same bead are exclude thus they are transparent toward each other and they can rotate around the $W$ particle. As a consequence the dipole momentum of the water bead depends on the relative angular position $\theta$ of $WP$ and $WM$: It can vary from zero ($\theta = 0$), to $2ql$ ($\theta = \pi$). A harmonic angle potential with equilibrium angle fixed to $\theta_0 = 0$ and a force constant $k_\theta = 4.2$~kJ/(mol$\cdot$rad$^2$) is added to control the rotation of $WP$ and $WM$ particles around the $W$ particle so to adjust the distribution of the dipole momentum. The value of the equilibrium angle is consistent with the fact that in an apolar medium the total dipole momentum of a water molecule is zero. 
-Since in this model the screening and polarization effects are treated explicitly the global dielectric constant is then reduced from $\varepsilon_r = 15$, used in the standard \martini, to $\varepsilon_r = 2.5$. Moreover, since the \ac{PW} beads attract each other stronger then the standard water beads because of additional electrostatic interactions the strength $\epsilon_{WW}$ of the Lennard--Jones interaction between $W$ particles must be reduced. They found that change the Lennard--Jones strength from an $I$ level to an $III$ level can do the trick (see table~(\ref{tab:martiniEpsilon}) for the various interaction levels). While $\sigma$ remains set to $0.47$~nm.
+In the same fashion of the \martini philosophy, Yesylevskyy \etal\, \cite{PW} have developed a \acf{PW} model that better describes the real behavior of water. As before one \ac{PW} bead is associated to four water molecules. The new water bead consists of three particles instead of one in the standard \martini model. In figure~(\ref{fig:PW}) the topology of the \ac{PW} and a comparison with the old model is shown. The central particle $W$ is neutral and interacts with other particles in the system with the only Lennard--Jones potential, just like the standard P$_4$ water bead (see figure~(\ref{fig:martiniInteractions}) for the interactions matrix). There are two additional particles, namely $WP$ and $WM$, that are bound to the central particle and carry a positive and negative charge $|q| = 0.46\mathsf{e}$ respectively, where $\mathsf{e} = 1.60217653(14) \cdot 10^{-19}$~C is the unit electron charge. They interact with other particles in the system by the Coulomb interaction only. The bonds $W-WP$ and $W-WM$ are constrained to have a fixed distance $l = 0.14$~nm. The electrostatic interaction between $WP$ and $WM$ inside the same bead are exclude, thus they are invisible to each other and they can rotate around the $W$ particle. As a consequence the dipole momentum of the water bead depends on the relative angular position $\theta$ of $WP$ and $WM$: it can vary from zero ($\theta = 0$) to $2ql$ ($\theta = \pi$). A harmonic angle potential with equilibrium angle fixed to $\theta_0 = 0$ and a force constant $k_\theta = 4.2$~kJ/(mol\ rad$^2$) is added to control the rotation of $WP$ and $WM$ particles around the $W$ particle, so to adjust the distribution of the dipole momentum. The value of the equilibrium angle is consistent with the fact that in an apolar medium the total dipole momentum of a water molecule is zero. 
 
-The parametrization of $q$, $k_\theta$ and $\epsilon_{WW}$ are obtained, in addition to the basic target properties of the \martini \ac{FF}, also trying to reproduce the dielectric constant, density and dipole momentum of a pure water phase. For a more details about the parameterizations and testing methods the reader is addressed to the article by Yesylevskyy \etal\,\cite{PW}. An important question is the use of the \ac{PME} method to treat the long range electrostatic interaction. The authors found that, despite the loss of performance, in addition to the \ac{PW} model, the use of the \ac{PME} method contributes to a more realistic description of the processes involved in a biomolecular environments. In particular, some interesting results of utility for this thesis work, concern a better description of some properties of lipid membranes. One is the translocation of charged ions through a lipid bilayer that is described in a more realist detail: The authors found that the simulations with \ac{PW} and \ac{PME} are approaching the atomistic results better then the standard \martini \ac{FF}. Another important phenomenon about lipid membranes consist in the electroporation of membrane by \ac{PW} beads due to an electric field across the membrane (for example, created by a cross membrane ions imbalance) and, relented to this, the translocation of ions across the membrane helped by a so called ``\textit{water finger}'' a water defect inside the membrane that seems to be the trigger of the ions translocation. Such phenomenons are clearly evident in atomistic simulation however never occurred using the standard \martini \ac{FF} thus the importance to use the \ac{PW} model together with \ac{PME} method.
-%Despite this the loss of performance is clearly related to the fact that \ac{PW} increase by a factor $\times 3$ the number of particles in the system related to water.
+Since in this model the screening and polarization effects are treated explicitly the global dielectric constant is then reduced from $\varepsilon_r = 15$, used in the standard \martini, to $\varepsilon_r = 2.5$. Moreover, since the \ac{PW} beads attract each other stronger then the standard water beads, because of the additional electrostatic interactions, the strength $\epsilon_{WW}$ of the Lennard--Jones interaction between $W$ particles must be reduced. Water properties are reproduced satisfactory if the Lennard--Jones strength is changed from an $I$ level to an $III$ level (see table~(\ref{tab:martiniEpsilon}) for the various interaction levels). $\sigma$ remains set to $0.47$~nm.
+
+The parametrization of $q$, $k_\theta$ and $\epsilon_{WW}$ are obtained, in addition to the basic target properties of the \martini \ac{FF}, also trying to reproduce the dielectric constant, density and dipole momentum of a pure water phase. The above parameters and some results of the \ac{PW} model are summarized in table~(). For more details about the parameterizations and testing methods the reader is addressed to the article by Yesylevskyy \etal\,\cite{PW}.
+
+Moreover, the authors found that, in addition to the \ac{PW} model, the use of \ac{PME} method contributes to a more realistic description of the processes involved in biomolecular environments. In particular, some interesting results of utility for this thesis work concern a better description of the properties of lipid membranes, as we shall see in Chapter~. 
+
+%One is the translocation of charged ions through a lipid bilayer that is described in a more realistic detail: the authors found that the simulations with \ac{PW} and \ac{PME} are approaching the atomistic results better then the standard \martini \ac{FF}. Another important phenomenon about lipid membranes consist in the electroporation of membrane by \ac{PW} beads due to an electric field across the membrane (for example, created by a cross membrane ions imbalance) and, related to this, the translocation of ions across the membrane helped by a so called ``\textit{water finger}'' a water defect inside the membrane that seems to be the trigger of the ions translocation. Such phenomenons are clearly evident in atomistic simulations however never occurred using the standard \martini \ac{FF} thus the importance to use the \ac{PW} model together with \ac{PME} method.
+
 
 %\subsection{Applications}
 
 \subsection{Limitations of MARTINI FF}
-As we have seen in~\ref{sec:CGModel} the \ac{CG} \acp{FF} are computationally advantages, however a price has to be paid. Although the \martini \ac{FF} is still a finer \ac{CG} \ac{FF}, some limitations are shared with other \ac{CG} models at a fundamental level, such as the chemical and spatial resolution, which are both limited compared to atomistic models. One of the most important question is the \ac{DOF} reduction: This affects the entropy of the system which is underestimated and, as consequence of the \martini parameterizations, also the balance between enthalpy is not correct described. Since the \martini model is built with the constraint that the partitioning free energy $\Delta G = \Delta H - T\Delta S$ must be conserved with the atomistic case, together with an intrinsic loss of entropy, the enthalpic contribution must decrease with respect to the atomistic model\footnote{If a $NVT$ ensemble is used the correct potential is $\Delta A = \Delta U - T\Delta S$, thus the incorrect balance is between the internal energy and the entropy.}. Moreover this mean that the temperature dependence of a \ac{CG} model is a priori not correct, anyway this is not our case since we use only a $NVT$ or a $NPT$ ensemble with an external thermostat coupling.
+As we have seen in~\ref{sec:CGModel} the \ac{CG} \acp{FF} are computationally advantageous, still a price has to be paid. Although the \martini \ac{FF} is still a fine s\ac{CG} \ac{FF}, some limitations are shared with other \ac{CG} models at a fundamental level, such as the chemical and spatial resolution, which are both limited compared to atomistic models. One of the most important question is the \ac{DOF} reduction: This affects the entropy of the system which is underestimated and, as consequence of the \martini parameterizations, also the balance between enthalpy is not correct described. Since the \martini model is built with the constraint that the partitioning free energy $\Delta G = \Delta H - T\Delta S$ must be conserved with the atomistic case, together with an intrinsic loss of entropy, the enthalpic contribution must decrease with respect to the atomistic model\footnote{If a $NVT$ ensemble is used the correct potential is $\Delta A = \Delta U - T\Delta S$, thus the incorrect balance is between the internal energy and the entropy.}. Moreover this mean that the temperature dependence of a \ac{CG} model is a priori not correct, anyway this is not our case since we use only a $NVT$ or a $NPT$ ensemble with an external thermostat coupling.
 
 Another consequence of \ac{CG} \acp{FF} is related to the \ac{PEF} that becomes smoother respect to the atomistic case. This effectively results in more sampling of the energy landscape in a given time period, speeding up the kinetics of the system and allowing the use of an higher time steps with longer simulation times. However the speed--up is not easily predictable and is not likely to be the same for different systems and maybe it is dependent on the type of molecule. Nevertheless for the \martini \ac{FF} an average scaling factor of $4$, based on lateral diffusion coefficients of lipids in membranes, is commonly used, of course with some care. Another smaller source of errors is due to the choice of masses: Since ensemble properties is not affected by particles mass, in order to increase the efficiency, all the \martini beads have the same mass of $72$~amu. This leads in some uncertainty in the dynamics of the system making the time scaling for different beads non--trivial.
 

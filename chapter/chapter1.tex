@@ -55,7 +55,9 @@ $6N$--dimensional vector
 called \textit{phase space vector} or the \textit{microstate} of the system at time $t$. All the possible
 microstates of a system generate a $6N$--dimensional space called \textit{phase space} of the system, indicated 
 with $\Omega$. Thus $\vec x(t)$ describes a particular trajectory in the phase space, i.e. the system evolution 
-is the motion of a phase space point. For simplicity of notation let us introduce also the ordered vectors $\vec r = (\vec r_1, \dots, \vec r_N)$, $\dot{\vec r} = (\dot{\vec{r}}_1,\dots,\dot{\vec{r}}_N)$ and $\vec p = (\vec p_1, \dots, \vec p_N)$ which are the coordinates, velocities and momenta off all particles.
+is the motion of a phase space point. For simplicity of notation let us introduce also the ordered vectors 
+$\vec r = (\vec r_1, \dots, \vec r_N)$, $\dot{\vec r} = (\dot{\vec{r}}_1,\dots,\dot{\vec{r}}_N)$ and 
+$\vec p = (\vec p_1, \dots, \vec p_N)$ which are the coordinates, velocities and momenta off all particles.
 
 Let us suppose that all the forces acting on the $N$--particle system are conservative; this means that it must
 exist a scalar function $U = U(\vec r)$ called \ac{PEF}, such that
@@ -570,14 +572,16 @@ figure~(\ref{fig:pairlist}) a schematic representation of the buffered pair--lis
 	\label{fig:pairlist}
 \end{SCfigure}
 
-A better performance can be achieved adding a dynamic update algorithm of the pair--list refresh rate during the simulation. A nice way is to consider the maximum distances traveled by a particles in the pair--list: if this distance is greater than $r_b = r_l - r_c$ then the pair--list is certainly updated. From this one can fix the refresh rate to a higher value increasing the performance.
+A better performance can be achieved adding a dynamic update algorithm of the pair--list refresh rate during the 
+simulation. A nice way is to consider the maximum distance traveled by a particle in the pair--list: if this 
+distance is greater than $r_b = r_l - r_c$ then the pair--list is certainly updated. Thus one can fix the refresh 
+rate to a higher value increasing the performance.
 
 \subsection{Thermostat algorithms} %Molecular Modelling, 382
-A thermostat is an external tool that allows to maintain a system at a constant temperature.
-%In \ac{MD} simulations if one want to use isothermal ensemble, so with constant temperature, some algorithms have to be developed in order to mimics the thermostat effect on the system and which generates the correct ensemble. 
-Several algorithms are available. Some are based acting on particle velocities (Anderson, Berendsen, Bussi) other 
-introduce some more \ac{DOF} in the system that take into account a real temperature bath coupling 
-(Nosé--Hoover). We will describe in more detail the one used in this thesis work.
+A thermostat is an external tool that allows to maintain a system at a constant temperature. Several algorithms 
+are available. Some are based acting on particle velocities (Anderson, Berendsen, Bussi) other introduce some 
+more \ac{DOF} in the system that take into account a real temperature bath coupling (Nosé--Hoover). We will 
+describe in more detail the one used in this thesis work.
 
 As suggested by Bussi \etal\, \cite{Bussi}, a common practice to implement a thermostat acting on particle 
 velocities is related to a \textit{velocity rescale} algorithm in which the velocities of all particles are 
@@ -798,7 +802,8 @@ transition temperatures.
 For biomolecular applications the inter--particle interaction potentials are divided into two main classes: the 
 \textit{bonded interactions} involving particles within the same molecules and the \textit{non--bonded 
 interactions} engaging all particles in the system and which usually represent the Van der Waals and the 
-electrostatic interactions. In the following the most common and general functional form for the \ac{PEF} is descried. In general the \ac{PEF} can be always splitted in a bonded and non--bonded contributions.
+electrostatic interactions. In the following the most common and general functional form for the \ac{PEF} is 
+descried. In general the \ac{PEF} can be always splitted in a bonded and non--bonded contributions:
 \begin{equation*}
 	U(\vec r) = U_{\text{b}}(\vec r) + U_\text{nb}(\vec r)
 	\label{eq:FFPEF}
@@ -1299,15 +1304,6 @@ figure~(\ref{fig:martiniInteractions}).
 	\label{fig:martiniInteractions}
 \end{figure}
 
-% \begin{adjustwidth}{-3cm}{-5cm}%
-% \centering
-% \begin{minipage}[c]{1.2\textwidth}%
-% 	\includegraphics[width=\textwidth]{img/martiniInteractions.pdf}%
-% 	\captionof{figure}{Interaction strength association matrix for the \martini bead types and subtypes. Taken from \cite{Martini}.}
-% 	\label{fig:martiniInteractions}
-% \end{minipage}
-% \end{adjustwidth}
-
 \paragraph{\textbf{electrostatic interactions}} Electrostatic charges are assigned using the atom--centered 
 approximation, as described in~\ref{sec:chargeRep}. The charges of the \martini beads are empirically assigned at 
 the center of the beads and correspond to the net charge of the chemical moiety they represent. Water, for 
@@ -1392,7 +1388,14 @@ different degrees of hydrophobicity.
 \subsection{Polarizable Water model}
 \label{sec:pw}
 Water plays a crucial role in any biomolecular system. It is important thus to correctly describe its behavior. 
-Since the \martini water model does not directly take into account the electrostatic interaction between water and water and other environment because it does not have any charge and it interact only via Van der Waals interaction, a simple implicit medium is used to take into account the main electrostatic effects of water, screening and polarizability. In reality, however, any biomolecular process involves charged species moving between regions of different dielectric constant. Due to the change in electrostatic screening between those environments, the strength of the interaction between the moving charges and the surrounding molecules also changes. This effect can not be taken into account in an implicit medium models. In order to capture the inhomogeneous nature of the dielectric response an explicit medium has to be used. 
+Since the \martini water model does not directly take into account the electrostatic interaction between water 
+and water and other environment because it does not have any charge and it interact only via Van der Waals 
+interaction, a simple implicit medium is used to take into account the main electrostatic effects of water, 
+screening and polarizability. In reality, however, any biomolecular process involves charged species moving 
+between regions of different dielectric constant. Due to the change in electrostatic screening between those 
+environments, the strength of the interaction between the moving charges and the surrounding molecules also 
+changes. This effect can not be taken into account by implicit medium models. In order to capture the 
+inhomogeneous nature of the dielectric response an explicit medium has to be used. 
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[width=0.8\textwidth]{./img/PWModel/PWModel}
@@ -1400,77 +1403,209 @@ Since the \martini water model does not directly take into account the electrost
 	\label{fig:PW}
 \end{figure}
 
-In the same fashion of the \martini philosophy, Yesylevskyy \etal\, \cite{PW} have developed a \acf{PW} model that better describes the real behavior of water. As before one \ac{PW} bead is associated to four water molecules. The new water bead consists of three particles instead of one in the standard \martini model. In figure~(\ref{fig:PW}) the topology of the \ac{PW} and a comparison with the old model is shown. The central particle $W$ is neutral and interacts with other particles in the system with the only Lennard--Jones potential, just like the standard P$_4$ water bead (see figure~(\ref{fig:martiniInteractions}) for the interactions matrix). There are two additional particles, namely $WP$ and $WM$, that are bound to the central particle and carry a positive and negative charge $|q| = 0.46\mathsf{e}$ respectively, where $\mathsf{e} = 1.60217653(14) \cdot 10^{-19}$~C is the unit electron charge. They interact with other particles in the system by the Coulomb interaction only. The bonds $W-WP$ and $W-WM$ are constrained to have a fixed distance $l = 0.14$~nm. The electrostatic interaction between $WP$ and $WM$ inside the same bead are exclude, thus they are invisible to each other and they can rotate around the $W$ particle. As a consequence the dipole momentum of the water bead depends on the relative angular position $\theta$ of $WP$ and $WM$: it can vary from zero ($\theta = 0$) to $2ql$ ($\theta = \pi$). A harmonic angle potential with equilibrium angle fixed to $\theta_0 = 0$ and a force constant $k_\theta = 4.2$~kJ/(mol\ rad$^2$) is added to control the rotation of $WP$ and $WM$ particles around the $W$ particle, so to adjust the distribution of the dipole momentum. The value of the equilibrium angle is consistent with the fact that in an apolar medium the total dipole momentum of a water molecule is zero. 
+In the same fashion of the \martini philosophy, Yesylevskyy \etal\, \cite{PW} have developed a \acf{PW} model 
+that better describes the real behavior of water. As before one \ac{PW} bead is associated to four water 
+molecules. The new water bead consists of three particles instead of one in the standard \martini model. In 
+figure~(\ref{fig:PW}) the topology of the \ac{PW} and a comparison with the old model is shown. The central 
+particle $W$ is neutral and interacts with other particles in the system with the only Lennard--Jones potential, 
+just like the standard P$_4$ water bead (see figure~(\ref{fig:martiniInteractions}) for the interactions matrix). 
+There are two additional particles, namely $WP$ and $WM$, that are bound to the central particle and carry a 
+positive and negative charge $|q| = 0.46\mathsf{e}$ respectively, where 
+$\mathsf{e} = 1.60217653(14) \cdot 10^{-19}$~C is the unit electron charge. They interact with other particles in 
+the system by the Coulomb interaction only. The bonds $W-WP$ and $W-WM$ are constrained to have a fixed distance 
+$l = 0.14$~nm. The electrostatic interaction between $WP$ and $WM$ inside the same bead are exclude, thus they 
+are invisible to each other and they can rotate around the $W$ particle. As a consequence the dipole momentum of 
+the water bead depends on the relative angular position $\theta$ of $WP$ and $WM$: it can vary from zero 
+($\theta = 0$) to $2ql$ ($\theta = \pi$). A harmonic angle potential with equilibrium angle fixed to 
+$\theta_0 = 0$ and a force constant $k_\theta = 4.2$~kJ/(mol\ rad$^2$) is added to control the rotation of 
+$WP$ and $WM$ particles around the $W$ particle, so to adjust the distribution of the dipole momentum. The value 
+of the equilibrium angle is consistent with the fact that in an apolar medium the total dipole momentum of a 
+water molecule is zero. 
 
-Since in this model the screening and polarization effects are treated explicitly the global dielectric constant is then reduced from $\varepsilon_r = 15$, used in the standard \martini, to $\varepsilon_r = 2.5$. Moreover, since the \ac{PW} beads attract each other stronger then the standard water beads, because of the additional electrostatic interactions, the strength $\epsilon_{WW}$ of the Lennard--Jones interaction between $W$ particles must be reduced. Water properties are reproduced satisfactory if the Lennard--Jones strength is changed from an $I$ level to an $III$ level (see table~(\ref{tab:martiniEpsilon}) for the various interaction levels). $\sigma$ remains set to $0.47$~nm.
+Since in this model the screening and polarization effects are treated explicitly the global dielectric constant 
+is then reduced from $\varepsilon_r = 15$, used in the standard \martini, to $\varepsilon_r = 2.5$. Moreover, 
+since the \ac{PW} beads attract each other stronger then the standard water beads, because of the additional 
+electrostatic interactions, the strength $\epsilon_{WW}$ of the Lennard--Jones interaction between $W$ particles 
+must be reduced. Water properties are reproduced satisfactory if the Lennard--Jones strength is changed from an 
+$I$ level to an $III$ level (see table~(\ref{tab:martiniEpsilon}) for the various interaction levels). $\sigma$ 
+remains set to $0.47$~nm.
 
-The parametrization of $q$, $k_\theta$ and $\epsilon_{WW}$ are obtained, in addition to the basic target properties of the \martini \ac{FF}, also trying to reproduce the dielectric constant, density and dipole momentum of a pure water phase. The above parameters and some results of the \ac{PW} model are summarized in table~(). For more details about the parameterizations and testing methods the reader is addressed to the article by Yesylevskyy \etal\,\cite{PW}.
+The parametrization of $q$, $k_\theta$ and $\epsilon_{WW}$ are obtained, in addition to the basic target 
+properties of the \martini \ac{FF}, also trying to reproduce the dielectric constant $\varepsilon_{W}$, density 
+$\rho$ and dipole momentum of a pure water phase. The above parameters of the \ac{PW} model are summarized in 
+table~(\ref{tab:PWParam}) while a comparison of the results obtained with the \ac{PW}, the standard \martini 
+water and the experimental data are summarized in table~(\ref{tab:PWRes}). For more details about the 
+parameterizations and testing methods the reader is 
+addressed to the article by Yesylevskyy \etal\,\cite{PW}.
+\begin{SCtable}
+	\centering
+	\begin{tabular}{ll}
+		\toprule
+		$|q| = 0.46\mathsf{e}$				\\ \midrule
+		$l = 0.14$~nm						\\ \midrule
+		$\theta_0 = 0$						\\ \midrule
+		$k_\theta = 4.2$~kJ/(mol\ rad$^2$)	\\ \midrule
+		$\epsilon_{WW} = 4$~kJ/mol			\\ \midrule
+		$\sigma = 0.47$~nm					\\ \bottomrule
+	\end{tabular}
+	\caption{Summary of the parameters used in the \acs{PW} model. Taken from \cite{PW}.}
+	\label{tab:PWParam}
+\end{SCtable}
 
-Moreover, the authors found that, in addition to the \ac{PW} model, the use of \ac{PME} method contributes to a more realistic description of the processes involved in biomolecular environments. In particular, some interesting results of utility for this thesis work concern a better description of the properties of lipid membranes, as we shall see in Chapter~. 
+\begin{table}
+	\centering
+	\begin{tabular}{lrrr}
+		\toprule
+		\,	& \acs{PW} &  \martini water & Experimental \\ \toprule
+		$\rho$~[kg/m$^3$]				& $1043$  &   		& $997$		\\ \midrule
+		$\overline{p}$~[D] 				& $4.9$   & $-$ 	& 		    \\ \midrule
+		$\varepsilon_{W}$ 				& $75.6$  & $-$ 	& $78.4$	\\ \midrule
+		$T_\text{melt}$~[K] 			& $282$   & $290$ 	& $273$		\\ \midrule
+		$\Delta G^\text{hyd}$~[kJ/mol] 	& $-18.7$ &	$-18$	& $-27$		\\ \midrule%\subsection{Applications}
+		$D_{WW}~[10^{-5}$~cm$^2$/s]		& $2.5$   & $2.0$   & $2.3$		\\ \bottomrule
+	\end{tabular}
+	\caption{Summary of the results obtained with the \acs{PW}, standard \martini water and the experimental data at $T=300$~K. $\overline{p}$ is the average dipole momentum and $D_{WW}$ is the self--diffusion coefficient.}
+	\label{tab:PWRes}
+\end{table}
+
+Moreover, the authors found that, in addition to the \ac{PW} model, the use of \ac{PME} method contributes to a 
+more realistic description of the processes involved in biomolecular environments. In particular, some 
+interesting results of utility for this thesis work concern a better description of the properties of lipid 
+membranes, as we shall see in Chapter~. 
 
 %One is the translocation of charged ions through a lipid bilayer that is described in a more realistic detail: the authors found that the simulations with \ac{PW} and \ac{PME} are approaching the atomistic results better then the standard \martini \ac{FF}. Another important phenomenon about lipid membranes consist in the electroporation of membrane by \ac{PW} beads due to an electric field across the membrane (for example, created by a cross membrane ions imbalance) and, related to this, the translocation of ions across the membrane helped by a so called ``\textit{water finger}'' a water defect inside the membrane that seems to be the trigger of the ions translocation. Such phenomenons are clearly evident in atomistic simulations however never occurred using the standard \martini \ac{FF} thus the importance to use the \ac{PW} model together with \ac{PME} method.
 
-
-%\subsection{Applications}
-
+										
 \subsection{Limitations of MARTINI FF}
-As we have seen in~\ref{sec:CGModel} the \ac{CG} \acp{FF} are computationally advantageous, still a price has to be paid. Although the \martini \ac{FF} is still a fine s\ac{CG} \ac{FF}, some limitations are shared with other \ac{CG} models at a fundamental level, such as the chemical and spatial resolution, which are both limited compared to atomistic models. One of the most important question is the \ac{DOF} reduction: This affects the entropy of the system which is underestimated and, as consequence of the \martini parameterizations, also the balance between enthalpy is not correct described. Since the \martini model is built with the constraint that the partitioning free energy $\Delta G = \Delta H - T\Delta S$ must be conserved with the atomistic case, together with an intrinsic loss of entropy, the enthalpic contribution must decrease with respect to the atomistic model\footnote{If a $NVT$ ensemble is used the correct potential is $\Delta A = \Delta U - T\Delta S$, thus the incorrect balance is between the internal energy and the entropy.}. Moreover this mean that the temperature dependence of a \ac{CG} model is a priori not correct, anyway this is not our case since we use only a $NVT$ or a $NPT$ ensemble with an external thermostat coupling.
+As we have seen in~\ref{sec:CGModel} the \ac{CG} \acp{FF} are computationally advantageous, still a price has to 
+be paid. Although the \martini \ac{FF} is still a fine \ac{CG} \ac{FF}, some limitations are shared with other 
+\ac{CG} models at a fundamental level, such as the chemical and spatial resolution, which are both limited 
+compared to atomistic models. An important issue is the underestimation of the entropy which respect to the 
+atomistic case, that is a consequence of the \ac{DOF} reduction process. Since in the \martini \ac{FF} the 
+partitioning free energy $\Delta G = \Delta H - T\Delta S$ must be consistent which the experimental data, the 
+intrinsic loss of entropy imply a reduction of the enthalpy contribution, generating an imbalance between them. 
+If a $NVT$ ensemble is used the correct potential is the Helmholtz free energy $\Delta A = \Delta U - T\Delta S$, 
+thus the imbalance is between the internal energy and the entropy. This means that the use of a \ac{CG} model 
+with a $NVE$ ensemble leads to a problem of energy conservation. Anyway this is not our case since we only use a 
+$NVT$ or a $NPT$ ensemble with an external thermostat coupling.
 
-Another consequence of \ac{CG} \acp{FF} is related to the \ac{PEF} that becomes smoother respect to the atomistic case. This effectively results in more sampling of the energy landscape in a given time period, speeding up the kinetics of the system and allowing the use of an higher time steps with longer simulation times. However the speed--up is not easily predictable and is not likely to be the same for different systems and maybe it is dependent on the type of molecule. Nevertheless for the \martini \ac{FF} an average scaling factor of $4$, based on lateral diffusion coefficients of lipids in membranes, is commonly used, of course with some care. Another smaller source of errors is due to the choice of masses: Since ensemble properties is not affected by particles mass, in order to increase the efficiency, all the \martini beads have the same mass of $72$~amu. This leads in some uncertainty in the dynamics of the system making the time scaling for different beads non--trivial.
+Another consequence of the use of a \ac{CG} \acp{FF} is related to the \ac{FES} that becomes smoother respect to 
+the atomistic case. This effectively results in more sampling of the energy landscape in a given time period, 
+speeding up the dynamics of the system. Moreover even the \ac{PEF} becomes smoother, in particular the bonded 
+contributions, allowing the use of an higher time steps with longer simulation times. However the speed--up is 
+not easily predictable and is not likely to be the same for different systems and maybe it is dependent on the 
+type of molecule. Nevertheless for the \martini \ac{FF} an average scaling factor of four, based on lateral 
+diffusion coefficients of lipids in membranes, is commonly used, of course with some care. Another smaller source 
+of errors is due to the choice of masses: since ensemble properties are not affected by particle masses, in order 
+to increase the efficiency, all the \martini beads have the same mass of $72$~amu. This leads in some uncertainty 
+in the dynamics of the system making the time scaling for different beads non--trivial.
 
-A problem involving the Lennard--Jones potential as a model of Van der Waals interaction in \martini, is that the steep repulsion leads to an over--structuring of fluids compared to atomistic models. The direct and most evident implication is the melting point of the water that is $290 \pm 5$~K. A practical partial solution is the use of the so called ``anti--freeze'' particles named BP$_4$ type. The Lennard--Jones interaction between these particles and water is modified with a slightly larger Van der Waals radius parameter, $\sigma = 0.57$~nm and a stronger interaction to be a level $O$ (see table~(\ref{tab:martiniEpsilon}) for the interaction level). Marrink \etal\, suggest that a mole fraction of $n_{\text{af}} = 0.1$ is sufficient to prevent freezing without affecting the other properties of water. Some other properties of water are not accurate described such us the surface tension of air/water interface that leads in problem to water/oil interfaces formation. Using the \ac{PW} model these properties improve slightly. For a more comprehensive discussion about the limitations of the \martini \ac{FF} the reader is addressed to the review by Marrink \etal\, \cite{MartiniReview}.
+A problem involving the Lennard--Jones potential as a model of Van der Waals interactions in \martini, is that 
+the steep repulsion leads to an over--structuring of fluids compared to atomistic models. As we can see from 
+table~(\ref{tab:PWRes}) the direct and most evident implication is the melting point of the standard \martini 
+water that is $290 \pm 5$~K. A practical partial solution is the use of the so called ``anti--freeze'' particles 
+named BP$_4$ type. The Lennard--Jones interaction between these particles and water is modified with a slightly 
+larger Van der Waals radius parameter, $\sigma = 0.57$~nm and a stronger interaction to be a level $O$ (see 
+table~(\ref{tab:martiniEpsilon}) for the interaction level). Marrink \etal\, suggest that a mole fraction of 
+$n_{\text{af}} = 0.1$ is sufficient to prevent freezing without affecting the other properties of water. 
+%Some other properties of water are not accurate described such us the surface tension of air/water interface that leads in problem to water/oil interfaces formation. 
+Using the \ac{PW} model these properties improve slightly, see table~(\ref{tab:PWRes}). For a more comprehensive 
+discussion about the limitations of the \martini \ac{FF} the reader is addressed to the review by Marrink \etal\, \cite{MartiniReview}.
 
 \section{Advanced sampling methods}
-The quantity of particular importance for the equilibrium statistical mechanics of which we are interested to obtain with \ac{MD} technique is the free energy function: the Gibbs free energy $G$ for the isobaric--isothermal ensemble and $A$ the Helmholtz free energy for the canonical ensemble. Being related to the partition function of an ensemble, the free energy is the generator through which other thermodynamic quantities are obtained via differentiation. However often we are particularly interested in the free energy difference between two thermodynamic states, instead of the absolute value. This because free energy differences are the driving force of any process and they tell us, for example, if a chemical reaction occurs spontaneously, whether a given solute is hydrophobic or hydrophilic, if a protein conformational change take place or whether some molecules in water solution are able to self--assembles into a more complex system and so forth. Moreover, often, we are interested also in the \ac{FES}: the free energy in function of some generalized coordinates, called \acp{CV} of the system. These small set of variables can describe, in a simple and useful manner, some chemical, thermodynamic or mechanical processes that take place in the system, for example, the free energy in function of the distance between the \ac{COM} of two molecules give us information about their attraction or repulsion and if they form a bound state; or in function of a rotational angle of a molecule bond to obtain all the possible stable configurations and so on. Thus the \ac{FES} provides a map of the stable conformations, the relative stability of these conformations and the barrier heights that must be crossed for the processes to take place. It is necessary to stress out that in many cases one do not know exactly \textit{a priori} the \ac{FES} about a certain process and so one want to know it also for understand if other minima energy configurations exist, in addition to those known, how stable they are and what are the energy barriers to go from one minima state to an other\footnote{Sometimes thought the cinematic of an \ac{MD} simulation one can gamble an estimate of the functional form of the \ac{FES}, looking for the relative probability to stay in a meta--stable state rather then the other. Clearly this means that both meta--stable states are to be sampled, as we shall see later it depends of the height of the energy barriers.}. 
-Despite this, the calculation of free energy difference of two thermodynamic states (that leads an \textit{a priori} knowledge of the two stable states) and the calculation of the \ac{FES} are one of the main challenges in \ac{MD} simulations for biomolecular applications.
+The quantity of particular importance for the equilibrium statistical mechanics of which we are interested to obtain with \ac{MD} technique is the free energy function: the Gibbs free energy $G$ for the isobaric--isothermal ensemble and $A$ the Helmholtz free energy for the canonical ensemble. Being related to the partition function of an ensemble, the free energy is the generator through which other thermodynamic quantities are obtained via differentiation. However often we are particularly interested in the free energy difference between two thermodynamic states, instead of the absolute value. This because free energy differences are the driving force of any process and they tell us, for example, if a chemical reaction occurs spontaneously, whether a given solute is hydrophobic or hydrophilic, if a protein conformational change take place or whether some molecules in water solution are able to self--assembles into a more complex system and so forth. Moreover, often, we are interested also in the \ac{FES}: the free energy in function of some generalized coordinates, called \acp{CV} of the system. These small set of variables can describe, in a simple and useful manner, some chemical, thermodynamic or mechanical processes that take place in the system, for example, the free energy in function of the distance between the \ac{COM} of two molecules give us information about their attraction or repulsion and if they form a bound state; or in function of a rotational angle of a molecule bond to obtain all the possible stable configurations and so on. Thus the \ac{FES} provides a map of the stable conformations, the relative stability of these conformations and the barrier heights that must be crossed for the processes to take place. It is necessary to stress out that in many cases one do not know exactly \textit{a priori} the \ac{FES} about a certain process and so one want to know it also for understand if other minima energy configurations exist, in addition to those known, how stable they are and what are the energy barriers to go from one minima state to an other
+%\footnote{Sometimes thought the cinematic of an \ac{MD} simulation one can gamble an estimate of the functional form of the \ac{FES}, looking for the relative probability to stay in a meta--stable state rather then the other. Clearly this means that both meta--stable states are to be sampled, as we shall see later it depends of the height of the energy barriers.}. 
+Despite this, the calculation of free energy difference between two thermodynamic states (that requires an 
+\textit{a priori} knowledge of the two stable states) and the calculation of the \ac{FES} are one of the main 
+challenges in \ac{MD} simulations for biomolecular applications.
 
-Lets us suppose that we are interested in the \ac{FES} of the \ac{CV} $s(\vec r)$ and we are working in a isobaric--isothermal ensemble with an isotropic system. Following section~\ref{sec:statmec}, the Gibbs free energy along the \ac{CV} is obtained as
+Let us suppose that we are interested in the \ac{FES} of the \ac{CV} $s(\vec r)$ and we are working in a 
+isobaric--isothermal ensemble with an isotropic system. Following section~\ref{sec:statmec}, the Gibbs free 
+energy along the \ac{CV} is obtained as
 \begin{equation}
 	G(s) = -k_BT \ln Q(s)
 	\label{eq:fes}
 \end{equation}
-where $Q(s)$ is the partition function with all other \ac{DOF} expect for $s(\vec r)$, integrated out. This leads as follow
+where $Q(s)$ is the partition function that integrate out all the \ac{DOF} of the system expect for $s(\vec r)$:
 \begin{equation*}
-	Q(s) = \frac{1}{\mathcal{Z}_{NpT}} \int_0^{+\infty}\ dV \ \int_\Omega e^{-\beta(\mathcal{H}(\vec x) + pV)}\delta(s(\vec r) - S)\ dx
+	Q(s) = \frac{1}{\mathcal{Z}_{NpT}} \int_0^{+\infty}\ dV \ \int_\Omega e^{-\beta(\mathcal{H}(\vec x) + pV)}\delta(s(\vec r) - s)\ dx
 \end{equation*}
-since $s(\vec r)$ do not depends on particles momenta, from equations~\eqref{eq:hamiltonian} and~\eqref{eq:nptPartition}, it can be rewritten as
+since $s(\vec r)$ does not depend on particle momenta, from equations~\eqref{eq:hamiltonian} 
+and~\eqref{eq:nptPartition}, $Q(s)$ can be rewritten as
 \begin{equation}
 	Q(s) =  \frac{ \int_\Omega e^{-\beta U(\vec r)}\delta(s(\vec r) - s)\ dr }{\int_\Omega e^{-\beta U(\vec r)}\ dr}
 	\label{eq:CVprobability}
 \end{equation}
-where $U(\vec r)$ is the \ac{PEF}. $Q(s)ds$ can be interpreted as the probability of finding the system with $s(\vec x)$ between $s$ and $s + ds$. Since this equation contains a direct phase space integration can be rewritten in a more useful manner using the ensemble averages then, using the ergodic theorem in equation~\eqref{eq:ergotic}, as a time averages:
+where $U(\vec r)$ is the \ac{PEF}. $Q(s)ds$ can be interpreted as the probability of finding the system with 
+$s(\vec x)$ between $s$ and $s + ds$. Since this equation contains a direct phase space integration it can be 
+rewritten in a more useful manner using the ensemble averages and then, using the ergodic theorem in 
+equation~\eqref{eq:ergotic}, as a time average:
 \begin{equation}
 	Q(s) = \ave{\delta(s(\vec r) - s)} = \lim_{t\to +\infty}\frac{1}{\tau}\int_0^\tau \delta(s(\vec r(t)) - s)\ dt
 	\label{eq:CVprobabilityAve}
 \end{equation}
 
-\ac{MD} simulations give us the possibility to sample a given ensemble via computational methods, in principle, in order to calculate the integrals in equation~\eqref{eq:CVprobabilityAve}. Unfortunately, since the time can not be infinity, the main problem related to \ac{MD} simulations is whether we are able to correctly sample \textit{all} the phase space of an ensemble in order to compute the ensemble average. Clearly the answer depends on the system in exam, if it is really simple maybe we can do that, otherwise probably no or it takes too time and/or we are not able to collect sufficiently data. This sampling problem can be summarized as follow: Regions in phase space around a local minimum of the \ac{PEF} (then a local minimum even in the \ac{FES}) are typically sampled well, whereas regions of higher energy are sampled rarely. Despite they leads with a small contribution to the partition function, due to Boltzmann factor, a bigger challenge, related to overcome regions of higher energy, is to sample other minima of the \ac{PEF}, that can be of lower or same energy and instead can leads to a important contribution to the ensemble averages. This is the \textit{rare events problem}. When the system is moving in the \ac{PEF} landscape the only way to escape from a local minimum is due to thermal fluctuations and so energy barriers that are higher then $\sim k_B T$ have a small probability of being overcame. Then the sampling problem! Moreover the energy landscape, even for a small molecule, it is extremely wrinkled and the large number of free energy minima is far more than can be sampled in a typical \ac{MD} simulation. Thus the principal reason for the use of the just introduced \acp{CV}, they can limit the sampling necessity to those regions of phase space that are most important to the process under study, hoping that, as the \ac{DOF} reduction in a \ac{CG} \ac{FF}, the limited sampled regions are sufficient to correctly describe the process.
+The time sampling of equation~\eqref{eq:CVprobabilityAve} can be derived, in principle, via \ac{MD}. 
+Unfortunately, since the time can not be infinite, the main problem related to \ac{MD} simulations is whether we 
+are able to correctly sample \textit{all} the phase space of an ensemble in order to compute the ensemble 
+average. Clearly the answer depends on the system in exam, if it is really simple maybe we can do that, otherwise 
+probably not or indeed it take too much time and/or we are not able to collect sufficient data. This sampling 
+problem can be summarized as follows: regions in phase space around a local minimum of the \ac{FES} are typically 
+sampled well, whereas regions of higher energy are sampled rarely. These high energy regions provide with a small 
+contribution to the partition function, due to their unfavorable Boltzmann factor. However they must be overcome 
+in order to sample other minima that can give, instead, a important contribution to the ensemble averages. These 
+transitions are called \textit{rare events}. When the system is moving in the energy landscape the only way to 
+escape from a local minimum is to exploit thermal fluctuations and so energy barriers that are higher then 
+$\sim k_B T$ have a small probability of being overcome. Moreover, the energy landscape, even for a small 
+molecule, can be extremely wrinkled and the large number of free energy minima can not be sampled in a typical 
+\ac{MD} simulation. The principal reason for the use of the \acp{CV}, is thus to limit the sampling to those 
+regions of phase space that are most important for the process under study, hoping that the limited sampled 
+regions are sufficient to correctly describe the process.
 
-Several methods are developed and are still in development in order to solve the just described sampling problem. This method are all based on advanced sampling techniques that allow us to
+Several methods are developed and are still in development in order to solve the just described sampling problem. 
+These methods are all based on advanced sampling techniques that allow us to
 \begin{itemize}
-	\item Escape from a local energy minima, in order to explore other regions of the phase space;
-	\item Calculate free energy difference between two thermodynamic states;
-	\item Compute the \ac{FES} along one or a small set of \acp{CV};
-	\item Try to capture and study the transition state of a process (in function of some \acp{CV}).
+	\item Escape from a local energy minimum, in order to explore other regions of the phase space;
+	\item Calculate the free energy difference between two thermodynamic states;
+	\item Compute the \ac{FES} along one or a small set of \acp{CV}.
 \end{itemize}
-The common basic idea is to introduce additional \ac{DOF} along the \acp{CV} in order to modify or add some potential energy, to the \ac{PEF} that drive the system from one state to another. This additional potential is called \textit{biased potential} and those advanced sampling methods are grouped in the so called \textit{biased} \ac{MD} to distinguish from the \textit{un--biased} \ac{MD} in which the system is not driven. In particular we describe only those methods used in this thesis work: \textit{Umbrella sampling method} and \textit{Metadynamics}. For a more comprehensive discussion the reader is addressed to the review by Kästner \cite{Umbrella} for the former and to the review by Laio and Gervasio \cite{MetadReview} for the latter. Moreover in the books of Tuckerman \cite{Tuckerman} other methods are described.
-
-%It is clear, from the previous sections, that if we are able to correctly sample an ensemble, the law of statistical mechanics (\ref{sec:stamec}) leads the way to obtain thermodynamic properties and macroscopic observables of a system that is part of the ensemble; while \ac{MD} simulations (\ref{sec:MD}) give us the possibility to sample a given ensemble via computational methods. Unfortunately the main problem related to \ac{MD} simulations is whether we are really able to correctly sample \textit{all} the phase space of an ensemble. Clearly the answer depends on the system in exam, if it is really simple maybe we can do that, otherwise probably no or it takes too time and/or we are not able to collect sufficiently data. Let us to focus more in detail about the problem.
+The common basic idea is to introduce a additional \textit{bias potential} able to confine the sampling to a 
+limited region of the \ac{CV} space and/or drive the transition between two metastable configuration. In 
+particular we describe only those methods used in this thesis work: \textit{umbrella sampling method} and 
+\textit{metadynamics}. For a more comprehensive discussion the reader is addressed to the review by Kästner 
+\cite{Umbrella} for the former, and to the review by Laio and Gervasio \cite{MetadReview} for the latter. 
+Moreover in the books by Tuckerman \cite{Tuckerman} other enhanced sampling methods are described.
 
 \subsection{Umbrella sampling}
-Umbrella sampling method was developed by Torrie and Valleau and today is one of the most mature and broadly accepted method for calculating free energy differences. The basic idea is to drive the system from a known state $A$ to an other known state $B$ through a deterministic path defined on the \ac{CV} $s(\vec r)$ chosen to describe the process. This methods is well suitable for one \ac{CV} otherwise the computational performance degrades rapidly with the number of \acp{CV}. The idea is to divide the path into a discrete number of segment $N_w$ and take a subset $\{s_i\}$ of the values assumed by the continuos \ac{CV} from state $A$ to $B$ along the path. For each of those target values $s_i$ a bias potential $w_i(s)$ depending only on $s$ is added to \ac{PEF} in order to restrain the system to the target value. Then \ac{MD} simulations are performed for each value. Those $N_w$ independent simulations are commonly called \textit{windows} for which the \ac{CV} assume different values. Then, with an analysis method, all data collected with the windows are combined together to compute the \ac{FES} along the chosen \ac{CV}. In figure~(\ref{fig:umbrellaPath}) an example of the windows selection is shown.
+The umbrella sampling method was developed by Torrie and Valleau and today is one of the most mature and broadly 
+accepted method for calculating free energy differences. The basic idea is to drive the system from a known state 
+$A$ to an other known state $B$ through a deterministic path defined on the \ac{CV} $s(\vec r)$ chosen to 
+describe the process. This method is well suited for one \ac{CV}, otherwise the computational performance 
+degrades rapidly with the number of \acp{CV}. The idea is to identify a path connecting $A$ to $B$, and divide it 
+into a discrete number of windows $N_w$ and take a subset $\{s_i\}$, $i=1,\dots,N_w$ of the values assumed by the 
+continuos \ac{CV} from state $A$ to $B$ along the path. For each of these target values $s_i$ a bias potential 
+$w_i(s)$, depending only on $s$, is added to \ac{PEF} in order to restrain the system to the $s_i$ target value. 
+Then, \ac{MD} simulations are performed for each window. All the data collected within the $N_w$ windows are 
+combined together to compute the biased \ac{FES} along the chosen \ac{CV}. Eventually, the unbiased \ac{FES} is 
+recovered. In figure~(\ref{fig:umbrellaPath}) an example of the windows selection is shown.
 \begin{SCfigure}
 	\centering
-	\includegraphics[width=0.6\textwidth]{./img/umbrellaPath/umbrellaPath.pdf}
+	\includegraphics[width=0.5\textwidth]{./img/umbrellaPath/umbrellaPath.pdf}
 	\caption{Example of an umbrella sampling windows selection. The contour plot represent a $2$--minima free energy profile through which the system is evolved. The dashed line is the path along the \acs{CV} $s(\vec r)$ that connect state $A$ to $B$. The black filled circles represent the selected windows for different values of $s$.}
 	\label{fig:umbrellaPath}
 \end{SCfigure}
 
-Suppose $w_i(s)$ to be the bias potential applied on window $i$ in function of the \ac{CV} $s(\vec r)$. Then the biased \ac{PEF} of window $i$ become $U_i^b(\vec r) = U(\vec r) + w_i(s)$; where the superscript $b$ denotes biased quantities. With the substitution $U(\vec r) \rightarrow U_i^b(\vec r)$ in equation~\eqref{eq:CVprobability} the corresponding biased partition function integrated over all \ac{DOF} but $s$ and exploiting the Dirac delta properties, yields to
+Suppose $w_i(s)$ to be the bias potential applied on window $i$ in function of the \ac{CV} $s(\vec r)$. Then the 
+biased \ac{PEF} of window $i$ become $U_i^b(\vec r) = U(\vec r) + w_i(s)$; where the superscript $b$ denotes 
+biased quantities. With the substitution $U(\vec r) \rightarrow U_i^b(\vec r)$ in 
+equation~\eqref{eq:CVprobability} the corresponding biased partition function integrated over all \ac{DOF} but 
+$s$ yields to
 \begin{equation*}
 	Q_i^b(s) = e^{\beta w_i(s)}\frac{ \int_\Omega e^{-\beta U(\vec r)}\delta(s(\vec r) - s)\ dr }{\int_\Omega e^{-\beta (U(\vec r) + w_i(s(\vec r)))}\ dr}
 \end{equation*}
-In order to use equation~\eqref{eq:fes} to obtain the \ac{FES}, we need to recover the un--biased partition faction $Q_i(s)$ like in equation~\eqref{eq:CVprobability}. This can be done (see \cite{Umbrella}), obtaining the following expression
+In order to use equation~\eqref{eq:fes} to obtain the \ac{FES}, we need to recover the un--biased partition 
+faction $Q_i(s)$ like in equation~\eqref{eq:CVprobability}. This can be done (see \cite{Umbrella}), obtaining the 
+following expression
 \begin{equation}
 	\begin{aligned}
 	Q_i(s) &= Q_i^b(s) e^{\beta w_i(s)}\ \frac{ \int_\Omega e^{-\beta U(\vec r)}e^{-\beta w_i(s(\vec r))}\ dr }{\int_\Omega e^{-\beta U(\vec r)}\ dr} = \\
@@ -1482,9 +1617,18 @@ then the \ac{FES} for window $i$ is obtained simply by equation~\eqref{eq:fes}
 \begin{equation*}
 	G_i(s) = -k_BT \ln Q_i^b(s) - w_i(s) + C_i
 \end{equation*}
-where $Q_i^b(s)$ is obtain as an ensemble average via the biased \ac{MD} simulation like equation~\eqref{eq:CVprobabilityAve} and $w_i(s)$ is a known function. $C_i$ is an addictive constant independent of $s$ that connect the free energy curves $G_i(s)$ of different windows. As we shall see, in order to combine more windows to calculate a global \ac{FES}, all set $\{C_i\}$ must be computed.
+where $Q_i^b(s)$ is obtained as an ensemble average via the biased \ac{MD} simulation like 
+equation~\eqref{eq:CVprobabilityAve} and $w_i(s)$ is a known function. $C_i$ is an addictive constant independent 
+of $s$ that connects the free energy curves $G_i(s)$ of different windows. As we shall see, in order to combine 
+more windows to calculate a global \ac{FES}, all $\{C_i\}$ must be computed.
 
-\paragraph{\textbf{Weighted histogram analysis method}} Different analysis methods have been developed in order combine informations collected from the $N_w$ windows. The aim of those methods is to compute the global un--biased partition function $Q(s)$ from the set of biased partition function $\{Q_i(s)\}$ in order to extract the global \ac{FES} $G(s)$. The most commonly used method is the \ac{WHAM} \cite{WHAM}, \cite{gWHAM}. The philosophy behind is to minimize the statistical error in the calculation of $Q(s)$. For each of the $N_w$ biased windows a set of histograms $\{h_i(s)\}$ with $n_i$ bins, representing the set $\{Q_i(s)\}$, is recorded. The global distribution function is computed as follow
+\paragraph{\textbf{Weighted histogram analysis method}} Different analysis methods have been developed in order 
+combine informations collected from the $N_w$ windows. The aim of those methods is to compute the global unbiased 
+partition function $Q(s)$ from the set of biased partition functions $\{Q^n_i(s)\}$ in order to extract the 
+global \ac{FES} $G(s)$. The most commonly used method is the \ac{WHAM} \cite{WHAM}, \cite{gWHAM}. The philosophy 
+behind it is to minimize the statistical error in the calculation of $Q(s)$. For each of the $N_w$ biased windows 
+a set of histograms $\{h_i(s)\}$ with $n_i$ bins, representing the set $\{Q^b_i(s)\}$, is recorded. The global 
+distribution function is computed as follow
 \begin{equation}
 	Q(s) = \sum_{i=0}^{N_w} p_i h_i(s), \qquad \sum_{i=0}^{N_w} p_i = 1
 	\label{eq:whan1}
@@ -1494,27 +1638,42 @@ where $p_i$ are weights chosen to minimize statistical error on $Q(s)$. Those le
 	p_i = \frac{n_ie^{-\beta (w_i(s) - C_i)}}{\sum_{j=0}^{N_w} n_je^{-\beta (w_j(s) - C_j)}}
 	\label{eq:whanwheight}
 \end{equation}
-where $n_i$ is the total number of independent bins in the $i-$th histogram. The problem now is to compute the set of constants $\{C_i\}$. We can not use the integrals in equation~\eqref{eq:windowPartFunc} for the problems already described at the begging of this section, but the second line give us an idea. The ensemble average can be computed using the global distribution function $Q(s)$ as follow
+where $n_i$ is the total number of independent bins in the $i-$th histogram. The problem now is to compute the 
+set of constants $\{C_i\}$. We can not use the integrals in equation~\eqref{eq:windowPartFunc} for the problems 
+already described at the begging of this section, but the second line give us an idea. The ensemble average can 
+be computed using the global distribution function $Q(s)$ as follow
 \begin{equation}
 	e^{-\beta C_i} = \ave{e^{-\beta w_i(s)}} = \int Q(s) e^{-\beta w_i(s)}\ ds
 	\label{eq:whan2}
 \end{equation} 
-Because $Q(s)$ in equation~\eqref{eq:whan1} depends on the set of constants $\{C_i\}$ and \textit{vice versa}, both equations must be solved in a iterative self--consistent manner. A first guess of set $\{C_i\}$ is used to compute the weights from equation~\eqref{eq:whanwheight} then from equation~\eqref{eq:whan1} $Q(s)$ is computed and it is used to obtain a new set of constants $\{C_i\}$ from equation~\eqref{eq:whan2} and so on until both equations are satisfied. When the iteration procedure is completed the global \ac{FES} $G(s)$ is obtained from equation~\eqref{eq:fes}. One important consideration about \ac{WHAM} is that each window must be sufficient overlap between the distribution of the chosen value of the \ac{CV} otherwise the statistical error due to the combining procedure can be too high or the iterative producer itself can lead to convergence problem. In general a set of windows are performed then if they are not sufficient other windows are carry out.
+Because $Q(s)$ in equation~\eqref{eq:whan1} depends on the set of constants $\{C_i\}$ and \textit{vice versa}, 
+both equations must be solved in a iterative self--consistent manner. A first guess of set $\{C_i\}$ is used to 
+compute the weights from equation~\eqref{eq:whanwheight} then from equation~\eqref{eq:whan1} $Q(s)$ is computed 
+and it is used to obtain a new set of constants $\{C_i\}$ from equation~\eqref{eq:whan2} and so on until both 
+equations are satisfied. When the iteration procedure is completed the global \ac{FES} $G(s)$ is obtained from 
+equation~\eqref{eq:fes}. One important consideration about \ac{WHAM} is that the histograms in adjacent windows 
+must be sufficiently overlapped otherwise the statistical error due to the combining procedure can be too high or 
+the iterative procedure itself can lead to convergence problems.
 
-\paragraph{\textbf{Bias potential}} The bias potential is chosen such that sampling along the \ac{CV} is uniform. Obviously $w(s) = -G(s)$ is the best optimal choice, unfortunately $G(s)$ is not \textit{a priori} known. Together with \ac{WHAM} a simple harmonic bias potential is most commonly used for its simplicity. In order to restrain the system to the target value $s_i$ of the \ac{CV} $s(\vec r)$ along the path chosen to connect state $A$ and $B$, each window is biased with a harmonic potential of the form
+\paragraph{\textbf{Bias potential}} The bias potential is chosen such that sampling along the \ac{CV} is uniform. 
+Together with \ac{WHAM} a simple harmonic bias potential is most commonly used for its simplicity. In order to 
+restrain the system to the target value $s_i$ of the \ac{CV} $s(\vec r)$ along the path chosen to connect state 
+$A$ and $B$, each window is biased with a harmonic potential of the form
 \begin{equation*}
 	w_i(s) = \frac{1}{2}K (s - s_i)^2
 \end{equation*}
-The choice of $K$, the strength of the bias potential, is a critical point. $K$ has to be large enough to drive the system over the barrier. However too large $K$ cause too narrow distribution that can cause overlap problems, thus the necessity for $K$ to be as small as possible to allow for much overlap between windows.
+The choice of $K$, the strength of the bias potential, is a critical point. $K$ has to be large enough to 
+appropriately sample the corresponding modes. However too large $K$ cause too narrow distributions that can cause 
+overlap problems, hence the necessity for $K$ to be as small as possible to allow for some overlap between 
+windows.
 
 %\paragraph{\textbf{error estimation}}
 
 \bigskip The implementation of the umbrella sampling method can be summarized in the following procedure
 \begin{itemize}
-	\item A \ac{CV} that well describe the transition process from state $A$ to $B$ and a connecting path are chosen;
-	\item A subset of the values assumed by the \ac{CV} along the path are taken and for each a biased \ac{MD} simulation is performed (windows)\footnote{Since each biased simulation is independent they can be performed in parallel with the other.};
-	\item Using \ac{WHAM} the set of biased partition functions $\{Q_i(s)\}$ are combined in order to compute the global partition function $Q(s)$. Then $G(s)$ is calculated;
-	\item If the biased partition functions are not well overlapping then more windows have to be performed.
+	\item A \ac{CV} that well describes the transition process from state $A$ to $B$ and a connecting path are chosen;
+	\item A subset of the values assumed by the \ac{CV} along the path are taken and for each a biased \ac{MD} simulation is performed\footnote{Since each biased simulation is independent they can be performed in parallel with the other.};
+	\item Using \ac{WHAM} the set of biased partition functions $\{Q^b_i(s)\}$ are combined in order to compute the global unbiased partition function $Q(s)$. Then $G(s)$ is calculated.
 \end{itemize}
 
  

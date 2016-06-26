@@ -1398,7 +1398,7 @@ changes. This effect can not be taken into account by implicit medium models. In
 inhomogeneous nature of the dielectric response an explicit medium has to be used. 
 \begin{figure}[!ht]
 	\centering
-	\includegraphics[width=0.8\textwidth]{./img/PWModel/PWModel}
+	\includegraphics[width=0.7\textwidth]{./img/PWModel/PWModel}
 	\caption{Schematic representation of the \acs{PW} bead. Shaded orange spheres correspond to the Van der Walls radii of the central neutral particle $W$. The blue particle is the positively charged while the red is the negatively charged.}
 	\label{fig:PW}
 \end{figure}
@@ -1472,10 +1472,8 @@ Moreover, the authors found that, in addition to the \ac{PW} model, the use of \
 more realistic description of the processes involved in biomolecular environments. In particular, some 
 interesting results of utility for this thesis work concern a better description of the properties of lipid 
 membranes, as we shall see in Chapter~. 
-
 %One is the translocation of charged ions through a lipid bilayer that is described in a more realistic detail: the authors found that the simulations with \ac{PW} and \ac{PME} are approaching the atomistic results better then the standard \martini \ac{FF}. Another important phenomenon about lipid membranes consist in the electroporation of membrane by \ac{PW} beads due to an electric field across the membrane (for example, created by a cross membrane ions imbalance) and, related to this, the translocation of ions across the membrane helped by a so called ``\textit{water finger}'' a water defect inside the membrane that seems to be the trigger of the ions translocation. Such phenomenons are clearly evident in atomistic simulations however never occurred using the standard \martini \ac{FF} thus the importance to use the \ac{PW} model together with \ac{PME} method.
-
-										
+			
 \subsection{Limitations of MARTINI FF}
 As we have seen in~\ref{sec:CGModel} the \ac{CG} \acp{FF} are computationally advantageous, still a price has to 
 be paid. Although the \martini \ac{FF} is still a fine \ac{CG} \ac{FF}, some limitations are shared with other 
@@ -1513,15 +1511,37 @@ Using the \ac{PW} model these properties improve slightly, see table~(\ref{tab:P
 discussion about the limitations of the \martini \ac{FF} the reader is addressed to the review by Marrink \etal\, \cite{MartiniReview}.
 
 \section{Advanced sampling methods}
-The quantity of particular importance for the equilibrium statistical mechanics of which we are interested to obtain with \ac{MD} technique is the free energy function: the Gibbs free energy $G$ for the isobaric--isothermal ensemble and $A$ the Helmholtz free energy for the canonical ensemble. Being related to the partition function of an ensemble, the free energy is the generator through which other thermodynamic quantities are obtained via differentiation. However often we are particularly interested in the free energy difference between two thermodynamic states, instead of the absolute value. This because free energy differences are the driving force of any process and they tell us, for example, if a chemical reaction occurs spontaneously, whether a given solute is hydrophobic or hydrophilic, if a protein conformational change take place or whether some molecules in water solution are able to self--assembles into a more complex system and so forth. Moreover, often, we are interested also in the \ac{FES}: the free energy in function of some generalized coordinates, called \acp{CV} of the system. These small set of variables can describe, in a simple and useful manner, some chemical, thermodynamic or mechanical processes that take place in the system, for example, the free energy in function of the distance between the \ac{COM} of two molecules give us information about their attraction or repulsion and if they form a bound state; or in function of a rotational angle of a molecule bond to obtain all the possible stable configurations and so on. Thus the \ac{FES} provides a map of the stable conformations, the relative stability of these conformations and the barrier heights that must be crossed for the processes to take place. It is necessary to stress out that in many cases one do not know exactly \textit{a priori} the \ac{FES} about a certain process and so one want to know it also for understand if other minima energy configurations exist, in addition to those known, how stable they are and what are the energy barriers to go from one minima state to an other
-%\footnote{Sometimes thought the cinematic of an \ac{MD} simulation one can gamble an estimate of the functional form of the \ac{FES}, looking for the relative probability to stay in a meta--stable state rather then the other. Clearly this means that both meta--stable states are to be sampled, as we shall see later it depends of the height of the energy barriers.}. 
-Despite this, the calculation of free energy difference between two thermodynamic states (that requires an 
-\textit{a priori} knowledge of the two stable states) and the calculation of the \ac{FES} are one of the main 
-challenges in \ac{MD} simulations for biomolecular applications.
+The Gibbs (or Helmholtz) free energy function is a quantity of particular importance for the equilibrium 
+statistical mechanics of which we are interested to obtain with \ac{MD} technique. In fact, the time evolution of 
+a biomolecular system and its equilibrium properties are determined by the system's \ac{FES}. This because free 
+energy differences tell us, for example, if a chemical reaction occurs spontaneously, whether a given solute is 
+hydrophobic or hydrophilic, if a protein conformational change can take place or whether some molecules in water 
+solution are able to self--assemble into a more complex system and so forth. Being related to the partition 
+function of an ensemble, the free energy is the generator through which other thermodynamic quantities are 
+obtained via differentiation. However often we are particularly interested in the free energy difference between 
+two thermodynamic states, instead of the absolute value. The Gibbs free energy $G$ is specific for the $NPT$ 
+isobaric--isothermal ensemble and the Helmholtz free energy $A$ for the $NVE$ canonical ensemble. 
 
-Let us suppose that we are interested in the \ac{FES} of the \ac{CV} $s(\vec r)$ and we are working in a 
-isobaric--isothermal ensemble with an isotropic system. Following section~\ref{sec:statmec}, the Gibbs free 
-energy along the \ac{CV} is obtained as
+\paragraph{\textbf{Collective variables}} Often, we are interested in the \ac{FES} in function of some 
+generalized coordinates, called \acp{CV} of the system. These small set of variables can describe, in a simple 
+and useful manner, some chemical, thermodynamic or mechanical processes that take place in the system. For 
+example, the free energy in function of the distance between the \ac{COM} of two molecules give us information 
+about their attraction or repulsion and if they form a bound state. Thus the \ac{FES}, in the \acp{CV} space, 
+provides a map of the stable conformations, the relative stability of these conformations and the barrier heights 
+that must be crossed for the processes to take place. Moreover, the energy landscape, even for a small molecule, 
+can be extremely wrinkled and the large number of minima can not be sampled in a typical \ac{MD} simulation. The 
+principal reason for the use of the \acp{CV}, is thus to limit the sampling to those regions of phase space that 
+are most important for the process under study, hoping that the limited sampled regions are sufficient to 
+correctly describe the process.
+%It is necessary to stress out that in many cases one do not know exactly \textit{a priori} the \ac{FES} about a certain process and so one want to know it also for understand if other minima energy configurations exist, in addition to those known, how stable they are and what are the energy barriers to go from one minima state to an other\footnote{Sometimes thought the cinematic of an \ac{MD} simulation one can gamble an estimate of the functional form of the \ac{FES}, looking for the relative probability to stay in a meta--stable state rather then the other. Clearly this means that both meta--stable states are to be sampled, as we shall see later it depends of the height of the energy barriers.}. 
+
+\paragraph{\textbf{Free energy surface}} The calculation of free energy difference between two thermodynamic 
+states (that requires an \textit{a priori} knowledge of the two stable states) and the calculation of the 
+\ac{FES} are one of the main challenges in \ac{MD} simulations for biomolecular applications. Let us suppose that 
+we are interested in the \ac{FES} in function of the \ac{CV} $s(\vec r)$ and we are working in a $NPT$ 
+ensemble\footnote{The following is still valid even for a $NVE$ ensemble with the substitution $G\rightarrow A$ 
+and the use of the correct partition function $\mathcal{Z}_{NVE}$.} with an isotropic system. Following 
+section~\ref{sec:statmec}, the Gibbs free energy along the \ac{CV} is obtained as
 \begin{equation}
 	G(s) = -k_BT \ln Q(s)
 	\label{eq:fes}
@@ -1536,7 +1556,7 @@ and~\eqref{eq:nptPartition}, $Q(s)$ can be rewritten as
 	Q(s) =  \frac{ \int_\Omega e^{-\beta U(\vec r)}\delta(s(\vec r) - s)\ dr }{\int_\Omega e^{-\beta U(\vec r)}\ dr}
 	\label{eq:CVprobability}
 \end{equation}
-where $U(\vec r)$ is the \ac{PEF}. $Q(s)ds$ can be interpreted as the probability of finding the system with 
+where $U(\vec r)$ is the \ac{PEF}. $Q(s)ds$ can be interpreted as the probability to find the system with 
 $s(\vec x)$ between $s$ and $s + ds$. Since this equation contains a direct phase space integration it can be 
 rewritten in a more useful manner using the ensemble averages and then, using the ergodic theorem in 
 equation~\eqref{eq:ergotic}, as a time average:
@@ -1545,25 +1565,22 @@ equation~\eqref{eq:ergotic}, as a time average:
 	\label{eq:CVprobabilityAve}
 \end{equation}
 
-The time sampling of equation~\eqref{eq:CVprobabilityAve} can be derived, in principle, via \ac{MD}. 
-Unfortunately, since the time can not be infinite, the main problem related to \ac{MD} simulations is whether we 
-are able to correctly sample \textit{all} the phase space of an ensemble in order to compute the ensemble 
-average. Clearly the answer depends on the system in exam, if it is really simple maybe we can do that, otherwise 
-probably not or indeed it take too much time and/or we are not able to collect sufficient data. This sampling 
-problem can be summarized as follows: regions in phase space around a local minimum of the \ac{FES} are typically 
-sampled well, whereas regions of higher energy are sampled rarely. These high energy regions provide with a small 
-contribution to the partition function, due to their unfavorable Boltzmann factor. However they must be overcome 
-in order to sample other minima that can give, instead, a important contribution to the ensemble averages. These 
-transitions are called \textit{rare events}. When the system is moving in the energy landscape the only way to 
-escape from a local minimum is to exploit thermal fluctuations and so energy barriers that are higher then 
-$\sim k_B T$ have a small probability of being overcome. Moreover, the energy landscape, even for a small 
-molecule, can be extremely wrinkled and the large number of free energy minima can not be sampled in a typical 
-\ac{MD} simulation. The principal reason for the use of the \acp{CV}, is thus to limit the sampling to those 
-regions of phase space that are most important for the process under study, hoping that the limited sampled 
-regions are sufficient to correctly describe the process.
+The time sampling of equation~\eqref{eq:CVprobabilityAve} can be 
+derived, in principle, via \ac{MD}. Unfortunately, since the time can not be infinite, the main problem related 
+to \ac{MD} simulations is whether we are able to correctly sample \textit{all} the phase space of an ensemble in 
+order to compute the ensemble average. Clearly the answer depends on the system in exam, if it is really simple 
+maybe we can do that, otherwise probably not or indeed it take too much time and/or we are not able to collect 
+sufficient data. This sampling problem can be summarized as follows: regions in phase space around a local 
+minimum of the \ac{FES} are typically sampled well, whereas regions of higher energy are sampled rarely. These 
+high energy regions provide with a small contribution to the partition function, due to their unfavorable 
+Boltzmann factor. However they must be overcome in order to sample other minima that can give, instead, a 
+important contribution to the ensemble averages. These transitions are called \textit{rare events}. When the 
+system is moving in the energy landscape the only way to escape from a local minimum is to exploit thermal 
+fluctuations and so energy barriers that are higher then $\sim k_B T$ have a small probability of being overcome. 
 
-Several methods are developed and are still in development in order to solve the just described sampling problem. 
-These methods are all based on advanced sampling techniques that allow us to
+\paragraph{\textbf{Bias based advanced sampling}} Several methods are developed and are still in development in 
+order to solve the just described sampling problem. These methods are all based on advanced sampling techniques 
+that allow us to
 \begin{itemize}
 	\item Escape from a local energy minimum, in order to explore other regions of the phase space;
 	\item Calculate the free energy difference between two thermodynamic states;

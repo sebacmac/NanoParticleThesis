@@ -1316,6 +1316,7 @@ polarity: lowest polarity ($1$), $\dots$, highest polarity ($5$).
 \end{SCtable}
 
 \subsection{Interactions potential}
+\label{sec:martiniPotential}
 \paragraph{\textbf{van der waals interactions}} The functional form describing pairwise Van der Waals interaction 
 is a Lennard--Jones $12-6$ potential as in equation~\eqref{eq:lj126}. For most beads the $\sigma$ parameter is 
 set equal to $0.47~$nm except for the Q--C$_1$ and Q--C$_2$ interactions for which $\sigma = 0.62$~nm. This is 
@@ -1344,9 +1345,10 @@ water model, called \ac{PW}, to take into account a better water behavior.
 former is modeled with a harmonic potential as the first term in equation~\eqref{eq:bondPEF}, with the same bond 
 constant for all bead types: $k^b = 1250$~kJ/(mol\ nm$^2$) and an equilibrium distance of $l_0 = 0.47$~nm. The 
 latter is modeled as a cosine--type harmonic potential
-\begin{equation*}
+\begin{equation}
 	U = \frac{1}{2}k^a (\cos(\theta) - \cos(\theta_0))^2
-\end{equation*}
+	\label{eq:martiniAngle}
+\end{equation}
 whose parameters are: $k^a = 25$~kJ/mol and $\theta_0 = 180^\circ$ for aliphatic chains; $k^a = 45$~kJ/mol and 
 $\theta_0 = 120^\circ$ for \texttt{cis} double bonds and $k^a = 45$~kJ/mol and $\theta_0 = 180^\circ$ for 
 \texttt{trans} unsaturated bonds. Moreover, especially for ring systems, an improper dihedral angle harmonic 

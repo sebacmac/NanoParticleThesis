@@ -1,5 +1,5 @@
 % !TEX root = ./../main.tex
-\chapter{Model of biological membrane and monolayer--protected NP}
+\chapter{Model of cell membrane and monolayer--protected NP}
 
 \section{NanoParticle model}
 Monolayer--protected metal \acp{NP} have the advantage of having a well defined molecular structure. That is, mono--dispersed solutions can be synthesized and structurally determined. In particular, \acp{NP} with a gold core can be stabilized by thiols\footnote{The thiol (R--SH) group is like the alcohol (R--OH) group but it is less polar respect to the second due the lower electronegativity of the sulfur respect to oxygen.}, which stably bind to the Au surface via Au-S bonds. Thiolated Au\acp{NP} are air stable, electrochemically stable and thermally stable compounds []. Several stable thiolated Au\acp{NP} are identified, differing in size of the gold core and number of ligands. In particular we consider a {Au$_{144}$(SR)$_{60}$} \ac{NP}, where R is the aliphatic chains of the thiol compounds. 
@@ -75,14 +75,49 @@ Our Au\ac{NP} core is functionalized with \ac{MUS} and \ac{OT} ligands. The form
 \end{figure}
 
 
-\section{Model biological membrane}
+%\section{Model biological membrane}
 
-\subsection{Real membrane}
+\section{Real cell membranes}
+The cel membrane or cytoplasmic membrane is a biological membrane that separate the interior and the external environments of a living cells. The basic function is to protect cells from its surroundings but it also takes the function of a ``customs'' in order to allow the cells to exchange chemical compounds from and to the external environments. To fulfill at this role the cell membrane is a crowded environments consisting of phospholipids, glycolipids, carbohydrates proteins and so on as we can see from figure~(\ref{fig:cellMembrane}).
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=0.95\textwidth]{./img/cellMembrane}
+	\caption{Schematic representation of a biological cell membrane.}
+	\label{fig:cellMembrane}
+\end{figure}
 
-\subsection{MARTINI model}
+The skeleton of a cell membrane is a bilayer sheet made of \textit{phospholipids}. They are a kind of lipids made of a polar or charged head, which is hydrophilic and one or two fatty acid hydrocarbon chains, often called lipid tails, which are instead hydrophobic; phospholipids are then amphiphilic molecules. This amphiphilic nature play a key role in the bilayer formation. In fact the formation of a bilayer in water is a self--assembly process driven by the hydrophobic effect which acts so as to minimize the number of hydrophobic contact between water and lipids tails. Moreover the bilayer sheet is not the only possible structure, based on the concentration of the phospholipids in water and on the temperature the self--assembly process can lead to three main different structures: bilayer sheet, liposome and micelle. In figure~(\ref{fig:lipidsStructures}) a schematic representation of this three different structures is shown.
+\begin{SCfigure}
+	\includegraphics[width=0.3\textwidth]{./img/lipidsStructures}
+	\caption{Cross--section view of the structures that can be formed by a self--assembly process of phospholipids in aqueous solution.}
+	\label{fig:lipidsStructures}
+\end{SCfigure}
+
+A real lipid bilayer often contains hundred of different lipid species. They differ in the length of the hydrocarbon chains, in the degree of unsaturation, i.e. in the number of double bond in the hydrocarbon chains and in the different composition of the head that can be polar or non--polar. There two main class of phospholipids that make a cell membrane of animals: glycerophospholipid (phosphatidyl--choline, phophatidyl--ethanolamine, phophatidyl--serine, phosphatidyl--serine ) and phosphosphingolipids (sphingomyelin). In the former group the lipid tails are bound to a glycerol group while the latter do not have glycerol and the lipid tails have a backbone of sphingoid bases, absent in the former. This five types take into account for more then half of the lipid in most membranes.
+
+The cell membrane has a quasi--liquid properties at physiological temperature. This is in part due to some disorder in the alignment of the lipid tails produced by the presence of unsaturated chains. Another contribution arise from the area occupied by the lipid heads which determines the distance between the hydrocarbon chains. This fluid character make the lipid bilayer like a solvent in which the other molecules dissolved (lipids and protein) are free to diffuse. Moreover the lipids itself can move in different ways. The main movement and the associated time scale are summarized as follow
+\begin{itemize}
+	\item lipids conformational change take place on few nanoseconds;
+	\item lipids protrusions out--of--plane that occurs in tens of picoseconds;
+	\item diffuse within a leaflet takes times on the order of tens of nanoseconds;
+	\item bilayer undulation and thickness involve collective motion of many lipids.
+\end{itemize}
+There are also many rare events that take place on the order of hours or even days, such like flip--flop, in which a lipid go to the opposite leaflet; ions translocation; \textit{electroporation} by water, for example due to a cross membrane ions imbalance, in which water penetrate inside the bilayer and destroys a small portion in order to come to the other leaflet; water--helped ions permeation, called \textit{water--finger} and more general water defects inside the membrane.
+
+For what concern the length scale, the bilayer thickness is determined by the length of the lipid tails and their degree of unsaturation. Typically the hydrophobic region is $\sim 3$~nm thick while each hydrophilic regions is $\sim 1$~nm thick. Hence the typical bilayer thickness is around $\sim 4\div 5$~nm.
+
+\section{Model cell membranes}
+
+
 
 \section{NP--Membrane interaction}
 
 \subsection{Three--stage process}
 
 \subsection{Preliminary free energy calculations}
+
+
+
+
+
+

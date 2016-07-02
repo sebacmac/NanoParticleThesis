@@ -70,11 +70,11 @@ Our \ac{AuNP} core is functionalized with \ac{MUS} and \ac{OT} ligands. The form
 		\includegraphics[width=0.35\textwidth]{./img/MUS/MUS}%
 		\label{fig:mus}%
 	}%
-	\caption{Top: chemical structure. Bottom: \acs{CG} \martini model (red: C$_1$ bead, green: Q$_\text{da}$ negatively charged bead and yellow: sulfur atom).}
+	\caption{Top: chemical structure. Bottom: \acs{CG} \martini model (red: C$_1$ bead, green: Qda negatively charged bead and yellow: sulfur atom).}
 \end{figure}
 
 %\subsubsection{MUS ligands} %Anionic an the cationic???
-\paragraph{\textbf{MUS Model}} Three \martini beads of type C$_1$ model the hydrophobic chain even if one of them groups three carbon atoms instead of four. The charged group is modeled as a Q$_\text{da}$ beads with a charge of $-\mathsf{e}$. The chemical structure and the resulting \ac{CG} \martini model is shown in figure~(\ref{fig:mus}). Even in this case the first bead of a \ac{MUS} ligand is bounded to the sulphur atom through a harmonic potential with the same parameter: bond constant of $1250$~kJ/(mol\,nm$^2$) and equilibrium length of $0.47$~nm. The same potential is used to bind all other beads to the previous one. An angle potential as in equation~\eqref{eq:martiniAngle} is used among the sulfur atom, the first C$_1$ and second C$_1$, among the first, the second and the third C$_1$ beads and so on for all four beads. Parameters are fixed in accordance with the standard \martini ones (see section~\ref{sec:martiniPotential}). As in the \ac{OT} ligand model, a purely repulsion potential, as described in the previously, is used between C$_1$ beads and gold and sulfur atoms to prevent the co--penetration. The same applies between Q$_\text{da}$ bead and gold and sulfur atoms.
+\paragraph{\textbf{MUS Model}} Three \martini beads of type C$1$ model the hydrophobic chain even if one of them groups three carbon atoms instead of four. The charged group is modeled as a Qda beads with a charge of $-\mathsf{e}$. The chemical structure and the resulting \ac{CG} \martini model is shown in figure~(\ref{fig:mus}). Even in this case the first bead of a \ac{MUS} ligand is bounded to the sulphur atom through a harmonic potential with the same parameter: bond constant of $1250$~kJ/(mol\,nm$^2$) and equilibrium length of $0.47$~nm. The same potential is used to bind all other beads to the previous one. An angle potential as in equation~\eqref{eq:martiniAngle} is used among the sulfur atom, the first C$1$ and second C$1$, among the first, the second and the third C$1$ beads and so on for all four beads. Parameters are fixed in accordance with the standard \martini ones (see section~\ref{sec:martiniPotential}). As in the \ac{OT} ligand model, a purely repulsion potential, as described in the previously, is used between C$1$ beads and gold and sulfur atoms to prevent the co--penetration. The same applies between Qda bead and gold and sulfur atoms.
 
 \paragraph{\textbf{level of hydrophobicity}} The \ac{AuNP} core can be functionalized with both ligands in different composition. In particular varying the ratio between the \ac{OT} and \ac{MUS} ligands different levels of hydrophobicity can be reached: it decrease augmenting the number of charged ligands. Two surface composition is considered: (\ac{MUS}:\ac{OT} $1$:$1$) and (2:1), but the former is the main used in this thesis work.
 
@@ -82,7 +82,17 @@ Our \ac{AuNP} core is functionalized with \ac{MUS} and \ac{OT} ligands. The form
 
 \begin{figure}[!ht]
 	\centering
-	\includegraphics[width=0.9\textwidth]{./img/coatings/coat}
+	\subfloat[striped ($1$:$1$)]{
+		\includegraphics[width=3.3cm]{./img/coatings/striped}
+	}%
+	\qquad
+	\subfloat[random ($1$:$1$)]{
+		\includegraphics[width=2.9cm]{./img/coatings/random11}
+	}%
+	\qquad
+	\subfloat[random ($2$:$1$)]{
+		\includegraphics[width=2.7cm]{./img/coatings/random21}
+	}%
 	\caption{Au\acs{NP} with different ligands surface arrangements and composition. From left to right: striped (\ac{MUS}:\ac{OT} $1$:$1$), random (\ac{MUS}:\ac{OT} $1$:$1$) and random (\ac{MUS}:\ac{OT} $2$:$1$). Hydrophobic beads are shown in red while the negatively charged beads are green.}
 	\label{fig:coating}
 \end{figure}
@@ -130,7 +140,7 @@ It is clear that the number of lipids that constitute a real cell membrane is en
 	\label{fig:popc}
 \end{figure}
 
-\paragraph{\textbf{martini model}} As described in section \ref{sec:martini}, in this thesis work we use the \martini \ac{FF} for \ac{CG} lipids \cite{Martini}. The authors have developed a well suitable and comprehensive model about \ac{POPC} and a large variety of lipids. We consider a lipid bilayer made of $512$ \ac{POPC} lipids which extends on a surface of about $160$~nm$^2$ and whose thickness is about $4$~nm. The \martini model for the \ac{POPC} lipid maps the choline and the phosphate groups into two beads of type Q$_0$ and Q$_\text{a}$ negatively and positively charged, respectively. The saturated tail is modeled with four beads of type C$_1$ while the unsaturated tail is built up of four C$_1$ beads and one C$_3$ bead which corresponds to the unsaturated group of atoms. The glycerol group is modeled with two beads of type N$_\text{a}$. A comparison between the chemical structure and \ac{CG} model is shown in figure~(\ref{fig:popc}).
+\paragraph{\textbf{martini model}} As described in section \ref{sec:martini}, in this thesis work we use the \martini \ac{FF} for \ac{CG} lipids \cite{Martini}. The authors have developed a well suitable and comprehensive model about \ac{POPC} and a large variety of lipids. We consider a lipid bilayer made of $512$ \ac{POPC} lipids which extends on a surface of about $160$~nm$^2$ and whose thickness is about $4$~nm. The \martini model for the \ac{POPC} lipid maps the choline and the phosphate groups into two beads of type Q$0$ and Qa negatively and positively charged, respectively. The saturated tail is modeled with four beads of type C$1$ while the unsaturated tail is built up of four C$1$ beads and one C$3$ bead which corresponds to the unsaturated group of atoms. The glycerol group is modeled with two beads of type N$_\text{a}$. A comparison between the chemical structure and \ac{CG} model is shown in figure~(\ref{fig:popc}).
 
 \paragraph{\textbf{model comparison}} The standard \martini \ac{FF} is able to capture the main aspects of the physical properties of a lipid bilayer with less computational effort respect to an atomistic simulation. These properties are the area per lipid, the lipid diffusion constant, the distribution of groups across the membrane, the bending and the area compression moduli, the stress profile across the membrane and many other as described in the original work by Marrink \etal\, \cite{Martini}. Nevertheless many other properties, prevalently mediated by the electrostatic interaction, are not well described. As we have seen in the previous Chapter this is because the \martini model does not take into account the long range treatment of the electrostatic interaction and because the standard \martini water is prevalently insensible to the electrostatic interaction\footnote{Moreover we can not forget that the \martini water bead takes into account four real water molecules. And hence the probability for a \martini water bead to permeate the hydrophobic region of the membrane is much less then for a water molecule in an atomistic \ac{FF}.}. To overcome to this problem the use of the \ac{PW} model and the \ac{PME} method, as outlined in \cite{MartiniReview} and \cite{PW}, are crucial to better describe the aforementioned process that involve lipid bilayer, water and charged ions. These are ions translocation; electroporation of the lipid membrane by water, due to a cross membrane ions imbalance; water--helped ions permeation and many other water defects inside the membrane as better described in the works of Marrink and Yesylevskyy.
 
@@ -148,8 +158,43 @@ It is clear that the number of lipids that constitute a real cell membrane is en
 \end{table}
 
 \section{NP--Membrane interaction}
+Recently the literature for what concern the computational modeling about the interaction of such anionic monolayer--protected \ac{AuNP} and model lipid membranes has expanded contributing to sketch a possible mechanism of such interaction. The begging of the path way mechanism is the electrostatic attraction between the charged ligands and the polar head of the zwitterionic phospholipids in a fluid water phase: it is recognized to be the driving force for the adhesion of the \ac{AuNP} to the membrane surface, see figure~(\ref{fig:threeProcess}a). To the other end of the path way, it is known, on thermodynamics basis, that the most stable state for the \ac{AuNP} corresponds to the so--called \textit{snorkeling} configuration in which the \ac{NP} is embedded in the hydrophobic region of the membrane, while the charged ligands stably interact with the lipid head of both leaflet, see figure~(\ref{fig:threeProcess}f). 
 
-\subsection{Three--stage process}
+In the work of Federica Simonelli \etal\, \cite{ourPaper}, using the just described \ac{CG} \martini models of the \ac{NP} ligands and of biological membrane, with the standard \martini \ac{FF}, they found and characterize a possible path way mechanism of the interaction process with membrane at low curvature. Then they perform metadynamics simulations for characterize the thermodynamics of the process.
+
+\paragraph{\textbf{Three--stage process}} The authors found a three--stage mechanism that regulate the insertion of the \ac{NP} into the membrane core: from the adsorbed state, figure~(\ref{fig:threeProcess}a), to the snorkeling configuration, figure~(\ref{fig:threeProcess}f). When the \ac{NP} in the water phase approach the surface of the membrane it enters in the Stage $1$ or in the adsorbed state in with the charged ligands interact with the polar lipid heads. Then, in Stage $2$, a key role is played by a lipid tail protrusion out of the hydrophobic regions that stably interact with the hydrophobic beads of the \ac{NP} ligands, see figure~(\ref{fig:threeProcess}b-c). In order to minimize the contact between water and the tail of the protruding lipid it pull the \ac{NP} \ac{OT} ligands into the membrane core and the \ac{NP} enter in the hydrophobic contact state, figure~(\ref{fig:threeProcess}d). Then due the thermal fluctuation a charged bead is involved to cross the membrane core and stably interact with the head region of the opposite leaflet, figure~(\ref{fig:threeProcess}e). Since the anchored state is thermodynamically favorable respect to the hydrophobic contact state, more and more ligands drop the charged beads to the head region of the opposite leaflet, approaching step--by--step the snorkeling configuration, figure~(\ref{fig:threeProcess}f).
+\begin{figure}[h!t]
+	\centering
+	\subfloat[]{
+		\includegraphics[width=4cm]{./img/threeProcess/a}
+	}%
+	\quad%
+	\subfloat[]{
+		\includegraphics[width=4cm]{./img/threeProcess/b}
+	}%
+	\quad%
+	\subfloat[]{
+		\includegraphics[width=4cm]{./img/threeProcess/c}
+	}%
+	\\%
+	\subfloat[]{
+		\includegraphics[width=4cm]{./img/threeProcess/d}
+	}
+	\subfloat[]{
+		\includegraphics[width=4cm]{./img/threeProcess/e}
+	}%
+	\quad%
+	\subfloat[]{
+		\includegraphics[width=4cm]{./img/threeProcess/f}
+	}%
+	\caption{\acs{AuNP}--membrane interaction. (a) Stage $1$, adsorption of the \acs{NP} at membrane surface; (b) to (d) Stage $2$, the protrusion of a lipid tail initiates the hydrophobic contact that leads to partial embedding of the \acs{NP} in the membrane core; (e) the \ac{NP} binds to the opposite leaflet throwing a charged ligand; (f), Stage $3$, snorkeling configuration (five anchors shown). The hydrophobic beads of the ligands are shown in red and the charged beads in green. Lipid heads are blue (choline) and tan (phosphate), lipid tails are not shown, expect for (b) and (c), where the protruding lipid is shown with yellow tails. Water beads are not shown. All snapshot refer to a random (\ac{MUS}:\ac{OT} $1$:$1$) configuration. Taken from \cite{ourPaper}.}
+	\label{fig:threeProcess}
+\end{figure}
+
+\bigskip
+The authors performed \ac{MD} simulations for the three different \ac{NP} configurations showed in figure~(\ref{fig:coating}): the striped (\ac{MUS}:\ac{OT} $1$:$1$), the random (\ac{MUS}:\ac{OT} $1$:$1$) and the random (\ac{MUS}:\ac{OT} $2$:$1$). They found that the described behavior is common to the three configurations. Moreover, the lipid tail protrusion mechanism is validate form the kinematics of the simulations: the energy barrier to be overcome to move from stage $1$ to stage $2$ is of the order of the estimated energy cost of a lipid tail protrusion. Nevertheless, after the hydrophobic contact is reached, its lifetime depends on the surgace ligands arrangement. For the random configurations the time lag between the hydrophobic contact and the first anchor is on the order of few nanoseconds. Instead, the striped configuration can linger to the stage $2$ for several microseconds. This suggest that the energy barrier to be overcome to move from stage $2$ to a one anchor state is less for the former than for the latter. 
+
+\paragraph{\textbf{thermodynamics}} To quantify the thermodynamic behavior metadynamics calculations are performed. In particular, in order to estimate the energy barrier for the anchor process, the \ac{FES} for only one anchored ligands, is computed for the three \ac{NP} configurations. The choice \ac{CV} is the $z$ component of the distance between the center of the charged beads and the \ac{COM} of the whole membrane. Then starting from the hydrophobic state the metadynamics simulations begin biasing the charged beads. Since the achievement of the convergence it was not possible, the authors decide to perform different statistically independent metadynamics runs and stop each simulation at the recrossing process of the biased ligands. A recrossing is determined when the charged beads is $0.5$~nm above the \ac{COM} of the membrane in the leaflet in which the \ac{NP} stay. Then the resulting \ac{FES} profile, shown in figure~(), is obtained averaging the statistically independent runs. The error is the standard error as describe in \ref{sec:metadynamics}.
 
 \subsection{Preliminary free energy calculations}
 

@@ -273,7 +273,8 @@ equilibrium
 \end{equation}
 this is like the well know equipartition theorem in which $3N$ is the number of \ac{DOF}.
 
-\paragraph{\textbf{Pressure}} Choosing $x_i = r_i$ in equation~\eqref{eq:virial} and summing both side over all particles and substituting equations~\eqref{eq:eqhamilton} and~\eqref{eq:kineticT}, we obtain
+\paragraph{\textbf{Pressure}} Choosing $x_i = r_i$ in equation~\eqref{eq:virial} and summing both side over all 
+particles and substituting equations~\eqref{eq:eqhamilton} and~\eqref{eq:kineticT}, we obtain
 \begin{equation*}
 	W = \ave{\sum_{i=1}^{3N} r_i\dot p_i} = -3Nk_B T = - 2 \ave{K}
 \end{equation*}
@@ -410,7 +411,8 @@ Moreover, the random assignment algorithm has to rescale all the velocities in s
 momentum $\vec P = \sum_{k=1}^N m_k\vec v_k$ is zero, this is equivalent to a \ac{COM} motion removal. This is 
 done because, in general, the total force acting on the system $\vec F = \sum_{k=1}^N \vec F_i$ is zero, then the 
 \ac{COM} motion is constant and to avoid a constant drift of the system in space this can be removed. Of course 
-this is a constraint on the system and it must be taken into account because it reduces the system \ac{DOF} by three.
+this is a constraint on the system and it must be taken into account because it reduces the system \ac{DOF} by 
+three.
 
 \subsection{Periodic boundary conditions}
 In an \ac{MD} simulation the sample system is inserted into a \textit{simulation box} whose shape can be 
@@ -1239,22 +1241,22 @@ method is more time consuming compared to the first.
 As we have introduced at the beginning of this section, for biomolecular applications two main classes of 
 classical \acp{FF} exist: atomistic \acp{FF} and \ac{CG} \acp{FF}. Since the atomistic model takes into account 
 all the atoms in a molecule it is obviously the most realist and accurate \ac{FF}. Nevertheless the large number 
-of \ac{DOF} of atomistic \acp{FF} leads to a loss of computational performance. Moreover, basically, the atomistic 
-\acp{FF} are efficient until the physical proprieties can be properly sampled on a time scale of a few 
-microseconds over a length scale of a few nanometers. As the time and length scales increase more and more time is 
-needed to carry out a complete simulation. Unfortunately many biological processes involving lipid membranes and 
-other organic molecules, including synthetic compounds, take place on much longer time and length scales.
+of \ac{DOF} of atomistic \acp{FF} leads to a loss of computational performance. Moreover, basically, the 
+atomistic \acp{FF} are efficient until the physical proprieties can be properly sampled on a time scale of a few 
+microseconds over a length scale of a few nanometers. As the time and length scales increase more and more time 
+is needed to carry out a complete simulation. Unfortunately many biological processes involving lipid membranes 
+and other organic molecules, including synthetic compounds, take place on much longer time and length scales.
 
 One possible solution is to \textit{integrate out} some \ac{DOF}, preserving those that are relevant for the 
 problem in exam: this procedure is called \textit{coarse--graining}. The basic units of \ac{CG} \acp{FF} are 
-called \textit{beads}, each representing a group of atoms or a well defined chemical moiety. The size of the group 
-of atoms that is represented by a single bead determines the degree of coarsening of the \ac{FF}. Even in this 
-case, all the general features described above, apply: functional forms need to be chosen and their 
+called \textit{beads}, each representing a group of atoms or a well defined chemical moiety. The size of the 
+group of atoms that is represented by a single bead determines the degree of coarsening of the \ac{FF}. Even in 
+this case, all the general features described above, apply: functional forms need to be chosen and their 
 parameterization need to be adjusted so as to reproduce the desired target properties. 
 
 The first step in the development of a \ac{CG} model is the \textit{mapping} procedure. This establishes a link 
-between the atomistic model and the \ac{CG} one. There is not a unique or correct procedure to perform the mapping 
-because it depends on the desired coarse--graining level, on the time and length scales that one wants to 
+between the atomistic model and the \ac{CG} one. There is not a unique or correct procedure to perform the 
+mapping because it depends on the desired coarse--graining level, on the time and length scales that one wants to 
 correctly sample and on the properties one wants to reproduce. For biological applications \ac{CG} \acp{FF} are 
 often designed to reproduce specific thermodynamic properties such as surface tension, free energy of 
 partitioning, free energy of hydration and so on. \ac{CG} \acp{FF} employed in the of material sciences (e.g. 
@@ -1457,7 +1459,15 @@ since the \ac{PW} beads attract each other stronger then the standard water bead
 electrostatic interactions, the strength $\epsilon_{WW}$ of the Lennard--Jones interaction between $W$ particles 
 must be reduced. Water properties are reproduced satisfactory if the Lennard--Jones strength is changed from an 
 $I$ level to an $III$ level (see table~(\ref{tab:martiniEpsilon}) for the various interaction levels). $\sigma$ 
-remains set to $0.47$~nm.
+remains set to $0.47$~nm. The same apply with the Lennard--Jones interactions between Q type beads and other 
+beads. For recover the correct partitioning behavior the strength of such interactions are modify according to 
+figure~(\ref{fig:PWMartini})
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=\textwidth]{./img/PWMartini}
+	\caption{New interaction strength between Q type beads and other beads. New values in bold font, old values in normal font. See table~(\ref{tab:martiniEpsilon}) for the interaction levels. Taken from \cite{PW}.}
+	\label{fig:PWMartini}
+\end{figure}
 
 The parametrization of $q$, $k_\theta$ and $\epsilon_{WW}$ are obtained, in addition to the basic target 
 properties of the \martini \ac{FF}, also trying to reproduce the dielectric constant $\varepsilon_{W}$, density 
@@ -1732,9 +1742,9 @@ small set of \acp{CV}. The main advantages with respect to umbrella sampling met
 instead of a single one, can be simultaneously used without affecting the simulation performance. The basic idea 
 of metadynamics is to enhance the dynamics of a system along some \acp{CV} simply by filling the corresponding 
 energy minimum with an history--dependent bias potential, in order to sample larger and larger portions of the 
-phase space. Supposing a two state process from state $A$ to $B$, in the \ac{CV} space. If the deposited energy is 
-sufficient to fill the energy well the system is favorably disposed to overcome the barrier and go the state $B$. 
-This novel idea is moreover supported by the assumption of Parrinello and Laio, based on experimental and 
+phase space. Supposing a two state process from state $A$ to $B$, in the \ac{CV} space. If the deposited energy 
+is sufficient to fill the energy well the system is favorably disposed to overcome the barrier and go the state 
+$B$. This novel idea is moreover supported by the assumption of Parrinello and Laio, based on experimental and 
 heuristic results, that iteratively summing the deposited potential during the biased \ac{MD} simulation leads to 
 an estimator of the \ac{FES} along the chosen \acp{CV} in the region explored. If 
 $\vec s(\vec r) = (s_1(\vec r), \cdots, s_n(\vec r))$ is the \acp{CV} vector, where $n$ is a small number, and 
@@ -1774,20 +1784,20 @@ time $t$. Then the bias potential component, extended to multiple \acp{CV}, is c
 where $w$ is the height and $\delta s_i$ is the width of the deposited Gaussians.
 
 For setting up a metadynamics simulation, there are three parameters to choose carefully: the height $w$ and the 
-width $\delta s_i$ of the deposited Gaussians and the stride of deposition $\tau$. All these parameters affect the 
-accuracy and the efficiency of the free energy profile reconstruction. Clearly if the Gaussians are big and large 
-or placed too quickly the \ac{FES} will be explored at a fast pace but the reconstructed profile will be affected 
-by large errors. Instead if they are small or placed infrequently the reconstruction will be accurate but will 
-take a longer time. Moreover the time required to escape from a local minimum is determined by the number of 
-Gaussians necessary to fill the well. This number is proportional to $(1/\delta s)^n$ \cite{MetadReview}, hence 
-the necessity to maintain the number $n$ of \acp{CV} as small as possible or increase the Gaussian width. On the 
-other hand the history--dependent potential can only reproduce features of the \ac{FES} on a scale larger then 
-$\sim \delta s$. Empirical criteria can be used to choose the $\delta s$ and $\tau$ parameters; the former by 
-monitoring the standard deviation of the \acp{CV} in an unbiased \ac{MD} simulation and the latter by considering 
-the relaxation time of the system after a Gaussian is deposited: clearly the bigger is the Gaussian the more time 
-is needed by the system to relax. However it does not exist an universal and general recipe to choose these 
-parameters, only some knowledge of the system and process under study can give useful hints. They can certainly be 
-fine tuned in successive steps.
+width $\delta s_i$ of the deposited Gaussians and the stride of deposition $\tau$. All these parameters affect 
+the accuracy and the efficiency of the free energy profile reconstruction. Clearly if the Gaussians are big and 
+large or placed too quickly the \ac{FES} will be explored at a fast pace but the reconstructed profile will be 
+affected by large errors. Instead if they are small or placed infrequently the reconstruction will be accurate 
+but will take a longer time. Moreover the time required to escape from a local minimum is determined by the 
+number of Gaussians necessary to fill the well. This number is proportional to $(1/\delta s)^n$ 
+\cite{MetadReview}, hence the necessity to maintain the number $n$ of \acp{CV} as small as possible or increase 
+the Gaussian width. On the other hand the history--dependent potential can only reproduce features of the 
+\ac{FES} on a scale larger then $\sim \delta s$. Empirical criteria can be used to choose the $\delta s$ and 
+$\tau$ parameters; the former by monitoring the standard deviation of the \acp{CV} in an unbiased \ac{MD} 
+simulation and the latter by considering the relaxation time of the system after a Gaussian is deposited: clearly 
+the bigger is the Gaussian the more time is needed by the system to relax. However it does not exist an universal 
+and general recipe to choose these parameters, only some knowledge of the system and process under study can give 
+useful hints. They can certainly be fine tuned in successive steps.
 
 In figure~(\ref{fig:metadEs}) an example of the time evolution of a metadynamics simulation is shown. We can see 
 that as the number of deposited Gaussians increases the system is able to visit more regions of the phase space. 
@@ -1812,18 +1822,19 @@ flat and we can say that the system becomes diffusive in the region explored by 
 region, the placement of new Gaussians is no more affected by the difference between $G(\vec s)$ and 
 $w_M(\vec s, t)$ and they are deposited randomly over the flat free energy profile. The \acp{FES} reconstructed 
 after that point, as visible in figure~(\ref{fig:metadEs}), are affected by some corrugations, due to newly 
-deposited Gaussians, of the order of $w$. From that point the metadynamics has reached the \textit{convergence} in 
-the sampled region.
+deposited Gaussians, of the order of $w$. From that point the metadynamics has reached the \textit{convergence} 
+in the sampled region.
 
 \paragraph{\textbf{convergence}} As just explained before, the convergence of the metadynamics in a specific 
 region of the \acp{CV} space is reached when the system become diffusive in this region, i.e. when the \acp{CV} 
 can assume all possible values compatible to the sampled region. This is a crucial point for the metadynamics 
-method in order to obtain the best possible estimator of the \ac{FES}, in the sampled region. Clearly, in order to 
-save computational time, if one want only to give the possibility to the system to escape from an energy minimum 
-is not necessary to reach the convergence otherwise it is an important point. Unfortunately in most systems it is 
-not trivial to identify precisely when the diffusive regime has been reached. In most cases a practical method to 
-assess the convergence of metadynamics simulations is based on monitoring the free energy difference between two 
-reference point: when the difference is approximately flat then the convergence should be reached.
+method in order to obtain the best possible estimator of the \ac{FES}, in the sampled region. Clearly, in order 
+to save computational time, if one want only to give the possibility to the system to escape from an energy 
+minimum is not necessary to reach the convergence otherwise it is an important point. Unfortunately in most 
+systems it is not trivial to identify precisely when the diffusive regime has been reached. In most cases a 
+practical method to assess the convergence of metadynamics simulations is based on monitoring the free energy 
+difference between two reference point: when the difference is approximately flat then the convergence should be 
+reached.
 
 \paragraph{\textbf{error estimation}} After convergence is reached the error on the \ac{FES} estimator is clearly 
 dependent on the chosen parameters. The best way to estimate the statistical error introduced by the metadynamics 
@@ -1835,9 +1846,9 @@ $G(\vec s) \sim - \overline{w_M(\vec s,t)}$ and average it over the whole \acp{C
 \begin{equation*}
 \overline{\epsilon}^2 = \frac{1}{\Omega_s} \int_{\Omega_s}  \overline{(w_M(\vec s,t) - \overline{w_M(\vec s,t)})^2}\ ds
 \end{equation*}
-where $\Omega_s$ is the whole \acp{CV} space. Laio \etal\, in \cite{MetadError}, by performing extensive numerical 
-simulations of a Langevin stochastic system, have derived an approximate expression for the error estimator in 
-function of the system and metadynamics parameters, as follow
+where $\Omega_s$ is the whole \acp{CV} space. Laio \etal\, in \cite{MetadError}, by performing extensive 
+numerical simulations of a Langevin stochastic system, have derived an approximate expression for the error 
+estimator in function of the system and metadynamics parameters, as follow
 \begin{equation*}
 	\overline{\epsilon}^2 \propto \frac{LT}{D}\frac{w}{\tau} \delta s 
 \end{equation*}
@@ -1852,24 +1863,24 @@ estimators:
 	\item After the convergence is reached for each run, the estimator of the \ac{FES} is the arithmetic average of the \ac{FES} obtained from equation~\eqref{eq:fes} for each simulations (each free energy profile appropriately normalized);
 	\item The statistical error on the averaged \ac{FES} is performed considering its standard deviation. 
 \end{itemize}
-Alternatively one can perform a very long metadynamics run in which, for example, the system is diffusive for half 
-simulation. Then one can chose as statistically independent history--dependent potentials some of them computed at 
-different times in the diffusive region and follow the above procedure from the second point. Clearly one has to 
-be careful about the decorrelation time between the chosen profiles, otherwise they are not statistically 
-independent due the continuos nature of the metadynamics algorithm.
+Alternatively one can perform a very long metadynamics run in which, for example, the system is diffusive for 
+half simulation. Then one can chose as statistically independent history--dependent potentials some of them 
+computed at different times in the diffusive region and follow the above procedure from the second point. Clearly 
+one has to be careful about the decorrelation time between the chosen profiles, otherwise they are not 
+statistically independent due the continuos nature of the metadynamics algorithm.
 
 \paragraph{\textbf{performance optimization}} In general the computational overhead of adding metadynamics to an 
 \ac{MD} simulation is usually not excessive, even if it depends on the implemented algorithms. However as the 
-number of deposited Gaussians increases, in each \ac{MD} step a larger and larger number of exponential terms have 
-to be computed and summed in order to calculate the derivative of the history--dependent potential, i.e. the 
-forces due to the metadynamics. Thus if the Gaussians are big or frequently deposited or the system takes a lot of 
-time to reach the convergence, the computational overhead scales as the number of the deposited Gaussians. This 
-can clearly lead to a loss of performance as the simulation time increase. A simple solution is to implement a 
-discrete mesh grid on the \acp{CV} space in which the history--dependent potential is spread and stored. When a 
-new Gaussian is added the potential is updated in the whole grid. While, at each \ac{MD} step, in order to compute 
-the derivative, the potential in a non--grid point is only estimated from an interpolation of some neighbor grid 
-points, depending on the interpolation order. By this trick the computational overhead remains approximately 
-constant as the simulation time increase.
+number of deposited Gaussians increases, in each \ac{MD} step a larger and larger number of exponential terms 
+have to be computed and summed in order to calculate the derivative of the history--dependent potential, i.e. the 
+forces due to the metadynamics. Thus if the Gaussians are big or frequently deposited or the system takes a lot 
+of time to reach the convergence, the computational overhead scales as the number of the deposited Gaussians. 
+This can clearly lead to a loss of performance as the simulation time increase. A simple solution is to implement 
+a discrete mesh grid on the \acp{CV} space in which the history--dependent potential is spread and stored. When a 
+new Gaussian is added the potential is updated in the whole grid. While, at each \ac{MD} step, in order to 
+compute the derivative, the potential in a non--grid point is only estimated from an interpolation of some 
+neighbor grid points, depending on the interpolation order. By this trick the computational overhead remains 
+approximately constant as the simulation time increase.
 
 \subsection{Umbrella sampling and metadynamics remarks}
 Despite metadynamics is relatively recent while umbrella sampling is a well known and optimized method the former is steadily spread in the computational community against the latter. The most relevant reasons are its simplicity of implementation and the direct way to control efficiency and performance by changing the parameters of the Gaussians entering in the history--dependent potential. This gives to the metadynamics the possibility, with only one framework, to overcome different situations such as passing continuously from a fast and coarse exploration of the energy landscape to an accurate evaluation of the free energy profile, predict new stable configurations and structures, new reaction pathways, calculate free energy profiles and free energy differences.

@@ -1883,11 +1883,25 @@ neighbor grid points, depending on the interpolation order. By this trick the co
 approximately constant as the simulation time increase.
 
 \subsection{Umbrella sampling and metadynamics remarks}
-Despite metadynamics is relatively recent while umbrella sampling is a well known and optimized method the former is steadily spread in the computational community against the latter. The most relevant reasons are its simplicity of implementation and the direct way to control efficiency and performance by changing the parameters of the Gaussians entering in the history--dependent potential. This gives to the metadynamics the possibility, with only one framework, to overcome different situations such as passing continuously from a fast and coarse exploration of the energy landscape to an accurate evaluation of the free energy profile, predict new stable configurations and structures, new reaction pathways, calculate free energy profiles and free energy differences.
+The use of metadynamics is growing up in the computational community. The most relevant reasons are its 
+simplicity of implementation and the direct way to control the efficiency and performance by changing the 
+parameters of the Gaussians entering in the history--dependent potential. This gives to the metadynamics the 
+possibility, with only one framework, to overcome different situations such as passing continuously from a fast 
+and coarse exploration of the energy landscape to an accurate evaluation of the free energy profile, predict new 
+stable configurations and structures, new reaction pathways, calculate free energy profiles and free energy 
+differences.
 
-In umbrella sampling the reconstruction of the free energy profile follow a predefined scheme designed for covering the chosen \acp{CV} space. In contract a well implemented metadynamics reconstruct efficiently the free energy profile. Starting from the current minimum and explore a larger and larger region of the accessible phase space dwelling on the low energy regions, which are statistically the most relevant, avoiding spend to much time in the irrelevant regions, the \ac{FES} is recursively reconstruct. Moreover which the advantage that each point in the \acp{CV} space is explored several times during the simulation. However a careful choice of the \acp{CV} is needed otherwise the history--dependent potential (and the reconstructed \ac{FES}) can evolves in an unpredictable manner.   
+The main difference of metadynamics respect to umbrella sampling is the process of reconstruction of the free 
+energy profile. In the latter it follows a predefined scheme designed for covering only the \ac{CV} space along 
+the chosen path. In contract a well implemented metadynamics reconstruct efficiently the free energy profile: 
+starting from the current minimum it explore a larger and larger region of the \acp{CV} space in order to 
+recursively reconstruct the \ac{FES}. However a careful choice of the \acp{CV} is needed, otherwise the 
+history--dependent potential and the \ac{FES} can evolve in an unphysical manner.   
 
-In a recent work by Davide Bochicchio \etal\, \cite{metaUSComparison} both methods for the \ac{FES} estimation included the error estimation, performance and accuracy are extensively compared with \ac{MD} simulations involving the transfer of a hydrophobic oligomers from water phase to hydrophobic core of a lipid membrane. The authors consider both at atomistic and \ac{CG} levels (\martini \ac{FF}). The authors found that, if the \acp{CV} are properly chosen and the parameters for the metadynamics are carefully tuned, the energy profiles reconstructed are reasonable identical between umbrella sampling and metadynamics, but the latter yields the same accuracy in a less time consuming simulation.  
-
-
-%Manuale GROMACS 3.17.5 PP/PME ranks
+In a recent work by Davide Bochicchio \etal\, \cite{metaUSComparison} both methods for the \ac{FES} estimation 
+included the error estimation, performance and accuracy are extensively compared with \ac{MD} simulations 
+involving the transfer of hydrophobic oligomers from the water phase to the hydrophobic core of a lipid membrane. 
+The authors consider the system both at atomistic and \ac{CG} levels (\martini \ac{FF}). They found that, if the 
+\acp{CV} are properly chosen and the parameters for the metadynamics are carefully tuned, the reconstructed free 
+energy profiles are identical between umbrella sampling and metadynamics, but the latter yields the same accuracy 
+in less simulated time.

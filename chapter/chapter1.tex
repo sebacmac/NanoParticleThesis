@@ -33,8 +33,8 @@ The total force on each particle is defined as
 	\vec F_i(\vec r_1,\dots,\vec r_N) = \vec{f}_i^{\ (e)}(\vec r_i) + \sum_{i\ne j}^N \vec{f}_{ij}^{\ (i)}(\vec r_i - \vec r_j )
 \end{equation*}
 where $\vec{f}_i^{\ (e)}$ is an external force acting on particle $i$ and $\vec{f}_{ij}^{\ (i)}$, which in general
-depends only on distance between particle $i$ and $j$, is the inter-particle force that $i$ exerts on $j$ and
-\textit{vice-versa}. Equations~\eqref{eq:newtonLaw} are refereed to as \textit{the equations of motion} of the
+depends only on distance between particle $i$ and $j$, is the inter--particle force that $i$ exerts on $j$ and
+\textit{vice--versa}. Equations~\eqref{eq:newtonLaw} are refereed to as \textit{the equations of motion} of the
 system; integrating them, with the sets of the \textit{initial conditions} at start time 
 $t_0$ $\vec r_1(t_0),\dots,\vec r_N(t_0)$ and $\dot{\vec{r}}_1(t_0),\dots,\dot{\vec{r}}_N(t_0)$, the positions 
 and the velocities of all the particles in the system at any time are known.
@@ -75,6 +75,7 @@ The kinetic energy of the system is defined as
 \end{equation}
 
 If the system is conservative we can define a scalar function, called \textit{Lagrangian} of the system
+\graffito{Lagrangian formalism}
 \begin{equation}
 	\mathcal{L}(\vec r,\dot{\vec r}) = K(\dot{\vec r}) - U(\vec r)
 	\label{eq:lagrangian}
@@ -85,8 +86,8 @@ such that
 	\label{eq:EulerLagrange}
 \end{equation}
 These set of $3N$ equations are called \textit{Euler--Lagrange equations of motion}. It is easy to show that 
-substituting the definition of $\mathcal{L}$ we obtain the Newton's second law. The Euler--Lagrange equations are 
-a sort of generator of the equations of motion.
+substituting the definition of $\mathcal{L}$ \eqref{eq:lagrangian} we obtain the Newton's second law. The 
+Euler--Lagrange equations are a sort of generator of the equations of motion.
 
 Using the definition of $\mathcal{L}$ \eqref{eq:lagrangian} we have
 \begin{equation}
@@ -96,15 +97,16 @@ Using the definition of $\mathcal{L}$ \eqref{eq:lagrangian} we have
 thus we can express particle velocities as a function of particle momenta. Equations~\eqref{eq:kinetic}
 and~\eqref{eq:momentaLagrangian} let us to express the kinetic energy in the form
 \begin{equation}
-	K(\vec p) = \sum_{i=0}^N \frac{\vec p_i \cdot \vec p_i}{2m_i}
+	K(\vec p) = \sum_{i=0}^N \frac{1}{2m_i}\vec p_i \cdot \vec p_i
 	\label{eq:kineticP}
 \end{equation}
 
 To describe the system we can define another scalar function, called \textit{Hamiltonian} of the system
+\graffito{Hamiltonian formalism}
 \begin{equation*}
 	\mathcal{H}(\vec r, \vec p) = \sum_{i=0}^N \vec p_i \cdot \dot{\vec r}_i(\vec p_i) - \mathcal{L}(\vec r, \dot{\vec r}(\vec p))
 \end{equation*}
-Substituting~\eqref{eq:lagrangian} and using~\eqref{eq:kineticP} the Hamiltonian of the system is nothing that
+Substituting~\eqref{eq:lagrangian} and using~\eqref{eq:kineticP}, the Hamiltonian of the system is nothing that
 \begin{equation}
 	\mathcal{H}(\vec r, \vec p) = K(\vec p) + U(\vec r)
 	\label{eq:hamiltonian}
@@ -139,13 +141,15 @@ of the problem is to recognize that \textit{a macroscopic observable of a system
 complete dynamics of each particle in the system, but rather on an average that cancels out all the details of 
 the microscopic features}. This it is intuitively true. We can think to set up an experiment with a system in a 
 specific microscopic state that corresponds to a macroscopic state. Certainly we can do the contrary and for sure 
-we wont find the same microscopic state. Then we can iterate the experiment and we will find that for a specific 
-macroscopic state of a system there exists a number of microscopic states that yield to the same properties.
+we will not find the same microscopic state. Then we can iterate the experiment and we will find that for a 
+specific macroscopic state of a system there exists a number of microscopic states that yield to the same 
+properties.
 
 The most important concept that makes this idea practicable is the \textit{statistical ensemble}. Based on the 
 previous considerations, a general definition of an ensemble is \textit{a collection of systems subject to a set 
+\graffito{statistical ensemble concept}
 of common interactions and sharing the same macroscopic properties}. This concept lays the foundations of 
-thermodynamics and suggests a procedure to compute many macroscopic observables. In more details a 
+thermodynamic and suggests a procedure to compute many macroscopic observables. In more details a 
 $N$--particle system in a specific microscopic state is described by its microstate $\vec x$, then \textit{an 
 ensemble is a set of points in the phase space that are subject to the constraint to be part of the ensemble 
 itself}. Each system evolves in time with the equations of motion, so the time evolution of an ensemble is 
@@ -159,9 +163,9 @@ space volume, then
 \begin{equation*}
 	\frac{1}{\mathcal{N}}\tilde\rho(\vec x, t)\ dx = \rho(\vec x, t)\ dx ????
 \end{equation*}
-where $\mathcal{N}$ is the total number of microstates in the ensemble. $\rho(\vec x, t)dx$ can be interpreted as 
-the probability to find in the ensemble a system with microstate $\vec x$ at a time $t$ and $\rho(\vec x, t)$ is 
-the more convenient normalized distribution function. For definition of probability density must be
+where $\mathcal{N}$ is the total number of microstates in the ensemble, $\rho(\vec x, t)dx$ can be interpreted as 
+the probability to find a system in the ensemble with microstate $\vec x$ at a time $t$ and $\rho(\vec x, t)$ is 
+the more convenient normalized ensemble distribution function. For definition of probability density must be
 \begin{equation*}
 	\int_{\Omega} \rho(\vec x, t)\ dx = 1, \qquad \rho(\vec x, t) \ge 0
 \end{equation*}
@@ -175,6 +179,7 @@ For an ensemble at thermodynamic equilibrium the macroscopic state is fixed and 
 observable, it must be time--independent. Thus, it can be shown \cite{Tuckerman} that exist a scalar function of 
 the Hamiltonian $\mathit{f}(\mathcal{H}(\vec x))$ such that the time--independent ensemble average of the 
 equilibrium observable $A$ can be expressed as 
+\graffito{ensemble averages}
 \begin{equation*}
 	\ave{A} = \frac{1}{\mathcal{Z}} \int_\Omega A(\vec x, t) \mathit{f}(\mathcal{H}(\vec x))\ dx
 \end{equation*}
@@ -210,6 +215,7 @@ value of the observable
 \end{equation*}
 In order for a comparison to be made, an identity between ensemble and time averages must be established.
 This link is provided by the \textit{ergodic theorem} and the \textit{ergodic hypothesis}. A system is said to be 
+\graffito{ergodic theorem and ergodic hypothesis}
 ergodic if, over a long period of time, all the microstates in the phase space with the same energy are 
 accessible with the same probability. Then the ergodic theorem says that, if the system is ergodic, the time and 
 ensemble averages are equal \textit{almost everywhere} in the phase space. So we can write the follow identity
@@ -355,12 +361,14 @@ reduces to a diagonal pressure matrix such that
 \section{Molecular Dynamics simulation}
 \label{sec:MD}
 \acf{MD} is a set of techniques that allow us to prepare a ``computer experiments'' in which solving numerically 
-the classical equations of motion of a virtual system we will be able to know its time evolution. Such virtual 
+the classical equations of motion of a virtual system we are able to know its time evolution. Such virtual 
 experiment approach has the advantage that many experiments can be set up with different initial conditions 
 and/or with different control parameters, such as temperature or pressure. Obviously that experiment is carried 
 out using a model that approximates the real system. The main parts of that model are the information required to 
 obtain an approximation of the interactions among all system particles, i.e. to compute the \ac{PEF} from which 
-the forces are derived by equation~\eqref{eq:pefForces}. Solving the equations of motion with a numerical 
+the forces are derived by equation~\eqref{eq:pefForces}. 
+
+Solving the equations of motion with a numerical 
 integrator, an \ac{MD} simulation generates a set of phase space vectors, a \textit{trajectory}, at discrete 
 times that are multiples of the fundamental time discretization parameter, called \textit{MD time step}; 
 $\delta t$. Starting from an initial phase space vector $\vec x(0)$, at each step, the forces are computed from 
@@ -396,7 +404,7 @@ of \ac{MD} steps. An \ac{MD} simulation can be summarized in the scheme in figur
 \end{figure}
 
 \subsection{Initial configuration}
-Before an \ac{MD} simulation can be performed it is necessary to select an \textit{initial configuration}. Its 
+In order to perform an \ac{MD} simulation it is necessary to select an \textit{initial configuration}. Its 
 choice can be nontrivial and it depends on the complexity of the system. Then, careful attention must be paid in 
 setting up the initial configuration.
 
@@ -620,7 +628,7 @@ energy, given by
 \end{equation*}
 where $P(K_T)dK_T$ is probability that the system has a kinetic energy between $K_T$ and $K_T + dK_T$.
 
-Since velocities are scaled only after some \ac{MD} steps this can cause a discontinuity in the particles 
+Since velocities are scaled only after some \ac{MD} steps this can cause a discontinuity in the particle 
 velocities just before and after the scaling step. To avoid this problem, the authors suggest that the choice of 
 $K_T$ can be based on the previous value of $K$ so as to obtain a smoother evolution. The procedure proposed by 
 Bussi \etal\, consists in the following steps
@@ -670,10 +678,11 @@ pressure; on the contrary if $\tau_p \rightarrow +\infty$ the system reduces to 
 dynamics\footnote{If the system is coupled to a thermostat, then the canonical ensemble is sampled.}. The 
 particle coordinates is scaled by the factor $\lambda^{\nicefrac{1}{3}}$.  
 
-In the case of anisotropic system the pressure matrix $\mathbold{P}$ and the volume matrix $\mathbold{H}$ have to 
-be considered and the Berendsen algorithm can be generalized such that even $\lambda$ becomes a $3\times 3$ 
-matrix. However the main problem, as for the weak coupling thermostat, is that the sampled ensemble is not known. 
-Thus a new approach, in order to correct sample the isobaric ensemble, has been derived by Parrinello and Rahman.
+In the case of anisotropic system the pressure matrix $\mathbold{P}$ and the volume matrix $\mathbold{H}$ 
+\eqref{eq:volumeMatrix} have to be considered and the Berendsen algorithm can be generalized such that even 
+$\lambda$ becomes a $3\times 3$ matrix. However the main problem, as for the weak coupling thermostat, is that 
+the sampled ensemble is not known. Thus a new approach, in order to correct sample the isobaric ensemble, has 
+been derived by Parrinello and Rahman.
 
 \subsubsection{Parrinello--Rahman algorithm}
 The Parrinello--Rahman barostat \cite{ParrinelloBarostat1}\cite{ParrinelloBarostat2} is based on genuinely treat 
@@ -701,15 +710,15 @@ $\mathbold{G} = \leftidx{^t}{ \mathbold{H}}{} \mathbold{H}$. Parrinello \etal\, 
 	\mathcal{L} = \frac{1}{2}\sum_{i=1}^N m_i \dot{\vec s}_i \leftidx{^t}{\mathbold{G}}{} \dot{\vec s}_i - \sum_{i=1}^N \sum_{j=i+1}^N U_{ij}(\vec r) +  \frac{1}{2} M_h \text{Tr}(\leftidx{^t}{\mathbold{\dot H}}{} \mathbold{\dot H} ) -  p_0 |\det \mathbold{H}|
 \end{equation*}
 thus the equations of motion for $ \mathbold{H}$ and $\vec s_i$ can be computed solving the Euler--Lagrange 
-equations. It can be shown that those equations of motion, derived in \cite{ParrinelloBarostat1} and 
-\cite{ParrinelloBarostat2}, correct sample an isobaric ensemble. A practical way to show this is to consider the 
+equations. It can be shown that the equations of motion, derived in \cite{ParrinelloBarostat1} and 
+\cite{ParrinelloBarostat2}, correct sample an isobaric ensemble. A practical way to show it, is to consider the 
 Hamiltonian of the system. Using equation~\eqref{eq:hamiltonian} the Hamiltonian is
 \begin{equation*}
 	\mathcal{H} = \frac{1}{2}\sum_{i=1}^N m_i \dot{\vec s}_i \leftidx{^t}{\mathbold{G}}{} \dot{\vec s}_i + \sum_{i=1}^N \sum_{j=i+1}^N U_{ij}(\vec r) +  \frac{1}{2} M_h \text{Tr}( \leftidx{^t}{\mathbold{\dot H}}{} \mathbold{\dot H} ) + p_0 |\det\mathbold{H}|
 \end{equation*}
 if the system is in equilibrium at temperature $T$, using the equipartition theorem, the kinetic term of the 
-system particles contributes to the energy by $3Nk_BT/2$ while the kinetic term of the piston by $9k_BT/2$. Thus 
-since $3N \gg 9$ the Hamiltonian can be approximated by
+system particles contributes to the energy by $3Nk_BT/2$ while the kinetic term of the piston by $9k_BT/2$. Since 
+$3N \gg 9$ the Hamiltonian can be approximated by
 \begin{equation*}
 	\mathcal{H} \simeq \ave{K} + U + p_0 V = H
 \end{equation*}
@@ -737,6 +746,7 @@ the Parrinello--Rahman samples correctly the isobaric ensemble. A common strateg
 barostat to reach equilibrium then switch to the Parrinello--Rahman algorithm to correctly sample the phase space 
 associated to the isobaric ensemble.
 
+
 \section{Empirical Force--Field model}
 \label{sec:EmpiricalFF}
 As we have seen in the previous section \ac{MD} provides a variety of tools for solving the time evolution of a 
@@ -745,18 +755,18 @@ be used in a variety of systems, such as set of atoms, molecules or more complex
 macromolecules systems. In each of these systems, depending on the \textit{interaction model} and its 
 \textit{parametrization}, we will be able to describe crucial molecular--level processes, such as hydrogen bond 
 formation in organic molecules, which happen on the picoseconds time scale; or study slow processes such as the 
-diffusion of massive colloidal particles, taking place on time scales of milliseconds if not seconds.
-
-Considering soft or condensed mater, the most relevant for this thesis work, the main processes of interest 
+diffusion of massive colloidal particles, taking place on time scales of milliseconds if not seconds. Considering soft or condensed mater, the most relevant for this thesis, the main processes of interest 
 ranging from protein folding to glass transitions, from surface diffusion to ligand--receptor binding take place 
-on longer time scales (several ns) and involve a larger number of atoms ($N \gg 10^4$). In this case a crucial 
-role is played by the \textit{Born--Oppenheimer approximation}. It says that we can separate the motion of the 
-electrons by the motion of the atomic nuclei. This is done in order to integrate out the high frequency 
-electrons' motions and to remove some \ac{DOF} due to the necessity to increase the time step and speed up the 
-simulation. If, for some particular system, we want to know precisely the dynamics of the electrons we have to 
-introduce quantum mechanical methods that are, even for a small number of particles ($N\sim 10^2$), very 
-computationally time consuming. In the following, when we speak about atoms or chemical moieties we refer to it 
-as for nuclei coordinates only without considering electrons at all.
+on longer time scales (several ns) and involve a larger number of atoms ($N \gg 10^4$). 
+
+Hence with soft or condensed matter systems, in order to remove some \ac{DOF} due to the necessity to increase 
+the time step and speed up the simulation, a crucial role is played by the \textit{Born--Oppenheimer 
+approximation}. It says that we can separate the motion of the electrons by the motion of the atomic nuclei. This 
+is done in order to integrate out the high frequency electrons' motions. If, for some particular system, we want 
+to know precisely the dynamics of the electrons we have to introduce quantum mechanical methods that are, even 
+for a small number of particles ($N\sim 10^2$), very computationally time consuming. In the following, when we 
+speak about atoms or chemical moieties we refer to it as for nuclei coordinates only without considering 
+electrons at all.
 
 Nevertheless atom or molecule interactions, such as bond formation, are mediated by the electron interactions. 
 Thus, to describe the dynamics of such a system with a classical \ac{MD} tools and the Born--Oppenheimer 
@@ -847,16 +857,16 @@ figure~(\ref{fig:FFInteraction}).
 	\label{fig:FFInteraction}
 \end{figure}
 
-\subsection{Non--bonded interactions}
+\subsection{Non--bonded interactions: general aspects}
 \label{sec:nonbonded}
 The bonded interactions, as we can see in equation~\eqref{eq:bondPEF}, are at \textit{fixed range}, meaning that 
 they depend, for example, on the equilibrium bond length that is fixed. Moreover, usually in standard \ac{MD} 
-simulations the bond break is not taken into account. The same does not hold for the non--bonded interactions 
-because they depend on the inter--particles distance $r_{ij}$ and they decay to zero as a power of $r_{ij}^{-d}$. 
-Depending on the power order $d$ compared to the dimensionality $s$ of the system they are split into 
-\textit{short range} if $d>s$ and \textit{long range} interactions if $1 \le d < s$. For example, as we shall see 
-later, the Lennard--Jones $12-6$ potential decays to zero as $r^{-6}$ then it is a short range interaction, while 
-the electrostatic is a long range interaction since it decays to zero as $r$.
+simulations the bond break is not taken into account. The non--bonded interactions, instead, are at non--fixed 
+range because they depend on the inter--particles distance $r_{ij}$ and decay to zero as a power of 
+$r_{ij}^{-d}$. Depending on the power order $d$ compared to the dimensionality $s$ of the system they are split 
+into \textit{short range} if $d>s$ and \textit{long range} interactions if $1 \le d < s$. For example, as we 
+shall see later, the Lennard--Jones $12-6$ potential decays to zero as $r^{-6}$ then it is a short range 
+interaction, while the electrostatic is a long range interaction since it decays to zero as $r$.
 
 \subsubsection{Cut--off, shift and switch methods}
 As we have mentioned in section~\ref{sec:neighbor} the calculations of non--bonded interaction energy 
@@ -1068,12 +1078,23 @@ equations~\eqref{eq:ewaldReal},\eqref{eq:ewaldReciprocal} and~\eqref{eq:Ewaldsel
 	\end{aligned}
 	\label{eq:EwaldEnergy}
 \end{equation}
-The first line is the real space contribution while the second is the Fourier energy contribution. Since the last 
+The first line is the real space contribution while the second is the Fourier energy contribution. Since the 
 self--interaction term is constant it does not affect forces computation. The \ac{ESM} offers a well defined 
 method to properly treat electrostatic interactions, nevertheless it is quite expensive in term of computational 
 resources. If $\alpha$ and the cut--off are constant, then the computation scales as $\sim N^2$.
 
-For biomolecular applications most \ac{MD} tools set an equal cut-off radius for both Van der Waals interaction and the real part of the Ewald summation~\eqref{eq:EwaldEnergy} in order to achieve for both a scaling of the order $\sim N$. However in this way the computation of the reciprocal part in the Ewald summation~\eqref{eq:EwaldEnergy} will be very inefficient as it scales as $\sim N^2$. In order to increase the efficiency of the calculation of the Fourier transform various of advanced methods can be used. They are all based on the use of the \ac{FFT} method. In this way the reciprocal part can scale as $\sim N\ln N$. Since \ac{FFT} requires discretized quantities, the idea of such methods, called \textit{particle mesh} is to consider the charge density spread on a mesh grid and then evaluate the electrostatic potential via solving the Poisson's equation\footnote{Given a charge distribution $\rho(\vec r)$ then the associated electrostatic potential $\phi(\vec r)$ can be calculated solving the Poisson's equation $\displaystyle \nabla^2\phi(\vec r) = -\frac{1}{\varepsilon_0} \rho(\vec r)$. If a charge $q$ is at position $\vec r$ its electrostatic potential energy is given by $U = q\phi(\vec r)$.} using fast Poisson solver together with the \ac{FFT} method; this can be done, for example, exploiting the \ac{PBC} in order to discretize and make periodic the Poisson's equation.
+For biomolecular applications most \ac{MD} tools set an equal cut-off radius for both Van der Waals interaction 
+and the real part of the Ewald summation~\eqref{eq:EwaldEnergy} in order to achieve for both a scaling of the 
+order $\sim N$. However in this way the computation of the reciprocal part in the Ewald 
+summation~\eqref{eq:EwaldEnergy} will be very inefficient as it scales as $\sim N^2$. In order to increase the 
+efficiency of the calculation of the Fourier transform various advanced methods can be used. They are all based 
+on the use of the \ac{FFT} method. In this way the reciprocal part can scale as $\sim N\ln N$. Since \ac{FFT} 
+requires discretized quantities, the idea of such methods, called \textit{particle mesh} is to consider the 
+charge density spread on a mesh grid and then evaluate the electrostatic potential via solving the Poisson's 
+equation\footnote{Given a charge distribution $\rho(\vec r)$ then the associated electrostatic potential 
+$\phi(\vec r)$ can be calculated solving the Poisson's equation $\displaystyle \nabla^2\phi(\vec r) = -\frac{1}{\varepsilon_0} \rho(\vec r)$. If a charge $q$ is at position $\vec r$ its electrostatic potential energy is given by $U = q\phi(\vec r)$.} 
+using fast Poisson solver together with the \ac{FFT} method; this can be done, for example, exploiting the 
+\ac{PBC} in order to discretize and make periodic the Poisson's equation.
 %\footnote{It is generally true that the Poisson's equation become ``easily'' solvable in Fourier space. Considering a one dimensional Poisson's equation, its Fourier transform is $k^2\varepsilon_0\tilde\phi(k) = \tilde \rho(k)$ where $\tilde\phi(k)$ and $\tilde\rho(k)$ are, respectively, the Fourier transform of the electrostatic potential and charge distribution.}.
 Such algorithms include the \textit{particle--particle particle--mesh} method, \textit{particle mesh Ewald} 
 method, \textit{fast--Fourier Poisson} method and a recent methodology based on multi--scale mesh grid. The 
@@ -1082,8 +1103,8 @@ attributed to the mesh points, this makes the methods different. In the followin
 in this thesis work, the \acf{PME} method.
 
 \subsubsection{Particle mesh Ewald method}
-\acf{PME} method developed by Darden \etal\, \cite{DardenPME} is based on the \ac{ESM} so the starting point is 
-equation~\eqref{eq:EwaldEnergy}. As described above, the first part of the Ewald summation is computed in the 
+The \acf{PME} method developed by Darden \etal\, \cite{DardenPME} is based on the \ac{ESM} so the starting point 
+is equation~\eqref{eq:EwaldEnergy}. As described above, the first part of the Ewald summation is computed in the 
 real space together with the Van der Waals contribution using the same cut--off radius. The reciprocal part 
 instead, is computed using \ac{FFT} method, in order to have a gain of performance. First, we need to 
 consider a grid mesh onto which the Gaussian counteracting charge distribution is spread. The basic idea, then, 
@@ -1113,8 +1134,8 @@ efficiency and accuracy is clearly needed.
 A nice way to solve the problem of charge assignment is to shift the problem to the discretization of the Fourier 
 transform. This can be viewed as an interpolation problem. Consider the $e^{-\mathsf{i}\vec k\cdot \vec r_j}$ 
 term in the Fourier transform of equation~\eqref{eq:ewaldReciprocal}. In general $\vec r_j$ does not correspond 
-to a mesh grid point, so that term is not part of a discrete Fourier transform. The idea, thus, is to interpolate 
-it in terms of values of the complex exponential at the mesh points. Switching for simplicity to a one 
+to a mesh grid point, so this term is not part of a discrete Fourier transform. The idea, thus, is to interpolate 
+it in terms of the values of the complex exponential at the mesh points. Switching for simplicity to a one 
 dimensional system, if the mesh grid has $M = L/h$ points, a particle coordinate $r_j$ is located between mesh 
 points $[r_j/h]$ and $[r_j/h] + 1$ where $[\cdot]$ denotes the integer part; thus a $p$--order interpolation of 
 the exponential is of the form

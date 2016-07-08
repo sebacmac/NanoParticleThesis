@@ -2,3 +2,32 @@
 \chapter{MD tools, parallelization and hardware acceleration}
 
 %Manuale GROMACS 3.17.5 PP/PME ranks
+
+\begin{table}[h!t]
+	\centering\footnotesize
+	\begin{tabular}{lcccc}
+		\toprule
+		Input parameter & Eq. \acs{PME} & Run \acs{PME} & Eq. \acs{PME}\&\acs{PW} & Run \acs{PME}\&\acs{PW} \\ \toprule
+		Time step [fs]		&	$10$ & $20$ & $5$ & $20$ \\ \midrule
+		cut--off scheme		& Verlet & Verlet & Verlet & Verlet \\ \midrule
+		VbT$^a$ [J/(mol ps)]& $5$ & $5$ & $5$ & $5$ \\ \midrule
+		Coulomb Type		& \acs{PME}	& \acs{PME}	& \acs{PME} & \acs{PME} \\ \midrule
+		$r$ Coulomb	[nm]	& $1.2$ & $1.2$ & $1.2$ & $1.2$ \\ \midrule
+		$\varepsilon_r$		& $15$ & $15$ & $2.5$ & $2.5$ \\ \midrule
+		\acs{FFT} grid [nm]	& $0.12$ & $0.12$ & $0.12$ & $0.12$ \\ \midrule
+	    \acs{PME} order		& $4$ & $4$ & $4$ & $4$ \\ \midrule
+		VdW$^b$ type		& cut--off & cut--off & cut--off & cut--off \\ \midrule
+		$r$ VdW [nm]		& $1.2$ & $1.2$ & $1.2$ & $1.2$ \\ \midrule
+		$T$ coupling		& $v$--rescale & $v$--rescale & $v$--rescale & $v$--rescale \\ \midrule
+		$T$ [K]				& $310$ & $310$ & $310$ & $310$  \\ \midrule
+		$\tau_T$ [ps]		& $2.0$ & $2.0$ & $2.0$ & $2.0$ \\ \midrule
+		$p$ coupling		& Berendsen & Parrinello--Rahman & Berendsen & Parrinello--Rahman \\ \midrule
+		$p$ type			& semiisotropic & semiisotropic & semiisotropic & semiisotropic \\ \midrule
+		$p$ [bar]			& $1.0$,$1.0$ & $1.0$,$1.0$ & $1.0$,$1.0$ & $1.0$,$1.0$ \\ \midrule
+		$\tau_p$ [ps]		& $4.0$,$4.0$ & $12.0$,$12.0$ & $4.0$,$4.0$ & $12.0$,$12.0$ \\ \midrule
+		$K^c$ [bar$^{-1}$]	& $4.5\cdot 10^{-5}$ & $3.0\cdot 10^{-4}$ & $4.5\cdot 10^{-5}$ & $3.0\cdot 10^{-4}$ \\ \midrule
+		$v$ random			& yes ($310$~K) & no & yes ($310$~K) & no \\ \bottomrule 
+	\end{tabular}
+	\caption{Summary of the main input parameters used in my \acs{MD} runs. $^a$ Verlet--buffer--tollerance. $^b$ Van der Waals. $^c$ System compressibility.}
+	\label{tab:inputParam}
+\end{table}

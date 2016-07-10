@@ -1200,6 +1200,14 @@ and computational efficiency since it scales as $\sim N\ln N$. Moreover, despite
 interactions and in general to all energy contributions that decay as $r^{-d}$, for example, even with the Van
 der Waals energy contribution.
 
+The general workflow shown in figure~(\ref{fig:MDscheme}) can be update adding the calculation of the bonded and the non--bonded interactions and the \ac{PME} contribution. In figure~(\ref{fig:PPCore}) a summary of the new workflow is shown.
+\begin{figure}[ht!]
+	\center
+	\includegraphics[width=0.5\textwidth]{./img/Schemi/PPCores}
+	\caption{Schematic workflow of the particle interaction calculations inside an \acs{MD} simulation.}
+	\label{fig:PPCore}
+\end{figure}
+
 \subsection{Charge representation}
 \label{sec:chargeRep}
 Even if some methods, such as the \ac{PME} one, have been developed to speed up the computation of electrostatic

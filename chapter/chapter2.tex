@@ -1,11 +1,12 @@
 % !TEX root = ./../main.tex
 \chapter{MD tools, parallelization and hardware acceleration}
 %Manuale GROMACS 3.17.5 PP/PME ranks
-
 %http://www.gromacs.org
+Different tools for \ac{MD} simulations exist, in this Chapter we present the main used in this thesis for doing \ac{MD} and metadynamics simulations and for analyze the obtained data.
+
 
 \section{GROMACS package}
-The \ac{MD} tool and the main analysis tool used in this thesis work is the \href{http://www.gromacs.org}{\gromacs}\cite{gromacsManual} package. It is compatible with both atomistic and \ac{CG} \acp{FF} and support a variety of options and parameters such as different thermostat and barostat algorithms, different methods to treat the electrostatic interaction such as the \ac{ESM} and the \ac{PME} method, different integrators, cut--off schemes and so on. For what concern the trajectory analysis it holds a comprehensive framework for obtaining different quantities. Moreover it supports different kind of parallelization that is it has the compatibility with both multi--core single processor (home PC) and multi--core multi--processor (cluster) architectures with the support of both MPI and OpenMP libraries and the support of different hardware accelerated frameworks such as CUDA\textsuperscript{®}, OpenCL and OpenACC.  
+The \ac{MD} tool and the main analysis tool used in this thesis work is the \href{http://www.gromacs.org}{\gromacs}\footnote{http://www.gromacs.org}\cite{gromacsManual} package. It is compatible with both atomistic and \ac{CG} \acp{FF} and support a variety of options and parameters such as different thermostat and barostat algorithms, different methods to treat the electrostatic interaction such as the \ac{ESM} and the \ac{PME} method, different integrators, cut--off schemes and so on. For what concern the trajectory analysis it holds a comprehensive framework for obtaining different quantities. Moreover it supports different kind of parallelization that is it has the compatibility with both multi--core single processor (home PC) and multi--core multi--processor (cluster) architectures with the support of both \href{https://computing.llnl.gov/tutorials/mpi/}{MPI}\footnote{https://computing.llnl.gov/tutorials/mpi/} and \href{https://computing.llnl.gov/tutorials/openMP/}{OpenMP}\footnote{https://computing.llnl.gov/tutorials/openMP/} libraries and the support of different hardware accelerated frameworks such as CUDA\textsuperscript{®}\footnote{https://developer.nvidia.com/cuda-zone}, \href{https://www.khronos.org/opencl/}{OpenCL}™\footnote{https://www.khronos.org/opencl/} and \href{http://www.openacc.org}{OpenACC}\footnote{http://www.openacc.org}.  
 
 \subsection{Parallelization}
 Parallelization refers to the possibility of running a program, in this case an \ac{MD} simulation, in concurrency with the use of more then one CPUs or more then one cores per CPUs or both. The efficiency of a parallelization scheme is mainly determined by how much information each core and/or CPU has to exchange with the others, the least the better. The reason is that the libraries (MPI and OpenMP) needed for the exchange of the information are not fast as the cores are. Hence when the waiting time for the information exchange becomes higher than the total time spent in executing the parallel code, the program has reached its scaling limit, that is, no more cores have to be used.
@@ -44,10 +45,10 @@ Basically and briefly the main difference, as showed in figure~(\ref{fig:GPUvsCP
 	\caption{Schematic comparison between a CPU and a GPU.}
 	\label{fig:GPUvsCPU}
 \end{figure}
-\textit{computing modules} assigned to do vectorized calculations i.e. calculation that involve many vectors of different length. Now days the total number of hardware cores in a high level CPU is eight cores. Instead, a middle level GPU has a number of computing modules of the order of $ > 10^3$. In the GPU case, the computing module is essentially a \ac{SIMD} computing unit which is composed by several cores which each of it is equipped by several ALUs and FPUs. A \ac{SIMD} unit is a specific module for vector calculation: it give several instruction set to perform the same instruction on a multiple data stream i.e. multiple data arranged in a vector fashion. In figure~(\ref{fig:simd}) a schematic representation of a \ac{SIMD} that execute in parallel four two number sums
+\textit{computing modules} assigned to do vectorized calculations i.e. calculation that involve many vectors of different length. Now days the total number of hardware cores in a high level CPU is eight cores. Instead, a middle level GPU has a number of computing modules of the order of $ > 10^3$. In the GPU case, the computing module is essentially a \ac{SIMD} computing unit which is composed by several cores which each of it is equipped by several \acp{ALU} and \acp{FPU}. A \ac{SIMD} unit is a specific module for vector calculation: it give several instruction set to perform the same instruction on a multiple data stream i.e. multiple data arranged in a vector fashion. In figure~(\ref{fig:simd}) a schematic representation of a \ac{SIMD} that execute in parallel four two number sums
 \begin{figure}[h!t]
 	\centering
-	\includegraphics[width=0.5\textwidth]{./img/simd}
+	\includegraphics[width=0.5\textwidth]{./img//simd/simd.pdf}
 	\caption{Block diagram of a \acs{SIMD} computation on a four element vectors.}
 	\label{fig:simd}
 \end{figure}
@@ -60,11 +61,43 @@ i.e. the sum of each cell of the two vectors, is shown. Essentially this is poss
 \end{figure}
 
 
-
 \section{PLUMED package}
+The tool used for setting up and analyze a metadynamics simulation is the \href{http://www.plumed.org}{\plumed} package. It is an open source project composed by a set of libraries used for analyze the data obtained with a metadynamics simulation (first all, for obtaining the \ac{FES} from the history--dependent bias potential) or other advanced sampling technique, such as umbrella sampling. Moreover it works together with the most popular \ac{MD} tools, \gromacs included. In that sense it is a sort of plug--in that insert the advanced sampling code and algorithms inside the main \ac{MD} loop of the used \ac{MD} tool.
+
+For setting up a metadynamics simulation \plumed require an input file in which we have to specify what are the \acp{CV} and the parameters to be used in the metadynamics run. Moreover there is the possibility to add more feature such as, online analysis or more output files and options.
+
+For what concern the parallelization we have noted that it is badly parallelized between more than one node, that is, we observe good computational performance if we use the parallelization between cores inside the same CPU with the OpenMP library and the use of the GPU as hardware accelerator. Otherwise, for example with more than one node of a cluster, we obtain worse computational performance. Moreover, depending on the system and the parameters of the metadynamics, we observe a general decrease of computational performance compared to an un--biased \ac{MD} simulation.
+
+Below we show a typical input file used in this thesis work for a metadynamics simulation.
+\begin{Verbatim}[fontsize=\scriptsize,xleftmargin=1cm]
+# global variable: z distance from COM of particles 385-7040 and paticle 308 
+memb: COM ATOMS=385-7040
+mus: COM ATOMS=308
+dist: DISTANCE ATOMS=memb,mus COMPONENTS
+
+# Activate metadynamics in dist.z
+METAD ...
+LABEL=metad
+ARG=dist.z 
+PACE=50000
+HEIGHT=2.479
+SIGMA=0.06
+FILE=HILLS
+GRID_MIN=-9
+GRID_MAX=9
+GRID_SPACING=0.005
+... METAD
+
+# monitor the two variables and the metadynamics bias potential
+PRINT STRIDE=10000 ARG=dist.z,metad.bias FILE=COLVAR
+\end{Verbatim}
 
 \section{Simulation parameters}
+Since \gromacs is compatible both with atomistic and \ac{CG} \acp{FF} and with different kind of \ac{MD} simulations, such as with a $NVE$ or $NVT$ or $NpT$ ensemble, different \ac{MD} integrators, different algorithms to treat the long-- and short--range interactions and so forth, few input files must be given at \gromacs input. Briefly these input files are the initial configuration file in which the position and eventually the velocity of all particles and the three box dimensions are saved; the input parameters file in which, following the \ac{FF} receipt, all the \ac{MD} parameters are given; the topology file in which all the particles of a system are described: what kind of forces between them, the assigned charge, the mass and all the constant refer to the particles and the interactions between them, even this file, generally, is created under the receipt of the \ac{FF} used.
 
+In the table~(\ref{tab:inputParam}) we report the most important \ac{MD} parameters used in this thesis work. In table~(\ref{tab:inputParam}) ``VbT'' means Verlet--buffer--tollerance; ``VdW'' means Van der Waals; $T$ and $p$ coupling are the thermostat and barostat algorithms used, respectively; $\tau_T$ and $\tau_p$ are the related time constants; $p$ type, is the pressure coupling type: semiisotropic means two independent pressure coupling for $xy$ axes and for $z$ axis; $K$ is the related compressibility (in this case equal for both pressure coupling). In general when starting an \ac{MD} simulation, an equilibration run (Eq. in table~(\ref{tab:inputParam})) of few nanoseconds, that also generate the random velocities from the Maxwell–Boltzmann distribution at fixed temperature, is needed for equilibrating the volume of the simulation box and the whole system. Then one have to switch to the production run (Run in table~(\ref{tab:inputParam})) in which the correct ensemble is sampled. 
+
+For what concern the metadynamics parameters, in accordance with \cite{ourPaper}, in table~(\ref{tab:metadynParam}) we report the main input parameters used to set up a metadynamics run.
 
 \begin{table}[h!t]
 	\centering\footnotesize
@@ -73,13 +106,13 @@ i.e. the sum of each cell of the two vectors, is shown. Essentially this is poss
 		Input parameter & Eq. \acs{PME} & Run \acs{PME} & Eq. \acs{PME}\&\acs{PW} & Run \acs{PME}\&\acs{PW} \\ \toprule
 		Time step [fs]		&	$10$ & $20$ & $5$ & $20$ \\ \midrule
 		cut--off scheme		& Verlet & Verlet & Verlet & Verlet \\ \midrule
-		VbT$^a$ [J/(mol ps)]& $5$ & $5$ & $5$ & $5$ \\ \midrule
+		VbT [J/(mol ps)]	& $5$ & $5$ & $5$ & $5$ \\ \midrule
 		Coulomb Type		& \acs{PME}	& \acs{PME}	& \acs{PME} & \acs{PME} \\ \midrule
 		$r$ Coulomb	[nm]	& $1.2$ & $1.2$ & $1.2$ & $1.2$ \\ \midrule
 		$\varepsilon_r$		& $15$ & $15$ & $2.5$ & $2.5$ \\ \midrule
-		\acs{FFT} grid [nm]	& $0.12$ & $0.12$ & $0.12$ & $0.12$ \\ \midrule
+		\acs{PME} grid [nm]	& $0.12$ & $0.12$ & $0.12$ & $0.12$ \\ \midrule
 	    \acs{PME} order		& $4$ & $4$ & $4$ & $4$ \\ \midrule
-		VdW$^b$ type		& cut--off & cut--off & cut--off & cut--off \\ \midrule
+		VdW type			& cut--off & cut--off & cut--off & cut--off \\ \midrule
 		$r$ VdW [nm]		& $1.2$ & $1.2$ & $1.2$ & $1.2$ \\ \midrule
 		$T$ coupling		& $v$--rescale & $v$--rescale & $v$--rescale & $v$--rescale \\ \midrule
 		$T$ [K]				& $310$ & $310$ & $310$ & $310$  \\ \midrule
@@ -88,9 +121,22 @@ i.e. the sum of each cell of the two vectors, is shown. Essentially this is poss
 		$p$ type			& semiisotropic & semiisotropic & semiisotropic & semiisotropic \\ \midrule
 		$p$ [bar]			& $1.0$,$1.0$ & $1.0$,$1.0$ & $1.0$,$1.0$ & $1.0$,$1.0$ \\ \midrule
 		$\tau_p$ [ps]		& $4.0$,$4.0$ & $12.0$,$12.0$ & $4.0$,$4.0$ & $12.0$,$12.0$ \\ \midrule
-		$K^c$ [bar$^{-1}$]	& $4.5\cdot 10^{-5}$ & $3.0\cdot 10^{-4}$ & $4.5\cdot 10^{-5}$ & $3.0\cdot 10^{-4}$ \\ \midrule
+		$K$ [bar$^{-1}$]	& $4.5\cdot 10^{-5}$ & $3.0\cdot 10^{-4}$ & $4.5\cdot 10^{-5}$ & $3.0\cdot 10^{-4}$ \\ \midrule
 		$v$ random			& yes ($310$~K) & no & yes ($310$~K) & no \\ \bottomrule 
 	\end{tabular}
-	\caption{Summary of the main input parameters used in my \acs{MD} runs. $^a$ Verlet--buffer--tollerance. $^b$ Van der Waals. $^c$ System compressibility.}
+	\caption{Summary of the main input parameters used in my \acs{MD} runs.}
 	\label{tab:inputParam}
 \end{table}
+
+\begin{table}[ht]
+	\centering
+	\begin{tabular}{llll}
+		\toprule
+		Deposition pace ($\tau$) & Gaussian height ($w$)& Gaussian width ($\delta s$) & Grid spacing \\ \toprule
+		$50000$ \ac{MD} steps$^a$ & $2.479$~kJ$^b$ & $0.06$~nm & $0.005$~nm \\ \bottomrule
+	\end{tabular}
+	\caption{Main metadynamics parameters used in this thesis work. $^a$ With a $20$~fs time step it means a deposition of a Gaussian every nanoseconds. $^b$ It is approximately equal to $1~k_BT$.}
+	\label{tab:metadynParam}
+\end{table}
+
+

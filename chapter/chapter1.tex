@@ -1289,7 +1289,7 @@ parameterization need to be adjusted so as to reproduce the desired target prope
 \begin{figure}[h!t]
 	\centering
 	\includegraphics[width=0.7\textwidth]{./img/CGMapping}
-	\caption{Different levels of the coarse--graining of a phospholipid. From left to right increasing levels of coarse--graining.}
+	\caption{Different levels of the coarse--graining of a phospholipid. From left to right increasing levels of coarse--graining. Taken from \cite{CoarseGrainingMapping}.}
 	\label{fig:CGLevels}
 \end{figure}
 
@@ -1520,7 +1520,7 @@ addressed to the article by Yesylevskyy \etal\,\cite{PW}.
 		$\epsilon_{WW} = 4$~kJ/mol			\\ \midrule
 		$\sigma = 0.47$~nm					\\ \bottomrule
 	\end{tabular}
-	\caption{Summary of the parameters used in the \acs{PW} model. Taken from \cite{PW}.}
+	\caption{Summary of the parameters used in the \acs{PW} model. See \cite{PW} for details.}
 	\label{tab:PWParam}
 \end{SCtable}
 
@@ -1529,14 +1529,14 @@ addressed to the article by Yesylevskyy \etal\,\cite{PW}.
 	\begin{tabular}{lrrr}
 		\toprule
 		\,	& \acs{PW} &  \martini water & Experimental \\ \toprule
-		$\rho$~[kg/m$^3$]				& $1043$  &   		& $997$		\\ \midrule
-		$\overline{p}$~[D] 				& $4.9$   & $-$ 	& 		    \\ \midrule
+		$\rho$~[kg/m$^3$]				& $1043$  & $1013$  & $997$		\\ \midrule
+		$\overline{p}$~[D] 				& $4.9$   & $-$ 	& $4.4^a$		\\ \midrule
 		$\varepsilon_{W}$ 				& $75.6$  & $-$ 	& $78.4$	\\ \midrule
 		$T_\text{melt}$~[K] 			& $282$   & $290$ 	& $273$		\\ \midrule
 		$\Delta G^\text{hyd}$~[kJ/mol] 	& $-18.7$ &	$-18$	& $-27$		\\ \midrule%\subsection{Applications}
 		$D_{WW}~[10^{-5}$~cm$^2$/s]		& $2.5$   & $2.0$   & $2.3$		\\ \bottomrule
 	\end{tabular}
-	\caption{Summary of the results obtained with the \acs{PW}, standard \martini water and the experimental data at $T=300$~K. $\overline{p}$ is the average dipole momentum and $D_{WW}$ is the self--diffusion coefficient.}
+	\caption{Summary of the results obtained with the \acs{PW}, standard \martini water and the experimental data at $T=300$~K. $\overline{p}$ is the average dipole momentum of a pure water box and $D_{WW}$ is the self--diffusion coefficient. \footnotesize $^a$ In order for a comparison to be made, this data is obtained from an atomistic simulation of $1600$ SPC/E water molecules and the average dipole momentum $\overline{p}$ is obtained averaging over a groups of four molecules, randomly chosen; see \cite{PW} for more details.}
 	\label{tab:PWRes}
 \end{table}
 
@@ -1583,16 +1583,15 @@ Using the \ac{PW} model these properties improve slightly, see table~(\ref{tab:P
 discussion about the limitations of the \martini \ac{FF} the reader is addressed to the review by Marrink \etal\, \cite{MartiniReview}.
 
 \section{Advanced sampling methods}
-The Gibbs (or Helmholtz) free energy function is a quantity of particular importance for the equilibrium
-statistical mechanics of which we are interested to obtain with \ac{MD} technique. In fact, the time evolution of
-a biomolecular system and its equilibrium properties are determined by the system's \ac{FES}. This because free
-energy differences tell us, for example, if a chemical reaction occurs spontaneously, whether a given solute is
-hydrophobic or hydrophilic, if a protein conformational change can take place or whether some molecules in water
-solution are able to self--assemble into a more complex system and so forth. Being related to the partition
-function of an ensemble, the free energy is the generator through which other thermodynamic quantities are
-obtained via differentiation. However often we are particularly interested in the free energy difference between
-two thermodynamic states, instead of the absolute value. The Gibbs free energy $G$ is specific for the $NPT$
-isobaric--isothermal ensemble and the Helmholtz free energy $A$ for the $NVE$ canonical ensemble.
+The free energy is a quantity of particular importance for the equilibrium statistical mechanics. The 
+Gibbs free energy $G$ is specific for the $NPT$ isobaric--isothermal ensemble and the Helmholtz free energy $A$ 
+for the $NVE$ canonical ensemble. The time evolution of a biomolecular system and its equilibrium properties are 
+determined by the system's \ac{FES}. This because free energy differences tell us, for example, if a chemical 
+reaction occurs spontaneously, whether a given solute is hydrophobic or hydrophilic, if a protein conformational 
+change can take place or whether some molecules in water solution are able to self--assemble into a more complex 
+system and so forth. Being related to the partition function of an ensemble, the free energy is the generator 
+through which other thermodynamic quantities are obtained via differentiation. However often we are particularly 
+interested in the free energy difference between two thermodynamic states, instead of the absolute value. 
 
 \paragraph{\textbf{Collective variables}} Often, we are interested in the \ac{FES} in function of some
 generalized coordinates, called \acp{CV} of the system. These small set of variables can describe, in a simple
@@ -1600,7 +1599,7 @@ and useful manner, some chemical, thermodynamic or mechanical processes that tak
 example, the free energy in function of the distance between the \ac{COM} of two molecules give us information
 about their attraction or repulsion and if they form a bound state. Thus the \ac{FES}, in the \acp{CV} space,
 provides a map of the stable conformations, the relative stability of these conformations and the barrier heights
-that must be crossed for the processes to take place. Moreover, the energy landscape, even for a small molecule,
+that must be crossed for the transition to take place. Moreover, the energy landscape, even for a small molecule,
 can be extremely wrinkled and the large number of minima can not be sampled in a typical \ac{MD} simulation. The
 principal reason for the use of the \acp{CV}, is thus to limit the sampling to those regions of phase space that
 are most important for the process under study, hoping that the limited sampled regions are sufficient to

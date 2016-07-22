@@ -110,11 +110,11 @@ charged metal nanoparticles and model biological membranes}\\\bigskip
 \clearscrheadfoot
 \pagestyle{scrheadings}
 
-\rohead{\rightmark}
-\lehead{\leftmark}
+\rohead{\rightmark\qquad\pagemark}
+\lehead{\pagemark\qquad\leftmark}
 
-\renewcommand{\sectionmark}[1]{\markright{\spacedlowsmallcaps{\textcolor{gray}{\thesection\ #1}}\normalfont\qquad\pagemark{}}}
-\renewcommand{\chaptermark}[1]{\markleft{\normalfont\pagemark{}\qquad\spacedlowsmallcaps{\textcolor{gray}{\thechapter\ #1}}\normalfont}}
+\renewcommand{\sectionmark}[1]{\markright{\spacedlowsmallcaps{\textcolor{gray}{\thesection\ #1}}\normalfont}}
+\renewcommand{\chaptermark}[1]{\markleft{\normalfont\spacedlowsmallcaps{\textcolor{gray}{\thechapter\ #1}}\normalfont}}
 
 \mainmatter
 

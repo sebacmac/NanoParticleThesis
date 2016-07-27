@@ -9,10 +9,7 @@ the cell membrane. Then we will summarize the characteristics of the \ac{CG} mod
 will describe the interaction mechanism and some preliminary thermodynamic results about the interaction of the 
 \ac{AuNP} and the model cell membrane, as outlined in \cite{ourPaper}. For a more precise discussion about the 
 \ac{NP}--membrane interaction and the models parameterization the reader is addressed to the work of Federica 
-Simonelli \etal\, \cite{ourPaper} and her thesis work \cite{simonelliThesis}. For more details about the gold core 
-used, its properties, equilibrium structure and so forth, the reader is addressed to the work of Lopez-Acevedo 
-\etal\, \cite{clusterEquilibrium} while for a general discussion about thiolated \acp{AuNP} to the work of 
-Häkkinen \cite{corePassivated}.
+Simonelli \etal\, \cite{ourPaper} and her thesis work \cite{simonelliThesis}. For more details about the gold core used, its properties, equilibrium structure and so forth, the reader is addressed to the work of Lopez-Acevedo \etal\, \cite{clusterEquilibrium} while for a general discussion about thiolated \acp{AuNP} to the work of Häkkinen \cite{corePassivated}. For what concerns cell membranes and biological lipids the reader is addressed to the book of Yeagle \cite{yeagle}.
 
 \section{NanoParticle model}
 % gold core --> Thyiol passivated --> ligands
@@ -63,8 +60,7 @@ consider have a total diameter of about $4$~nm.
 
 Despite the computational cost associated to atomistically describe the \ac{NP} core, all gold and sulfur atoms 
 are taken into account. Bonds between gold atoms and sulfur atoms are allowed to vibrate. As we have seen in a 
-previous section, a many--body potential should be used. Instead, as we are interested in the vibrational modes of 
-the core atoms, 
+previous section, a many--body potential should be used. Instead, as we are interested in the vibrational modes of the core atoms, 
 %Federica Simonelli in her thesis work, found that
 a more efficient way, as shown in figure~(\ref{fig:coreNetwork}), is to use an elastic network associate the 
 potential energy
@@ -144,26 +140,28 @@ the three particles. Parameters are fixed in accordance with the standard \marti
 ligand. The charged group is modeled as a Qda bead with a charge of $-\mathsf{e}$. The chemical structure and the 
 resulting \ac{CG} \martini model is shown in figure~(\ref{fig:mus}). Even in this case the first bead of a 
 \ac{MUS} ligand is bound to the sulphur atom through a harmonic potential with the same parameter: bond constant 
-of $1250$~kJ/(mol\,nm$^2$) and equilibrium length of $0.47$~nm. The same potential is used to bind all other beads 
-to the previous one. An angle potential as in equation~\eqref{eq:martiniAngle} is used among the sulfur atom, the 
-first C$_1$ and second C$_1$, among the first, the second and the third C$_1$ beads and so on for all four beads. 
-Parameters are fixed in accordance with the standard \martini parameters for alkanes.%As in the \ac{OT} ligand 
+of $1250$~kJ/(mol\,nm$^2$) and equilibrium length of $0.47$~nm. The same potential is used to bind all other 
+beads to the previous one. An angle potential as in equation~\eqref{eq:martiniAngle} is used among the sulfur 
+atom, the first C$_1$ and second C$_1$, among the first, the second and the third C$_1$ beads and so on for all 
+four beads. Parameters are fixed in accordance with the standard \martini parameters for alkanes.
+%As in the \ac{OT} ligand 
 %model, a purely repulsive potential, as described previously, is used between C$_1$ beads and gold and sulfur 
 %atoms to prevent the \ac{NP} penetration. The same applies between Qda bead and gold and sulfur atoms.
 
 \paragraph{\textbf{level of hydrophobicity}} The \ac{AuNP} core can be functionalized with both ligands at 
 different composition. In particular varying the ratio between the \ac{OT} and \ac{MUS} ligands different levels 
 of hydrophobicity can be reached. Two surface compositions will be considered in this thesis work: 
-(\ac{MUS}:\ac{OT} $1$:$1$) and (2:1), the former is the main used in this thesis work. This choice is ?? to the 
-possibility to compare to previous experimental and simulation data \cite{experimentMaccarini}.
+(\ac{MUS}:\ac{OT} $1$:$1$) and (2:1), the former is the main used in this thesis work. This choice is due to the 
+possibility to compare to previous experimental and simulation data \cite{Maccarini2013}, \cite{VanLehn2013}, 
+\cite{VanLehn2014} and \cite{VanLehn2015}.
 
 \paragraph{\textbf{surface arrangements}} The ligands on the \ac{AuNP} surface can be arranged in two possible 
-ways: randomly or with a predetermined scheme. We will consider both \acp{NP} with a random ligand arrangement and 
-\acp{NP} with a striped ligand arrangement. The striped scheme is obtained dividing the \ac{NP} surface in three 
-stripes: the external two stripes are covered with \ac{MUS} ligands while the central with \ac{OT} ligands. For 
-this thesis work we consider three type of \acp{NP}: striped (\ac{MUS}:\ac{OT} $1$:$1$), random (\ac{MUS}:\ac{OT} 
-$1$:$1$) and random (\ac{MUS}:\ac{OT} $2$:$1$). In figure~(\ref{fig:coating}) the different coatings for the 
-\ac{NP} core is shown.
+ways: randomly or with a predetermined scheme. We will consider both \acp{NP} with a random ligand arrangement 
+and \acp{NP} with a striped ligand arrangement. The striped scheme is obtained dividing the \ac{NP} surface in 
+three stripes: the external two stripes are covered with \ac{MUS} ligands while the central with \ac{OT} ligands. 
+For this thesis work we consider three type of \acp{NP}: striped (\ac{MUS}:\ac{OT} $1$:$1$), random 
+(\ac{MUS}:\ac{OT} $1$:$1$) and random (\ac{MUS}:\ac{OT} $2$:$1$). In figure~(\ref{fig:coating}) the different 
+coatings for the \ac{NP} core is shown.
 
 \begin{figure}[!ht]
 	\centering
@@ -183,9 +181,10 @@ $1$:$1$) and random (\ac{MUS}:\ac{OT} $2$:$1$). In figure~(\ref{fig:coating}) th
 \end{figure}
 
 \section{Cell membranes}
+The cell membrane or cytoplasmic membrane is a biological membrane that separate the interior and the external environments of a living cells and controls communications and nutrient flow into and out the cell. This is essential to enable the function and stabilize the structure of cells. The membrane main function is the compartmentalization of a biological environment into two well defined not independent subsection: the cell in which the ``life reactions'' take place and the external cell fluid in which all the necessary biological compounds are dissolved. The compartmentalization in such environments enhance the probability of chemical reactions to take place but also allow to develop different chemical reactions inside and outside the cell. From an evolutionary point of view it is believed that a simple membrane that defines an inside and an outside environments and that protect and concentrates molecules in a closed space, it was necessary for the development of life. 
 
 \subsection{Real cell membranes}
-The cell membrane or cytoplasmic membrane is a biological membrane that separate the interior and the external environments of a living cells. The basic function is to protect cells from its surroundings but it also takes the function of a ``customs'' in order to allow the cells to exchange chemical compounds from and to the external environment. To fulfill at this role the cell membrane is a crowded environment consisting of phospholipids, glycolipids, carbohydrates proteins and so on as we can see from figure~(\ref{fig:cellMembrane}).
+Since the compartmentalization, the cell membrane have to allow the exchange of biological molecules from and to the outside world. This role is, in a small part, fulfilled by the membrane itself through the passive translocation of small molecules or ions. But the main part is fulfilled through proteins and other compounds that are solved inside the membrane. As we can see from a cartoon of a real cell membrane in figure~(\ref{fig:cellMembrane}), the biological membrane is a crowded environment consisting of phospholipids, glycolipids, carbohydrates, proteins and other organic molecules.
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[width=0.9\textwidth]{./img/cellMembrane}
@@ -193,30 +192,59 @@ The cell membrane or cytoplasmic membrane is a biological membrane that separate
 	\label{fig:cellMembrane}
 \end{figure}
 
-The skeleton of a cell membrane is a bilayer sheet made of \textit{phospholipids}. They are a kind of lipids made of a polar or charged head, which is hydrophilic and one or two fatty acid hydrocarbon chains, often called lipid tails, which are instead hydrophobic; phospholipids are then amphiphilic molecules. This amphiphilic nature play a key role in the bilayer formation. In fact the formation of a bilayer in water is a self--assembly process driven by the hydrophobic effect which acts so as to minimize the number of hydrophobic contact between water and lipid tails. Moreover the bilayer sheet is not the only possible structure, based on the concentration of the phospholipids in water and on the temperature the self--assembly process can lead to three main different structures: bilayer sheet, liposome and micelle. In figure~(\ref{fig:lipidsStructures}) a schematic representation of this three different structures is shown.
+The plasma membrane by mass is essentially composed by half lipids and half proteins. The lipids that constitute the membrane are a particular type of lipids, called \textit{phospholipids}. They are made of a neutral (polar) or charged head, which is hydrophilic and one or two fatty acid hydrocarbon chains, often called lipid tails, which are instead hydrophobic, as shown schematically to the left of figure~(\ref{fig:phospho}). Due to have both properties a phospholipid is an \textit{amphiphilic} molecule. This amphiphilic nature, through the \textit{hydrophobic effect}, play a key role in the membrane formation. In fact when we put a relevant concentration of phospholipids in a water solution at a certain temperature, the lipid tails tend to move away from water molecules due to the hydrophobic effect, so they tend to get closer between them in order to minimize the hydrophobic surface in contact with water. Instead, the polar heads tend to make favorable bonds with water molecules. The resultant bilayer configuration, proper of the biological membrane, is shown schematically to the right of figure~(\ref{fig:phospho}). 
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=0.6\textwidth]{./img/phospholipids}
+	\caption{Left: schematic representation of a phospholipid. Right: self--assembled bilayer configuration assumed by an aqueous solution of phospholipids.}
+	\label{fig:phospho}
+\end{figure}
+Hence, the phospholipids in a water solution tend to \textit{spontaneously} self--organize in a \textit{ordered} state that minimize the Gibbs free energy and that depends on the lipids concentration and the temperature of the solution. As schematically shown in figure~(\ref{fig:lipidsStructures}) the final configurations of such self--assembly process are essentially three: the bilayer sheet, a liposome and a micelle.
 \begin{SCfigure}[][!ht]
-	\includegraphics[width=0.3\textwidth]{./img/lipidsStructures}
-	\caption{Cross--section view of the structures that can be formed by a self--assembly process of phospholipids in aqueous solution.}
+	\centering
+	\includegraphics[width=0.35\textwidth]{./img/lipidsStructures}
+	\caption{Cross--sectional view of the structures that can be formed by a self--assembly process of a phospholipid aqueous solution.}
 	\label{fig:lipidsStructures}
 \end{SCfigure}
 
-A real lipid bilayer often contains hundred of different lipid species. They differ in the length of the hydrocarbon chains, in the degree of unsaturation, i.e. in the number of double bond in the hydrocarbon chains, and in different composition of the head that can be polar or non--polar. There are two main classes of phospholipids that make a cell membrane of animals: glycerophospholipid (phosphatidyl--choline, phophatidyl--ethanolamine, phophatidyl--serine, phosphatidyl--serine ) and phosphosphingolipids (sphingomyelin). In the former group the lipid tails are bound to a glycerol group while the latter do not have glycerol and the lipid tails have a backbone of sphingoid bases, absent in the former. These five types take into account for more then half of the lipids in most membranes.
+A real lipid bilayer often contains hundred of different lipid species. They differ in the length of the 
+hydrocarbon chains, in the degree of unsaturation, i.e. in the number of double bond in the hydrocarbon chains, 
+and in different composition of the head that can be neutral (polar) or charged. There are two main classes of 
+phospholipids that make a cell membrane of animals: glycerophospholipid (phosphatidyl--choline, 
+phophatidyl--ethanolamine, phophatidyl--serine, phosphatidyl--serine ) and phosphosphingolipids (sphingomyelin). 
+In the former group the lipid tails are bound to a glycerol group while the latter do not have glycerol and the 
+lipid tails have a backbone of sphingoid bases, absent in the former. These five types take into account for more 
+then half of the lipids in most membranes.
 
-The cell membrane has a quasi--liquid properties at physiological temperature. This is in part due to some disorder in the alignment of the lipid tails produced by the presence of unsaturated chains. Another contribution arise from the area occupied by the lipid heads which determines the distance between the hydrocarbon chains. This fluid character make the lipid bilayer like a solvent in which the other molecules are dissolved (lipids and proteins) and are free to diffuse. Moreover the lipids itself can move in different ways. The main movements and the associated time scales are summarized as follow
+The cell membrane has quasi--liquid properties at physiological temperature. This is in part due to some disorder 
+in the alignment of the lipid tails produced by the presence of unsaturated chains. Another contribution arise 
+from the area occupied by the lipid heads which determines the distance between the hydrocarbon chains. This 
+fluid character makes the lipid bilayer like a solvent in which the other molecules (lipids and proteins) are 
+dissolved and are free to diffuse. Moreover the lipids itself can move in different ways. The main movements and 
+the associated time scales are summarized as follow
 \begin{itemize}
 	\item lipids conformational change (few nanoseconds);
 	\item lipids protrusions out--of--plane (tens of picoseconds);
 	\item diffusion within a leaflet (order of tens of nanoseconds);
 	\item bilayer undulation and thickness involve collective motion of many lipids.
 \end{itemize}
-There are also many rare events that take place on the order of hours or even days, such like lipid flip--flop, in which a lipid go to the opposite leaflet; ions translocation; \textit{electroporation} by water, for example due to a cross membrane ions imbalance, in which water penetrate inside the bilayer and destroys a small portion in order to come to the other leaflet; water--helped ions permeation, called \textit{water--finger} and more general water defects inside the membrane.
+There are also many rare events that take place on the order of hours or even days, such as lipid flip--flop, in 
+which a lipid flips from one leaflet to the opposite one; ion translocation; \textit{electroporation} by water, 
+for example due to a cross membrane ion imbalance, in which water translocates across the bilayer; water assisted 
+ion permeation via formation of a \textit{water--finger} and so forth.
 
-For what concerns the length scales, the bilayer thickness is determined by the length of the lipid tails and their degree of unsaturation. Typically the hydrophobic region is $\sim 3$~nm thick while each hydrophilic regions is $\sim 1$~nm thick. Hence the typical bilayer thickness is around $\sim 4\div 5$~nm.
+For what concerns the length scales, the bilayer thickness is determined by the length of the lipid tails and 
+their degree of unsaturation. Typically the hydrophobic region is $\sim 3$~nm thick while each hydrophilic 
+regions is $\sim 1$~nm thick. Hence the typical bilayer thickness is around $\sim 4\div 5$~nm.
 
 \subsection{Model cell membrane}
-As we have seen above, the cell membrane is an extremely complex environment due to the large number of different biological molecules (lipids,proteins) which composes and resides in the membrane. The model membranes we will consider in this thesis will be composed of lipids only. This choice is dictated by three main reasons. First, current models and computational power could badly aim at reproducing the complexity of a real plasma membrane. Second, the use of a model system allows to take? fundamental questions concerning the physical and molecular  ?? interaction between \acp{NP} and membranes, last but not least, the model membrane we will consider resembles closely the model membranes used in a number of experimental and simulations results.  
+As we have seen above, the cell membrane is an extremely complex environment due to the large number of different biological molecules (lipids, proteins and so on) which composes and resides in the membrane. The model membranes we will consider in this thesis will be composed of lipids only. This choice is dictated by three main reasons. First, current models and computational power could badly aim at reproducing the complexity of a real plasma membrane. Second, the use of a model system allows to tackle fundamental questions concerning the physical and molecular  ?? interaction between \acp{NP} and membranes, last but not least, the model membrane we will consider resembles closely the model membranes used in a number of experimental and simulations results.  
 
-In the bilayer model we will use, we consider model biological membrane consisting of \ac{POPC}; the chemical structure is shown in the top of figure~(\ref{fig:popc}). It is a zwitterionic glycerophospholipid of type phosphatidyl--choline whose head is made of a phosphate (PO$_4^-$) and a choline (C$_5$H$_{14}$NO$^+$) groups. It has two hydrocarbon chains: one is a saturated chain (palmitoyl) and the other is an unsaturated chain (oleoyl). The head groups and tails are both bounded to the glycerol group (C$_3$H$_8$O$_3$).
+In the bilayer model we will use, we consider model biological membrane consisting of \ac{POPC} lipids; the 
+chemical structure is shown in the top of figure~(\ref{fig:popc}). It is a zwitterionic glycerophospholipid of 
+type phosphatidyl--choline whose head is made of a phosphate (PO$_4^-$) and a choline (C$_5$H$_{14}$NO$^+$) 
+groups. It has two hydrocarbon chains: one is a saturated chain (palmitoyl) and the other is an unsaturated chain 
+(oleoyl). The head groups and tails are both bounded to the glycerol group (C$_3$H$_8$O$_3$).
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[width=0.7\textwidth]{./img/POPC/popc}
@@ -233,7 +261,7 @@ $26\cdot 10^3$ plus the water molecules ($\sim 7\cdot 10^4$). This has a very ex
 the range of phenomena which can be studied on these time and length scales are very limited, calling for the 
 adoption of a \ac{CG} approach.
 
-\paragraph{\textbf{martini model}} As described in section \ref{sec:martini}, in this thesis work we will use the 
+\paragraph{\textbf{martini model}} As described in section \ref{sec:martini}, we will use the 
 \ac{CG} \martini \ac{FF} for lipids \cite{Martini}.
 %We consider a lipid bilayer made of $512$ \ac{POPC} lipids which extend on a surface of about $160$~nm$^2$ and whose thickness is about $4$~nm. 
 The \martini model for the \ac{POPC} lipid maps the choline and the phosphate groups into two beads of type Q$_0$ 
@@ -246,30 +274,30 @@ between the chemical structure and \ac{CG} model is shown in figure~(\ref{fig:po
 of a lipid bilayer. These properties include the area per lipid, the distribution of groups across the membrane, 
 the trend of the bending and the area compression moduli in function of the lipids composition and the 
 unsaturation degree of the lipids, the stress profile across the membrane, the process of lipid desorption and 
-flip--flopping, and many other as described in \cite{Martini} and \cite{MartiniReview}. Nevertheless many other 
-properties, prevalently mediated by the electrostatic interaction, are not well described. As we have seen in the 
-previous chapter this is because the \martini \ac{FF} does not take into account the long range treatment of the 
-electrostatic interaction and because the standard \martini water is prevalently insensible to the electrostatic 
-interaction\footnote{Moreover we can not forget that the \martini water bead takes into account four real water 
-molecules. Hence the probability for a \martini water bead to permeate the hydrophobic region of the membrane is 
-much less then for a water molecule in an atomistic \ac{FF}.}. To overcome to this problem the use of the \ac{PW} 
-model and the \ac{PME} method, as outlined in \cite{MartiniReview} and \cite{PW}, are crucial to better describe 
-the process that involve lipid bilayer, water and charged ions. These are ions translocation; electroporation of 
-the membrane by water, due to a cross membrane ions imbalance; water--helped ions permeation and many other water 
-defects inside the membrane as better described in the works of Marrink and Yesylevskyy.
+flip--flopping, and many other as better described in \cite{Martini} and \cite{MartiniReview}. Nevertheless many 
+other properties, prevalently mediated by the electrostatic interaction, are not well described. As we have seen 
+in the previous chapter this is because the \martini \ac{FF} does not take into account the long range treatment 
+of the electrostatic interaction and because the standard \martini water is prevalently insensible to the 
+electrostatic interaction\footnote{Moreover we can not forget that the \martini water bead takes into account 
+four real water molecules. Hence the probability for a \martini water bead to permeate the hydrophobic region of 
+the membrane is much less then for a water molecule in an atomistic \ac{FF}.}. To overcome to this problem the 
+use of the \ac{PW} model and the \ac{PME} method, as outlined in \cite{MartiniReview} and \cite{PW}, are crucial 
+to better describe the process that involve lipid bilayer, water and charged ions. These are ions translocation; 
+electroporation of the membrane by water, due to a cross membrane ions imbalance; water--helped ions permeation 
+and many other water defects inside the membrane as better described in the works of Marrink and Yesylevskyy.
 
-\paragraph{\textbf{ions translocation}} An important phenomenon mediated by the electrostatic interactions that is crucial for this thesis work is the lipid membrane ions translocation. In \cite{PW} the authors have computed the \ac{FES} of the translocation of Na$^+$ and Cl$^-$ ions\footnote{The \martini model for Na$^+$ and Cl$^-$ associates the ion plus the hydration shell to a bead of type Qd positively charged and Qa negatively charged, respectively.} across a \acs{DPPC} membrane using umbrella sampling and the \ac{WHAM} with the standard \martini \ac{FF}, adding the \ac{PW} and adding together \ac{PW} and \ac{PME}. The height of the barriers are summarized in table~(\ref{tab:ionTranslocation}). The same \ac{FES} for a \acs{DMPC} membrane was calculated by Khavrutskii \etal\, \cite{atomisticTranslocation} with an atomistic \ac{FF}. Since the \martini model for the \acs{DPPC} lipid also model the \acs{DMPC} lipid a comparison can be made and it is shown in table~(\ref{tab:ionTranslocation}). As one can see, from left to right, increasing the loyalty of the treatment of the electrostatic interaction the \martini \ac{FF} approach the results of the atomistic \ac{FF}. Moreover in \cite{PW}, in accordance with the atomistic results in \cite{atomisticTranslocation}, for small cross membrane ions imbalance and only with the use of the \ac{PW} model and the \ac{PME} method, they observe some ion leakage without pore formation but still mediated by a water defect inside the membrane, called \textit{water finger} that help the ions to cross the hydrophobic region of the membrane. We remark that, these kind of phenomena, are totally absent using the standard \martini \ac{FF}. Hence, as already outlined, the importance to use a better treatment of the electrostatic interaction and a better model for water solvent.
-\begin{table}[h!t]
-	\centering
-	\begin{tabular}{lcccc}
-		\toprule
-		\,		& Standard & \acs{PW} & \acs{PW} \& \acs{PME} & Atomistic	\\ \toprule
-		Na$^+$	& 68.0	   & 67.6	  & 78.6					& 91.7 		\\ \midrule
-		Cl$^-$	& 69.2	   & 70.4	  & 99.0					& 98.8		\\ \bottomrule
-	\end{tabular}
-	\caption{Height of the energy barrier (in kJ/mol) for Na$^+$ and Cl$^-$ translocation across a bilayer. The \martini results are based on a \acs{DPPC} membrane and are taken from \cite{PW} while the atomistic are based on a \acs{DMPC} membrane and are taken from \cite{atomisticTranslocation}.}
-	\label{tab:ionTranslocation}
-\end{table}
+% \paragraph{\textbf{ions translocation}} An important phenomenon mediated by the electrostatic interactions that is crucial for this thesis work is the lipid membrane ions translocation. In \cite{PW} the authors have computed the \ac{FES} of the translocation of Na$^+$ and Cl$^-$ ions\footnote{The \martini model for Na$^+$ and Cl$^-$ associates the ion plus the hydration shell to a bead of type Qd positively charged and Qa negatively charged, respectively.} across a \acs{DPPC} membrane using umbrella sampling and the \ac{WHAM} with the standard \martini \ac{FF}, adding the \ac{PW} and adding together \ac{PW} and \ac{PME}. The height of the barriers are summarized in table~(\ref{tab:ionTranslocation}). The same \ac{FES} for a \acs{DMPC} membrane was calculated by Khavrutskii \etal\, \cite{atomisticTranslocation} with an atomistic \ac{FF}. Since the \martini model for the \acs{DPPC} lipid also model the \acs{DMPC} lipid a comparison can be made and it is shown in table~(\ref{tab:ionTranslocation}). As one can see, from left to right, increasing the loyalty of the treatment of the electrostatic interaction the \martini \ac{FF} approach the results of the atomistic \ac{FF}. Moreover in \cite{PW}, in accordance with the atomistic results in \cite{atomisticTranslocation}, for small cross membrane ions imbalance and only with the use of the \ac{PW} model and the \ac{PME} method, they observe some ion leakage without pore formation but still mediated by a water defect inside the membrane, called \textit{water finger} that help the ions to cross the hydrophobic region of the membrane. We remark that, these kind of phenomena, are totally absent using the standard \martini \ac{FF}. Hence, as already outlined, the importance to use a better treatment of the electrostatic interaction and a better model for water solvent.
+% \begin{table}[h!t]
+% 	\centering
+% 	\begin{tabular}{lcccc}
+% 		\toprule
+% 		\,		& Standard & \acs{PW} & \acs{PW} \& \acs{PME} & Atomistic	\\ \toprule
+% 		Na$^+$	& 68.0	   & 67.6	  & 78.6					& 91.7 		\\ \midrule
+% 		Cl$^-$	& 69.2	   & 70.4	  & 99.0					& 98.8		\\ \bottomrule
+% 	\end{tabular}
+% 	\caption{Height of the energy barrier (in kJ/mol) for Na$^+$ and Cl$^-$ translocation across a bilayer. The \martini results are based on a \acs{DPPC} membrane and are taken from \cite{PW} while the atomistic are based on a \acs{DMPC} membrane and are taken from \cite{atomisticTranslocation}.}
+% 	\label{tab:ionTranslocation}
+% \end{table}
 
 \section{NP--Membrane interaction}
 Recently the literature for what concern the computational modeling about the interaction of such anionic monolayer--protected \ac{AuNP} and model lipid membranes has expanded contributing to sketch a possible mechanism of such interaction. The begging of the path way mechanism is the electrostatic attraction between the charged ligands and the polar head of the zwitterionic phospholipids in a fluid water phase: it is recognized to be the driving force for the adhesion of the \ac{AuNP} to the membrane surface, see figure~(\ref{fig:threeProcess}a). To the other end of the path way, it is known, on thermodynamic basis, that the most stable state for the \ac{AuNP} corresponds to the so--called \textit{snorkeling} configuration in which the \ac{NP} is embedded in the hydrophobic region of the membrane, while the charged ligands stably interact with the lipid heads of both leaflets, see figure~(\ref{fig:threeProcess}f). 
@@ -323,5 +351,5 @@ To quantify the thermodynamic behavior, metadynamics calculations are performed.
 For the striped arrangement, the crossing barrier to reach the saddle point, located at $0.5$~nm off the \ac{COM} of \ac{POPC}, is of the order of $\sim 22$~kJ/mol. While the recrossing energy barrier is approximately twice as high. The same is for the recrossing barrier of the random configuration. The absent of data for the random \acp{NP} in the hydrophobic contact is due to the difficulty to sample the stage $2$ to the anchor state transition for only one charged ligand. This is because, while the metadynamics is running on a specific charged ligand, other charged ligands spontaneously anchor to the opposite leaflet, making the free energy sampling of the first anchor impossible. Hence, together with the kinematic, for which the average lifetime of stage $2$ for random \acp{NP} is three order of magnitude shorter than for striped, the authors confirm the very low energy barrier, of the order of few $k_B T$, for the anchor process of the random \acp{NP}.
 
 
-\subsection{Electrostatic interaction problem}
-As we have outlined in the previous chapter, the standard \martini \ac{FF} poorly describe such process that strongly involve the electrostatic interaction. Moreover, the just describe anchoring process, in which one charged ligand drop its charged bead through the hydrophobic core of the membrane and anchors to the opposite leaflet, can be assimilated as an ion translocation process. A comparison of the energy barriers they obtained in \cite{ourPaper} and the data in table~(\ref{tab:ionTranslocation}) suggest that the standard \martini \ac{FF} can underestimate the energy barriers involved in the anchoring process. Thus, the necessity to increase the complexity of our model and try to use both \ac{PME} method and the \ac{PW} model. 
+% \subsection{Electrostatic interaction problem}
+% As we have outlined in the previous chapter, the standard \martini \ac{FF} poorly describe such process that strongly involve the electrostatic interaction. Moreover, the just describe anchoring process, in which one charged ligand drop its charged bead through the hydrophobic core of the membrane and anchors to the opposite leaflet, can be assimilated as an ion translocation process. A comparison of the energy barriers they obtained in \cite{ourPaper} and the data in table~(\ref{tab:ionTranslocation}) suggest that the standard \martini \ac{FF} can underestimate the energy barriers involved in the anchoring process. Thus, the necessity to increase the complexity of our model and try to use both \ac{PME} method and the \ac{PW} model.

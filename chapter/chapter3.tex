@@ -1,355 +1,151 @@
 % !TEX root = ./../main.tex
-\chapter{Model of cell membrane and monolayer--protected NP}
-\label{chap:tre}
-In the first part of this chapter we will present and describe the model of the charged monolayer--protected 
-\ac{AuNP} developed by Federica Simonelli and co--workers in \cite{simonelliThesis} and \cite{ourPaper}. The gold 
-core is treated by an all atoms representation, while the ligands are modeled at \ac{CG} level by the \martini 
-\ac{FF}. In the second part of the chapter we will describe the most important physical and chemical features of 
-the cell membrane. Then we will summarize the characteristics of the \ac{CG} model used to treat it. Finally, we 
-will describe the interaction mechanism and some preliminary thermodynamic results about the interaction of the 
-\ac{AuNP} and the model cell membrane, as outlined in \cite{ourPaper}. For a more precise discussion about the 
-\ac{NP}--membrane interaction and the models parameterization the reader is addressed to the work of Federica 
-Simonelli \etal\, \cite{ourPaper} and her thesis work \cite{simonelliThesis}. For more details about the gold core used, its properties, equilibrium structure and so forth, the reader is addressed to the work of Lopez-Acevedo \etal\, \cite{clusterEquilibrium} while for a general discussion about thiolated \acp{AuNP} to the work of Häkkinen \cite{corePassivated}. For what concerns cell membranes and biological lipids the reader is addressed to the book of Yeagle \cite{yeagle}.
+\chapter{MD tools, parallelization and hardware acceleration}
+%Manuale GROMACS 3.17.5 PP/PME ranks
+%http://www.gromacs.org
+Different tools for setting up an \ac{MD} simulation, a metadynamics run and to analyze the collected data exist. In this Chapter we present the main tools used in this thesis: the \href{http://www.gromacs.org}{\gromacs} and the \href{http://www.plumed.org}{\plumed} packages. Moreover, with the increasing of the systems complexity, different \textit{parallelization} techniques are developed in order to exploit all the computational resources of the modern multi--core CPUs and multi--node cluster. We shall describe the main used in this thesis work. Then we give the main input parameters used to setup the \ac{MD} and metadynamics runs. 
 
-\section{NanoParticle model}
-% gold core --> Thyiol passivated --> ligands
-%Ligand Composition: Patched (1:1), Random (1:1) (1:2)
-%Different level of hydrophobicity
-%Different ligand charge: anionic/cationic NP
-Monolayer--protected \acp{AuNP} have the advantage of having a well defined molecular structure. That is, 
-mono--dispersed solutions can be synthesized and structurally determined. In particular \acp{AuNP} are 
-biocompatible, have a facile surface chemistry and efficiently convert light into heat. Monolayer--protected 
-\acp{AuNP} have a definite mass and molecular composition, and their structure is stabilized by the covalently 
-bound ligands shell. Most commonly they are thiolated compounds because they covalently bound to the gold \ac{NP} 
-by Au--S surface bonds, that is, a robust but modifiable interaction, crucial in stabilizing the \ac{NP} and 
-transmitting electronic interactions between gold and sulfur--containing organic molecules \cite{corePassivated}. 
-Moreover monodisperse \acp{AuNP} can be synthesized in the $1-4$~nm range. Subtle changes of size, structure and 
-ligand compositions and arrangements, can affect \ac{NP} properties such as their optical properties, important 
-for biological sensing and therapeutics. 
-%Thiolated \acp{AuNP} are air stable, electrochemically stable and thermally stable compounds [].
-Several stable thiolated \acp{AuNP} are identified, differing in size of the gold core and number of ligands 
-\cite{corePassivated}. In this thesis work we will consider the {Au$_{144}$(SR)$_{60}$} thiolated \ac{AuNP}, where 
-R are the aliphatic chain of the thiol compounds. The equilibrium structure of the gold core is described by 
-\textit{ab--initio} calculation in \cite{clusterEquilibrium}. 
 
-Changing the composition of the aliphatic chains bonded to the thiol group, different properties of the thiolated 
-\ac{AuNP} can be achieved, such as different net charge, different level of hydrophobicity, different size and so 
-on. In particular, as we shall see, in the model we will use we consider only \ac{OT} and \ac{MUS} ligands that 
-cover the \ac{NP} gold core with a monolayer with different compositions and surface arrangements. 
-%To overcome the computational cost of an atomistic model we use a \martini \ac{CG} model of the \ac{OT} and \ac{MUS} ligands. 
+\section{GROMACS package}
+The \ac{MD} tool and the main analysis tool used in this thesis work is the \href{http://www.gromacs.org}{\gromacs} \cite{gromacsManual} package. It is compatible with both atomistic and \ac{CG} \acp{FF} and support a variety of options and parameters such as different thermostat and barostat algorithms, different methods to treat the electrostatic interaction such as the \ac{ESM} and the \ac{PME} method, different integrators, cut--off schemes and so on. For what concern the trajectory analysis it holds a comprehensive framework for obtaining different quantities. Moreover it supports different kind of parallelization techniques that is, it has the compatibility with both multi--core single processor (home PC) and multi--core multi--processor (cluster) architectures with the support of both \href{https://computing.llnl.gov/tutorials/mpi/}{MPI}
+%\footnote{https://computing.llnl.gov/tutorials/mpi/} 
+and \href{https://computing.llnl.gov/tutorials/openMP/}{OpenMP}
+%\footnote{https://computing.llnl.gov/tutorials/openMP/}
+libraries for the inter--nodes and inter--cores information exchange and the support of different hardware accelerated frameworks such as \href{https://developer.nvidia.com/cuda-zone}{NVIDIA CUDA}\textsuperscript{®}
+%\footnote{https://developer.nvidia.com/cuda-zone}
+, \href{https://www.khronos.org/opencl/}{OpenCL}™
+%\footnote{https://www.khronos.org/opencl/}
+ and \href{http://www.openacc.org}{OpenACC}.
+ %\footnote{http://www.openacc.org}  
 
-%The model of the \ac{AuNP} and the \martini model of the \ac{OT} and \ac{MUS} ligands are developed by Federica Simonelli \etal\, in \cite{ourPaper}, and the reader is addressed to it for a more detail discussion about the model and the parameterization.
+\subsection{Parallelization}
+Parallelization refers to the possibility of running a program, in this case an \ac{MD} simulation, in parallel with the use of more then one CPUs or more then one cores per CPU or both. The efficiency of a parallelization scheme is mainly determined by how much information each core and/or CPU has to exchange with the others, the least the better. The reason is that the libraries (MPI and OpenMP) needed for the exchange of the information are not fast as the cores are. Hence when the waiting time for the information exchange becomes higher than the total time spent in executing the parallel code, the program has reached its scaling limit, that is, no more cores have to be used.
 
-\subsection{Passivated gold core}
-% some information about gold core: dimensions, number of atoms, model used, elastic network, shel construction
-The gold core is composed of $144$ atoms, it has icosahedral symmetry and it is made of three bulk shell with 
-$12$, $42$ and $60$ atoms, respectively. A surface shell of $30$ atoms completes the gold cluster structure. Then 
-$60$ sulphur atoms, which bind the aliphatic chains (R) to the gold core, are bounded to the gold atoms on the 
-surface through the typical bond structure RS--Au--SR. The shell construction is shown in 
-figure~(\ref{fig:goldShell}).
-\begin{figure}[!ht]
-	\centering
-	\includegraphics[width=0.8\textwidth]{./img/goldShell}
-	\caption{First three frame: the concentric $12$--(yellow), $42$--(red) and $60$--(blue) atom gold internal shell, surrounded (last frame) by $30$ gold (red small) and $60$ sulphur (yellow small) surface atoms. The R chains are not shown. Taken from \cite{corePassivated}.}
-	\label{fig:goldShell}
-\end{figure}
+For what concern an \ac{MD} simulation there exists one main kind of parallelization scheme: the domain decomposition. It exploits the local character of most of the interactions used in common \acp{FF}. The simulation box is dived into cells, each of which is assigned to a cores such that it store only a portion of the whole system: the particles which lie in that region and forces between them and the atom positions and forces from neighboring regions owned by other cores. In order to minimize the communication between different cores each cells has to minimize its surface respect to the volume, so it is important to use cells that are as cubic as possible. Indeed if the cells are not too small, the particle update can be carried out every time the neighbor list is updated and not avery \ac{MD} step. Then, this also contribute to reduce the number of communications. A common choice is to use cell greater than two times the cut-off radius. The scaling limit with the domain decomposition is reached when the cells are so small that a few number of particles lied in each cell; for \gromacs it means $\sim 100 \div 200$~atoms/core.
 
-The resulting diameter of the gold core is about $2$~nm. When passivated by thiols, its overall size depends on 
-the length of the aliphatic chains bound to the sulphur atoms. The monolayer--protected \acp{AuNP} we will 
-consider have a total diameter of about $4$~nm.
-
-Despite the computational cost associated to atomistically describe the \ac{NP} core, all gold and sulfur atoms 
-are taken into account. Bonds between gold atoms and sulfur atoms are allowed to vibrate. As we have seen in a 
-previous section, a many--body potential should be used. Instead, as we are interested in the vibrational modes of the core atoms, 
-%Federica Simonelli in her thesis work, found that
-a more efficient way, as shown in figure~(\ref{fig:coreNetwork}), is to use an elastic network associate the 
-potential energy
-\begin{equation*}
-	U = \frac{1}{2}\sum_i \sideset{}{'}\sum_{j\ne i}k_{ij}(r_{ij} - r_{ij}^0)^2
-\end{equation*}
-where $r_{ij}$ is the distance, $k_{ij}$ is the bond constant for $i-j$ atom pair and the prime indicates that 
-only neighbor atoms within a certain cutoff are considered. 
+\subsection{PP and PME nodes}
+When using the \ac{PME} method for the electrostatic interaction a special parallelization scheme is needed in order to speed up the simulation. The reason is related to the fact that the \ac{PME} method intrinsically need to know all the particle positions in the whole simulation box. In a domain decomposition scheme this results in a massive use of the so called \textit{all--to--all} communications, i.e. all cores have to communicate to each other. Hence this leads to a loss of computational performance. In order to minimize the all--to--all communications, \gromacs implement the possibility to assign a subset of the cores exclusively to the calculation of the energy contribution of the electrostatic interaction using the \ac{PME} method, while the rest of the work is assigned to the remaining cores, called the \ac{PP} cores. 
 \begin{figure}[h!t]
-	\centering%
-	\subfloat[Gold elastic network]{%
-		\includegraphics[width=0.35\textwidth]{./img/goldNetwork}%
-	}\qquad%
-	\subfloat[\acs{AuNP} cluter]{%
-		\includegraphics[width=0.32\textwidth]{./img/NPCluster}%
-	}
-	\caption{Left: gold elastic network. In cyan a surface atom and its neighbors; in blue bulk atom and its neighbors. Right: \acs{AuNP} cluster. The elastic network for both gold and sulfur atoms are represented by sticks. Taken from \cite{simonelliThesis} and \cite{ourPaper}.}
-	\label{fig:coreNetwork}
+	\centering
+	\includegraphics[width=0.8\textwidth]{./img/PMENodes}
+	\caption{Left: example of the use of $8$ cores for both \acs{PP} and \acs{PME}. Right: same but $2$ cores are used only for \acs{PME} and the other for the \acs{PP} contribution. Red arrows represent the all--to--all communications while the blu arrows are the communications between one \acs{PP} core and one \acs{PME} core. Taken from \cite{gromacsManual}.}
+	\label{fig:PMENodes}
+\end{figure} 
+In figure~(\ref{fig:PMENodes}) a schematic view of the all--to--all communications needed in a comparison between \ac{PP}/\ac{PME} in the same cores and the use of the separate \ac{PME} cores is shown. As one can see the all--to--all communications (red arrows) are smaller for the separate \acs{PME} scheme then that for \ac{PP}/\ac{PME} scheme. With this parallelization scheme the workflow of figure~(\ref{fig:PPCore}) is updated to one shown in figure~(\ref{fig:PPPMECores}). 
+\begin{figure}[h!t]
+	\centering
+	\includegraphics[width=0.8\textwidth]{./img/Schemi/PPPMECores}
+	\caption{Schematic workflow of the load balancing between \acs{PP} and \acs{PME} cores.}
+	\label{fig:PPPMECores}
 \end{figure}
 
-%The bond constants is assigned so as to reproduce the vibrational spectrum of the gold core as provided by the many--body Gupta potential. 
-The bond constant is assigned to $k = 32500$~kJ/(mol\,nm$^2$) for Au--Au surface atoms, $k = 11000$ kJ/(mol\ 
-nm$^2$) for Au--Au bulk atoms, $k = 1250$~kJ/(mol\,nm$^2$) for S--S atoms and $k = 32500$~kJ/(mol\,nm$^2$) for 
-Au--S bonds, as summarized in table~(\ref{tab:NPConstants}). Instead, the equilibrium distances are derived from 
-\textit{ab--initio} data in \cite{clusterEquilibrium}. Moreover, to prevent the penetration of other particles 
-inside the \ac{NP} core, a purely repulsive interaction of the form $C/r^{-12}$ where 
-$C = 0.92953\cdot 10^{-6}$~(kJ\,nm$^{12}$)/mol, is added between gold and sulfur atoms, gold and all other 
-particles and sulfur and all other particles. A gold atom is considered as bulk atom if it has at least nine gold 
-atom neighbors otherwise as a surface atom. Two gold atoms $i$ and $j$ are neighbors if their distance is 
-$r_{ij} \le 0.35$~nm. Instead, two sulfur atoms are considered neighbors if they lie in a sphere shell of radius 
-$0.55$~nm, i.e. each sulfur atom have at least five neighbors.
-\begin{table}[h!t]
+\paragraph{\textbf{PME Domain decomposition}} To optimize the load in the \ac{PME} cores a domain decomposition is still used but with a $2$D or a ``pencil'' scheme. This because the \ac{FFT} method is very inefficient if parallelized with too many cores due to the all--to--all communications, thus the domain decomposition acts on the $xy$--plane while the $z$ axis is assigned to one core; pencil refers to the shape of the domain at high parallelization. Moreover the number of domains along the $x$ axis have to be equal to the number of domains in the \ac{PP} decomposition and eventually a $1$D scheme can be used along the $y$ axis only if the \ac{PP} decomposition has one domain along $x$ axis. To avoid superfluous communication of coordinates and forces between the \ac{PP} and \ac{PME} cores, the number of cells along the $x$ axis should ideally be the same or a multiple of the number of the \ac{PME} cores. Most of this issues are taken into account approximately automatically by \gromacs at the begging of the simulation.
+
+\paragraph{\textbf{PP -- PME load balancing}} In order to achieve the better performance a well balancing of the load between \ac{PP} and \ac{PME} cores is needed, i.e. no core should expect to each other. In \gromacs this is done balancing the real part and the \ac{PME} part of the electrostatic interaction. Since the real part is computed on \ac{PP} cores as non--bonded interaction, changing the Coulomb cut--off between the real and the \ac{PME} part, will adjust the load balancing between \ac{PP} and \ac{PME} cores. Off course this has to be done keeping unchanged the desired accuracy of the electrostatic energy contribution. In \gromacs the ratio between the starting cut-off radius and the \ac{PME} grid spacing gives the accuracy of the electrostatic energy contribution. Then changing both the Coulomb cut--off and \ac{PME} grid spacing, leaving the ratio unchanged, will adjust the \ac{PP} -- \ac{PME} load without affecting the accuracy. We have to stress out that at the begging of the simulation the Coulomb, the Van der Waals and the pair list cut--off radii must be the same. Then \gromacs only adjust the ratio between the Coulomb cut--off and the \ac{PME} grid spacing, without affecting the cut--off of the pair list or of the Van der Waals interaction.
+
+\subsection{Hardware acceleration}
+Excluding the \ac{PME}, an other most time consuming part of an \ac{MD} simulation, is the computation of the non--bonded interactions. The way to speed up the simulation without recur to more cores, because, for example, the system has reached its scaling limit or there are no longer cores, is to use an hardware accelerator. By offloading the computation of the non--bonded interactions to the hardware accelerator, the CPU has the possibility to do \textit{in concurrency} other calculations such as the \ac{PME} calculations. \gromacs support completely the NVIDIA GPU with the NVIDIA CUDA\textsuperscript{®} framework acceleration together with the use of the Verlet cut--off scheme. Other GPUs or other cut-off scheme are partially supported with OpenCL or OpenACC libraries. 
+
+The speed up of the simulation by offloading the non--bonded interactions to a GPU using NVIDIA CUDA\textsuperscript{®} is of the order of two or three times faster than that of a non accelerated simulation. Moreover, to increase the performance, avoiding the waiting time of the CPU for the GPU to finish the non--bonded calculations, the same load balancing between \ac{PP} and \ac{PME} part can be used. Adjusting both the Coulomb cut--off and \ac{PME} grid spacing, leaving the ratio unchanged, will adjust the load between the real and the reciprocal part of the electrostatic energy contribution. Since the real part is computed in the GPU as non--bonded interaction, it will adjust the load balancing between the GPU and the CPU. Using an hardware accelerator the schematic workflow of figure~(\ref{fig:PPCore}) is updated to one shown in figure~(\ref{fig:GPU}).
+
+Basically and briefly the main difference, as showed in figure~(\ref{fig:GPUvsCPU}), between a CPU and a GPU is the total number of 
+\begin{figure}[h!t]
 	\centering
-	\begin{tabular}{lr}
+	\includegraphics[width=0.6\textwidth]{./img/GPUvsCPU}
+	\caption{Schematic comparison between a CPU and a GPU.}
+	\label{fig:GPUvsCPU}
+\end{figure}
+\textit{computing modules} assigned to do vectorized calculations i.e. calculation that involve many vectors of different length. Now days the total number of hardware cores in a high level CPU is eight cores. Instead, a middle level GPU has a number of computing modules of the order of $ > 10^3$. In the GPU case, the computing module is essentially a \ac{SIMD} computing unit which is composed by several cores which each of it is equipped by several \acp{ALU} and \acp{FPU}. A \ac{SIMD} unit is a specific module for vector calculation: it give several instruction set to perform the same instruction on a multiple data stream i.e. multiple data arranged in a vector fashion. In figure~(\ref{fig:simd}) a schematic representation of a \ac{SIMD} that execute in parallel four two number sums
+\begin{figure}[h!t]
+	\centering
+	\includegraphics[width=0.5\textwidth]{./img//simd/simd.pdf}
+	\caption{Block diagram of a \acs{SIMD} computation on a four element vectors.}
+	\label{fig:simd}
+\end{figure}
+i.e. the sum of each cell of the two vectors, is shown. Essentially this is possible thinking a $32$--bit register as vector of four $8$--bit or two $16$--bit numbers, then the same instruction is applied to each cell pair of the vectors. Even a modern CPU has the possibility of \ac{SIMD} computation but the goal of the GPU implementation is the extremely high number of modules arranged in a efficiency pipeline, respect to CPU one. Hence the \textit{concurrency} calculations on a streamed data are much faster if executed on a GPU then on a CPU. On the contrary the CPU has the ability to perform several task in parallel (or approximately in parallel).
+\begin{figure}[h!t]
+	\centering
+	\includegraphics[width=0.8\textwidth]{./img/Schemi/GPU}
+	\caption{Schematic workflow of the calculation of the interactions with the use of a GPU as hardware accelerator.}
+	\label{fig:GPU}
+\end{figure}
+
+
+\section{PLUMED package}
+The tool used for setting up and analyze a metadynamics simulation is the \href{http://www.plumed.org}{\plumed} package. It is an open source project composed by a set of libraries used for analyze the data obtained with a metadynamics simulation (first all, for obtaining the \ac{FES} from the history--dependent bias potential) or other advanced sampling technique, such as umbrella sampling. Moreover it works together with the most popular \ac{MD} tools, \gromacs included. In that sense it is a sort of plug--in that insert the advanced sampling code and algorithms inside the main \ac{MD} loop of the used \ac{MD} tool.
+
+For setting up a metadynamics simulation \plumed require an input file in which we have to specify what are the \acp{CV} and the parameters to be used in the metadynamics run. Moreover there is the possibility to add more feature such as, online analysis or more output files and options.
+
+For what concern the parallelization we have noted that it is badly parallelized between more than one node, that is, we observe good computational performance if we use the parallelization between cores inside the same CPU with the OpenMP library and the use of the GPU as hardware accelerator. Otherwise, for example with more than one node of a cluster, we obtain worse computational performance. Moreover, depending on the system and the parameters of the metadynamics, we observe a general decrease of computational performance compared to an un--biased \ac{MD} simulation.
+
+Below we show a typical input file used in this thesis work for a metadynamics simulation.
+\begin{Verbatim}[fontsize=\scriptsize,xleftmargin=1cm]
+# global variable: z distance from COM of particles 385-7040 and paticle 308 
+memb: COM ATOMS=385-7040
+mus: COM ATOMS=308
+dist: DISTANCE ATOMS=memb,mus COMPONENTS
+
+# Activate metadynamics in dist.z
+METAD ...
+LABEL=metad
+ARG=dist.z 
+PACE=50000
+HEIGHT=2.479
+SIGMA=0.06
+FILE=HILLS
+GRID_MIN=-9
+GRID_MAX=9
+GRID_SPACING=0.005
+... METAD
+
+# monitor the two variables and the metadynamics bias potential
+PRINT STRIDE=10000 ARG=dist.z,metad.bias FILE=COLVAR
+\end{Verbatim}
+
+\section{Simulation parameters}
+Since \gromacs is compatible both with atomistic and \ac{CG} \acp{FF} and with different kind of \ac{MD} simulations, such as with a $NVE$ or $NVT$ or $NpT$ ensemble, different \ac{MD} integrators, different algorithms to treat the long-- and short--range interactions and so forth, few input files must be given at \gromacs input. Briefly these input files are the initial configuration file in which the position and eventually the velocity of all particles and the three box dimensions are saved; the input parameters file in which, following the \ac{FF} receipt, all the \ac{MD} parameters are given; the topology file in which all the particles of a system are described: what kind of forces between them, the assigned charge, the mass and all the constant refer to the particles and the interactions between them, even this file, generally, is created under the receipt of the \ac{FF} used.
+
+In table~(\ref{tab:inputParam}) we report the most important \ac{MD} parameters used in this thesis work. In table~(\ref{tab:inputParam}) ``VbT'' means Verlet--buffer--tolerance; ``VdW'' means Van der Waals; $T$ and $p$ coupling are the thermostat and barostat algorithms used, respectively; $\tau_T$ and $\tau_p$ are the related time constants; $p$ type, is the pressure coupling type: semi--isotropic means two independent pressure coupling for $xy$ axes and for $z$ axis; $K$ is the related compressibility (in this case equal for both pressure coupling). In general when starting an \ac{MD} simulation, an equilibration run (Eq. in table~(\ref{tab:inputParam})) of few nanoseconds, that also generate the random velocities from the Maxwell–Boltzmann distribution at fixed temperature, is needed for equilibrating the volume of the simulation box and the whole system. Then one have to switch to the production run (Run in table~(\ref{tab:inputParam})) in which the correct ensemble is sampled. 
+
+For what concern the metadynamics parameters, in accordance with \cite{ourPaper}, in table~(\ref{tab:metadynParam}) we report the main input parameters used to set up a metadynamics run.
+
+\begin{table}[h!t]
+	\centering\footnotesize
+	\begin{tabular}{lcccc}
 		\toprule
-		Bond			 & $k$\,\footnotesize[kJ/(mol\,nm$^2$)] \\ \toprule
-		Au--Au (bulk) 	 & $11000$ 	\\ \midrule
-		Au--Au (surface) & $32500$ 	\\ \midrule
-		Au--S			 & $32500$ 	\\ \midrule
-		S--S			 & $1250$ 	\\ \bottomrule
+		Input parameter & Eq. \acs{PME} & Run \acs{PME} & Eq. \acs{PME}\&\acs{PW} & Run \acs{PME}\&\acs{PW} \\ \toprule
+		Time step [fs]		& $10$ & $20$ & $5$ & $20$ \\ \midrule
+		cut--off scheme		& Verlet & Verlet & Verlet & Verlet \\ \midrule
+		VbT [J/(mol ps)]	& $5$ & $5$ & $5$ & $5$ \\ \midrule
+		Coulomb Type		& \acs{PME}	& \acs{PME}	& \acs{PME} & \acs{PME} \\ \midrule
+		$r$ Coulomb	[nm]	& $1.2$ & $1.2$ & $1.2$ & $1.2$ \\ \midrule
+		$\varepsilon_r$		& $15$ & $15$ & $2.5$ & $2.5$ \\ \midrule
+		\acs{PME} grid [nm]	& $0.12$ & $0.12$ & $0.12$ & $0.12$ \\ \midrule
+	    \acs{PME} order		& $4$ & $4$ & $4$ & $4$ \\ \midrule
+		VdW type			& cut--off & cut--off & cut--off & cut--off \\ \midrule
+		$r$ VdW [nm]		& $1.2$ & $1.2$ & $1.2$ & $1.2$ \\ \midrule
+		$T$ coupling		& $v$--rescale & $v$--rescale & $v$--rescale & $v$--rescale \\ \midrule
+		$T$ [K]				& $310$ & $310$ & $310$ & $310$  \\ \midrule
+		$\tau_T$ [ps]		& $2.0$ & $2.0$ & $2.0$ & $2.0$ \\ \midrule
+		$p$ coupling		& Berendsen & Parrinello--Rahman & Berendsen & Parrinello--Rahman \\ \midrule
+		$p$ type			& semiisotropic & semiisotropic & semiisotropic & semiisotropic \\ \midrule
+		$p$ [bar]			& $1.0$ & $1.0$ & $1.0$ & $1.0$ \\ \midrule
+		$\tau_p$ [ps]		& $4.0$ & $12.0$ & $4.0$ & $12.0$ \\ \midrule
+		$K$ [bar$^{-1}$]	& $4.5\cdot 10^{-5}$ & $3.0\cdot 10^{-4}$ & $4.5\cdot 10^{-5}$ & $3.0\cdot 10^{-4}$ \\ \midrule
+		$v$ random			& yes ($310$~K) & no & yes ($310$~K) & no \\ \bottomrule 
 	\end{tabular}
-	\caption{Summary of the bond constants for the elastic network of the \acs{NP} core.}
-	\label{tab:NPConstants}
+	\caption{Summary of the main input parameters used in my \acs{MD} runs.}
+	\label{tab:inputParam}
 \end{table}
 
-\subsection{Functionalizing ligands}
-Our \ac{AuNP} core is functionalized with \ac{MUS} and \ac{OT} ligands as shown in figure~\ref{fig:figands}. 
-\ac{MUS} is a charged compound made of an alkyl chain (\acs{CH2})$_{11}$ and a charged terminal \acs{SO4-} group. 
-The charged terminal group makes \ac{MUS} partially hydrophilic. \ac{OT}, instead, is completely hydrophobic and 
-it is made by an alkyl chain (\acs{CH2})$_{7}$ and one \acs{CH3} terminal group. Using both hydrophilic and 
-hydrophobic groups guarantees that \acp{NP} are stable, that is, they do not aggregate in aqueous environments.
-\begin{figure}[!ht]
+\begin{table}[ht]
 	\centering
-	\subfloat[\acs{OT} ligand]{%
-		\includegraphics[width=0.3\textwidth]{./img/OT/OT}%
-		\label{fig:ot}%
-	}%
-	\qquad\qquad%
-	\subfloat[\acs{MUS} ligand]{%
-		\includegraphics[width=0.35\textwidth]{./img/MUS/MUS}%
-		\label{fig:mus}%
-	}%
-	\caption{Top: chemical structure. Bottom: \acs{CG} \martini model (red: C$_1$ bead, green: Qda negatively charged bead and yellow: sulfur atom).}
-	\label{fig:figands}
-\end{figure}
-
-\paragraph{\textbf{OT Model}} Two \martini beads of type C$_1$ model the eight carbon atoms of the \ac{OT} 
-backbone and their hydrogen atoms. The chemical structure and the resulting \ac{CG} \martini model is shown in 
-figure~(\ref{fig:ot}). The first bead of each \ac{OT} ligand is bound to a sulphur atom via a harmonic potential 
-with a bond constant of $1250$~kJ/(mol\,nm$^2$) and equilibrium length of $0.47$~nm. The second bead is connected 
-to the first by the same bond potential. An angle potential as in equation~\eqref{eq:martiniAngle} is used among 
-the three particles. Parameters are fixed in accordance with the standard \martini parameters for alkanes. 
-%Moreover a purely repulsive potential, as described previously, is used between C$_1$ beads and gold and sulfur 
-%atoms to prevent the penetration of the \ac{NP} core.
-
-\paragraph{\textbf{MUS Model}} Three \martini beads of type C$_1$ model the hydrophobic chain of the \ac{MUS} 
-ligand. The charged group is modeled as a Qda bead with a charge of $-\mathsf{e}$. The chemical structure and the 
-resulting \ac{CG} \martini model is shown in figure~(\ref{fig:mus}). Even in this case the first bead of a 
-\ac{MUS} ligand is bound to the sulphur atom through a harmonic potential with the same parameter: bond constant 
-of $1250$~kJ/(mol\,nm$^2$) and equilibrium length of $0.47$~nm. The same potential is used to bind all other 
-beads to the previous one. An angle potential as in equation~\eqref{eq:martiniAngle} is used among the sulfur 
-atom, the first C$_1$ and second C$_1$, among the first, the second and the third C$_1$ beads and so on for all 
-four beads. Parameters are fixed in accordance with the standard \martini parameters for alkanes.
-%As in the \ac{OT} ligand 
-%model, a purely repulsive potential, as described previously, is used between C$_1$ beads and gold and sulfur 
-%atoms to prevent the \ac{NP} penetration. The same applies between Qda bead and gold and sulfur atoms.
-
-\paragraph{\textbf{level of hydrophobicity}} The \ac{AuNP} core can be functionalized with both ligands at 
-different composition. In particular varying the ratio between the \ac{OT} and \ac{MUS} ligands different levels 
-of hydrophobicity can be reached. Two surface compositions will be considered in this thesis work: 
-(\ac{MUS}:\ac{OT} $1$:$1$) and (2:1), the former is the main used in this thesis work. This choice is due to the 
-possibility to compare to previous experimental and simulation data \cite{Maccarini2013}, \cite{VanLehn2013}, 
-\cite{VanLehn2014} and \cite{VanLehn2015}.
-
-\paragraph{\textbf{surface arrangements}} The ligands on the \ac{AuNP} surface can be arranged in two possible 
-ways: randomly or with a predetermined scheme. We will consider both \acp{NP} with a random ligand arrangement 
-and \acp{NP} with a striped ligand arrangement. The striped scheme is obtained dividing the \ac{NP} surface in 
-three stripes: the external two stripes are covered with \ac{MUS} ligands while the central with \ac{OT} ligands. 
-For this thesis work we consider three type of \acp{NP}: striped (\ac{MUS}:\ac{OT} $1$:$1$), random 
-(\ac{MUS}:\ac{OT} $1$:$1$) and random (\ac{MUS}:\ac{OT} $2$:$1$). In figure~(\ref{fig:coating}) the different 
-coatings for the \ac{NP} core is shown.
-
-\begin{figure}[!ht]
-	\centering
-	\subfloat[striped ($1$:$1$)]{
-		\includegraphics[width=3.3cm]{./img/coatings/striped}
-	}%
-	\qquad
-	\subfloat[random ($1$:$1$)]{
-		\includegraphics[width=2.9cm]{./img/coatings/random11}
-	}%
-	\qquad
-	\subfloat[random ($2$:$1$)]{
-		\includegraphics[width=2.7cm]{./img/coatings/random21}
-	}%
-	\caption{Au\acs{NP} with different ligands surface arrangements and composition. From left to right: striped (\ac{MUS}:\ac{OT} $1$:$1$), random (\ac{MUS}:\ac{OT} $1$:$1$) and random (\ac{MUS}:\ac{OT} $2$:$1$). Hydrophobic beads are shown in red while the negatively charged beads are green.}
-	\label{fig:coating}
-\end{figure}
-
-\section{Cell membranes}
-The cell membrane or cytoplasmic membrane is a biological membrane that separate the interior and the external environments of a living cells and controls communications and nutrient flow into and out the cell. This is essential to enable the function and stabilize the structure of cells. The membrane main function is the compartmentalization of a biological environment into two well defined not independent subsection: the cell in which the ``life reactions'' take place and the external cell fluid in which all the necessary biological compounds are dissolved. The compartmentalization in such environments enhance the probability of chemical reactions to take place but also allow to develop different chemical reactions inside and outside the cell. From an evolutionary point of view it is believed that a simple membrane that defines an inside and an outside environments and that protect and concentrates molecules in a closed space, it was necessary for the development of life. 
-
-\subsection{Real cell membranes}
-Since the compartmentalization, the cell membrane have to allow the exchange of biological molecules from and to the outside world. This role is, in a small part, fulfilled by the membrane itself through the passive translocation of small molecules or ions. But the main part is fulfilled through proteins and other compounds that are solved inside the membrane. As we can see from a cartoon of a real cell membrane in figure~(\ref{fig:cellMembrane}), the biological membrane is a crowded environment consisting of phospholipids, glycolipids, carbohydrates, proteins and other organic molecules.
-\begin{figure}[!ht]
-	\centering
-	\includegraphics[width=0.9\textwidth]{./img/cellMembrane}
-	\caption{Schematic representation of a biological cell membrane.}
-	\label{fig:cellMembrane}
-\end{figure}
-
-The plasma membrane by mass is essentially composed by half lipids and half proteins. The lipids that constitute the membrane are a particular type of lipids, called \textit{phospholipids}. They are made of a neutral (polar) or charged head, which is hydrophilic and one or two fatty acid hydrocarbon chains, often called lipid tails, which are instead hydrophobic, as shown schematically to the left of figure~(\ref{fig:phospho}). Due to have both properties a phospholipid is an \textit{amphiphilic} molecule. This amphiphilic nature, through the \textit{hydrophobic effect}, play a key role in the membrane formation. In fact when we put a relevant concentration of phospholipids in a water solution at a certain temperature, the lipid tails tend to move away from water molecules due to the hydrophobic effect, so they tend to get closer between them in order to minimize the hydrophobic surface in contact with water. Instead, the polar heads tend to make favorable bonds with water molecules. The resultant bilayer configuration, proper of the biological membrane, is shown schematically to the right of figure~(\ref{fig:phospho}). 
-\begin{figure}[!ht]
-	\centering
-	\includegraphics[width=0.6\textwidth]{./img/phospholipids}
-	\caption{Left: schematic representation of a phospholipid. Right: self--assembled bilayer configuration assumed by an aqueous solution of phospholipids.}
-	\label{fig:phospho}
-\end{figure}
-Hence, the phospholipids in a water solution tend to \textit{spontaneously} self--organize in a \textit{ordered} state that minimize the Gibbs free energy and that depends on the lipids concentration and the temperature of the solution. As schematically shown in figure~(\ref{fig:lipidsStructures}) the final configurations of such self--assembly process are essentially three: the bilayer sheet, a liposome and a micelle.
-\begin{SCfigure}[][!ht]
-	\centering
-	\includegraphics[width=0.35\textwidth]{./img/lipidsStructures}
-	\caption{Cross--sectional view of the structures that can be formed by a self--assembly process of a phospholipid aqueous solution.}
-	\label{fig:lipidsStructures}
-\end{SCfigure}
-
-A real lipid bilayer often contains hundred of different lipid species. They differ in the length of the 
-hydrocarbon chains, in the degree of unsaturation, i.e. in the number of double bond in the hydrocarbon chains, 
-and in different composition of the head that can be neutral (polar) or charged. There are two main classes of 
-phospholipids that make a cell membrane of animals: glycerophospholipid (phosphatidyl--choline, 
-phophatidyl--ethanolamine, phophatidyl--serine, phosphatidyl--serine ) and phosphosphingolipids (sphingomyelin). 
-In the former group the lipid tails are bound to a glycerol group while the latter do not have glycerol and the 
-lipid tails have a backbone of sphingoid bases, absent in the former. These five types take into account for more 
-then half of the lipids in most membranes.
-
-The cell membrane has quasi--liquid properties at physiological temperature. This is in part due to some disorder 
-in the alignment of the lipid tails produced by the presence of unsaturated chains. Another contribution arise 
-from the area occupied by the lipid heads which determines the distance between the hydrocarbon chains. This 
-fluid character makes the lipid bilayer like a solvent in which the other molecules (lipids and proteins) are 
-dissolved and are free to diffuse. Moreover the lipids itself can move in different ways. The main movements and 
-the associated time scales are summarized as follow
-\begin{itemize}
-	\item lipids conformational change (few nanoseconds);
-	\item lipids protrusions out--of--plane (tens of picoseconds);
-	\item diffusion within a leaflet (order of tens of nanoseconds);
-	\item bilayer undulation and thickness involve collective motion of many lipids.
-\end{itemize}
-There are also many rare events that take place on the order of hours or even days, such as lipid flip--flop, in 
-which a lipid flips from one leaflet to the opposite one; ion translocation; \textit{electroporation} by water, 
-for example due to a cross membrane ion imbalance, in which water translocates across the bilayer; water assisted 
-ion permeation via formation of a \textit{water--finger} and so forth.
-
-For what concerns the length scales, the bilayer thickness is determined by the length of the lipid tails and 
-their degree of unsaturation. Typically the hydrophobic region is $\sim 3$~nm thick while each hydrophilic 
-regions is $\sim 1$~nm thick. Hence the typical bilayer thickness is around $\sim 4\div 5$~nm.
-
-\subsection{Model cell membrane}
-As we have seen above, the cell membrane is an extremely complex environment due to the large number of different biological molecules (lipids, proteins and so on) which composes and resides in the membrane. The model membranes we will consider in this thesis will be composed of lipids only. This choice is dictated by three main reasons. First, current models and computational power could badly aim at reproducing the complexity of a real plasma membrane. Second, the use of a model system allows to tackle fundamental questions concerning the physical and molecular  ?? interaction between \acp{NP} and membranes, last but not least, the model membrane we will consider resembles closely the model membranes used in a number of experimental and simulations results.  
-
-In the bilayer model we will use, we consider model biological membrane consisting of \ac{POPC} lipids; the 
-chemical structure is shown in the top of figure~(\ref{fig:popc}). It is a zwitterionic glycerophospholipid of 
-type phosphatidyl--choline whose head is made of a phosphate (PO$_4^-$) and a choline (C$_5$H$_{14}$NO$^+$) 
-groups. It has two hydrocarbon chains: one is a saturated chain (palmitoyl) and the other is an unsaturated chain 
-(oleoyl). The head groups and tails are both bounded to the glycerol group (C$_3$H$_8$O$_3$).
-\begin{figure}[!ht]
-	\centering
-	\includegraphics[width=0.7\textwidth]{./img/POPC/popc}
-	\caption{Top: chemical structure of a \acs{POPC} lipid. Bottom: \martini \acs{CG} model. The tan bead is the phosphate group, choline is in blue, the two pink beads represents the glycerol group and the hydrophobic chains in cyan.}
-	\label{fig:popc}
-\end{figure}
-
-\paragraph{\textbf{CG model}} It is clear that the number of lipids that constitute a real cell membrane is 
-enormous and it is impossible to take into account an entire cell membrane in a \ac{MD} simulation. A first 
-approximation is to consider only a small area of the model bilayer. Given the medium area per lipid of about 
-$0.65$~nm$^2$ and a portion of bilayer of $\sim 160$~nm$^2$, which corresponds to about $250$ lipids per leaflet, 
-the total number of particles to be included in a atomistic simulation (excluding hydrogen atoms) are about 
-$26\cdot 10^3$ plus the water molecules ($\sim 7\cdot 10^4$). This has a very expensive computational cost and 
-the range of phenomena which can be studied on these time and length scales are very limited, calling for the 
-adoption of a \ac{CG} approach.
-
-\paragraph{\textbf{martini model}} As described in section \ref{sec:martini}, we will use the 
-\ac{CG} \martini \ac{FF} for lipids \cite{Martini}.
-%We consider a lipid bilayer made of $512$ \ac{POPC} lipids which extend on a surface of about $160$~nm$^2$ and whose thickness is about $4$~nm. 
-The \martini model for the \ac{POPC} lipid maps the choline and the phosphate groups into two beads of type Q$_0$ 
-and Qa negatively and positively charged, respectively. The saturated tail is modeled with four beads of type 
-C$_1$ while the unsaturated tail is built up of four C$_1$ beads and one C$3$ bead which corresponds to the 
-unsaturated group of atoms. The glycerol group is modeled with two beads of type N$_\text{a}$. A comparison 
-between the chemical structure and \ac{CG} model is shown in figure~(\ref{fig:popc}).
-
-\paragraph{\textbf{model accuracy}} The standard \martini \ac{FF} is able to capture the main physical properties 
-of a lipid bilayer. These properties include the area per lipid, the distribution of groups across the membrane, 
-the trend of the bending and the area compression moduli in function of the lipids composition and the 
-unsaturation degree of the lipids, the stress profile across the membrane, the process of lipid desorption and 
-flip--flopping, and many other as better described in \cite{Martini} and \cite{MartiniReview}. Nevertheless many 
-other properties, prevalently mediated by the electrostatic interaction, are not well described. As we have seen 
-in the previous chapter this is because the \martini \ac{FF} does not take into account the long range treatment 
-of the electrostatic interaction and because the standard \martini water is prevalently insensible to the 
-electrostatic interaction\footnote{Moreover we can not forget that the \martini water bead takes into account 
-four real water molecules. Hence the probability for a \martini water bead to permeate the hydrophobic region of 
-the membrane is much less then for a water molecule in an atomistic \ac{FF}.}. To overcome to this problem the 
-use of the \ac{PW} model and the \ac{PME} method, as outlined in \cite{MartiniReview} and \cite{PW}, are crucial 
-to better describe the process that involve lipid bilayer, water and charged ions. These are ions translocation; 
-electroporation of the membrane by water, due to a cross membrane ions imbalance; water--helped ions permeation 
-and many other water defects inside the membrane as better described in the works of Marrink and Yesylevskyy.
-
-% \paragraph{\textbf{ions translocation}} An important phenomenon mediated by the electrostatic interactions that is crucial for this thesis work is the lipid membrane ions translocation. In \cite{PW} the authors have computed the \ac{FES} of the translocation of Na$^+$ and Cl$^-$ ions\footnote{The \martini model for Na$^+$ and Cl$^-$ associates the ion plus the hydration shell to a bead of type Qd positively charged and Qa negatively charged, respectively.} across a \acs{DPPC} membrane using umbrella sampling and the \ac{WHAM} with the standard \martini \ac{FF}, adding the \ac{PW} and adding together \ac{PW} and \ac{PME}. The height of the barriers are summarized in table~(\ref{tab:ionTranslocation}). The same \ac{FES} for a \acs{DMPC} membrane was calculated by Khavrutskii \etal\, \cite{atomisticTranslocation} with an atomistic \ac{FF}. Since the \martini model for the \acs{DPPC} lipid also model the \acs{DMPC} lipid a comparison can be made and it is shown in table~(\ref{tab:ionTranslocation}). As one can see, from left to right, increasing the loyalty of the treatment of the electrostatic interaction the \martini \ac{FF} approach the results of the atomistic \ac{FF}. Moreover in \cite{PW}, in accordance with the atomistic results in \cite{atomisticTranslocation}, for small cross membrane ions imbalance and only with the use of the \ac{PW} model and the \ac{PME} method, they observe some ion leakage without pore formation but still mediated by a water defect inside the membrane, called \textit{water finger} that help the ions to cross the hydrophobic region of the membrane. We remark that, these kind of phenomena, are totally absent using the standard \martini \ac{FF}. Hence, as already outlined, the importance to use a better treatment of the electrostatic interaction and a better model for water solvent.
-% \begin{table}[h!t]
-% 	\centering
-% 	\begin{tabular}{lcccc}
-% 		\toprule
-% 		\,		& Standard & \acs{PW} & \acs{PW} \& \acs{PME} & Atomistic	\\ \toprule
-% 		Na$^+$	& 68.0	   & 67.6	  & 78.6					& 91.7 		\\ \midrule
-% 		Cl$^-$	& 69.2	   & 70.4	  & 99.0					& 98.8		\\ \bottomrule
-% 	\end{tabular}
-% 	\caption{Height of the energy barrier (in kJ/mol) for Na$^+$ and Cl$^-$ translocation across a bilayer. The \martini results are based on a \acs{DPPC} membrane and are taken from \cite{PW} while the atomistic are based on a \acs{DMPC} membrane and are taken from \cite{atomisticTranslocation}.}
-% 	\label{tab:ionTranslocation}
-% \end{table}
-
-\section{NP--Membrane interaction}
-Recently the literature for what concern the computational modeling about the interaction of such anionic monolayer--protected \ac{AuNP} and model lipid membranes has expanded contributing to sketch a possible mechanism of such interaction. The begging of the path way mechanism is the electrostatic attraction between the charged ligands and the polar head of the zwitterionic phospholipids in a fluid water phase: it is recognized to be the driving force for the adhesion of the \ac{AuNP} to the membrane surface, see figure~(\ref{fig:threeProcess}a). To the other end of the path way, it is known, on thermodynamic basis, that the most stable state for the \ac{AuNP} corresponds to the so--called \textit{snorkeling} configuration in which the \ac{NP} is embedded in the hydrophobic region of the membrane, while the charged ligands stably interact with the lipid heads of both leaflets, see figure~(\ref{fig:threeProcess}f). 
-
-In the work of Federica Simonelli \etal\, \cite{ourPaper}, using the just described \ac{CG} \martini models of the \ac{NP} ligands and of biological membrane, with the standard \martini \ac{FF}, they found and characterize a possible path way mechanism of the interaction process with membrane at low curvature. Then they perform metadynamics simulations for characterize the thermodynamic of the process.
-
-\subsection{Three--stage process}
-%\paragraph{\textbf{Three--stage process}} 
-The authors found a three--stage mechanism that regulate the insertion of the \ac{AuNP} into a low curvature membrane core: from the adsorbed state, figure~(\ref{fig:threeProcess}a), to the snorkeling configuration, figure~(\ref{fig:threeProcess}f). When the \ac{NP} in the water phase is approaching the surface of the membrane it enters in the Stage $1$ or in the adsorbed state in which the charged ligands interact with the polar lipid heads. Then, in Stage $2$, a key role is played by a lipid tail protrusion out of the hydrophobic region that stably interact with the hydrophobic beads of the \ac{NP} ligands, see figure~(\ref{fig:threeProcess}b-c). In order to minimize the contacts between water and the tails of the protruding lipid it pull the \ac{OT} ligands into the membrane core and the \ac{NP} enter in the hydrophobic contact state, figure~(\ref{fig:threeProcess}d). Then due the thermal fluctuation a charged bead is involved to cross the membrane core and stably interact with the head region of the opposite leaflet, figure~(\ref{fig:threeProcess}e).
-\begin{figure}[ht!]
-	\centering
-	\subfloat[]{
-		\includegraphics[width=4cm]{./img/threeProcess/a}
-	}%
-	\quad%
-	\subfloat[]{
-		\includegraphics[width=4cm]{./img/threeProcess/b}
-	}%
-	\quad%
-	\subfloat[]{
-		\includegraphics[width=4cm]{./img/threeProcess/c}
-	}%
-	\\%
-	\subfloat[]{
-		\includegraphics[width=4cm]{./img/threeProcess/d}
-	}
-	\subfloat[]{
-		\includegraphics[width=4cm]{./img/threeProcess/e}
-	}%
-	\quad%
-	\subfloat[]{
-		\includegraphics[width=4cm]{./img/threeProcess/f}
-	}%
-	\caption{\acs{AuNP}--membrane interaction. (a) Stage $1$, adsorption of the \acs{NP} at membrane surface; (b) to (d) Stage $2$, the protrusion of a lipid tail initiates the hydrophobic contact that leads to partial embedding of the \acs{NP} in the membrane core; (e) the \ac{NP} binds to the opposite leaflet throwing a charged ligand; (f), Stage $3$, snorkeling configuration (five anchors shown). The hydrophobic beads of the ligands are shown in red and the charged beads in green. Lipid heads are blue (choline) and tan (phosphate), lipid tails are not shown, expect for (b) and (c), where the protruding lipid is shown with yellow tails. Water beads are not shown. All snapshot refer to a random (\ac{MUS}:\ac{OT} $1$:$1$) configuration. Taken from \cite{ourPaper}.}
-	\label{fig:threeProcess}
-\end{figure}
-Since the anchored state is thermodynamically favorable respect to the hydrophobic contact, more and more ligands drop the charged beads to the head region of the opposite leaflet, approaching step--by--step the snorkeling configuration, figure~(\ref{fig:threeProcess}f). Moreover, compatibly with other works in literature, they found that the energy cost associated with the extraction of the \ac{NP} out of the membrane core is very high, making the anchoring process, and the snorkeling configuration, almost irreversible.
- 
-The authors performed \ac{MD} simulations for the three different \ac{NP} configurations showed in figure~(\ref{fig:coating}): the striped (\ac{MUS}:\ac{OT} $1$:$1$), the random (\ac{MUS}:\ac{OT} $1$:$1$) and the random (\ac{MUS}:\ac{OT} $2$:$1$). They found that the described behavior is common to the three configurations. Moreover, the lipid tail protrusion mechanism is validate form the kinematic of the simulations: the energy barrier to be overcome to move from stage $1$ to stage $2$ is of the order of the estimated energy cost of a lipid tail protrusion. Nevertheless, after the hydrophobic contact is reached, its lifetime depends on the surface ligand arrangements. For the random configurations the time lag between the hydrophobic contact and the first anchor is on the order of few nanoseconds. Instead, the striped configuration can linger in the stage $2$ for several microseconds. This suggest that the energy barrier to be overcome to move from stage $2$ to a one anchor state is less for the former than that for the latter. 
-
-\subsection{Preliminary metadynamics results}
-%\paragraph{\textbf{thermodynamics}} 
-To quantify the thermodynamic behavior, metadynamics calculations are performed. In particular, in order to estimate the energy barrier for the anchor process, the \ac{FES} for only one anchored ligand, is computed for the three \ac{NP} configurations. The choice \ac{CV} is the $z$ component of the distance between the center of the charged beads and the \ac{COM} of \ac{POPC}. Then, starting from the hydrophobic state the metadynamics simulations begin biasing the charged bead. Since the achievement of the convergence it was not possible, the authors decide to perform different statistically independent metadynamics runs and stop each simulation at the recrossing process of the biased ligand. A recrossing is determined when the charged bead is $0.5$~nm above the \ac{COM} of the membrane in the leaflet in which the \ac{NP} stay. The resulting \ac{FES} profile, shown in figure~(\ref{fig:NPFES}), is obtained averaging the statistically independent runs. The errorbars are the standard error of the independent runs, as describe in \ref{sec:metadynamics}.
-\begin{figure}[h!t]
-	\centering
-	\includegraphics[width=0.7\textwidth]{./img/NPFES}
-	\caption{Free energy profile related to the transfer of a negatively charged ligand from the entrance leaflet to the opposite one. The blue is related to the striped (\ac{MUS}:\ac{OT} $1$:$1$) configuration while the red to the random (\ac{MUS}:\ac{OT} $1$:$1$) configuration. Metadynamics data are shown with errorbars, while the red dashed line are hypothesized profiles for the stage $2$ to stage $3$ transition of random \acp{NP}. Gray shades show the position of the polar head beads (AU). Taken from \cite{ourPaper}.}
-	\label{fig:NPFES}
-\end{figure}
-
-For the striped arrangement, the crossing barrier to reach the saddle point, located at $0.5$~nm off the \ac{COM} of \ac{POPC}, is of the order of $\sim 22$~kJ/mol. While the recrossing energy barrier is approximately twice as high. The same is for the recrossing barrier of the random configuration. The absent of data for the random \acp{NP} in the hydrophobic contact is due to the difficulty to sample the stage $2$ to the anchor state transition for only one charged ligand. This is because, while the metadynamics is running on a specific charged ligand, other charged ligands spontaneously anchor to the opposite leaflet, making the free energy sampling of the first anchor impossible. Hence, together with the kinematic, for which the average lifetime of stage $2$ for random \acp{NP} is three order of magnitude shorter than for striped, the authors confirm the very low energy barrier, of the order of few $k_B T$, for the anchor process of the random \acp{NP}.
+	\begin{tabular}{llll}
+		\toprule
+		Deposition pace ($\tau$) & Gaussian height ($w$)& Gaussian width ($\delta s$) & Grid spacing \\ \toprule
+		$50000$ \ac{MD} steps$^a$ & $2.479$~kJ$^b$ & $0.06$~nm & $0.005$~nm \\ \bottomrule
+	\end{tabular}
+	\caption{Main metadynamics parameters used in this thesis work. $^a$ With a $20$~fs time step it means a deposition of a Gaussian every nanoseconds. $^b$ It is approximately equal to $1~k_BT$.}
+	\label{tab:metadynParam}
+\end{table}
 
 
-% \subsection{Electrostatic interaction problem}
-% As we have outlined in the previous chapter, the standard \martini \ac{FF} poorly describe such process that strongly involve the electrostatic interaction. Moreover, the just describe anchoring process, in which one charged ligand drop its charged bead through the hydrophobic core of the membrane and anchors to the opposite leaflet, can be assimilated as an ion translocation process. A comparison of the energy barriers they obtained in \cite{ourPaper} and the data in table~(\ref{tab:ionTranslocation}) suggest that the standard \martini \ac{FF} can underestimate the energy barriers involved in the anchoring process. Thus, the necessity to increase the complexity of our model and try to use both \ac{PME} method and the \ac{PW} model.

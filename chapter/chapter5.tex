@@ -2,35 +2,45 @@
 \chapter{Results from metadynamics simulations}
 %Introduzione al lavoro svolto durante la tesi per quanto rigurda le matadinamiche
 
-%In my thesis work I primarily try to setting up \ac{MD} runs with the use of the previously described thiolated \ac{AuNP} model and the \ac{PME} method, and with \ac{PME} and the \ac{PW} model. By performing metadynamics runs involving the same anchoring process as in \cite{ourPaper} we can investigate if a more realist description can be obtained with a \ac{CG} model in order to use it for future applications. In order for a comparison to be made, at the same time, the PhD student Federica Simonelli, worked to set--up the same \ac{MD} and metadynamics runs with the use of an atomistic \ac{FF}, the best \ac{MD} description that we can obtain.
+The preliminary metadynamics results (see section~\ref{sec:preliminaryMetadyn}) of the charged ligand translocation across the membrane, as outlined in \cite{ourPaper}, are made using the standard \martini \ac{FF} with a cut--off method for treating the electrostatic interactions. Unfortunately, as we have seen in chapter~\ref{sec:EmpiricalFF}, such method poorly describe the process that involve the electrostatic interaction and hence it underestimates the energy barrier of the process that involve the interactions between ions, water molecules and hydrophobic regions. Moreover the use of the standard \martini water model does not improve the energy barrier estimation.
 
-%Preliminary some test about the use of the \ac{PME} method and the \ac{PW} model with a simple \ac{POPC} bilayer was performed. Then metadynamics runs for obtaining the \ac{FES} of the anchoring process involving both the striped (\ac{MUS}:\ac{OT} $1$:$1$) and the random (\ac{MUS}:\ac{OT} $1$:$1$) \ac{NP} configurations, were performed with the use of the only \ac{PME} and the use of the \ac{PME} plus the \ac{PW} model. In view of the results, then, as better described in the next Chapter, unbiased \ac{MD} runs with the use of \ac{PME} and \ac{PW} involving all the \ac{NP} configurations were performed in order to investigate a possible change in the kinematic of the all the \ac{NP}--membrane interaction process.
+The pathway to improve the model is the use of the \ac{PME} method to increase the treatment of the electrostatic interactions and the use of the \ac{PW} water model to improve the behavior of water. For a comparison to be made, the idea, is to follow the procedure as in section~\ref{sec:preliminaryMetadyn} and, with metadynamics runs, try to estimate the energy barrier of the anchoring process with the use of the \ac{PME} alone and in combination with the \ac{PW} model. Then the estimated energy barriers for these \ac{CG} models have to be compared to a reference atomistic model performed in parallel by Federica Simonelli in her PhD study. By performing this we can investigate if a more realist description can be obtained with a \ac{CG} model in order to use it for future applications.
 
+Preliminary, some tests about the use of the \ac{PME} method and the \ac{PW} model with a simple \ac{POPC} bilayer was performed. Then metadynamics runs for obtaining the \ac{FES} of the anchoring process involving both the striped (\ac{MUS}:\ac{OT} $1$:$1$) and the random (\ac{MUS}:\ac{OT} $1$:$1$) \ac{NP} configurations, were performed with the use of the \ac{PME} alone and in combination with the \ac{PW} model. 
+%In view of the results, then, as better described in the next Chapter, unbiased \ac{MD} runs with the use of \ac{PME} and \ac{PW} involving all the \ac{NP} configurations were performed in order to investigate a possible change in the kinematic of the all the \ac{NP}--membrane interaction process.
 
-
-\section{Metadynamics set--up}
-%set up generale per una simulazione con metadinamica: procedura, start, stop e FES
-
-
-%Initial configuration
-
-%Metadynamics parameters
-
-%Procedure
-
-\section{Models compare}
-%models compare (Standard, PME, PME & PW, Atomistico)
-
-	%metadinamiche patched con PME e standard martini water
-
-	%metadinamiche patched e random con PME e PW
-
-\section{Convergence problems}
-
+\section{Metadynamics: converges and CV issues}
 	%tentativi di convergenza con bound
 
-\section{Head lipids dragging}
-%Trascinamento delle teste dei lipidi
+\section{Anchor process}
 
-\section{Membrane leaflet engulfment}
-%Risucchio delle membrane al recrossing
+\subsection{System set--up}
+%set up generale per una simulazione con metadinamica
+%Initial configuration
+%la usiamo per stimare la barriera di andata e ritorno
+
+\subsection{Crossing process: models comparison}
+%striped models comparison (Standard, PME, PME & PW, Atomistico)
+
+\subsection{Striped and random comparison}
+	%metadinamiche patched e random con PME e PW
+
+	
+\subsection{Recrossing process: preliminary results}
+
+
+\section{Discussion of the results}
+
+
+% \paragraph{\textbf{ions translocation}} An important phenomenon mediated by the electrostatic interactions that is crucial for this thesis work is the lipid membrane ions translocation. In \cite{PW} the authors have computed the \ac{FES} of the translocation of Na$^+$ and Cl$^-$ ions\footnote{The \martini model for Na$^+$ and Cl$^-$ associates the ion plus the hydration shell to a bead of type Qd positively charged and Qa negatively charged, respectively.} across a \acs{DPPC} membrane using umbrella sampling and the \ac{WHAM} with the standard \martini \ac{FF}, adding the \ac{PW} and adding together \ac{PW} and \ac{PME}. The height of the barriers are summarized in table~(\ref{tab:ionTranslocation}). The same \ac{FES} for a \acs{DMPC} membrane was calculated by Khavrutskii \etal\, \cite{atomisticTranslocation} with an atomistic \ac{FF}. Since the \martini model for the \acs{DPPC} lipid also model the \acs{DMPC} lipid a comparison can be made and it is shown in table~(\ref{tab:ionTranslocation}). As one can see, from left to right, increasing the loyalty of the treatment of the electrostatic interaction the \martini \ac{FF} approach the results of the atomistic \ac{FF}. Moreover in \cite{PW}, in accordance with the atomistic results in \cite{atomisticTranslocation}, for small cross membrane ions imbalance and only with the use of the \ac{PW} model and the \ac{PME} method, they observe some ion leakage without pore formation but still mediated by a water defect inside the membrane, called \textit{water finger} that help the ions to cross the hydrophobic region of the membrane. We remark that, these kind of phenomena, are totally absent using the standard \martini \ac{FF}. Hence, as already outlined, the importance to use a better treatment of the electrostatic interaction and a better model for water solvent.
+% \begin{table}[h!t]
+% 	\centering
+% 	\begin{tabular}{lcccc}
+% 		\toprule
+% 		\,		& Standard & \acs{PW} & \acs{PW} \& \acs{PME} & Atomistic	\\ \toprule
+% 		Na$^+$	& 68.0	   & 67.6	  & 78.6					& 91.7 		\\ \midrule
+% 		Cl$^-$	& 69.2	   & 70.4	  & 99.0					& 98.8		\\ \bottomrule
+% 	\end{tabular}
+% 	\caption{Height of the energy barrier (in kJ/mol) for Na$^+$ and Cl$^-$ translocation across a bilayer. The \martini results are based on a \acs{DPPC} membrane and are taken from \cite{PW} while the atomistic are based on a \acs{DMPC} membrane and are taken from \cite{atomisticTranslocation}.}
+% 	\label{tab:ionTranslocation}
+% \end{table}

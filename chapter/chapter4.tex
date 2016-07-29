@@ -286,18 +286,19 @@ to better describe the process that involve lipid bilayer, water and charged ion
 electroporation of the membrane by water, due to a cross membrane ions imbalance; water--helped ions permeation 
 and many other water defects inside the membrane as better described in the works of Marrink and Yesylevskyy.
 
-% \paragraph{\textbf{ions translocation}} An important phenomenon mediated by the electrostatic interactions that is crucial for this thesis work is the lipid membrane ions translocation. In \cite{PW} the authors have computed the \ac{FES} of the translocation of Na$^+$ and Cl$^-$ ions\footnote{The \martini model for Na$^+$ and Cl$^-$ associates the ion plus the hydration shell to a bead of type Qd positively charged and Qa negatively charged, respectively.} across a \acs{DPPC} membrane using umbrella sampling and the \ac{WHAM} with the standard \martini \ac{FF}, adding the \ac{PW} and adding together \ac{PW} and \ac{PME}. The height of the barriers are summarized in table~(\ref{tab:ionTranslocation}). The same \ac{FES} for a \acs{DMPC} membrane was calculated by Khavrutskii \etal\, \cite{atomisticTranslocation} with an atomistic \ac{FF}. Since the \martini model for the \acs{DPPC} lipid also model the \acs{DMPC} lipid a comparison can be made and it is shown in table~(\ref{tab:ionTranslocation}). As one can see, from left to right, increasing the loyalty of the treatment of the electrostatic interaction the \martini \ac{FF} approach the results of the atomistic \ac{FF}. Moreover in \cite{PW}, in accordance with the atomistic results in \cite{atomisticTranslocation}, for small cross membrane ions imbalance and only with the use of the \ac{PW} model and the \ac{PME} method, they observe some ion leakage without pore formation but still mediated by a water defect inside the membrane, called \textit{water finger} that help the ions to cross the hydrophobic region of the membrane. We remark that, these kind of phenomena, are totally absent using the standard \martini \ac{FF}. Hence, as already outlined, the importance to use a better treatment of the electrostatic interaction and a better model for water solvent.
-% \begin{table}[h!t]
-% 	\centering
-% 	\begin{tabular}{lcccc}
-% 		\toprule
-% 		\,		& Standard & \acs{PW} & \acs{PW} \& \acs{PME} & Atomistic	\\ \toprule
-% 		Na$^+$	& 68.0	   & 67.6	  & 78.6					& 91.7 		\\ \midrule
-% 		Cl$^-$	& 69.2	   & 70.4	  & 99.0					& 98.8		\\ \bottomrule
-% 	\end{tabular}
-% 	\caption{Height of the energy barrier (in kJ/mol) for Na$^+$ and Cl$^-$ translocation across a bilayer. The \martini results are based on a \acs{DPPC} membrane and are taken from \cite{PW} while the atomistic are based on a \acs{DMPC} membrane and are taken from \cite{atomisticTranslocation}.}
-% 	\label{tab:ionTranslocation}
-% \end{table}
+\begin{table}[h!t]
+	\centering
+	\begin{tabular}{lcccc}
+		\toprule
+		\,				& STD$^a$	& \acs{PME}$^b$	& \acs{PME} + \acs{PW}$^b$ & atomistic$^c$ 	\\ \toprule
+		$D$				& $\sim62$	& $44 \pm 4$	& $32.4 \pm 0.7$		& $7.8 \pm 0.9$	\\ \midrule
+		$D_{tl}$		& -			& $36.9 \pm 0.4$& $35 \pm 1$			& -				\\ \midrule
+		$D_{bl}$		& -			& $45 \pm 3$	& $30.0 \pm 0.6$		& -				\\ \midrule
+		$A$				& $0.65$	& $0.630$		& $0.635$				& -				\\ \bottomrule
+	\end{tabular}
+	\caption{Summary of main properties of a pure \acs{POPC} bilayer in comparison with different models. $D$ [$10^{-8}$~cm$^2$/s] is the lateral diffusion coefficient of a lipid: in the whole bilayer ($D$), in top leaflet ($D_{tl}$) and in the bottom leaflet ($D_{bl}$). $A$ [nm$^2$] is the average area per lipid. $^a$ Data obtained from \cite{Rossi2014}. $^b$ Data obtained from my \ac{MD} runs. $^c$ Data obtained from \ac{MD} runs by Federica Simonelli.}
+	\label{tab:POPCData}
+\end{table}
 
 \newpage
 \section{NP--Membrane interaction}
@@ -340,7 +341,7 @@ Since the anchored state is thermodynamically favorable respect to the hydrophob
 The authors performed \ac{MD} simulations for the three different \ac{NP} configurations showed in figure~(\ref{fig:coating}): the striped (\ac{MUS}:\ac{OT} $1$:$1$), the random (\ac{MUS}:\ac{OT} $1$:$1$) and the random (\ac{MUS}:\ac{OT} $2$:$1$). They found that the described behavior is common to the three configurations. Moreover, the lipid tail protrusion mechanism is validate form the kinematic of the simulations: the energy barrier to be overcome to move from stage $1$ to stage $2$ is of the order of the estimated energy cost of a lipid tail protrusion. Nevertheless, after the hydrophobic contact is reached, its lifetime depends on the surface ligand arrangements. For the random configurations the time lag between the hydrophobic contact and the first anchor is on the order of few nanoseconds. Instead, the striped configuration can linger in the stage $2$ for several microseconds. This suggest that the energy barrier to be overcome to move from stage $2$ to a one anchor state is less for the former than that for the latter. 
 
 \subsection{Preliminary metadynamics results}
-%\paragraph{\textbf{thermodynamics}} 
+\label{sec:preliminaryMetadyn}
 To quantify the thermodynamic behavior, metadynamics calculations are performed. In particular, in order to estimate the energy barrier for the anchor process, the \ac{FES} for only one anchored ligand, is computed for the three \ac{NP} configurations. The choice \ac{CV} is the $z$ component of the distance between the center of the charged beads and the \ac{COM} of \ac{POPC}. Then, starting from the hydrophobic state the metadynamics simulations begin biasing the charged bead. Since the achievement of the convergence it was not possible, the authors decide to perform different statistically independent metadynamics runs and stop each simulation at the recrossing process of the biased ligand. A recrossing is determined when the charged bead is $0.5$~nm above the \ac{COM} of the membrane in the leaflet in which the \ac{NP} stay. The resulting \ac{FES} profile, shown in figure~(\ref{fig:NPFES}), is obtained averaging the statistically independent runs. The errorbars are the standard error of the independent runs, as describe in \ref{sec:metadynamics}.
 \begin{figure}[h!t]
 	\centering
@@ -350,7 +351,3 @@ To quantify the thermodynamic behavior, metadynamics calculations are performed.
 \end{figure}
 
 For the striped arrangement, the crossing barrier to reach the saddle point, located at $0.5$~nm off the \ac{COM} of \ac{POPC}, is of the order of $\sim 22$~kJ/mol. While the recrossing energy barrier is approximately twice as high. The same is for the recrossing barrier of the random configuration. The absent of data for the random \acp{NP} in the hydrophobic contact is due to the difficulty to sample the stage $2$ to the anchor state transition for only one charged ligand. This is because, while the metadynamics is running on a specific charged ligand, other charged ligands spontaneously anchor to the opposite leaflet, making the free energy sampling of the first anchor impossible. Hence, together with the kinematic, for which the average lifetime of stage $2$ for random \acp{NP} is three order of magnitude shorter than for striped, the authors confirm the very low energy barrier, of the order of few $k_B T$, for the anchor process of the random \acp{NP}.
-
-
-% \subsection{Electrostatic interaction problem}
-% As we have outlined in the previous chapter, the standard \martini \ac{FF} poorly describe such process that strongly involve the electrostatic interaction. Moreover, the just describe anchoring process, in which one charged ligand drop its charged bead through the hydrophobic core of the membrane and anchors to the opposite leaflet, can be assimilated as an ion translocation process. A comparison of the energy barriers they obtained in \cite{ourPaper} and the data in table~(\ref{tab:ionTranslocation}) suggest that the standard \martini \ac{FF} can underestimate the energy barriers involved in the anchoring process. Thus, the necessity to increase the complexity of our model and try to use both \ac{PME} method and the \ac{PW} model.

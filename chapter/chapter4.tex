@@ -284,8 +284,7 @@ the membrane is much less then for a water molecule in an atomistic \ac{FF}.}. T
 use of the \ac{PW} model and the \ac{PME} method, as outlined in \cite{MartiniReview} and \cite{PW}, are crucial 
 to better describe the process that involve lipid bilayer, water and charged ions. These are ions translocation; 
 electroporation of the membrane by water, due to a cross membrane ions imbalance; water--helped ions permeation 
-and many other water defects inside the membrane as better described in the works of Marrink and Yesylevskyy.
-
+and many other water defects inside the membrane as better described in the works of Marrink and Yesylevskyy. Some of the main properties of a pure \ac{POPC} bilayer are shown in table~(\ref{tab:POPCData}) in a comparison with different models
 \begin{table}[h!t]
 	\centering
 	\begin{tabular}{lcccc}
@@ -296,7 +295,7 @@ and many other water defects inside the membrane as better described in the work
 		$D_{bl}$		& -			& $45 \pm 3$	& $30.0 \pm 0.6$		& -				\\ \midrule
 		$A$				& $0.65$	& $0.630$		& $0.635$				& -				\\ \bottomrule
 	\end{tabular}
-	\caption{Summary of main properties of a pure \acs{POPC} bilayer in comparison with different models. $D$ [$10^{-8}$~cm$^2$/s] is the lateral diffusion coefficient of a lipid: in the whole bilayer ($D$), in top leaflet ($D_{tl}$) and in the bottom leaflet ($D_{bl}$). $A$ [nm$^2$] is the average area per lipid. $^a$ Data obtained from \cite{Rossi2014}. $^b$ Data obtained from my \ac{MD} runs. $^c$ Data obtained from \ac{MD} runs by Federica Simonelli.}
+	\caption{Summary of main properties of a pure \acs{POPC} bilayer in comparison with different models. $D$ [$10^{-8}$~cm$^2$/s] is the lateral diffusion coefficient of a lipid: in the whole bilayer ($D$), in top leaflet ($D_{tl}$) and in the bottom leaflet ($D_{bl}$). $A$ [nm$^2$] is the average area per lipid. \footnotesize $^a$ Data obtained from \cite{Rossi2014}. $^b$ Data obtained from my \ac{MD} runs. $^c$ Data obtained from \ac{MD} runs by Federica Simonelli.}
 	\label{tab:POPCData}
 \end{table}
 
@@ -342,7 +341,7 @@ The authors performed \ac{MD} simulations for the three different \ac{NP} config
 
 \subsection{Preliminary metadynamics results}
 \label{sec:preliminaryMetadyn}
-To quantify the thermodynamic behavior, metadynamics calculations are performed. In particular, in order to estimate the energy barrier for the anchor process, the \ac{FES} for only one anchored ligand, is computed for the three \ac{NP} configurations. The choice \ac{CV} is the $z$ component of the distance between the center of the charged beads and the \ac{COM} of \ac{POPC}. Then, starting from the hydrophobic state the metadynamics simulations begin biasing the charged bead. Since the achievement of the convergence it was not possible, the authors decide to perform different statistically independent metadynamics runs and stop each simulation at the recrossing process of the biased ligand. A recrossing is determined when the charged bead is $0.5$~nm above the \ac{COM} of the membrane in the leaflet in which the \ac{NP} stay. The resulting \ac{FES} profile, shown in figure~(\ref{fig:NPFES}), is obtained averaging the statistically independent runs. The errorbars are the standard error of the independent runs, as describe in \ref{sec:metadynamics}.
+To quantify the thermodynamic behavior, metadynamics calculations are performed. In particular, in order to estimate the energy barrier for the anchor process, the \ac{FES} for only one anchored ligand, is computed for the three \ac{NP} configurations. The choice \ac{CV} is the $z$ component of the distance between the center of the charged beads and the \ac{COM} of the \ac{POPC} bilayer. Then, starting from the hydrophobic state the metadynamics simulations begin biasing the charged bead. Since the achievement of the convergence it was not possible, the authors decide to perform different statistically independent metadynamics runs and stop each simulation at the recrossing process of the biased ligand. A recrossing is determined when the charged bead is $0.5$~nm above the \ac{COM} of the membrane in the leaflet in which the \ac{NP} stay. The resulting \ac{FES} profile, shown in figure~(\ref{fig:NPFES}), is obtained averaging the statistically independent runs. The errorbars are the standard error of the independent runs, as describe in \ref{sec:metadynamics}.
 \begin{figure}[h!t]
 	\centering
 	\includegraphics[width=0.7\textwidth]{./img/NPFES}

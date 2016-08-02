@@ -11,13 +11,13 @@ integration arises from the complexity of the interactions involved in realistic
 functions of positions and momenta of the particles, which makes it impossible to obtain an analytical solution
 for the equations of motion.
 
-In the first part of this Chapter the laws of classical and statistical mechanics will be briefly summarized.
+In the first part of this chapter the laws of classical and statistical mechanics will be briefly summarized.
 Then we will introduce the computational \acf{MD} method and analyze the main aspects of this technique with some
 details about the \textit{empirical} \ac{FF}: the container of system model and parameters under study. This
 includes the way to consider and treat the inter--particle interactions at \ac{MD} level. Then, coarse--graining
 procedure are introduced, with particular attention to the \martini \ac{FF}, the main \ac{FF} used in this thesis
 work. Lastly advanced sampling techniques are explained: the \textit{Umbrella Sampling} and
-\textit{Metadynamics}. This introductory Chapter are based on the books of Tuckerman \cite{Tuckerman}, Leach
+\textit{Metadynamics}. This introductory chapter are based on the books of Tuckerman \cite{Tuckerman}, Leach
 \cite{Leach}, Frenkel and Smit \cite{Frenkel} and Allen and Tildesley \cite{Allen} to which the reader is
 addressed for a more complete discussion.
 
@@ -161,7 +161,7 @@ are part of the ensemble. For this purpose we define the \textit{ensemble distri
 $\tilde\rho = \tilde\rho(\vec x,t)$. Let $dx = dr_1\cdots dr_{3N} dp_1 \cdots dp_{3N}$ the infinitesimal phase
 space volume, then
 \begin{equation*}
-	\frac{1}{\mathcal{N}}\tilde\rho(\vec x, t)\ dx = \rho(\vec x, t)\ dx ????
+	\frac{1}{\mathcal{N}}\tilde\rho(\vec x, t)\ dx = \rho(\vec x, t)\ dx
 \end{equation*}
 where $\mathcal{N}$ is the total number of microstates in the ensemble, $\rho(\vec x, t)dx$ can be interpreted as
 the probability to find a system in the ensemble with microstate $\vec x$ at a time $t$ and $\rho(\vec x, t)$ is
@@ -370,7 +370,7 @@ the forces are derived by equation~\eqref{eq:pefForces}.
 
 Solving the equations of motion with a numerical
 integrator, an \ac{MD} simulation generates a set of phase space vectors, a \textit{trajectory}, at discrete
-times that are multiples of the fundamental time discretization parameter, called \textit{MD time step};
+times that are multiples of the fundamental time discretization parameter, called \textit{MD time step},
 $\delta t$. Starting from an initial phase space vector $\vec x(0)$, at each step, the forces are computed from
 the \ac{PEF}. Then the equations of motion are integrated and a new phase space vector $\vec x(\delta t)$ is
 generated, thus a new set of forces is computed and so on. In order to compute time averages we need to
@@ -455,7 +455,7 @@ interactions: one have to choose carefully the size of the simulation box, or th
 ensemble is used, to ensure that the smallest simulation box length is greater then the interaction range. This
 can be made easily for example with the Van der Waals interaction. On the contrary it is a difficult and time
 consuming task to do the same with the electrostatic interactions that are treated with a more sophisticated
-methods, as better explained in section~\ref{sec:longRangeInt}.
+methods, as better explained in the next chapter.
 
 \subsection{Numerical integrators}
 As we have seen above we need to solve numerically the equations of motion. Since the \ac{PEF} is a continuous
@@ -494,7 +494,8 @@ equation~\eqref{eq:verlet1} and~\eqref{eq:verlet2}
 Since positions in equation~\eqref{eq:verletPosition} are computed as differences this is a fourth order
 algorithm and the precision is up to $o(\delta t)^4$, but they also contain a small term of order
 $o(\delta t)^2$, ($\vec f_i(t)/(2m_i)$) which is summed to a difference of larger terms
-($2 \vec r_i(t) - \vec r_i (t - \delta t)$). This may cause a loss of precision due to computer numerical representation.
+($2 \vec r_i(t) - \vec r_i (t - \delta t)$). This may cause a loss of precision due to computer numerical 
+representation.
 
 The main disadvantage is that velocities at a time $t$ are an output of the calculation and not a part of the
 algorithm itself. Moreover it is not self--starting because the algorithm required the positions at a time

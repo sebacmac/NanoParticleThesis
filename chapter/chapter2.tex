@@ -1,6 +1,6 @@
 % !TEX root = ./../main.tex
 \chapter{Empirical Force--Field model}
-\label{sec:EmpiricalFF}
+\label{chap:EmpiricalFF}
 As we have seen in the previous section \ac{MD} provides a variety of tools for solving the time evolution of a
 $N$--particle system. Due to the possibility to capture different length and time scales \ac{MD} simulations can
 be used in a variety of systems, such as set of atoms, molecules or more complex system such as protein and
@@ -209,7 +209,7 @@ Lennard--Jones potential vanishes rapidly with distance: at $r \sim 2\sigma$ its
 value in $r \sim \sigma$. A good choice for the cut--off is then of the order of $r_c \sim 2\sigma \div 3\sigma$.
 
 \section{Electrostatic interactions}
-\label{sec:longRangeInt}
+\label{sec:electrostaticInt}
 Despite the long range characteristic of the electrostatic interaction, for computational efficient reason, most
 of the \acp{FF} for biomolecular applications treat them in the same way as a short range interaction by a
 cut--off method\footnote{In general, for computational reason, a common choice is to consider the same cut--off
@@ -794,7 +794,7 @@ addressed to the article by Yesylevskyy \etal\,\cite{PW}.
 Moreover, the authors found that, in addition to the \ac{PW} model, the use of \ac{PME} method contributes to a
 more realistic description of the processes involved in biomolecular environments. In particular, some
 interesting results of utility for this thesis work concern a better description of the properties of lipid
-membranes, as we shall see in Chapter~\ref{chap:tre}.
+membranes, as we shall see in chapter~\ref{chap:membraneNP}.
 %One is the translocation of charged ions through a lipid bilayer that is described in a more realistic detail: the authors found that the simulations with \ac{PW} and \ac{PME} are approaching the atomistic results better then the standard \martini \ac{FF}. Another important phenomenon about lipid membranes consist in the electroporation of membrane by \ac{PW} beads due to an electric field across the membrane (for example, created by a cross membrane ions imbalance) and, related to this, the translocation of ions across the membrane helped by a so called ``\textit{water finger}'' a water defect inside the membrane that seems to be the trigger of the ions translocation. Such phenomenons are clearly evident in atomistic simulations however never occurred using the standard \martini \ac{FF} thus the importance to use the \ac{PW} model together with \ac{PME} method.
 
 \subsection{Limitations of MARTINI FF}

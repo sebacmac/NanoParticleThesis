@@ -1,13 +1,11 @@
 % !TEX root = ./../main.tex
 \chapter{Free energy calculations}
-%Introduzione al lavoro svolto durante la tesi per quanto rigurda le matadinamiche
-
-The preliminary metadynamics results from \cite{ourPaper} and summarized in section~\ref{sec:preliminaryMetadyn} of the charged ligand translocation across the membrane are made using the standard \martini \ac{FF} with a cut--off method for treating the electrostatic interactions. Unfortunately, as we have seen in chapter~\ref{sec:EmpiricalFF}, such method poorly describe the processes that involve the electrostatic interaction and hence it underestimates the energy barriers of the processes that involve the interaction between ions, water molecules and hydrophobic regions. Moreover the use of the standard \martini water model does not improve the energy barriers estimation.
+The preliminary metadynamics results from \cite{ourPaper} and summarized in section~\ref{sec:preliminaryMetadyn} of the charged ligand translocation across the membrane are made using the standard \martini \ac{FF} with a cut--off method for treating the electrostatic interactions. Unfortunately, as we have seen in chapter~\ref{chap:EmpiricalFF}, such method poorly describe the processes that involve the electrostatic interaction and hence it underestimates the energy barriers of the processes that involve the interaction between ions, water molecules and hydrophobic regions. Moreover the use of the standard \martini water model does not improve the energy barriers estimation.
 
 The pathway to improve the model is the use of the \ac{PME} method to better describe the electrostatic interaction and the use of the \ac{PW} model to improve the behavior of the water solvent. For a comparison to be made, the idea, is to follow the procedure as in section~\ref{sec:preliminaryMetadyn} and, with metadynamics runs, try to estimate the energy barrier of the anchoring process with the use of the \ac{PME} alone and in combination with the \ac{PW} model. 
 
 Preliminary, some tests about the use of the \ac{PME} method and the \ac{PW} model with a pure \ac{POPC} bilayer was performed. Then metadynamics runs for obtaining the \ac{FES} of the anchoring process involving both the striped (\ac{MUS}:\ac{OT} $1$:$1$) and the random (\ac{MUS}:\ac{OT} $1$:$1$) \acp{NP}, were performed with the use of the \ac{PME} alone and in combination with the \ac{PW} model. 
-%In view of the results, then, as better described in the next Chapter, unbiased \ac{MD} runs with the use of \ac{PME} and \ac{PW} involving all the \ac{NP} configurations were performed in order to investigate a possible change in the kinematic of the all the \ac{NP}--membrane interaction process.
+%In view of the results, then, as better described in the next chapter, unbiased \ac{MD} runs with the use of \ac{PME} and \ac{PW} involving all the \ac{NP} configurations were performed in order to investigate a possible change in the kinematic of the all the \ac{NP}--membrane interaction process.
 
 \section{Metadynamics: system set--up and issues}
 %tentativi di convergenza con bound

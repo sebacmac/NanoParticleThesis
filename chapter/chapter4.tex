@@ -1,6 +1,6 @@
 % !TEX root = ./../main.tex
 \chapter{Model of cell membrane and monolayer--protected NP}
-\label{chap:tre}
+\label{chap:membraneNP}
 In the first part of this chapter we will present and describe the model of the charged monolayer--protected 
 \ac{AuNP} developed by Federica Simonelli and co--workers in \cite{simonelliThesis} and \cite{ourPaper}. The gold 
 core is treated by an all atoms representation, while the ligands are modeled at \ac{CG} level by the \martini 
@@ -276,15 +276,17 @@ the trend of the bending and the area compression moduli in function of the lipi
 unsaturation degree of the lipids, the stress profile across the membrane, the process of lipid desorption and 
 flip--flopping, and many other as better described in \cite{Martini} and \cite{MartiniReview}. Nevertheless many 
 other properties, prevalently mediated by the electrostatic interaction, are not well described. As we have seen 
-in the previous chapter this is because the \martini \ac{FF} does not take into account the long range treatment 
-of the electrostatic interaction and because the standard \martini water is prevalently insensible to the 
-electrostatic interaction\footnote{Moreover we can not forget that the \martini water bead takes into account 
+in chapter~\ref{chap:EmpiricalFF}, this is because the \martini \ac{FF} does not take into account the long range 
+treatment of the electrostatic interaction and because the standard \martini water is prevalently insensible to 
+the electrostatic interaction\footnote{Moreover we can not forget that the \martini water bead takes into account 
 four real water molecules. Hence the probability for a \martini water bead to permeate the hydrophobic region of 
 the membrane is much less then for a water molecule in an atomistic \ac{FF}.}. To overcome to this problem the 
 use of the \ac{PW} model and the \ac{PME} method, as outlined in \cite{MartiniReview} and \cite{PW}, are crucial 
 to better describe the process that involve lipid bilayer, water and charged ions. These are ions translocation; 
 electroporation of the membrane by water, due to a cross membrane ions imbalance; water--helped ions permeation 
-and many other water defects inside the membrane as better described in the works of Marrink and Yesylevskyy. Some of the main properties of a pure \ac{POPC} bilayer are shown in table~(\ref{tab:POPCData}) in a comparison with different models
+and many other water defects inside the membrane as better described in the works of Marrink and Yesylevskyy. 
+Some of the main properties of a pure \ac{POPC} bilayer are shown in table~(\ref{tab:POPCData}) in a comparison 
+with different models
 \begin{table}[h!t]
 	\centering
 	\begin{tabular}{lcccc}

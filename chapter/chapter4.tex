@@ -302,14 +302,43 @@ and many other water defects inside the membrane as better described in the work
 
 \newpage
 \section{NP--Membrane interaction}
-Recently the literature for what concern the computational modeling about the interaction of such anionic monolayer--protected \ac{AuNP} and model lipid membranes has expanded contributing to sketch a possible mechanism of such interaction. The begging of the path way mechanism is the electrostatic attraction between the charged ligands and the polar head of the zwitterionic phospholipids in a fluid water phase: it is recognized to be the driving force for the adhesion of the \ac{AuNP} to the membrane surface, see figure~(\ref{fig:threeProcess}a). To the other end of the path way, it is known, on thermodynamic basis, that the most stable state for the \ac{AuNP} corresponds to the so--called \textit{snorkeling} configuration in which the \ac{NP} is embedded in the hydrophobic region of the membrane, while the charged ligands stably interact with the lipid heads of both leaflets, see figure~(\ref{fig:threeProcess}f). 
+Recently the literature concerning the computational modeling about the interaction of anionic 
+monolayer--protected \ac{AuNP} and model lipid membranes has expanded contributing to sketch a possible mechanism 
+of such interaction. The first step of the interaction between the \ac{NP}, dissolved in the extracellular 
+water environment, and the membrane is the attraction between the charged ligands and the polar head of the 
+zwitterionic phospholipids: electrostatics it is recognized to be the driving force for the adhesion of the 
+\ac{AuNP} to the membrane surface, figure~(\ref{fig:threeProcess}a). To the other end of the pathway, it is 
+known, on thermodynamic basis, that the most stable state for the \ac{AuNP} corresponds to the so--called 
+\textit{snorkeling} configuration in which the \ac{NP} is embedded in the hydrophobic region of the membrane, 
+while the charged ligands stably interact with the lipid heads of both leaflets, 
+figure~(\ref{fig:threeProcess}f). 
 
-In the work of Federica Simonelli \etal\, \cite{ourPaper}, using the just described \ac{CG} \martini models of the \ac{NP} ligands and of biological membrane, with the standard \martini \ac{FF}, they found and characterize a possible path way mechanism of the interaction process with membrane at low curvature. Then they perform metadynamics simulations for characterize the thermodynamic of the process.
+In the work of Federica Simonelli \etal\, \cite{ourPaper}, using the standard \martini \ac{FF}, the authors found 
+and characterized a possible mechanism of the interaction process, as better detailed in the next paragraph. In 
+the next paragraph we summarized the findings of Simonelli \etal\,, which constitute the starting point of the 
+development of my thesis work.
 
 \subsection{Three--stage process}
 %\paragraph{\textbf{Three--stage process}} 
-The authors found a three--stage mechanism that regulate the insertion of the \ac{AuNP} into a low curvature membrane core: from the adsorbed state, figure~(\ref{fig:threeProcess}a), to the snorkeling configuration, figure~(\ref{fig:threeProcess}f). When the \ac{NP} in the water phase is approaching the surface of the membrane it enters in the Stage $1$ or in the adsorbed state in which the charged ligands interact with the polar lipid heads. Then, in Stage $2$, a key role is played by a lipid tail protrusion out of the hydrophobic region that stably interact with the hydrophobic beads of the \ac{NP} ligands, see figure~(\ref{fig:threeProcess}b-c). In order to minimize the contacts between water and the tails of the protruding lipid it pull the \ac{OT} ligands into the membrane core and the \ac{NP} enter in the hydrophobic contact state, figure~(\ref{fig:threeProcess}d). Then due the thermal fluctuation a charged bead is involved to cross the membrane core and stably interact with the head region of the opposite leaflet, figure~(\ref{fig:threeProcess}e).
-\begin{figure}[ht!]
+The authors found a three--stage mechanism that regulates the insertion of the \ac{AuNP} into a low curvature 
+membrane core: from the adsorbed state, figure~(\ref{fig:threeProcess}a), to the snorkeling configuration, 
+figure~(\ref{fig:threeProcess}f). When the \ac{NP} in the water phase is approaching the surface of the membrane 
+it enters in the stage $1$, the adsorbed state, in which the charged ligands interact with the polar lipid heads. 
+The stage $2$ is the hydrophobic contact, figure~(\ref{fig:threeProcess}d), in which the hydrophobic beads of the 
+\ac{MUS} and \ac{OT} ligands are in contact with the hydrophobic tails of the membrane while the charged bead of 
+the \ac{MUS} ligands are still in the water phase or in contact with the lipid heads. The stage $3$, is the 
+snorkeling configuration, figure~(\ref{fig:threeProcess}f). 
+
+A key role for the stage $1$ to stage $2$ transition is played by a lipid tail protrusion out of the hydrophobic 
+region that stably interact with the hydrophobic beads of the \ac{NP} ligands, 
+figure~(\ref{fig:threeProcess}b-c). In order to minimize the contacts between water and the tails of the 
+protruding lipid it pull the \ac{OT} ligands into the membrane core and the \ac{NP} enter in the hydrophobic 
+state, figure~(\ref{fig:threeProcess}d). The lipid tail protrusion mechanism is validate form the 
+kinematic of the simulations: the energy barrier to be overcome to move from stage $1$ to stage $2$ is of the 
+order of the estimated energy cost of a lipid tail protrusion \cite{VanLehn2015}. Subsequently due to the thermal 
+fluctuation a charged bead could cross the membrane core and stably interact with the head region of the opposite 
+leaflet bringing the \ac{NP} in the anchored state, figure~(\ref{fig:threeProcess}e).
+\begin{figure}[t]
 	\centering
 	\subfloat[]{
 		\includegraphics[width=4cm]{./img/threeProcess/a}
@@ -333,21 +362,51 @@ The authors found a three--stage mechanism that regulate the insertion of the \a
 	\subfloat[]{
 		\includegraphics[width=4cm]{./img/threeProcess/f}
 	}%
-	\caption{\acs{AuNP}--membrane interaction. (a) Stage $1$, adsorption of the \acs{NP} at membrane surface; (b) to (d) Stage $2$, the protrusion of a lipid tail initiates the hydrophobic contact that leads to partial embedding of the \acs{NP} in the membrane core; (e) the \ac{NP} binds to the opposite leaflet throwing a charged ligand; (f), Stage $3$, snorkeling configuration (five anchors shown). The hydrophobic beads of the ligands are shown in red and the charged beads in green. Lipid heads are blue (choline) and tan (phosphate), lipid tails are not shown, expect for (b) and (c), where the protruding lipid is shown with yellow tails. Water beads are not shown. All snapshot refer to a random (\ac{MUS}:\ac{OT} $1$:$1$) configuration. Taken from \cite{ourPaper}.}
+	\caption{\acs{AuNP}--membrane interaction. (a) stage $1$, adsorption of the \acs{NP} at membrane surface; (b) to (d) stage $2$, the protrusion of a lipid tail initiates the hydrophobic contact that leads to partial embedding of the \acs{NP} in the membrane core; (e) the \ac{NP} binds to the opposite leaflet throwing a charged ligand; (f), stage $3$, snorkeling configuration (five anchors shown). The hydrophobic beads of the ligands are shown in red and the charged beads in green. Lipid heads are blue (choline) and tan (phosphate), lipid tails are not shown, expect for (b) and (c), where the protruding lipid is shown with yellow tails. Water beads are not shown. All snapshot refer to a random (\ac{MUS}:\ac{OT} $1$:$1$) configuration. Taken from \cite{ourPaper}.}
 	\label{fig:threeProcess}
 \end{figure}
-Since the anchored state is thermodynamically favorable respect to the hydrophobic contact, more and more ligands drop the charged beads to the head region of the opposite leaflet, approaching step--by--step the snorkeling configuration, figure~(\ref{fig:threeProcess}f). Moreover, compatibly with other works in literature, they found that the energy cost associated with the extraction of the \ac{NP} out of the membrane core is very high, making the anchoring process, and the snorkeling configuration, almost irreversible.
+Since the anchored state is thermodynamically favorable respect to the hydrophobic state, more and more ligands 
+drop the charged beads to the head region of the opposite leaflet, approaching step--by--step the snorkeling 
+configuration, figure~(\ref{fig:threeProcess}f). We want to stress out that all the aforementioned transitions 
+are triggered by rare molecular event: the lipid tail protrusion and the membrane translocation of a charged 
+bead. Hence they could only be observed by the use of a \ac{CG} \ac{FF}. Moreover, compatibly with the other 
+works in literature, they found that the energy cost associated with the extraction of the \ac{NP} out of the 
+membrane core is very high, making the anchoring process, and the snorkeling configuration, almost irreversible.
  
-The authors performed \ac{MD} simulations for the three different \ac{NP} configurations showed in figure~(\ref{fig:coating}): the striped (\ac{MUS}:\ac{OT} $1$:$1$), the random (\ac{MUS}:\ac{OT} $1$:$1$) and the random (\ac{MUS}:\ac{OT} $2$:$1$). They found that the described behavior is common to the three configurations. Moreover, the lipid tail protrusion mechanism is validate form the kinematic of the simulations: the energy barrier to be overcome to move from stage $1$ to stage $2$ is of the order of the estimated energy cost of a lipid tail protrusion. Nevertheless, after the hydrophobic contact is reached, its lifetime depends on the surface ligand arrangements. For the random configurations the time lag between the hydrophobic contact and the first anchor is on the order of few nanoseconds. Instead, the striped configuration can linger in the stage $2$ for several microseconds. This suggest that the energy barrier to be overcome to move from stage $2$ to a one anchor state is less for the former than that for the latter. 
+The authors performed \ac{MD} simulations for the three different \ac{NP} configurations showed in 
+figure~(\ref{fig:coating}): the striped (\ac{MUS}:\ac{OT} $1$:$1$), the random (\ac{MUS}:\ac{OT} $1$:$1$) and the 
+random (\ac{MUS}:\ac{OT} $2$:$1$). They found that the described behavior is common to the three configurations.  
+Nevertheless, after the hydrophobic contact is reached, its lifetime depends on the surface ligand arrangements. 
+For the random configurations the time lag between the hydrophobic contact and the first anchor is on the order 
+of few nanoseconds. Instead, the striped configuration can linger in the stage $2$ for several microseconds. This 
+suggest that the energy barrier to be overcome to move from stage $2$ to the anchored state is less for the 
+former than that for the latter. 
 
 \subsection{Preliminary metadynamics results}
 \label{sec:preliminaryMetadyn}
-To quantify the thermodynamic behavior, metadynamics calculations are performed. In particular, in order to estimate the energy barrier for the anchor process, the \ac{FES} for only one anchored ligand, is computed for the three \ac{NP} configurations. The choice \ac{CV} is the $z$ component of the distance between the center of the charged beads and the \ac{COM} of the \ac{POPC} bilayer. Then, starting from the hydrophobic state the metadynamics simulations begin biasing the charged bead. Since the achievement of the convergence it was not possible, the authors decide to perform different statistically independent metadynamics runs and stop each simulation at the recrossing process of the biased ligand. A recrossing is determined when the charged bead is $0.5$~nm above the \ac{COM} of the membrane in the leaflet in which the \ac{NP} stay. The resulting \ac{FES} profile, shown in figure~(\ref{fig:NPFES}), is obtained averaging the statistically independent runs. The errorbars are the standard error of the independent runs, as describe in \ref{sec:metadynamics}.
-\begin{figure}[h!t]
+To quantify the thermodynamic behavior, Simonelli \etal\, performed metadynamics calculations. In particular, in 
+order to estimate the energy barrier for the anchoring process, metadynamics was used to enhance the sampling of 
+the transition of the first anchoring ligand from the entrance leaflet to the opposite one. The metadynamics bias 
+was apply to the $z$ component of the distance between the center of charged bead and the \ac{COM} of the 
+\ac{POPC} bilayer. Then, starting from the hydrophobic state the metadynamics simulations begin biasing the 
+charged bead. The convergence of such a run is achieved when the charged bead is able to freely diffuse across 
+the membrane. As the size and the complexity of the system does not allow to achieve the convergence, not even at 
+\ac{CG} level, the authors decided to perform different statistically independent metadynamics runs and stop each 
+\begin{figure}[!b]
 	\centering
-	\includegraphics[width=0.7\textwidth]{./img/NPFES}
+	\includegraphics[width=0.6\textwidth]{./img/NPFES}
 	\caption{Free energy profile related to the transfer of a negatively charged ligand from the entrance leaflet to the opposite one. The blue is related to the striped (\ac{MUS}:\ac{OT} $1$:$1$) configuration while the red to the random (\ac{MUS}:\ac{OT} $1$:$1$) configuration. Metadynamics data are shown with errorbars, while the red dashed line are hypothesized profiles for the stage $2$ to stage $3$ transition of random \acp{NP}. Gray shades show the position of the polar head beads (AU). Taken from \cite{ourPaper}.}
 	\label{fig:NPFES}
 \end{figure}
+simulation at the recrossing process of the biased ligand. A recrossing is determined when the charged bead is 
+$0.5$~nm above the \ac{COM} of the membrane in the leaflet of entrance. The resulting \ac{FES} profile, shown in 
+figure~(\ref{fig:NPFES}), is obtained averaging the statistically independent runs. The errorbars are the 
+standard error of the independent runs, as described in \ref{sec:metadynamics}.
 
-For the striped arrangement, the crossing barrier to reach the saddle point, located at $0.5$~nm off the \ac{COM} of \ac{POPC}, is of the order of $\sim 22$~kJ/mol. While the recrossing energy barrier is approximately twice as high. The same is for the recrossing barrier of the random configuration. The absent of data for the random \acp{NP} in the hydrophobic contact is due to the difficulty to sample the stage $2$ to the anchor state transition for only one charged ligand. This is because, while the metadynamics is running on a specific charged ligand, other charged ligands spontaneously anchor to the opposite leaflet, making the free energy sampling of the first anchor impossible. Hence, together with the kinematic, for which the average lifetime of stage $2$ for random \acp{NP} is three order of magnitude shorter than for striped, the authors confirm the very low energy barrier, of the order of few $k_B T$, for the anchor process of the random \acp{NP}.
+For the striped arrangement, the crossing barrier to reach the saddle point, located at $0.5$~nm off the \ac{COM} 
+of \ac{POPC}, is of the order of $\sim 22$~kJ/mol. While the recrossing energy barrier is approximately twice as 
+high. The same is for the recrossing barrier of the random configuration. The absence of data for the random 
+\acp{NP} in the hydrophobic contact is due to the difficulty to sample the stage $2$, whose lifetime is too short 
+(few nanoseconds).
+
+%to the anchor state transition for only one charged ligand. This is because, while the metadynamics is running on a specific charged ligand, other charged ligands spontaneously anchor to the opposite leaflet, making the free energy sampling of the first anchor impossible. Hence, together with the kinematic, for which the average lifetime of stage $2$ for random \acp{NP} is three order of magnitude shorter than for striped, the authors confirm the very low energy barrier, of the order of few $k_B T$, for the anchor process of the random \acp{NP}.

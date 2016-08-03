@@ -1,10 +1,10 @@
 set term qt enhanced dashed font 'Sans,20' size 1000,800
 set title "Forward wall: models comparison"   
-set xlabel "CV [nm]"
+set xlabel "z from POPC COM [nm]"
 set ylabel "FES [kJ/mol]"
 
 set yrange[-8:140]
-set xrange [-5.2:1.4]
+set xrange [-5:1.2]
 set xtics -6,0.5,5 nomirror out
 set ytics -120,20,140 nomirror out
 
@@ -13,7 +13,7 @@ set mytics 5
 
 set key opaque bottom right 
 
-plot "PME.dat" u ($1*0.853):2:4 w errorbars lc rgb "red" t "PME", \
-"PW.dat" u ($1*0.859):2:4 w errorbars lc rgb "blue" t "PME + PW", \
-"STD.dat" u ($1*0.880):2:4 w errorbars lc rgb "green" t "STD", \
-"atomistic.dat" u 1:2:4 w errorbars lc rgb "orange" t"Atomistic"
+plot "STD.dat" u ($1*0.880):2:4 w errorbars pt 7 ps 0.5 lc rgb "red" t "STD", \
+"PME.dat" u ($1*0.853):2:4 w errorbars pt 7 ps 0.5 lc rgb "black" t "PME", \
+"PW.dat" u ($1*0.859):2:4 w errorbars pt 7 ps 0.5 lc rgb "green" t "PME + PW", \
+"atomistic.dat" u 1:2:4 w errorbars pt 7 ps 0.5 lc rgb "orange" t"Atomistic"

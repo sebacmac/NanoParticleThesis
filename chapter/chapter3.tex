@@ -112,7 +112,17 @@ the Verlet cut--off scheme. Other GPUs or other cut-off scheme are partially sup
 libraries. 
 
 The speed up of the simulation by offloading the non--bonded interactions to a GPU using NVIDIA 
-CUDA\textsuperscript{®} is of the order of two or three times faster than that of a non accelerated simulation. 
+CUDA\textsuperscript{®} is of the order of from two to four times faster than that of a non accelerated simulation. In table~(\ref{tab:performance}) we report a comparison of the performance obtained with a \ac{CG} system composed by $128$ phospholipids and $2000$ \ac{PW} beads for a total of $7664$ particles.
+\begin{table}[ht]
+	\centering
+	\begin{tabular}{lccc}
+		\toprule
+		\, 					& GPU\&\acs{PME} balance 	& GPU		& no GPU	\\ \midrule
+		Performance [ns/day]& $3466$					& $1388$	& $847$		\\ \bottomrule
+	\end{tabular}
+	\caption{Performance comparison obtained with a system composed by $128$ phospholipids and $2000$ \ac{PW} beads for a total of $7664$ particles. The used PC has a quad core CPU at $4.00$~GHz and the NVIDIA Titan X GPU card.}
+	\label{tab:performance}
+\end{table}
 Moreover, to increase the performance, avoiding the waiting time of the CPU for the GPU to finish the non--bonded 
 calculations, the same load balancing between \ac{PP} and \ac{PME} part can be used. Adjusting both the Coulomb 
 cut--off and \ac{PME} grid spacing, leaving the ratio unchanged, will adjust the load between the real and the 

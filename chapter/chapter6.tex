@@ -8,13 +8,13 @@
 %	WPatchedComparison		WRPComparison
 \begin{figure}[]
 	\center
-	\subfloat[]{
+	\subfloat[striped – model comparison]{
 		\includegraphics[width=0.5\textwidth]{./img/results/WPatchedComparison}
 	}%
-	\subfloat[]{
+	\subfloat[striped – random comparison]{
 		\includegraphics[width=0.5\textwidth]{./img/results/WRPComparison}
 	}%
-	\caption{Comparison of the contacts per second in function of the time between \acs{PW} beads and the charged bead. (a) comparison between different models. (b) comparison between striped and random \acs{NP}s.}
+	\caption{Number of contacts per ns between water beads and the charged bead in function of the $z$ distance of the charged bead from the bilayer \acs{COM}. (a) For the striped \acs{NP} in comparison with different models. (b) In comparison between the striped and the random \acs{NP}s.}
 \end{figure}
 
 
@@ -24,16 +24,28 @@
 % 	minDistPatched			minDistRandom11
 \begin{figure}[p]
 	\center
-	\subfloat[]{
+	\subfloat[striped NP]{
 		\includegraphics[width=\textwidth]{./img/results/minDistPatched}
 	}\\%
-	\subfloat[]{
+	\subfloat[random NP]{
 		\includegraphics[width=\textwidth]{./img/results/minDistRandom11}
 	}%
-	\caption{}
+	\caption{Average distribution of the coline groups (NC3 beads) in the entrance leaflet closer to the bilayer \acs{COM} in function of the $z$ distance of the charged bead from the bilayer \acs{COM}; in comparison with an average over ten metadynamics runs, the unbiased run and a pure \acs{POPC} run for the striped \acs{NP} (a) and the random one (b).}
 \end{figure}
 
 %	NC3PatchedComparison	NC3RPComparison
+\newgeometry{left=2.5cm,right=2.5cm}
+\begin{figure}
+	\center
+	\subfloat[striped – model comparison]{
+		\includegraphics[width=0.5\textwidth]{./img/results/NC3PatchedComparison}
+	}%
+	\subfloat[striped – random comparison]{
+		\includegraphics[width=0.5\textwidth]{./img/results/NC3RPComparison}
+	}%
+	\caption{Number of contacts per ns between coline group (NC3 bead) and the charged bead in function of the $z$ distance of the charged bead from the bilayer \acs{COM}. (a) For the striped \acs{NP} in comparison with different models. (b) In comparison between the striped and the random \acs{NP}s.}
+\end{figure}
+\restoregeometry
 
 \section{Effects of metadynamics}
 %Quanto la metadinamica sia distrittiva: comparazione tra rum unbiased e biased
@@ -41,33 +53,35 @@
 % 	minDistHydroPatched		minDistHydroRandom11
 \begin{figure}[p]
 	\center
-	\subfloat[]{
+	\subfloat[striped NP]{
 		\includegraphics[width=\textwidth]{./img/results/minDistHydroPatched}
 	}\\%
-	\subfloat[]{
+	\subfloat[random NP]{
 		\includegraphics[width=\textwidth]{./img/results/minDistHydroRandom11}
 	}%
-	\caption{}
+	\caption{Average distribution of the coline groups (NC3 beads) in the entrance leaflet closer to the bilayer \acs{COM} in function of the $z$ distance of the charged bead from the bilayer \acs{COM}; in comparison with an average over ten metadynamics runs in the hydrophobic contact only, the unbiased run and a pure \acs{POPC} run for the striped \acs{NP} (a) and the random one (b).}
 \end{figure}
 
 %	patchedPWContact	randon11PWContact
-% 	patchedNC3Contact	
+% 	patchedNC3Contact
+\newgeometry{left=2.5cm,right=2.5cm}
 \begin{figure}[p]
 	\center
-	\subfloat[]{
+	\subfloat[striped NP]{
 		\includegraphics[width=0.5\textwidth]{./img/results/patchedPWContact}
 	}%
-	\subfloat[]{
+	\subfloat[random NP]{
 		\includegraphics[width=0.5\textwidth]{./img/results/randon11PWContact}
 	}\\%
-	\subfloat[]{
+	\subfloat[striped NP]{
 		\includegraphics[width=0.5\textwidth]{./img/results/patchedNC3Contact}
 	}%
-	\subfloat[]{
+	\subfloat[random NP]{
 		\includegraphics[width=0.5\textwidth]{./img/results/patchedNC3Contact}
 	}
-	\caption{(a-b) Number of contacts per ns in function of the $z$ component of the distance between the \acs{COM} of the bilayer and the center of the charged bead between the \acs{PW} beads and the charged bead for the \acs{NP} configuration: (a) striped and (b) random. (c-d) The same for the coline group and the charged bead; (c) striped and (d) random. For each plots the number of contacts are in comparison with the corresponding unbiased run.}
+	\caption{(a-b) Number of contacts per ns between the \acs{PW} beads and the charged bead in function of the $z$ distance of the charged bead from the bilayer \acs{COM} for the striped \acs{NP} (a) and the random one (b). (c-d) The same for the coline group and the charged bead for the striped \ac{NP} and the random one (d). For each plots the number of contacts are in comparison with the corresponding unbiased runs.}
 \end{figure}
+\restoregeometry
 
 
 \section{NP and membrane properties}

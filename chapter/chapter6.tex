@@ -8,16 +8,10 @@ Unfortunately, with ten of microseconds for each configurations, we have not see
 
 \section{Water dragging}
 %Trascinamento delle PW nelle varie salse
-
-\begin{figure}[ht]
-	\center
-	\includegraphics[width=0.9\textwidth]{./img/results/wCorrelation}
-	\caption{Superposition of the \acs{CV} (red) and the number of contacts between the \acs{PW} beads and the charged bead (blue) in function of the time for a striped metadyamcis run. $z>0$ corresponds to the anchored state. It can be noted a clear anti--correlation between the distance of the charged bead from the bilayer \acs{COM} and the number of the \acs{PW} contacts: they decrease when the charged bead is approaching the hydrophobic region.}
-\end{figure}
-
+In order to study if there is an increase of water beads inside the hydrophobic region of the bilayer during the anchoring process as the model accuracy increase, I study the number of water beads contacts within $0.6$~nm from the charged bead in function of the time. Then, obtaining the $z$ component of the distance of the charged bead from the bilayer \ac{COM} in function of the time, since the time step is set to be equal to $1$~ns for both, I can correlate the two quantities. Next, the obtained data is binned with a spacing of $0.08$~nm and the total number of counts per bin is divided with the number of the bin entries achieving the plot shown in figure~(\ref{fig:WContact}). As explained previously, $z<0$ corresponds to the entrance leaflet and the \ac{NP} is in the hydrophobic state; for $z>0$, instead, the \ac{NP} is approaching the anchored state and corresponds to the opposite leaflet of the bilayer. In figure~(\ref{fig:WContact}a) is shown this analysis for the unbiased runs of the striped \ac{NP} in a comparison with different \ac{CG} \martini models: the standard (red), \ac{PME} (black) and both \ac{PME} and \ac{PW} (green). In figure~(\ref{fig:WContact}b) is shown a comparison of the number of water contacts between the striped (green) and the random (violet) \acp{NP} with \ac{PME} and \ac{PW}. For the contacts with the \ac{PW} bead, since the ligand is negatively charged, only the contacts with the charged bead and the $WP$ particle were considered.
 %	WPatchedComparison		WRPComparison
-\newgeometry{left=2.5cm,right=2.5cm}
-\begin{figure}
+%\newgeometry{left=2.5cm,right=2.5cm}
+\begin{figure}[!ht]
 	\center
 	\subfloat[striped – model comparison]{
 		\includegraphics[width=0.5\textwidth]{./img/results/WPatchedComparison}
@@ -26,8 +20,19 @@ Unfortunately, with ten of microseconds for each configurations, we have not see
 		\includegraphics[width=0.5\textwidth]{./img/results/WRPComparison}
 	}%
 	\caption{Number of contacts per ns between water beads and the charged bead in function of the position of the charged bead. (a) For the striped \acs{NP} in comparison with different models. (b) In comparison between the striped and the random \acs{NP}s.}
+	\label{fig:WContact}
 \end{figure}
-\restoregeometry
+%\restoregeometry
+
+As we can see from figure~(\ref{fig:WContact}a) for the standard \martini model and for the model with \ac{PME} alone we observe that the number of water contacts drop to zero in the core of the hydrophobic region. The contrary is observed for the model with the \ac{PW}, in which there is at least one contact per ns even in the core of the bilayer. Indeed we have to remark also that the persistence of the charged bead in the hydrophobic region is no more than $2$ or $3$~ns. The same behavior with the \ac{PW} model is observed also for the random \ac{NP}, shown in figure~(\ref{fig:WContact}b).
+
+These results suggest that some \ac{PW} beads are dragged inside the hydrophobic region during the forward process, but also that some \ac{PW} bead, in the opposite leaflet, can help the anchoring process forming a water finger. The same behavior can apply to the backward process too.
+ 
+% \begin{figure}[ht]
+% 	\center
+% 	\includegraphics[width=0.9\textwidth]{./img/results/wCorrelation}
+% 	\caption{Superposition of the \acs{CV} (red) and the number of contacts between the \acs{PW} beads and the charged bead (blue) in function of the time for a striped metadyamcis run. $z>0$ corresponds to the anchored state. It can be noted a clear anti--correlation between the distance of the charged bead from the bilayer \acs{COM} and the number of the \acs{PW} contacts: they decrease when the charged bead is approaching the hydrophobic region.}
+% \end{figure}
 
 \section{Lipid heads dragging}
 %Trascinamento delle teste dei lipidi nelle varie salse

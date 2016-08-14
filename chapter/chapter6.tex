@@ -7,8 +7,9 @@ Unfortunately, with ten of microseconds for each configurations, we have not see
 
 
 \section{Water dragging}
+\label{sec:WDragging}
 %Trascinamento delle PW nelle varie salse
-In order to study if there is an increase of water beads inside the hydrophobic region of the bilayer during the anchoring process as the model accuracy increase, I study the number of water beads contacts within $0.6$~nm from the charged bead in function of the time. Then, obtaining the $z$ component of the distance of the charged bead from the bilayer \ac{COM} in function of the time, since the time step is set to be equal to $1$~ns for both, I can correlate the two quantities. Next, the obtained data is binned with a spacing of $0.08$~nm and the total number of counts per bin is divided with the number of the bin entries achieving the plot shown in figure~(\ref{fig:WContact}). As explained previously, $z<0$ corresponds to the entrance leaflet and the \ac{NP} is in the hydrophobic state; for $z>0$, instead, the \ac{NP} is approaching the anchored state and corresponds to the opposite leaflet of the bilayer. In figure~(\ref{fig:WContact}a) is shown this analysis for the unbiased runs of the striped \ac{NP} in a comparison with different \ac{CG} \martini models: the standard (red), \ac{PME} (black) and both \ac{PME} and \ac{PW} (green). In figure~(\ref{fig:WContact}b) is shown a comparison of the number of water contacts between the striped (green) and the random (violet) \acp{NP} with \ac{PME} and \ac{PW}. For the contacts with the \ac{PW} bead, since the ligand is negatively charged, only the contacts with the charged bead and the $WP$ particle were considered.
+In order to study if there is an increase of water beads inside the hydrophobic region of the bilayer during the anchoring process as the model accuracy increase, I calculate the number of water beads contacts within $0.6$~nm from the charged bead in function of the time. Then, obtaining the $z$ component of the distance of the charged bead from the bilayer \ac{COM} in function of the time, since the time step is set to be equal to $1$~ns for both, I can correlate the two quantities. Next, the obtained data is binned with a bin spacing of $0.08$~nm and the total number of counts per bin is normalized dividing with the number of the bin entries. The results is the plot shown in figure~(\ref{fig:WContact}). As explained previously, $z=0$ is the center of the bilayer, $z<0$ corresponds to the entrance leaflet and the \ac{NP} is in the hydrophobic state; for $z>0$, instead, the \ac{NP} is approaching the anchored state and the charged bead is in the opposite leaflet. In particular, in figure~(\ref{fig:WContact}a) is shown a comparison between different \ac{CG} \martini models: the standard, with \ac{PME} alone and with both \ac{PME} and \ac{PW}. Instead, in figure~(\ref{fig:WContact}b) is shown a comparison between the striped and the random \acp{NP} with both \ac{PME} and \ac{PW}. For the contacts with the \ac{PW} bead, since the ligand is negatively charged, only the contacts with the charged bead and the $WP$ particle of a \ac{PW} bead is considered.
 %	WPatchedComparison		WRPComparison
 %\newgeometry{left=2.5cm,right=2.5cm}
 \begin{figure}[!ht]
@@ -26,7 +27,7 @@ In order to study if there is an increase of water beads inside the hydrophobic 
 
 As we can see from figure~(\ref{fig:WContact}a) for the standard \martini model and for the model with \ac{PME} alone we observe that the number of water contacts drop to zero in the core of the hydrophobic region. The contrary is observed for the model with the \ac{PW}, in which there is at least one contact per ns even in the core of the bilayer. Indeed we have to remark also that the persistence of the charged bead in the hydrophobic region is no more than $2$ or $3$~ns. The same behavior with the \ac{PW} model is observed also for the random \ac{NP}, shown in figure~(\ref{fig:WContact}b).
 
-These results suggest that some \ac{PW} beads are dragged inside the hydrophobic region during the forward process, but also that some \ac{PW} bead, in the opposite leaflet, can help the anchoring process forming a water finger. The same behavior can apply to the backward process too.
+These results suggest that some \ac{PW} beads are dragged inside the hydrophobic region during the forward process, but also that some \ac{PW} beads, in the opposite leaflet, can help the anchoring process forming a water finger. The same behavior can apply to the backward process too.
  
 % \begin{figure}[ht]
 % 	\center
@@ -36,9 +37,16 @@ These results suggest that some \ac{PW} beads are dragged inside the hydrophobic
 
 \section{Lipid heads dragging}
 %Trascinamento delle teste dei lipidi nelle varie salse
+As for the \ac{PW} beads, during the forward process, the same dragging effect was also noticed for the coline group (NC$3$ bead) of the entrance leaflet. In order to have a qualitatively idea of the phenomena, for all the NC$3$ beads in the entrance leaflet, we have calculated the closer to the bilayer \ac{COM} in function of the time. Then, plotting it together with the $z$ distance of the charged bead, as shown in figure~(\ref{fig:NC3Correlation}), we see an evidently correlation between them. This plot shows that when the ligand tends to approach the opposite leaflet the smallest distance of the NC$3$ beads drop to zero at the same time: this suggest that some NC$3$ bead is strongly bound to the charged bead and it tend to drag the head lipid inside the hydrophobic region. Since the flip-flopping energy for a \ac{POPC} lipid is too high, when the charged bead is too far from the entrance leaflet the NC$3$ bead detaches and go back. 
+\begin{figure}[ht]
+	\center
+	\includegraphics[width=0.9\textwidth]{./img/results/NC3Correlation}
+	\caption{Superposition of the \acs{CV} (red) and the smallest $z$ distance from bilayer \acs{COM} of the NC$3$ beads of the entrance leaflet (blue) in function of the time for a striped metadynamics run. $z>0.5$ corresponds to the anchored state. It can be noted a clear correlation between them: the NC$3$ bead closer to the bilayer \acs{COM} follow the charged bead approaching the opposite leaflet.}
+	\label{fig:NC3Correlation}
+\end{figure}
 
 % 	minDistPatched			minDistRandom11
-\begin{figure}[p]
+\begin{figure}[h!p]
 	\center
 	\subfloat[striped NP]{
 		\includegraphics[width=\textwidth]{./img/results/minDistPatched}
@@ -46,11 +54,14 @@ These results suggest that some \ac{PW} beads are dragged inside the hydrophobic
 	\subfloat[random NP]{
 		\includegraphics[width=\textwidth]{./img/results/minDistRandom11}
 	}%
-	\caption{Average distribution of the coline groups (NC3 beads) in the entrance leaflet closer to the bilayer \acs{COM} in function of the position of the charged bead in comparison with an average over ten metadynamics runs, the unbiased run and a pure \acs{POPC} run for: (a) the striped \acs{NP}; (b) the random \acs{NP}.}
+	\caption{Average distribution of the coline groups (NC3 beads) in the entrance leaflet closer to the bilayer \acs{COM} in function of the position of the charged bead in comparison with an average over ten metadynamics runs, the unbiased run and a pure \acs{POPC} run for: (a) the striped \acs{NP} and (b) the random \acs{NP}.}
+	\label{fig:NC3minDist}
 \end{figure}
 
+In order to better investigate the process and for a comparison of the dragging effect to be made, in figure~(\ref{fig:NC3minDist}) is shown an histogram of the distribution of the NC$3$ beads in the entrance leaflet closer to the bilayer \ac{COM} in function of the $z$ distance from the bilayer \ac{COM}, in a comparison with a pure \ac{POPC} bilayer, an unbiased run and an average over all the metadynamics runs for the striped \ac{NP}, figure~(\ref{fig:NC3minDist}a) and the random one, figure~(\ref{fig:NC3minDist}b). All the data are from runs with both \ac{PME} and \ac{PW}. The bin spacing is set to be $0.02$~nm for all curves and each histogram is normalized to the total number of entries. The error bar for the metadynamics runs is calculated as the standard error of the mean value.
+
 %	NC3PatchedComparison	NC3RPComparison
-\newgeometry{left=2.5cm,right=2.5cm}
+%\newgeometry{left=2.5cm,right=2.5cm}
 \begin{figure}
 	\center
 	\subfloat[striped – model comparison]{
@@ -59,9 +70,14 @@ These results suggest that some \ac{PW} beads are dragged inside the hydrophobic
 	\subfloat[striped – random comparison]{
 		\includegraphics[width=0.5\textwidth]{./img/results/NC3RPComparison}
 	}%
-	\caption{Number of contacts per ns between coline group (NC3 bead) and the charged bead in function of the position of the charged bead in the hydrophobic state. (a) For the striped \acs{NP} in comparison with different models. (b) In comparison between the striped and the random \acs{NP}s.}
+	\caption{Number of contacts per ns between coline group (NC3 bead) and the charged bead in function of the position of the charged bead in the hydrophobic state. (a) For the striped \acs{NP} in comparison with different models. (b) In comparison between the striped and the random \acs{NP}s. Data from my runs with \acs{PME} and \acs{PW}.}
+	\label{fig:NC3Contact}
 \end{figure}
-\restoregeometry
+%\restoregeometry
+
+Moreover, the same analysis for the water contacts as described in~\ref{sec:WDragging}, is made even for the contacts of the NC$3$ beads, in the entrance leaflet, with the charged bead within $0.6$~nm. The bin spacing is $0.08$~nm. The analysis results are shown in figure~(\ref{fig:NC3Contact}. In particular, in figure~(\ref{fig:NC3Contact}a) is shown a comparison with different \ac{CG} \martini models: the standard, with \ac{PME} alone and with both \ac{PME} and \ac{PW}. Instead, in figure~(\ref{fig:NC3Contact}b) is shown a comparison between the striped and the random \acp{NP} with \ac{PME} and \ac{PW}. We see that with the \ac{PW} model the contacts per ns are still appreciable even near the core of the membrane. This and the previous result confirm the dragging effect of the head lipids of the entrance leaflet by the charged bead during the forward process. In the random--striped comparison we see that this effect is less noticeable for the random \ac{NP} and and the number of contacts is globally lower respect to the striped one. This is consistence with the fact the average $z$ distance of the \ac{NP} \ac{COM} from the bilayer \ac{COM} is less for the striped than that for the random one, as shown in table~(\ref{tab:NPMembProperties}).
+
+
 
 \section{Effects of metadynamics}
 %Quanto la metadinamica sia distrittiva: comparazione tra rum unbiased e biased

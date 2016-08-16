@@ -61,7 +61,6 @@ The same dragging effect of the water beads during the forward process, is also 
 In order to better investigate such process and for a comparison with different models and \ac{NP} configurations to be made, in figure~(\ref{fig:NC3minDist}) is shown an histogram of the distribution of the NC$3$ beads in the entrance leaflet closer to the bilayer \ac{COM} in function of the $z$ distance from the bilayer \ac{COM}, in a comparison with a pure \ac{POPC} bilayer, an unbiased run and an average over all the metadynamics runs for the striped \ac{NP}, figure~(\ref{fig:NC3minDist}a) and the random one, figure~(\ref{fig:NC3minDist}b). All the data are from runs with both \ac{PME} and \ac{PW}. The bin width is $0.02$~nm for all curves and each histogram is normalized to the total number of entries. The error bar for the metadynamics runs is calculated as the standard error of the mean value.
 
 %	NC3PatchedComparison	NC3RPComparison
-%\newgeometry{left=2.5cm,right=2.5cm}
 \begin{figure}
 	\center
 	\subfloat[striped – model comparison]{
@@ -73,10 +72,8 @@ In order to better investigate such process and for a comparison with different 
 	\caption{Number of contacts per ns between coline group (NC3 bead) and the charged bead in function of the position of the charged bead in the hydrophobic state. (a) For the striped \acs{NP} in comparison with different models. (b) In comparison between the striped and the random \acs{NP}s. Data from my runs with \acs{PME} and \acs{PW}.}
 	\label{fig:NC3Contact}
 \end{figure}
-%\restoregeometry
 
 Moreover, the same analysis for the water contacts as described in~\ref{sec:WDragging}, is made even for the contacts of the NC$3$ beads in the entrance leaflet within $0.6$~nm from the charged bead. The bin width is $0.08$~nm. The analysis results are shown in figure~(\ref{fig:NC3Contact}. In particular, in figure~(\ref{fig:NC3Contact}a) is shown a comparison with different \ac{CG} \martini models: the standard, with \ac{PME} alone and with both \ac{PME} and \ac{PW}. Instead, in figure~(\ref{fig:NC3Contact}b) is shown a comparison between the striped and the random \acp{NP} with \ac{PME} and \ac{PW}. We see that with the \ac{PW} model the contacts per ns are still appreciable even near the core of the membrane. This and the previous results confirm the dragging effect of the head lipids of the entrance leaflet by the charged bead during the forward process. In the random--striped comparison we see that this effect is less noticeable for the random \ac{NP} and the number of contacts is globally lower respect to the striped one. This can be consistence with the fact that the average $z$ distance of the \ac{NP} \ac{COM} from the bilayer \ac{COM} is less for the striped than that for the random one, as shown in table~(\ref{tab:NPMembProperties}). 
-
 
 \section{Effects of metadynamics}
 %Quanto la metadinamica sia distrittiva: comparazione tra rum unbiased e biased

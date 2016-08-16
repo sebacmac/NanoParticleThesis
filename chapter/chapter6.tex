@@ -96,25 +96,25 @@ We have used the metadynamics to estimate the energy barriers of the forward and
 
 %	patchedPWContact	randon11PWContact
 % 	patchedNC3Contact	random11NC3Contact
-\newgeometry{left=2.5cm,right=2.5cm}
 \begin{figure}[p]
 	\center
-	\subfloat[striped NP]{
-		\includegraphics[width=0.5\textwidth]{./img/results/patchedPWContact}
-	}%
-	\subfloat[random NP]{
-		\includegraphics[width=0.5\textwidth]{./img/results/random11PWContact}
-	}\\%
-	\subfloat[striped NP]{
-		\includegraphics[width=0.5\textwidth]{./img/results/patchedNC3Contact}
-	}%
-	\subfloat[random NP]{
-		\includegraphics[width=0.5\textwidth]{./img/results/random11NC3Contact}
-	}
-	\caption{(a-b) Number of contacts per ns between the \acs{PW} beads and the charged bead in function of the position of the charged bead for: (a) the striped \acs{NP} and (b) the random \acs{NP}. (c-d) The same for the coline group and the charged bead  in the hydrophobic state for: (c) the striped \ac{NP} and (d) the random \acs{NP}. For each plots the number of contacts are in comparison with the corresponding unbiased runs.}
-	\label{fig:contactsUn}
+	\begin{adjustwidth}{-0.5cm}{-1.5cm}
+		\subfloat[striped NP]{
+		\includegraphics[width=0.5\linewidth]{./img/results/patchedPWContact}
+		}%
+		\subfloat[random NP]{
+		\includegraphics[width=0.5\linewidth]{./img/results/random11PWContact}
+		}\\%
+		\subfloat[striped NP]{
+		\includegraphics[width=0.5\linewidth]{./img/results/patchedNC3Contact}
+		}%
+		\subfloat[random NP]{
+		\includegraphics[width=0.5\linewidth]{./img/results/random11NC3Contact}
+		}
+		\caption{(a-b) Number of contacts per ns between the \acs{PW} beads and the charged bead in function of the position of the charged bead for: (a) the striped \acs{NP} and (b) the random \acs{NP}. (c-d) The same for the coline group and the charged bead  in the hydrophobic state for: (c) the striped \ac{NP} and (d) the random \acs{NP}. For each plots the number of contacts are in comparison with the corresponding unbiased runs.}
+		\label{fig:contactsUn}
+	\end{adjustwidth}
 \end{figure}
-\restoregeometry
 
 
 \section{NP and membrane properties}
@@ -125,8 +125,9 @@ We have used the metadynamics to estimate the energy barriers of the forward and
 	\centering
 	\begin{tabular}{lccc}
 		\toprule
-		\,		 & striped($1$:$1$)		& random($1$:$1$)		& random($1$:$2$)					\\ \toprule
-		$D^h_{\text{NP}}$ [$10^{-8}$~cm$^2$/s] & $12 \pm 2$ & $5 \pm 2$ & $5.7 \pm 0.7$ 				\\ \midrule
+		\,		& striped ($1$:$1$)		& random ($1$:$1$)		& random ($1$:$2$)		\\
+		\,		& \acs{PW}$+$\acs{PME} & \acs{PW}$+$\acs{PME} & \acs{PW}$+$\acs{PME}	\\ \toprule
+		$D^h_{\text{NP}}$ [$10^{-8}$~cm$^2$/s] & $12 \pm 2$ & $5 \pm 2$ & $5.7 \pm 0.7$ 			\\ \midrule
 		$D_{tl}$ [$10^{-8}$~cm$^2$/s] & $30 \pm 1$ & $\mathbf{25 \pm 1}$ & $\mathbf{27.8 \pm 0.1}$	\\ \midrule
 		$D_{bl}$ [$10^{-8}$~cm$^2$/s] & $\mathbf{22 \pm 2}$ & $27 \pm 3$	& $35 \pm 1$			\\ \midrule
 		$\overline{d_z}$ [nm] & $1.996 \pm 0.0016$	& $2.2794 \pm 0.0017$	& $2.7284 \pm 0.0014$	\\ \bottomrule

@@ -50,65 +50,97 @@ For a comparison between different models to be made all the distance variables 
  
 \subsection{Models comparison}
 %striped models comparison (Standard, PME, PME & PW, Atomistico)
-A comparison of the forward wall obtained for the striped (\ac{MUS}:\ac{OT} $1$:$1$) \ac{NP} with different models is shown in figure~(\ref{fig:forwardWall}) and in table~(\ref{tab:hydroTime}) are summarized the average height of the barrier with the \ac{CG} models; the height of the barrier in the atomistic case is, instead, $\Delta G = 134 \pm 5$~kJ/mol. For the \ac{PME} and the \ac{PME}+\ac{PW} versions is shown an average over ten simulations each. For the STD version is shown an average over eight simulations. The atomistic version is obtained over an average of two simulations. The error is estimated using the standard error as in the procedure described in section~\ref{sec:metadynamics}. As we can see, increasing the accuracy of the \ac{CG} model, in particular with the use of the \ac{PW} model, the \ac{CG} results are approaching the atomistic one. Despite the shift of the \ac{CV} respect to the thickness of a pure \ac{POPC} bilayer with the atomistic and the \ac{CG} models, we see that the minimum is not well align. This can be because in the metadynamics runs the thickness of the bilayer in the \ac{CG} models may change: for example, with the \ac{PW} and a striped \ac{NP} the thickness is in the range of $4$~nm to $4.4$~nm. The same slightly apply in the atomistic case too.
+A comparison of the forward wall obtained for the striped (\ac{MUS}:\ac{OT} $1$:$1$) \ac{NP} with different models is shown in figure~(\ref{fig:forwardWall}a) and in table~(\ref{tab:hydroTime}) are summarized the average height of the barrier with the \ac{CG} models; the height of the barrier in the atomistic case is, instead, $\Delta G = 134 \pm 5$~kJ/mol. For the \ac{PME} and the \ac{PME}+\ac{PW} versions is shown an average over ten simulations each. For the STD version is shown an average over eight simulations. The atomistic version is obtained over an average of two simulations. The error is estimated using the standard error as in the procedure described in section~\ref{sec:metadynamics}. As we can see, increasing the accuracy of the \ac{CG} model, in particular with the use of the \ac{PW} model, the \ac{CG} results are approaching the atomistic one. Despite the shift of the \ac{CV} respect to the thickness of a pure \ac{POPC} bilayer with the atomistic and the \ac{CG} models, we see that the minimum is not well align. This can be because in the metadynamics runs the thickness of the bilayer in the \ac{CG} models may change: for example, with the \ac{PW} and a striped \ac{NP} the thickness is in the range of $4$~nm to $4.4$~nm. The same slightly apply in the atomistic case too.
 
 As we shall see later, the order of magnitude of the energy barrier is consistence with my unbiased simulations of all \acp{NP} with the \ac{PW} in which for ten of microseconds no anchor process is observed. This suggest that the energy wall is much higher than what is observed in \cite{ourPaper}. Another sign of the increasing of the energy wall as the \ac{CG} model accuracy increase, is the time spent by the \ac{NP} in the hydrophobic state. In table~(\ref{tab:hydroTime}) is shown a comparison of the average time spent by the \ac{NP} in the hydrophobic state between different \ac{CG} models.
 \begin{table}[h!t]
 	\centering
 	\begin{tabular}{lcccc}
 		\toprule
-		\,					& STD$^a$	& \acs{PME}$^b$	& \acs{PME}$+$\acs{PW}$^b$  \\ \toprule
-	$\overline{t_{h}}$ [ns]	& $\sim 140$& $\sim 215$	& $\sim 982$			 	\\ \midrule
-	$\Delta G$ [kJ/mol] 	& $26 \pm 2$& $36 \pm 4$	& $100 \pm 5$				\\ \bottomrule
+		\,					& striped	& striped		& striped					& random \\
+		\,					& STD$^a$	& \acs{PME}$^b$	& \acs{PME}$+$\acs{PW}$^b$	& \acs{PME}$+$\acs{PW}$^b$ \\ \toprule
+	$\overline{t_{h}}$ [ns]	& $\sim 140$& $\sim 215$	& $\sim 982$				& $\sim 413$ \\ \midrule
+	$\Delta G$ [kJ/mol] 	& $26 \pm 2$& $36 \pm 4$	& $100 \pm 5$				& $61 \pm 2$ \\ \bottomrule
 	\end{tabular}
-	\caption{Summary of the metadynamics results of the striped (\acs{MUS}:\acs{OT} $1$:$1$) \acs{NP}. $\overline{t_h}$ is the average time spent in the hydrophobic state. $\Delta G$ is the average height of the forward energy wall; the error is the error standard. \footnotesize $^a$ Data obtained from \cite{ourPaper}. $^b$ Data obtained from my \acs{MD} runs.}
+	\caption{Summary of the metadynamics results for the striped and the random \acs{NP}. $\overline{t_h}$ is the average time spent by the \acs{NP} in the hydrophobic state. $\Delta G$ is the average height of the forward energy wall. The error is the standard error of the mean value. $^a$ Data obtained from \cite{ourPaper}. $^b$ Data obtained from my \acs{MD} runs.}
 	\label{tab:hydroTime}
 \end{table}
 
+%Margins: in=3cm, out=4cm
 \begin{figure}[pth]
 	\centering
-	\includegraphics[width=0.7\textwidth]{./img/results/FESModelComparison/forwardWall}%
-	\caption{\acs{FES} of the forward energy wall in function of the \acs{CV} in a comparison with different models.}%
-	\label{fig:forwardWall}%
-	\vspace*{\floatsep}%
-	\includegraphics[width=0.7\textwidth]{./img/results/FESModelComparison/forwardWallRP}%
-	\caption{\acs{FES} of the forward energy wall in function of the \acs{CV}. The green is for the striped \acs{NP}. The magenta is for the random one.}%
-	\label{fig:forwardWallRP}
+	\begin{adjustwidth}{-1.5cm}{-0.5cm}
+		\subfloat[]{%
+		\includegraphics[width=0.5\linewidth]{./img/results/forwardWall}%
+		}%
+		\subfloat[]{%
+		\includegraphics[width=0.5\linewidth]{./img/results/forwardWallRP}%
+		}%
+		\caption{\acs{FES} of the forward energy wall in function of the \acs{CV}. (a) in a comparison with different models. (b) In a comparison with the striped and the random \acp{NP} with \acs{PME} and \acs{PW}.}%
+		\label{fig:forwardWall}%
+	
+		\vspace*{\floatsep}%
+	
+		\subfloat[]{%
+		\includegraphics[width=0.5\linewidth]{./img/results/backwardWall}%
+		}%
+		\subfloat[]{%
+		\includegraphics[width=0.5\linewidth]{./img/results/backwardWallRP}%
+		}%
+		\caption{\acs{FES} of the backward energy wall in function of the \acs{CV}. (a) In a comparison with different \acs{CG} models. (b) In a comparison with the striped and the random \acp{NP} with \acs{PME} and \acs{PW}.}%	
+		\label{fig:backwardWall}	
+	\end{adjustwidth}
 \end{figure}
 
 \subsection{Striped and random comparison}
 %metadinamiche patched e random con PME e PW
-The metadynamics runs performed allow us for a comparison of the forward energy wall for both striped (\ac{MUS}:\ac{OT} $1$:$1$) and random (\ac{MUS}:\ac{OT} $1$:$1$) \acp{NP} with the \ac{PW}. The comparison is shown in figure~(\ref{fig:forwardWallRP}) and in table~(\ref{tab:hydroTimeRP}). We can confirm the trend observed in \cite{ourPaper}: the striped (\ac{MUS}:\ac{OT} $1$:$1$) \ac{NP} has an higher energy wall for the hydrophobic to one anchor state transition than that for the random (\ac{MUS}:\ac{OT} $1$:$1$) \ac{NP}. Moreover in table~(\ref{tab:hydroTimeRP}) is show a comparison of the average time spent by the \ac{NP} in the hydrophobic state between the striped and the random configuration.
+The metadynamics runs performed allow us for a comparison of the forward energy wall for both striped (\ac{MUS}:\ac{OT} $1$:$1$) and random (\ac{MUS}:\ac{OT} $1$:$1$) \acp{NP} with the \ac{PW}. The comparison is shown in figure~(\ref{fig:forwardWall}b) and in table~(\ref{tab:hydroTime}). We can confirm the trend observed in \cite{ourPaper}: the striped (\ac{MUS}:\ac{OT} $1$:$1$) \ac{NP} has an higher energy wall for the hydrophobic to one anchor state transition than that for the random (\ac{MUS}:\ac{OT} $1$:$1$) \ac{NP}. Moreover in table~(\ref{tab:hydroTime}) is show a comparison of the average time spent by the \ac{NP} in the hydrophobic state between the striped and the random configuration.
+% \begin{table}[h!t]
+% 	\centering
+% 	\begin{tabular}{lcccc}
+% 		\toprule
+% 		\,					& striped		& random		\\ \toprule
+% 	$\overline{t_{h}}$ [ns]	& $\sim 982$	& $\sim 413$	\\ \midrule
+% 	$\Delta G$ [kJ/mol] 	& $100 \pm 5$ 	& $61 \pm 2$	\\ \bottomrule
+% 	\end{tabular}
+% 	\caption{Comparison of the metadynamics result with the \ac{PW} model for the striped and random \acp{NP}. $\overline{t_h}$ is average time spent by the \acs{NP} in the hydrophobic state. $\Delta G$ is the average height of the forward energy wall; the error is the error standard. Data obtained from my \acs{MD} runs.}
+% 	\label{tab:hydroTimeRP}
+% \end{table}
+
+ 
+\section{Backward process}
+As for the forward energy wall, the same procedure was followed in order to calculate the backward energy wall. This time the metadynamics runs have to start from the anchored state. Since the available machine time, I have performed eight metadynamics runs for the striped (\ac{MUS}:\ac{OT} $1$:$1$) \ac{NP} with the standard \martini models; nine metadynamics runs for the striped (\ac{MUS}:\ac{OT} $1$:$1$) \ac{NP} with \ac{PME} and \ac{PW} and five metadynamics runs for the random (\ac{MUS}:\ac{OT} $1$:$1$) \ac{NP} with \ac{PME} and \ac{PW}. The achieved results are shown in figure~(\ref{fig:backwardWall}).
+
+This results suggest that the for- and backward processes for the striped \ac{NP} are more similar and symmetrical to each other than what is observed in \cite{ourPaper}. The random \ac{NP}, instead, shows a more stable configuration in the anchored state since the backward energy wall is higher for the random \ac{NP} then that for the striped one.
+
+In table~(\ref{tab:anchorTime}) is shown the energy wall and the average time spent by the \ac{NP} in the anchored state in a comparison between different models and configurations.
 \begin{table}[h!t]
 	\centering
 	\begin{tabular}{lcccc}
 		\toprule
-		\,					& striped		& random		\\ \toprule
-	$\overline{t_{h}}$ [ns]	& $\sim 982$	& $\sim 413$	\\ \midrule
-	$\Delta G$ [kJ/mol] 	& $100 \pm 5$ 	& $61 \pm 2$	\\ \bottomrule
+		\,					& striped		& striped		& random	\\
+		\,					& STD & \acs{PME}$+$\acs{PW} & \acs{PME}$+$\acs{PW} \\ \toprule
+	$\overline{t_{a}}$ [ns]	& $\sim 156$	& $\sim 607$	& $\sim 680$	\\ \midrule
+	$\Delta G$ [kJ/mol] 	& $34 \pm 3$ 	& $100 \pm 4$ 	& $95 \pm 4$	\\ \bottomrule
 	\end{tabular}
-	\caption{Comparison of the metadynamics result with the \ac{PW} model for the striped and random \acp{NP}. $\overline{t_h}$ is average time spent by the \acs{NP} in the hydrophobic state. $\Delta G$ is the average height of the forward energy wall; the error is the error standard. Data obtained from my \acs{MD} runs.}
-	\label{tab:hydroTimeRP}
+	\caption{Summary of the metadynamics results for the striped and the random \acp{NP}. $\overline{t_a}$ is average time spent by the \acs{NP} in the anchored state. $\Delta G$ is the average height of the backward energy wall. The error is the standard error of the mean value. Data obtained from my \acs{MD} runs.}
+	\label{tab:anchorTime}
 \end{table}
-
- 
-\section{Backward process: preliminary results}
-
 
 \section{Discussion of the results}
 In order to understand the order of magnitude of the forward energy wall, the process of the charged bead translocation through the membrane can be thermodynamically compared to two main processes: the ion membrane translocation and the lipid flip--flopping in a pure \ac{POPC} bilayer.
 
-For the first comparison, in \cite{PW} the authors have computed the \ac{FES} of the translocation of one Na$^+$ and one Cl$^-$ ions across a \acs{DPPC} membrane using umbrella sampling and the \ac{WHAM} with the standard \martini \ac{FF}, with the \ac{PW} alone and with \ac{PW}$+$\ac{PME}. The height of the barriers are summarized in table~(\ref{tab:ionTranslocation}). The same \ac{FES} for a \acs{DMPC} membrane was calculated by Khavrutskii \etal\, \cite{atomisticTranslocation} with an atomistic \ac{FF}. Since the \martini model for the \acs{DPPC} lipid also model the \acs{DMPC} lipid a comparison can be made and it is shown in table~(\ref{tab:ionTranslocation}). As one can see, from left to right, increasing the loyalty of the treatment of the electrostatic interaction the \martini \ac{FF} approach the results of the atomistic \ac{FF}, as we see also in figure~(\ref{fig:forwardWall}). Moreover for what concern the \ac{PW}$+$\ac{PME} result it are comparable to one obtained in our forward energy wall as we can see from table~(\ref{tab:hydroTimeRP}). Moreover in \cite{PW}, in accordance with the atomistic results in \cite{atomisticTranslocation}, for small cross membrane ions imbalance and only with the use of the \ac{PW} model and the \ac{PME} method, they observe some ion leakage without pore formation but still mediated by a water defect inside the membrane, called \textit{water finger} that help the ions to cross the hydrophobic region of the membrane.
+For the first comparison, in \cite{PW} the authors have computed the \ac{FES} of the translocation of one Na$^+$ and one Cl$^-$ ions across a \acs{DPPC} membrane using umbrella sampling and the \ac{WHAM} with the standard \martini \ac{FF}, with the \ac{PW} alone and with \ac{PW}$+$\ac{PME}. The height of the barriers are summarized in table~(\ref{tab:ionTranslocation}). The same \ac{FES} for a \acs{DMPC} membrane was calculated by Khavrutskii \etal\, \cite{atomisticTranslocation} with an atomistic \ac{FF}. Since the \martini model for the \acs{DPPC} lipid also model the \acs{DMPC} lipid a comparison can be made and it is shown in table~(\ref{tab:ionTranslocation}). As one can see, from left to right, increasing the loyalty of the treatment of the electrostatic interaction the \martini \ac{FF} approach the results of the atomistic \ac{FF}, as we see also in figure~(\ref{fig:forwardWall}). Moreover for what concern the \ac{PW}$+$\ac{PME} result it are comparable to one obtained in our forward energy wall as we can see from table~(\ref{tab:hydroTime}). Moreover in \cite{PW}, in accordance with the atomistic results in \cite{atomisticTranslocation}, for small cross membrane ions imbalance and only with the use of the \ac{PW} model and the \ac{PME} method, they observe some ion leakage without pore formation but still mediated by a water defect inside the membrane, called \textit{water finger} that help the ions to cross the hydrophobic region of the membrane.
 %We remark that, these kind of phenomena, are totally absent using the standard \martini \ac{FF}. Hence, as already outlined, the importance to use a better treatment of the electrostatic interaction and a better model for water solvent.
 \begin{table}[h!t]
 	\centering
 	\begin{tabular}{lcccc}
 		\toprule	
-		\,		& STD 	& \acs{PW} 	& \acs{PW}$+$\acs{PME} 	& atomistic	\\ \toprule
+		\,		& STD$^a$ 	& \acs{PW}$^a$ 	& \acs{PW}$+$\acs{PME}$^a$ 	& atomistic$^b$	\\ \toprule
 		Na$^+$	& $68.0$& $67.6$	& $78.6$				& $91.7$ 	\\ \midrule
 		Cl$^-$	& $69.2$& $70.4$	& $99.0$				& $98.8$	\\ \bottomrule
 	\end{tabular}
-	\caption{Height of the energy barrier (in kJ/mol) for Na$^+$ and Cl$^-$ ion translocation across a bilayer. The \martini results are based on a \acs{DPPC} membrane and are taken from \cite{PW}. The atomistic are based on a \acs{DMPC} membrane and are taken from \cite{atomisticTranslocation}.}
+	\caption{Height of the energy barrier (in kJ/mol) for Na$^+$ and Cl$^-$ ion translocation across a bilayer. $^a$ results based on a \acs{DPPC} membrane, taken from \cite{PW}. $^b$ results based on a \acs{DMPC} membrane, taken from \cite{atomisticTranslocation}.}
 	\label{tab:ionTranslocation}
 \end{table}
 

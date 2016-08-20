@@ -1,4 +1,4 @@
-\documentclass[a4paper,11pt,cleardoubleempty,abstracton]{scrbook}
+\documentclass[a4paper,11pt,cleardoubleempty,bibliography=totoc]{scrbook}
 \usepackage{setspace}
 \usepackage[eulermath,pdfspacing,beramono,dottedtoc,subfig,linedheaders,eulerchapternumbers]{classicthesis}
 \usepackage{arsclassica}
@@ -23,7 +23,7 @@
 \usepackage{leftidx}
 \usepackage{fancyvrb}
 \usepackage{enumitem}
-\usepackage{multirow}
+%\usepackage{multirow}
 \usepackage{biblatex}
  \addbibresource{biblio.bib}
 
@@ -54,34 +54,46 @@
 
 \begin{document}
 
-\pagestyle{empty}
-\clearscrheadfoot
 \frontmatter
+\pagestyle{scrheadings}
+\clearscrheadfoot
+\rohead{\pagemark}
+\lehead{\pagemark\qquad\leftmark}
 
 %*--------------------------------------*
 %|***************TITLEPAGE**************|
 %*--------------------------------------*
-%\include{Frontespizio}
-\newgeometry{left=3cm,right=3cm,top=5cm,bottom=5cm}
+%\include{frontespizio}
+\newgeometry{left=3cm,right=3cm,top=4cm,bottom=3cm}
 \begin{titlepage}
 \begin{center}
+	\begin{figure}[h!t]
+		\center
+		\includegraphics[width=0.22\textwidth]{./unige.png}
+	\end{figure}
+	\spacedallcaps{\Large University of Genoa}\\
+	\noindent\rule{\textwidth}{0.5pt}\\
+	\spacedlowsmallcaps{Physics department}\\
+	\spacedlowsmallcaps{Master degree in Physics}
 	~\\[3cm]
-    \spacedallcaps{Kinetics and thermodynamics of interaction between monolayer--protected,
-charged metal nanoparticles and model biological membranes}\\\bigskip
+    \textcolor{BrickRed}{\large \spacedallcaps{Kinetics and thermodynamics of interaction between monolayer--protected, charged metal nanoparticles and model biological membranes}}
+	~\\[3cm]
     \spacedlowsmallcaps{sebastian salassi} \\
 \end{center}
 \vfill
 \noindent
-\textsc{\sffamily Supervisor: Dr. Giulia Rossi}
-~\\[0.5cm]
+\textsc{\sffamily Supervisor: Dr. Giulia Rossi}%
+~\\[0.3cm]
 \textsc{\sffamily Advisor: Prof. Annalisa Relini}%
+~\\[0.3cm]
+\textsc{\sffamily Accademic year: $2015/2016$}
 \end{titlepage}
 \restoregeometry
 
 %*--------------------------------------*
 %|*************DEDICATION***************|
 %*--------------------------------------*
-\clearpage
+\cleardoublepage
 ~\\[3cm]
 \begin{flushright}\footnotesize
 	\textsl{What do you get if you multiply six by nine?}\\
@@ -111,7 +123,6 @@ charged metal nanoparticles and model biological membranes}\\\bigskip
 
 \clearscrheadfoot
 \pagestyle{scrheadings}
-
 \rohead{\rightmark\qquad\pagemark}
 \lehead{\pagemark\qquad\leftmark}
 
@@ -138,9 +149,10 @@ charged metal nanoparticles and model biological membranes}\\\bigskip
 %*--------------------------------------*
 %|*************BIBLIOGRAPHY*************|
 %*--------------------------------------*
-\newpage
 \clearscrheadfoot
-\addtocontents{toc}{\protect\vspace{\beforebibskip}}\addcontentsline{toc}{chapter}{}
+\pagestyle{scrheadings}
+\rohead{\pagemark}
+\lehead{\pagemark\qquad\leftmark}
 \printbibliography
 
 \end{document}

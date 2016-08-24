@@ -291,14 +291,12 @@ with different models
 	\centering
 	\begin{tabular}{lcccc}
 		\toprule
-		\,				& STD$^a$	& \acs{PME}$^b$	& \acs{PME} + \acs{PW}$^b$ & atomistic$^c$ 	 \\ \toprule
-		$D$	[$10^{-8}$~cm$^2$/s]	& $\sim62$	& $44 \pm 4$	& $32.4 \pm 0.7$ & $7.8 \pm 0.9$ \\ \midrule
-		$D_{tl}$ [$10^{-8}$~cm$^2$/s] & -		& $36.9 \pm 0.4$& $35 \pm 1$	 & $6.8 \pm 0.2$ \\ \midrule
-		$D_{bl}$ [$10^{-8}$~cm$^2$/s] & -		& $45 \pm 3$	& $30.0 \pm 0.6$ & $9.3 \pm 0.1$ \\ \midrule
-		$\overline{A}$ [nm$^2$]		  & $0.65$	& $0.630$		& $0.635$		 & $0.688$		 \\ \midrule
-		$\overline{t}$ [nm]			  & $4.16$	& $4.29$		& $4.26$ 		 & $3.66$		 \\ \bottomrule
+		\,				& STD$^a$	& \acs{PME}$^b$	& \acs{PME} + \acs{PW}$^b$	& atomistic$^c$ \\ \toprule
+		$D$	[$10^{-8}$~cm$^2$/s]	& $\sim62$	& $43.3 \pm 0.7$ & $31 \pm 1$	& $8.0 \pm 0.4$	\\ \midrule
+		$\overline{A}$ [nm$^2$]		& $0.65$	& $0.630$		 & $0.635$		& $0.688$		\\ \midrule
+		$\overline{t}$ [nm]			& $4.16$	& $4.29$		 & $4.26$ 		& $3.66$		\\ \bottomrule
 	\end{tabular}
-	\caption{Summary of main properties of a pure \acs{POPC} bilayer in comparison with different models. $D$ is the lateral diffusion coefficient of a lipid: in the whole bilayer ($D$), in top leaflet ($D_{tl}$) and in the bottom leaflet ($D_{bl}$). $\overline{A}$ is the average area per lipid. $\overline{t}$ is the bilayer thickness as the average distance of the sulphate group. \footnotesize $^a$ Data obtained from \cite{Rossi2014}. $^b$ Data obtained from my \ac{MD} runs. $^c$ Data obtained from \ac{MD} runs by Federica Simonelli.}
+	\caption{Summary of main properties of a pure \acs{POPC} bilayer in comparison with different models. $D$ is the lateral diffusion coefficient of a lipid. $\overline{A}$ is the average area per lipid. $\overline{t}$ is the bilayer thickness as the average distance of the phosphate groups. \footnotesize $^a$ Data from \cite{Rossi2014}. $^b$ Data obtained from my \ac{MD} runs. $^c$ Data courtesy of Federica Simonelli.}
 	\label{tab:POPCData}
 \end{table}
 
@@ -389,22 +387,27 @@ former than that for the latter.
 \label{sec:preliminaryMetadyn}
 To quantify the thermodynamic behavior, Simonelli \etal\, performed metadynamics calculations. In particular, in 
 order to estimate the energy barrier for the anchoring process, metadynamics was used to enhance the sampling of 
-the transition of the first anchoring ligand from the entrance leaflet to the opposite one. The metadynamics bias 
-was apply to the $z$ component of the distance between the center of charged bead and the \ac{COM} of the 
-\ac{POPC} bilayer. Then, starting from the hydrophobic state the metadynamics simulations begin biasing the 
-charged bead. The convergence of such a run is achieved when the charged bead is able to freely diffuse across 
+the transition of the first anchoring ligand from the entrance leaflet to the opposite one. The metadynamics bias potential was applied to the $z$ component of the distance between the center of one charged ligand terminal and the \ac{COM} of the \ac{POPC} bilayer, as shown in figure~(\ref{fig:CVRappresentation}). This distance is thus the \ac{CV}.
+\begin{figure}[ht!]
+	\center
+	\includegraphics[width=0.8\textwidth]{./img/CV}
+	\caption{Schematic representation of the chosen \acs{CV} and the bias potential deposition along the \acs{CV} space. The richer dashed line is the center of the bilayer.}
+	\label{fig:CVRappresentation}
+\end{figure}
+
+The convergence of such a run is achieved when the charged bead is able to freely diffuse across 
 the membrane. As the size and the complexity of the system does not allow to achieve the convergence, not even at 
 \ac{CG} level, the authors decided to perform different statistically independent metadynamics runs and stop each 
-\begin{figure}[!b]
+simulation at the recrossing process of the biased ligand. A recrossing is determined when the charged bead is 
+$0.5$~nm above the \ac{COM} of the membrane in the leaflet of entrance. The resulting \ac{FES} profile, shown in 
+figure~(\ref{fig:NPFES}), is obtained averaging the statistically independent runs. The errorbars are the 
+standard error of the independent runs, as described in \ref{sec:metadynamics}.
+\begin{figure}[!th]
 	\centering
 	\includegraphics[width=0.6\textwidth]{./img/NPFES}
 	\caption{Free energy profile related to the transfer of a negatively charged ligand from the entrance leaflet to the opposite one. The blue is related to the striped (\ac{MUS}:\ac{OT} $1$:$1$) configuration while the red to the random (\ac{MUS}:\ac{OT} $1$:$1$) configuration. Metadynamics data are shown with errorbars, while the red dashed line are hypothesized profiles for the stage $2$ to stage $3$ transition of random \acp{NP}. Gray shades show the position of the polar head beads (AU). Taken from \cite{ourPaper}.}
 	\label{fig:NPFES}
 \end{figure}
-simulation at the recrossing process of the biased ligand. A recrossing is determined when the charged bead is 
-$0.5$~nm above the \ac{COM} of the membrane in the leaflet of entrance. The resulting \ac{FES} profile, shown in 
-figure~(\ref{fig:NPFES}), is obtained averaging the statistically independent runs. The errorbars are the 
-standard error of the independent runs, as described in \ref{sec:metadynamics}.
 
 For the striped arrangement, the crossing barrier to reach the saddle point, located at $0.5$~nm off the \ac{COM} 
 of \ac{POPC}, is of the order of $\sim 22$~kJ/mol. While the recrossing energy barrier is approximately twice as 

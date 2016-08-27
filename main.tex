@@ -23,7 +23,6 @@
 \usepackage{leftidx}
 \usepackage{fancyvrb}
 \usepackage{enumitem}
-%\usepackage{multirow}
 \usepackage{biblatex}
  \addbibresource{biblio.bib}
 
@@ -43,14 +42,20 @@
 
 \newcommand{\textacr}[1]{\spacedlowsmallcaps{\large #1}\normalfont}
 \newcommand{\ave}[1]{\left \langle #1 \right \rangle}
-\newcommand{\etal}[1]{\textit{et al.}}
+\newcommand{\etal}{\textit{et al.} }
 \newcommand{\erf}[1]{\text{erf}#1 }
 \newcommand{\erfc}[1]{\text{erfc}#1 }
 \newcommand{\martini}{\textacr{MARTINI} }
 \newcommand{\gromacs}{\textacr{GROMACS} }
 \newcommand{\plumed}{\textacr{PLUMED} }
 
-%\includeonly{./chapter/chapter1-2}
+%Command for the introduction style
+\newcommand{\nocontentsline}[3]{}
+\newcommand{\tocless}[2]{\bgroup\let\addcontentsline=\nocontentsline#1{#2}\egroup}
+\newcommand\introductionStyle{
+  \titleformat{\section}{\normalfont\large\sffamily}{\textsc{\MakeTextLowercase{\Roman{section}\ \ --\!\!\!}}}{1em}{\spacedlowsmallcaps}
+}
+
 
 \begin{document}
 
@@ -86,7 +91,7 @@
 ~\\[0.3cm]
 \textsc{\sffamily Advisor: Prof. Annalisa Relini}%
 ~\\[0.3cm]
-\textsc{\sffamily Accademic year: $2015/2016$}
+\textsc{\sffamily Academic year: $2015/2016$}
 \end{titlepage}
 \restoregeometry
 
@@ -140,8 +145,6 @@
 \include{./chapter/chapter4} %Model of cell membrane and monolayer--protected NP
 
 \include{./chapter/chapter5} %Free energy calculations
-
-%\include{./chapter/chapter6} %Molecular description of the process
 
 \include{./chapter/chapter7}
 

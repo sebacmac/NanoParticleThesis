@@ -50,12 +50,9 @@
 \newcommand{\plumed}{\textacr{PLUMED} }
 
 %Command for the introduction style
-\newcommand{\nocontentsline}[3]{}
-\newcommand{\tocless}[2]{\bgroup\let\addcontentsline=\nocontentsline#1{#2}\egroup}
-\newcommand\introductionStyle{
-  \titleformat{\section}{\normalfont\large\sffamily}{\textsc{\MakeTextLowercase{\Roman{section}\ \ --\!\!\!}}}{1em}{\spacedlowsmallcaps}
-}
-
+%\newcommand{\nocontentsline}[3]{}
+%\newcommand{\tocless}[2]{\bgroup\let\addcontentsline=\nocontentsline#1{#2}\egroup}
+\newcommand\introductionStyle{\titleformat{\section}{\normalfont\large\sffamily}{\textsc{\MakeTextLowercase{\Roman{section}\ \ --\!\!\!}}}{1em}{\spacedlowsmallcaps}}%
 
 \begin{document}
 

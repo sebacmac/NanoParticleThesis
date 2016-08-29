@@ -2,29 +2,29 @@
 \chapter{Introduction to Molecular Dynamics}
 \label{chap:methods}
 For macroscopic bodies, the motion of a system in time and space is governed by the classical equations of
-motion, say Newton’s laws, while reducing time and space scales, quantum mechanics kicks in. Despite the latter
-statement, classical laws of motion have proved to be a good approximation also at the molecular level, as long
+motion, say Newton’s laws, while reducing time and space scales, quantum mechanics kicks in. Despite this, 
+classical laws of motion have proved to be a good approximation also at the molecular level, as long
 as atoms are massive enough.
 
-In order to predict the time evolution of a complete system, such as the biomolecular system we will treat in
-this thesis, Newton’s equations of motion need to be integrated numerically. The necessity of a numerical
-integration arises from the complexity of the interactions involved in realistic systems, often nonlinear
-functions of positions and momenta of the particles, which makes it impossible to obtain an analytical solution
-for the equations of motion.
+In order to predict the time evolution of a system composed by a large number of atoms and molecules, such as the
+biomolecular system we will treat in this thesis, Newton’s equations of motion need to be integrated numerically. 
+The necessity of a numerical integration arises from the complexity of the interactions involved in realistic 
+systems, often nonlinear functions of positions and momenta of the particles, which makes it impossible to obtain 
+an analytical solution for the equations of motion.
 
 In the first part of this chapter the laws of classical and statistical mechanics will be briefly summarized.
-Then we will introduce the computational \acf{MD} method and analyze the main aspects of this technique with some
-details about the \textit{empirical} \ac{FF}: the container of system model and parameters under study. This
-includes the way to consider and treat the inter--particle interactions at \ac{MD} level. Then, coarse--graining
-procedure are introduced, with particular attention to the \martini \ac{FF}, the main \ac{FF} used in this thesis
-work. Lastly advanced sampling techniques are explained: the \textit{Umbrella Sampling} and
+Then we will introduce the computational \acf{MD} method and the \textit{empirical} \acf{FF}, that is the 
+classical models for inter--particle interactions, used in this thesis. We will describe briefly atomistic 
+\ac{FF}, which explicitly represent each atom in the system under study; then, we will present more in detail 
+\acf{CG} \ac{FF}, and in particular the \martini \ac{FF} used in this work. Eventually, advanced sampling 
+techniques are explained: the \textit{Umbrella Sampling} and
 \textit{Metadynamics}. This introductory chapter are based on the books of Tuckerman \cite{Tuckerman}, Leach
 \cite{Leach}, Frenkel and Smit \cite{Frenkel} and Allen and Tildesley \cite{Allen} to which the reader is
 addressed for a more complete discussion.
 
 \section{Review of classical mechanics}
 Let us consider a system of $N$ particles with mass $m_i$ and coordinates $\vec r_1,\dots,\vec r_N$. According
-to the Newton's second low each particle will experience a total force $\vec F_i$ such that
+to the Newton's second law each particle will experience a total force $\vec F_i$ such that
 \begin{equation}
 	m_i \ddot{\vec{r}}_i = \vec F_i(\vec r_1,\dots,\vec r_N)
 	\label{eq:newtonLaw}
@@ -58,7 +58,7 @@ microstates of a system generate a $6N$--dimensional space called \textit{phase 
 with $\Omega$. Thus $\vec x(t)$ describes a particular trajectory in the phase space, i.e. the system evolution
 is the motion of a phase space point. For simplicity of notation let us introduce also the ordered vectors
 $\vec r = (\vec r_1, \dots, \vec r_N)$, $\dot{\vec r} = (\dot{\vec{r}}_1,\dots,\dot{\vec{r}}_N)$ and
-$\vec p = (\vec p_1, \dots, \vec p_N)$ which are the coordinates, velocities and momenta off all particles.
+$\vec p = (\vec p_1, \dots, \vec p_N)$ which are the coordinates, velocities and momenta of all particles.
 
 Let us suppose that all the forces acting on the $N$--particle system are conservative; this means that it must
 exist a scalar function $U = U(\vec r)$ called \ac{PEF}, such that
@@ -76,7 +76,7 @@ The kinetic energy of the system is defined as
 \end{equation}
 
 If the system is conservative we can define a scalar function, called \textit{Lagrangian} of the system
-\graffito{Lagrangian formalism}
+%\graffito{Lagrangian formalism}
 \begin{equation}
 	\mathcal{L}(\vec r,\dot{\vec r}) = K(\dot{\vec r}) - U(\vec r)
 	\label{eq:lagrangian}
@@ -103,7 +103,7 @@ and~\eqref{eq:momentaLagrangian} let us to express the kinetic energy in the for
 \end{equation}
 
 To describe the system we can define another scalar function, called \textit{Hamiltonian} of the system
-\graffito{Hamiltonian formalism}
+%\graffito{Hamiltonian formalism}
 \begin{equation*}
 	\mathcal{H}(\vec r, \vec p) = \sum_{i=0}^N \vec p_i \cdot \dot{\vec r}_i(\vec p_i) - \mathcal{L}(\vec r, \dot{\vec r}(\vec p))
 \end{equation*}
@@ -148,9 +148,9 @@ properties.
 
 The most important concept that makes this idea practicable is the \textit{statistical ensemble}. Based on the
 previous considerations, a general definition of an ensemble is \textit{a collection of systems subject to a set
-\graffito{statistical ensemble concept}
+%\graffito{statistical ensemble concept}
 of common interactions and sharing the same macroscopic properties}. This concept lays the foundations of
-thermodynamic and suggests a procedure to compute many macroscopic observables. In more details a
+thermodynamics and suggests a procedure to compute many macroscopic observables. In more details a
 $N$--particle system in a specific microscopic state is described by its microstate $\vec x$, then \textit{an
 ensemble is a set of points in the phase space that are subject to the constraint to be part of the ensemble
 itself}. Each system evolves in time with the equations of motion, so the time evolution of an ensemble is
@@ -177,10 +177,10 @@ defined as
 	\ave{A}(t) = \int_\Omega A(\vec x)\rho(\vec x, t)\ dx
 \end{equation*}
 For an ensemble at thermodynamic equilibrium the macroscopic state is fixed and so, if $A$ is an equilibrium
-observable, it must be time--independent. Thus, it can be shown \cite{Tuckerman} that exist a scalar function of
-the Hamiltonian $\mathit{f}(\mathcal{H}(\vec x))$ such that the time--independent ensemble average of the
+observable, it must be time--independent. Thus, it can be shown \cite{Tuckerman} that it exists a scalar function 
+of the Hamiltonian $\mathit{f}(\mathcal{H}(\vec x))$ such that the time--independent ensemble average of the
 equilibrium observable $A$ can be expressed as
-\graffito{ensemble averages}
+%\graffito{ensemble averages}
 \begin{equation*}
 	\ave{A} = \frac{1}{\mathcal{Z}} \int_\Omega A(\vec x, t) \mathit{f}(\mathcal{H}(\vec x))\ dx
 \end{equation*}
@@ -216,7 +216,7 @@ value of the observable
 \end{equation*}
 In order for a comparison to be made, an identity between ensemble and time averages must be established.
 This link is provided by the \textit{ergodic theorem} and the \textit{ergodic hypothesis}. A system is said to be
-\graffito{ergodic theorem and ergodic hypothesis}
+%\graffito{ergodic theorem and ergodic hypothesis}
 ergodic if, over a long period of time, all the microstates in the phase space with the same energy are
 accessible with the same probability. Then the ergodic theorem says that, if the system is ergodic, the time and
 ensemble averages are equal \textit{almost everywhere} in the phase space. So we can write the follow identity
@@ -278,9 +278,9 @@ equilibrium
 	\ave{K} = \ave{ \sum_{i=1}^{N}\sum_{\alpha=1}^{3}\frac{p_{i+\alpha}^2}{2m_i} } = \ave{\sum_{i=1}^{N}\frac{\vec p_i\cdot \vec p_i}{2m_i}} = \frac{3}{2}Nk_B T
 	\label{eq:kineticT}
 \end{equation}
-this is like the well know equipartition theorem in which $3N$ is the number of \ac{DOF}.
+this is like the well know equipartition theorem in which $3N$ is the number of \ac{DOF} of the system.
 
-\paragraph{\textbf{Pressure}} Choosing $x_i = r_i$ in equation~\eqref{eq:virial} and summing both side over all
+\paragraph{\textbf{Pressure}} Choosing $x_i = r_i$ in equation~\eqref{eq:virial} and summing both sides over all
 particles and substituting equations~\eqref{eq:eqhamilton} and~\eqref{eq:kineticT}, we obtain
 \begin{equation*}
 	W = \ave{\sum_{i=1}^{3N} r_i\dot p_i} = -3Nk_B T = - 2 \ave{K}
@@ -311,7 +311,7 @@ temperature ($T$). This is useful in many chemical, biological and physical syst
 reported in conditions of standard temperature and pressure. To maintain the system at constant temperature and
 pressure it is necessary to couple it with an external \textit{temperature bath} and a \textit{pressure bath}.
 The first one can be considered simply a very big system at constant temperature with a high thermal capacity.
-The second can be idealized like a piston connected to the system: it change the volume in order to adjust the
+The second can be idealized like a piston connected to the system: it changes the volume in order to adjust the
 pressure. The instantaneous work done by the system against the external piston is defined by $pV$, where $V$ is
 the instantaneous system volume. Then we have to correct the Hamiltonian of the system:
 $\mathcal{H}(\vec x) \rightarrow \mathcal{H}(\vec x) + pV$. The partition function is then defined considering
@@ -345,13 +345,13 @@ and $\vec c$
 	\end{pmatrix}
 	\label{eq:volumeMatrix}
 \end{equation}
-so that its volume is $V = \vec a\cdot \vec b\times \vec c = |\det{ \mathbold{H}}|$. The partition function become
+so that its volume is $V = \vec a\cdot \vec b\times \vec c = |\det{ \mathbold{H}}|$. The partition function becomes
 \begin{equation*}
 	Z_{NpT} = \frac{1}{N!h^{3N}}\int\ d \mathbold{H} \ \int_\Omega \frac{1}{(\det{H})^2} e^{-\beta(\mathcal{H}(\vec x) + p|\det{ \mathbold{H}}|)}\ dx
 \end{equation*}
 where $\int\ d\mathbold{H}$ is an integral over all nine components of $\mathbold{H}$. Hence, the instantaneous
 pressure can no longer be described by a single quantity. Instead a $3\times 3$ pressure matrix $ \mathbold{P}$
-is needed. What one find, if the system is isotropically coupled, is that on average, this pressure matrix
+is needed. What one finds, if the system is isotropically coupled, is that on average, this pressure matrix
 reduces to a diagonal pressure matrix such that
 \begin{equation*}
 	\text{Tr}\ave{ \mathbold{P}} = 3p
@@ -361,23 +361,22 @@ reduces to a diagonal pressure matrix such that
 \newpage
 \section{Molecular Dynamics simulation}
 \label{sec:MD}
-\acf{MD} is a set of techniques that allow us to prepare a ``computer experiments'' in which solving numerically
-the classical equations of motion of a virtual system we are able to know its time evolution. Such virtual
-experiment approach has the advantage that many experiments can be set up with different initial conditions
-and/or with different control parameters, such as temperature or pressure. Obviously that experiment is carried
-out using a model that approximates the real system. The main parts of that model are the information required to
-obtain an approximation of the interactions among all system particles, i.e. to compute the \ac{PEF} from which
-the forces are derived by equation~\eqref{eq:pefForces}.
+Molecular dynamics \ac{MD} is a set of techniques that allows us to prepare a ``computer experiment'' in which 
+solving numerically the classical equations of motion of a virtual system we are able to know its time evolution. 
+Such virtual experiment approach has the advantage that many experiments can be set up with different initial 
+conditions and/or with different control parameters, such as temperature or pressure. Obviously that experiment is 
+carried out using a model that approximates the real system. The main parts of that model are the information 
+required to obtain an approximation of the interactions among all system particles, i.e. to compute the \ac{PEF} 
+from which the forces are derived by equation~\eqref{eq:pefForces}.
 
-Solving the equations of motion with a numerical
-integrator, an \ac{MD} simulation generates a set of phase space vectors, a \textit{trajectory}, at discrete
-times that are multiples of the fundamental time discretization parameter, called \textit{MD time step},
-$\delta t$. Starting from an initial phase space vector $\vec x(0)$, at each step, the forces are computed from
-the \ac{PEF}. Then the equations of motion are integrated and a new phase space vector $\vec x(\delta t)$ is
-generated, thus a new set of forces is computed and so on. In order to compute time averages we need to
-discretize equation~\eqref{eq:ergotic} so the time integration is substituted with a summation over the collected
-data at certain time step $\Delta \tau = i \delta t$, $i=1,2,3,\dots$. If $i > 1$ only a subset of the collected
-data is used to compute time averages. The formula becomes
+Solving the equations of motion with a numerical integrator, an \ac{MD} simulation generates a set of phase space 
+vectors, a \textit{trajectory}, at discrete times that are multiples of the fundamental time discretization 
+parameter, called \textit{MD time step}, $\delta t$. Starting from an initial phase space vector $\vec x(0)$, at 
+each step, the forces are computed from the \ac{PEF}. Then the equations of motion are integrated and a new phase 
+space vector $\vec x(\delta t)$ is generated, thus a new set of forces is computed and so on. In order to compute 
+time averages we need to discretize equation~\eqref{eq:ergotic} so the time integration is substituted with a 
+summation over the collected data at certain time steps $\Delta \tau = i \delta t$, $i=1,2,3,\dots$. If $i > 1$ 
+only a subset of the collected data is used to compute time averages. The formula becomes
 \begin{equation}
 	\ave{A} = \frac{1}{M}\sum_{n=1}^M A(\vec x(n\Delta \tau))
 	\label{eq:MDTimeAve}
@@ -388,7 +387,7 @@ of \ac{MD} steps. An \ac{MD} simulation can be summarized in the scheme in figur
 \centering
 \begin{tikzpicture}[scale=0.8, transform shape]
 	\node[rectangle,draw,rounded corners,very thin,minimum width=6cm,minimum height=1.5cm,text width=6cm,align=center] (A) at (0,10) {Initial conditions \\ and parameters are set};
-	\node[rectangle,draw,rounded corners,very thin,minimum width=6cm,minimum height=1.5cm,text width=6cm,align=center] (B)  at (0,7.5) {Calculation of forces \\ from \ac{PEF} is performed};
+	\node[rectangle,draw,rounded corners,very thin,minimum width=6cm,minimum height=1.5cm,text width=6cm,align=center] (B)  at (0,7.5) {Calculation of forces \\ from \acs{PEF} is performed};
 	\node[rectangle,draw,rounded corners,very thin,minimum width=6cm,minimum height=1.5cm,text width=6cm,align=center] (C)  at (0,5) {\footnotesize Equations of motion are integrated to obtain the new phase space vector};
 	\node[rectangle,draw,rounded corners,very thin,minimum width=6cm,minimum height=1.5cm,text width=6cm,align=center] (D)  at (0,2.5) {Averages are computed \\ by equation~(\ref{eq:MDTimeAve})};
 	\node[rectangle,draw,rounded corners,very thin,minimum width=6cm,minimum height=1.5cm,text width=6cm,align=center] (E)  at (0,0) {END};
@@ -411,7 +410,7 @@ setting up the initial configuration.
 
 Setting up an initial configuration means to prepare an $N$--particle system and assign all particle positions
 and velocities, i.e. all the $6N$ coordinates of the initial phase space vector $\vec x(0)$. A common choice to
-assign the initial velocities is to extract they randomly from the Maxwell--Boltzmann distribution function at a
+assign the initial velocities is to extract them randomly from the Maxwell--Boltzmann distribution function at a
 specific system's temperature
 \begin{equation*}
 	f(v_i) = \sqrt{\frac{m_i}{2\pi k_B T}}e^{-\left ( \frac{m_iv_i^2}{2k_B T}\right )}
@@ -432,7 +431,7 @@ infinite bulk system, \ac{PBC} are imposed to the simulation box. This gives us 
 system's bulk proprieties without considering a too large number of particles.
 \begin{SCfigure}
 	\includegraphics[width=0.4\textwidth]{./img/PBCScheme/PBCScheme}
-	\caption{Schematic view of a two--dimensional box with \acs{PBC} imposed. The central, red contoured, box is the simulation box and it is replicated along each side.}
+	\caption{Schematic view of a two--dimensional box with \acs{PBC} imposed. The central, red contoured, box is the simulation box and it is replicated along each side.}%
 	\label{fig:pbc}
 \end{SCfigure}
 To give a better idea, in figure~(\ref{fig:pbc}) an example of a two--dimensional box with \ac{PBC} is shown. The
@@ -441,27 +440,27 @@ that there are no surface particles nor walls in the central box. When a particl
 its images virtually move the same way in the copies of the box so that if a particle leaves the virtual boundary
 of the central box, then, its nearest image enters the box and the number density of particles in the simulation
 box is conserved. This virtual movement of image particles is achieved adjusting the positions of the simulation
-box particles which have left the main box. For example, if one use a cubic box and a particle crosses its
+box particles which have left the main box. For example, if one uses a cubic box and a particle crosses its
 boundary in one direction, say the $x$ direction, then its coordinate is corrected by subtracting (if it leaves
 the box in the positive direction) or adding the box side length parallel to $x$ direction. Only box geometries
 compatible with translational symmetry can be used. For example, nether a spherical nor a icosahedral box could
-do the job. However when it is possible one have to use the most appropriate shape to better describe the
-symmetry of the system, otherwise a closest approximation, compatible with \ac{PBC}, must be used.
+do the job. However when it is possible one has to use the most appropriate shape to better describe the
+symmetry of the system, otherwise a close approximation, compatible with \ac{PBC}, must be used.
 
 Even if \ac{PBC} are used in a wide range of applications, it must be taken into account that imposing
 periodicity to a system may affect its properties. A clear limitation of the periodic cell is that it is not
-possible to achieve fluctuations that have a wavelength greater then the cell length. This cause, obviously, the
-impossibility to sample those vibrating modes. Another problem arises with the range of the inter--particles
-interactions: one have to choose carefully the size of the simulation box, or the number of particles if an $NPT$
+possible to achieve fluctuations that have a wavelength greater then the cell length. This causes, obviously, the
+impossibility to sample those vibrating modes. Another problem arises with the range of the inter--particle
+interactions: one has to choose carefully the size of the simulation box, or the number of particles if an $NPT$
 ensemble is used, to ensure that the smallest simulation box length is greater then the interaction range. This
-can be made easily for example with the Van der Waals interaction. On the contrary it is a difficult and time
-consuming task to do the same with the electrostatic interactions that are treated with a more sophisticated
+can be made easily for example with the Van der Waals interactions. On the contrary it is a difficult and time
+consuming task to do the same with the electrostatic interactions that are treated with more sophisticated
 methods, as better explained in the next chapter.
 
 \subsection{Numerical integrators}
 As we have seen above we need to solve numerically the equations of motion. Since the \ac{PEF} is a continuous
 function of the phase space vector at a time $t$, the simplest way is to use the so called \textit{finite
-difference} method. The basic idea is to expand the Newton's law in a Taylor series as follow
+difference} method. The basic idea is to expand the Newton's law in a Taylor series as follows
 \begin{equation}
 	\vec r_i(t + \delta t) = \vec r_i(t) + \vec v_i(t)\ \delta t + \frac{1}{2m_i}\vec f_i(t)\ (\delta t)^2\ +\ o((\delta t)^3)
 	\label{eq:newtonTaylor}
@@ -499,18 +498,19 @@ $o(\delta t)^2$, ($\vec f_i(t)/(2m_i)$) which is summed to a difference of large
 representation.
 
 The main disadvantage is that velocities at a time $t$ are an output of the calculation and not a part of the
-algorithm itself. Moreover it is not self--starting because the algorithm required the positions at a time
+algorithm itself. Moreover it is not self--starting because the algorithm requires the positions at a time
 $t-\delta t$. So at $t=0$ we need a trick to obtain the previous inexistent positions. The trick is to use
-equation~\eqref{eq:verlet2} truncated at the first order: $\vec r_i(-\delta t) \simeq \vec r(0) - \vec v_i(0)\delta t$.
+equation~\eqref{eq:verlet2} truncated at the first order: 
+$\vec r_i(-\delta t) \simeq \vec r(0) - \vec v_i(0)\delta t$.
 
-\subsubsection{Leap--Frog algorithm}
+\subsubsection{Leap--frog algorithm}
 The leap--frog algorithm is a variant of the Verlet one and it is commonly implemented in many \ac{MD} tools, as
 it is in our case. It computes the positions at a time $t$ and the velocities at a time
 $t+\nicefrac{1}{2}\delta t$ from the forces at a time $t$ and the velocities at a time
 $t-\nicefrac{1}{2}\delta t$. The main advantage with respect to the Verlet algorithm, is that it is
 self--starting because it does not require the positions at a time $t-\delta t$.
 
-First it calculates the velocities at a time $t+\nicefrac{1}{2}\delta t$ as follow
+First it calculates the velocities at a time $t+\nicefrac{1}{2}\delta t$ as follows
 \begin{equation*}
 	\vec v_i(t + \nicefrac{1}{2}\delta t) \simeq \vec v_i(t - \nicefrac{1}{2}\delta t) + \vec a_i(t)\delta t
 \end{equation*}
@@ -540,7 +540,7 @@ consuming part of an \ac{MD} simulation. To know the forces acting on one partic
 to calculate the contribution from all particles in the simulation box and all other periodic images. The most
 popular way to speed up the simulation is to use a truncation of the interaction potentials within a cutoff. The
 general idea is to compute the energy contribution of particle $i$ considering the interaction only with
-particles $j$ that are closer to a certain cutoff distance $r_c$, thus such that
+particles $j$ that are closer than a certain cutoff distance $r_c$, i.e. such that
 $\|\vec r_i - \vec r_j\| \le r_c$. This is summarized in the following expressions
 \begin{equation*}
 	U_i(\vec r) = \sum_{j\ne i}^N U^*_{ij}(\vec r), \qquad U^*_{ij}(\vec r) = \left \{
@@ -559,44 +559,44 @@ of performance is achieved by the use of a \textit{neighbor pair--list}. The sim
 each particle, a list of its neighbor particles that lie within a sphere of radius $r_c$ surrounding the selected
 particle. Then, for each particle, the interactions are computed between the selected particle and those that are
 in its pair--list. There is a gain in performance if the pair--list is updated at least every $M>1$ \ac{MD}
-steps. This is possible taking into account that, typically, in \ac{MD} simulations of liquids system at ambient
+steps. This is possible taking into account that, typically, in \ac{MD} simulations of liquid systems at ambient
 temperature and pressure, a particle neighbors do not change significantly for $M < 20$ time steps.
 
 Anyway particles move during the non--updating time so that some of them may cross the pair--list causing an
 over-- or under--estimation of the inter--particle energy contribution. To partially solve this problem, as
 suggested by Verlet \cite{VerletList}, one can consider a \textit{buffered} pair--list or a \textit{Verlet
 cut--off scheme} in which the pair--list is constructed considering those particles that are close to the
-selected one by a distance of $r_l > r_c$, called \textit{list radius}. That pair--list is updated every some
-time steps, but every time steps the pairwise contribution is computed only between those particles in the
+selected one by a distance of $r_l > r_c$, called \textit{list radius}. In figure~(\ref{fig:pairlist}) a schematic 
+representation of the buffered pair--list construction is shown. That pair--list is updated every some
+time step, but every time steps the pairwise contribution is computed only between those particles in the
 pair--list for which the distance is less then $r_c$. Thus, at the cost of slightly decrease the performance
 compared to the un--buffered pair--list, almost none of the interacting particles within the cutoff is neglected.
 Nevertheless, since a too big list radius and a too small list update frequency leads to a loss of performance,
 particle--pairs could still move enough during the non--updating time and have a chance to cross the boundary of
 the buffered pair--list $r_l$. This chance leads to a small energy drift proportional to the system temperature.
-In simulations with a constant temperature coupling, i.e. in a canonical or isothermal--isobaric ensemble, the
-extra radius of the buffered pair--list can be dynamically determined, during the simulation, by fixing an upper
-limit to the energy drift. That tolerance is often called \textit{Verlet buffer tolerance}. In
-figure~(\ref{fig:pairlist}) a schematic representation of the buffered pair--list construction is shown.
 \begin{SCfigure}
 	\includegraphics[width=0.42\textwidth]{./img/pairList/pairList}
 	\caption{Schematic representation of the buffered pair--list construction respect to the central particle.
-	Green particles are in the pair--list below the cutoff radius $r_c$, therefore included in the calculation of the interactions. Orange particles are in the pair--list for which at every step is checked if their distances became smaller then $r_c$. Red particles are not in the pair--list and they are completely neglected until the next list update.}
+	Green particles are in the pair--list below the cutoff radius $r_c$, therefore included in the calculation of the interactions. Orange particles are in the pair--list for which at every step is checked if their distances became smaller then $r_c$. Red particles are not in the pair--list and they are completely neglected until the next list update.}%
 	\label{fig:pairlist}
 \end{SCfigure}
 
-A better performance can be achieved adding a dynamic update algorithm of the pair--list refresh rate during the
+In simulations with a constant temperature coupling, i.e. in a canonical or isothermal--isobaric ensemble, the
+extra radius of the buffered pair--list can be dynamically determined, during the simulation, by fixing an upper
+limit to the energy drift. That tolerance is often called \textit{Verlet buffer tolerance}. Alternatively, better 
+performance can be achieved adding a dynamic update algorithm of the pair--list refresh rate during the
 simulation. A nice way is to consider the maximum distance traveled by a particle in the pair--list: if this
 distance is greater than $r_b = r_l - r_c$ then the pair--list is certainly updated. Thus one can fix the refresh
 rate to a higher value increasing the performance.
 
 \subsection{Thermostat algorithms} %Molecular Modelling, 382
 A thermostat is an external tool that allows to maintain a system at a constant temperature. Several algorithms
-are available. Some are based acting on particle velocities (Anderson, Berendsen, Bussi) other introduce some
+are available. Some act directly on particle velocities (Anderson, Berendsen, Bussi) other introduce some
 more \ac{DOF} in the system that take into account a real temperature bath coupling (Nosé--Hoover). We will
 describe in more detail the one used in this thesis work.
 
 As suggested by Bussi \etal \cite{Bussi}, a common practice to implement a thermostat acting on particle
-velocities is related to a \textit{velocity rescale} algorithm in which the velocities of all particles are
+velocities consists in a \textit{velocity rescale} algorithm in which the velocities of all particles are
 scaled by some factor. The simplest way is to consider the total kinetic energy $K$ of the system as in
 equation~\eqref{eq:kinetic} and the average kinetic energy $\ave{K}$ obtained from equation~\eqref{eq:kineticT}
 with the substitution $3N\rightarrow N_f$
@@ -610,12 +610,12 @@ factor is defined by
 \end{equation*}
 
 The scaling operation is usually performed at a fixed rate during the simulation, or when the kinetic energy
-exceeds the limits of an interval centered around the target value. However the sampled ensemble is not
-explicitly known but, since in the thermodynamic limit the average properties do not depend on the ensemble
-chosen, even this very simple algorithm, often called \textit{weak coupling thermostat}, can be used to produce
-useful results. Despite this, for small systems or when the observables of interest are dependent on the
-fluctuations rather than on the averages or when other methods assume a canonical sampling, this method cannot be
-safely used.
+exceeds the limits of an interval centered around the target value. A limitation of this approach is that the 
+sampled ensemble is not explicitly known but, since in the thermodynamic limit the average properties do not 
+depend on the ensemble chosen, even this very simple algorithm, often called \textit{weak coupling thermostat}, 
+can be used to produce useful results. Despite this, for small systems or when the observables of interest are 
+dependent on the fluctuations rather than on the averages or when other methods assume a canonical sampling, this 
+method cannot be safely used.
 
 In order to obtain the correct canonical sampling Bussi \etal \cite{Bussi} modify the way to calculate
 $\alpha_T$ so as to enforce a canonical distribution for the kinetic energy. The new scaling factor is obtained
@@ -635,8 +635,8 @@ velocities just before and after the scaling step. To avoid this problem, the au
 $K_T$ can be based on the previous value of $K$ so as to obtain a smoother evolution. The procedure proposed by
 Bussi \etal consists in the following steps
 \begin{itemize}
-	\item Evolve the system for a single time step solving the equations of motion, so as to be in an $NVE$ ensemble;
-	\item Calculate the total kinetic energy and evolve it for a single time step using an auxiliary continuous stochastic dynamics;
+	\item Evolve the system for a single time step solving the equations of motion, so as to be in an $NVE$ ensemble;%
+	\item Calculate the total kinetic energy and evolve it for a single time step using an auxiliary continuous stochastic dynamics;%
 	\item Rescale the velocities by $\alpha_T$ so as to enforce this new value of the kinetic energy.
 \end{itemize}
 
@@ -678,27 +678,27 @@ allow us to take into account the finite response time of the barostat. If $\tau
 an infinity isothermal compressibility so it is necessary a really small change in volume to achieve the correct
 pressure; on the contrary if $\tau_p \rightarrow +\infty$ the system reduces to the Hamiltonian
 dynamics\footnote{If the system is coupled to a thermostat, then the canonical ensemble is sampled.}. The
-particle coordinates is scaled by the factor $\lambda^{\nicefrac{1}{3}}$.
+particle coordinates are scaled by the factor $\lambda^{\nicefrac{1}{3}}$.
 
 In the case of anisotropic system the pressure matrix $\mathbold{P}$ and the volume matrix $\mathbold{H}$
 \eqref{eq:volumeMatrix} have to be considered and the Berendsen algorithm can be generalized such that even
 $\lambda$ becomes a $3\times 3$ matrix. However the main problem, as for the weak coupling thermostat, is that
-the sampled ensemble is not known. Thus a new approach, in order to correct sample the isobaric ensemble, has
-been derived by Parrinello and Rahman.
+the sampled ensemble is not known. Thus a new approach, in order to obtain the correct sampling of the isobaric 
+ensemble, has been derived by Parrinello and Rahman.
 
 \subsubsection{Parrinello--Rahman algorithm}
 The Parrinello--Rahman barostat \cite{ParrinelloBarostat1}\cite{ParrinelloBarostat2} is based on genuinely treat
 the coupling of the system to an external piston of ``mass'' $M_h$ through a Lagrangian method in which the
 volume becomes a Lagrangian variable of the system and its time evolution can be computed solving the
-Euler--Lagrange equations. Both the size and the shape of the simulation box are allowed to fluctuate. So it is
-perfectly compatible with anisotropic system. The shape and size of the simulation box are described by the
-volume matrix $ \mathbold{H}$ in equation~\eqref{eq:volumeMatrix} such that $V = |\det\mathbold{H}|$.
-$\mathbold{H}$ is the Lagrangian coordinate of the external piston. If the external pressure $p_0$ is applied to
-the piston then its potential energy is given by
+Euler--Lagrange equations. Both the size and the shape of the simulation box are allowed to fluctuate, so that the 
+method is compatible with the treatment of anisotropic systems. The shape and size of the simulation box are 
+described by the volume matrix $ \mathbold{H}$ in equation~\eqref{eq:volumeMatrix} such that $V = 
+|\det\mathbold{H}|$. $\mathbold{H}$ is the Lagrangian coordinate of the external piston. If the external pressure 
+$p_0$ is applied to the piston then its potential energy is given by
 \begin{equation*}
 	U_p = p_0 |\det  \mathbold{H}|
 \end{equation*}
-instead, if $ \mathbold{H}$ varies in time then a ``kinetic energy'' is associated to the piston as follow
+If $ \mathbold{H}$ varies in time then a ``kinetic energy'' is associated to the piston as follows
 \begin{equation*}
 	K_p = \frac{1}{2}M_h \text{Tr}(\leftidx{^t}{\dot{ \mathbold{H}}}{} \dot{ \mathbold{H}} )
 \end{equation*}
@@ -706,8 +706,9 @@ where $\leftidx{^t}{(\cdot)}{}$ denote the transpose operation.
 
 In order to write the Lagrangian of the system the particle coordinates must be expressed in terms of
 $\mathbold{H}$. This can be done defining the vector $\vec s_i$ so that $\vec r_i =  \mathbold{H} \vec s_i$. The
-square displacement can be obtained as $\vec r_i \cdot \vec r_i = \leftidx{^t}{ (\mathbold{H} \vec s_i)}{}  \mathbold{H} \vec s_i = \leftidx{^t}{\vec s_i}{} \leftidx{^t}{ \mathbold{H}}{}  \mathbold{H} \vec s_i$, often
-$\mathbold{G} = \leftidx{^t}{ \mathbold{H}}{} \mathbold{H}$. Parrinello \etal write the Lagrangian as follow
+square displacements can be obtained as $\vec r_i \cdot \vec r_i = \leftidx{^t}{ (\mathbold{H} \vec s_i)}{}  \mathbold{H} \vec s_i = \leftidx{^t}{\vec s_i}{} \leftidx{^t}{ \mathbold{H}}{}  \mathbold{H} \vec s_i$. Using the 
+notation $\mathbold{G} = \leftidx{^t}{ \mathbold{H}}{} \mathbold{H}$, Parrinello \etal write the Lagrangian as 
+follows
 \begin{equation*}
 	\mathcal{L} = \frac{1}{2}\sum_{i=1}^N m_i \dot{\vec s}_i \leftidx{^t}{\mathbold{G}}{} \dot{\vec s}_i - \sum_{i=1}^N \sum_{j=i+1}^N U_{ij}(\vec r) +  \frac{1}{2} M_h \text{Tr}(\leftidx{^t}{\mathbold{\dot H}}{} \mathbold{\dot H} ) -  p_0 |\det \mathbold{H}|
 \end{equation*}
@@ -718,7 +719,7 @@ Hamiltonian of the system. Using equation~\eqref{eq:hamiltonian} the Hamiltonian
 \begin{equation*}
 	\mathcal{H} = \frac{1}{2}\sum_{i=1}^N m_i \dot{\vec s}_i \leftidx{^t}{\mathbold{G}}{} \dot{\vec s}_i + \sum_{i=1}^N \sum_{j=i+1}^N U_{ij}(\vec r) +  \frac{1}{2} M_h \text{Tr}( \leftidx{^t}{\mathbold{\dot H}}{} \mathbold{\dot H} ) + p_0 |\det\mathbold{H}|
 \end{equation*}
-if the system is in equilibrium at temperature $T$, using the equipartition theorem, the kinetic term of the
+If the system is in equilibrium at temperature $T$, using the equipartition theorem, the kinetic term of the
 system particles contributes to the energy by $3Nk_BT/2$ while the kinetic term of the piston by $9k_BT/2$. Since
 $3N \gg 9$ the Hamiltonian can be approximated by
 \begin{equation*}
@@ -728,7 +729,8 @@ that is the enthalpy. Since the Hamiltonian is a constant of motion the correct 
 the system is also coupled to a thermostat, the $-TS$ term must be added, so the constant of motion become the
 Gibbs free energy $G = H - TS$ and the isobaric--isotherm ensemble is correctly sampled.
 
-In order to understand the meaning of the $M_h$ parameter (the piston ``mass'') we report the dynamic equation of $\mathbold H$
+In order to understand the meaning of the $M_h$ parameter (the piston ``mass'') we report the dynamic equation of 
+$\mathbold H$
 \begin{equation*}
 	M_h \mathbold{\ddot H} = V (p - p_0) (\leftidx{^t}{\mathbold{H}}{})^{-1}
 \end{equation*}
@@ -743,7 +745,7 @@ order of $L/c$ where $L$ is simulation box size and $c$ is the sound velocity.
 Interesting is the fact that this algorithm can be generalized to an anisotropic pressure coupling making use of
 the theory of elasticity. Differently from the Berendsen algorithm, Parrinello--Rahman method is much slower in
 changing the volume until the equilibrium value is reached and it is less stable: if the system is not well
-equilibrated can lead to a large volume fluctuation with can compromise the simulation success. On the other hand
+equilibrated it can lead to large volume fluctuations that can compromise the simulation success. On the other hand
 the Parrinello--Rahman samples correctly the isobaric ensemble. A common strategy is to use the Berendsen
 barostat to reach equilibrium then switch to the Parrinello--Rahman algorithm to correctly sample the phase space
 associated to the isobaric ensemble.
@@ -752,7 +754,7 @@ associated to the isobaric ensemble.
 \section{Advanced sampling methods}
 The free energy is a quantity of particular importance for the equilibrium statistical mechanics. The 
 Gibbs free energy $G$ is specific for the $NPT$ isobaric--isothermal ensemble and the Helmholtz free energy $A$ 
-for the $NVE$ canonical ensemble. The time evolution of a biomolecular system and its equilibrium properties are 
+for the $NVT$ canonical ensemble. The time evolution of a biomolecular system and its equilibrium properties are 
 determined by the system's \ac{FES}. This because free energy differences tell us, for example, if a chemical 
 reaction occurs spontaneously, whether a given solute is hydrophobic or hydrophilic, if a protein conformational 
 change can take place or whether some molecules in water solution are able to self--assemble into a more complex 
@@ -760,21 +762,21 @@ system and so forth. Being related to the partition function of an ensemble, the
 through which other thermodynamic quantities are obtained via differentiation. However often we are particularly 
 interested in the free energy difference between two thermodynamic states, instead of the absolute value. 
 
-\paragraph{\textbf{Collective variables}} Often, we are interested in the \ac{FES} in function of some
-generalized coordinates, called \acp{CV} of the system. These small set of variables can describe, in a simple
+\paragraph{\textbf{Collective variables}} Often, we are interested in the \ac{FES} as a function of some
+generalized coordinates, called \acp{CV} of the system. A small set of variables can describe, in a simple
 and useful manner, some chemical, thermodynamic or mechanical processes that take place in the system. For
-example, the free energy in function of the distance between the \ac{COM} of two molecules give us information
+example, the free energy in function of the distance between the \ac{COM} of two molecules gives us information
 about their attraction or repulsion and if they form a bound state. Thus the \ac{FES}, in the \acp{CV} space,
 provides a map of the stable conformations, the relative stability of these conformations and the barrier heights
-that must be crossed for the transition to take place. Moreover, the energy landscape, even for a small molecule,
-can be extremely wrinkled and the large number of minima can not be sampled in a typical \ac{MD} simulation. The
-principal reason for the use of the \acp{CV}, is thus to limit the sampling to those regions of phase space that
-are most important for the process under study, hoping that the limited sampled regions are sufficient to
-correctly describe the process.
+that must be crossed for the transition to take place.
+
+Unfortunately the free energy landscape, even for small molecules, can be extremely wrinkled and its large number 
+of minima can be hard to sample in MD simulations. The principal reason for the use of the \acp{CV} is thus to 
+limit the sampling to those regions of the phase space that are most important for the process under study.
 %It is necessary to stress out that in many cases one do not know exactly \textit{a priori} the \ac{FES} about a certain process and so one want to know it also for understand if other minima energy configurations exist, in addition to those known, how stable they are and what are the energy barriers to go from one minima state to an other\footnote{Sometimes thought the cinematic of an \ac{MD} simulation one can gamble an estimate of the functional form of the \ac{FES}, looking for the relative probability to stay in a meta--stable state rather then the other. Clearly this means that both meta--stable states are to be sampled, as we shall see later it depends of the height of the energy barriers.}.
 
-\paragraph{\textbf{Free energy surface}} The calculation of free energy difference between two thermodynamic
-states (that requires an \textit{a priori} knowledge of the two stable states) and the calculation of the
+\paragraph{\textbf{Free energy surface}} The calculation of the free energy difference between two thermodynamic
+states (which requires an \textit{a priori} knowledge of the two stable states) and the calculation of the
 \ac{FES} are one of the main challenges in \ac{MD} simulations for biomolecular applications. Let us suppose that
 we are interested in the \ac{FES} in function of the \ac{CV} $s(\vec r)$ and we are working in a $NPT$
 ensemble\footnote{The following is still valid even for a $NVE$ ensemble with the substitution $G\rightarrow A$
@@ -784,14 +786,14 @@ section~\ref{sec:statmec}, the Gibbs free energy along the \ac{CV} is obtained a
 	G(s) = -k_BT \ln Q(s)
 	\label{eq:fes}
 \end{equation}
-where $Q(s)$ is the partition function that integrate out all the \ac{DOF} of the system expect for $s(\vec r)$:
+where $Q(s)$ is the partition function that integrate out all the \ac{DOF} of the system except for $s(\vec r)$:
 \begin{equation*}
 	Q(s) = \frac{1}{\mathcal{Z}_{NpT}} \int_0^{+\infty}\ dV \ \int_\Omega e^{-\beta(\mathcal{H}(\vec x) + pV)}\delta(s(\vec r) - s)\ dx
 \end{equation*}
 since $s(\vec r)$ does not depend on particle momenta, from equations~\eqref{eq:hamiltonian}
 and~\eqref{eq:nptPartition}, $Q(s)$ can be rewritten as
 \begin{equation}
-	Q(s) =  \frac{ \int_\Omega e^{-\beta U(\vec r)}\delta(s(\vec r) - s)\ dr }{\int_\Omega e^{-\beta U(\vec r)}\ dr}
+	Q(s) =  \frac{ \int_\Omega e^{-\beta U(\vec r)}\delta(s(\vec r) - s)\ dr }{\int_\Omega e^{-\beta U(\vec r)}\ dr}%
 	\label{eq:CVprobability}
 \end{equation}
 where $U(\vec r)$ is the \ac{PEF}. $Q(s)ds$ can be interpreted as the probability to find the system with
@@ -807,7 +809,7 @@ The time sampling of equation~\eqref{eq:CVprobabilityAve} can be
 derived, in principle, via \ac{MD}. Unfortunately, since the time can not be infinite, the main problem related
 to \ac{MD} simulations is whether we are able to correctly sample \textit{all} the phase space of an ensemble in
 order to compute the ensemble average. Clearly the answer depends on the system in exam, if it is really simple
-maybe we can do that, otherwise probably not or indeed it take too much time and/or we are not able to collect
+maybe we can do that, otherwise probably not or indeed it takes too much time and/or we are not able to collect
 sufficient data. This sampling problem can be summarized as follows: regions in phase space around a local
 minimum of the \ac{FES} are typically sampled well, whereas regions of higher energy are sampled rarely. These
 high energy regions provide with a small contribution to the partition function, due to their unfavorable
@@ -816,16 +818,16 @@ important contribution to the ensemble averages. These transitions are called \t
 system is moving in the energy landscape the only way to escape from a local minimum is to exploit thermal
 fluctuations and so energy barriers that are higher then $\sim k_B T$ have a small probability of being overcome.
 
-\paragraph{\textbf{Bias based advanced sampling}} Several methods are developed and are still in development in
-order to solve the just described sampling problem. These methods are all based on advanced sampling techniques
-that allow us to
+\paragraph{\textbf{Bias based advanced sampling}} Several methods have been developed and are still in development 
+in order to solve the just described sampling problem. These methods are called advanced sampling techniques
+and allow us to
 \begin{itemize}
 	\item Escape from a local energy minimum, in order to explore other regions of the phase space;
 	\item Calculate the free energy difference between two thermodynamic states;
 	\item Compute the \ac{FES} along one or a small set of \acp{CV}.
 \end{itemize}
-The common basic idea is to introduce a additional \textit{bias potential} able to confine the sampling to a
-limited region of the \ac{CV} space and/or drive the transition between two metastable configuration. In
+The common basic idea is to introduce an additional \textit{bias potential} able to confine the sampling to a
+limited region of the \ac{CV} space and/or drive the transition between two metastable configurations. In
 particular we describe only those methods used in this thesis work: \textit{umbrella sampling method} and
 \textit{metadynamics}. For a more comprehensive discussion the reader is addressed to the review by Kästner
 \cite{Umbrella} for the former, and to the review by Laio and Gervasio \cite{MetadReview} for the latter.
@@ -846,7 +848,7 @@ recovered. In figure~(\ref{fig:umbrellaPath}) an example of the windows selectio
 \begin{SCfigure}
 	\centering
 	\includegraphics[width=0.45\textwidth]{./img/umbrellaPath/umbrellaPath.pdf}
-	\caption{Example of an umbrella sampling windows selection. The contour plot represent a $2$--minima free energy profile through which the system is evolved. The dashed line is the path along the \acs{CV} $s(\vec r)$ that connect state $A$ to $B$. The black filled circles represent the selected windows for different values of $s$.}
+	\caption{Example of an umbrella sampling windows selection. The contour plot represent a $2$--minima free energy profile through which the system is evolved. The dashed line is the path along the \acs{CV} $s(\vec r)$ that connect state $A$ to $B$. The black filled circles represent the selected windows for different values of $s$.}%
 	\label{fig:umbrellaPath}
 \end{SCfigure}
 
@@ -856,14 +858,14 @@ biased quantities. With the substitution $U(\vec r) \rightarrow U_i^b(\vec r)$ i
 equation~\eqref{eq:CVprobability} the corresponding biased partition function integrated over all \ac{DOF} but
 $s$ yields to
 \begin{equation*}
-	Q_i^b(s) = e^{\beta w_i(s)}\frac{ \int_\Omega e^{-\beta U(\vec r)}\delta(s(\vec r) - s)\ dr }{\int_\Omega e^{-\beta (U(\vec r) + w_i(s(\vec r)))}\ dr}
+	Q_i^b(s) = e^{\beta w_i(s)}\frac{ \int_\Omega e^{-\beta U(\vec r)}\delta(s(\vec r) - s)\ dr }{\int_\Omega e^{-\beta (U(\vec r) + w_i(s(\vec r)))}\ dr}%
 \end{equation*}
 In order to use equation~\eqref{eq:fes} to obtain the \ac{FES}, we need to recover the un--biased partition
 faction $Q_i(s)$ like in equation~\eqref{eq:CVprobability}. This can be done (see \cite{Umbrella}), obtaining the
 following expression
 \begin{equation}
 	\begin{aligned}
-	Q_i(s) &= Q_i^b(s) e^{\beta w_i(s)}\ \frac{ \int_\Omega e^{-\beta U(\vec r)}e^{-\beta w_i(s(\vec r))}\ dr }{\int_\Omega e^{-\beta U(\vec r)}\ dr} = \\
+	Q_i(s) &= Q_i^b(s) e^{\beta w_i(s)}\ \frac{ \int_\Omega e^{-\beta U(\vec r)}e^{-\beta w_i(s(\vec r))}\ dr }{\int_\Omega e^{-\beta U(\vec r)}\ dr} = \\%
 		   &= Q_i^b(s) e^{\beta w_i(s)}\ \ave{e^{-\beta w_i(s)}}
 	\end{aligned}
 	\label{eq:windowPartFunc}
@@ -926,27 +928,27 @@ windows.
 
 \bigskip The implementation of the umbrella sampling method can be summarized in the following procedure
 \begin{itemize}
-	\item A \ac{CV} that well describes the transition process from state $A$ to $B$ and a connecting path are chosen;
-	\item A subset of the values assumed by the \ac{CV} along the path are taken and for each a biased \ac{MD} simulation is performed\footnote{Since each biased simulation is independent they can be performed in parallel with the other.};
-	\item Using \ac{WHAM} the set of biased partition functions $\{Q^b_i(s)\}$ are combined in order to compute the global unbiased partition function $Q(s)$. Then $G(s)$ is calculated.
+	\item A \ac{CV} that well describes the transition process from state $A$ to $B$ and a connecting path are chosen;%
+	\item A subset of the values assumed by the \ac{CV} along the path are taken and for each a biased \ac{MD} simulation is performed\footnote{Since each biased simulation is independent they can be performed in parallel with the other.};%
+	\item Using \ac{WHAM} the set of biased partition functions $\{Q^b_i(s)\}$ are combined in order to compute the global unbiased partition function $Q(s)$. Then $G(s)$ is calculated.%
 \end{itemize}
 
 
 \subsection{Metadynamics}
 \label{sec:metadynamics}
-The metadynamics method was originally developed by Parrinello and Laio \cite{MetadParrinello} with the first aim
-to accelerate the escaping from a free energy minimum in \ac{MD} simulations. The success of the method soon led
-to the creation of a unified framework for accelerating rare events and computing free energies in function of a
-small set of \acp{CV}. The main advantages with respect to umbrella sampling method is that several \acp{CV},
-instead of a single one, can be simultaneously used without affecting the simulation performance. The basic idea
-of metadynamics is to enhance the dynamics of a system along some \acp{CV} simply by filling the corresponding
-energy minimum with an history--dependent bias potential, in order to sample larger and larger portions of the
-phase space. Supposing a two state process from state $A$ to $B$, in the \ac{CV} space, if the deposited energy
-is sufficient to fill the energy well of state $A$, the system is favorably disposed to overcome the barrier and 
-go to the state $B$. In figure~(\ref{fig:fancyMetadyn}) a simple scheme of that cartoon is shown. 
+\paragraph{\textbf{the concept}} The metadynamics method was originally developed by Parrinello and Laio 
+\cite{MetadParrinello} with the first aim to accelerate the escaping from a free energy minimum in \ac{MD} 
+simulations. The success of the method soon led to the creation of a unified framework for accelerating rare 
+events and computing free energies in function of a small set of \acp{CV}. The main advantages with respect to 
+umbrella sampling method is that several \acp{CV}, instead of a single one, can be simultaneously used without 
+affecting the simulation performance. The basic idea of metadynamics is to enhance the dynamics of a system along 
+some \acp{CV} simply by filling the corresponding energy minimum with an history--dependent bias potential, in 
+order to sample larger and larger portions of the phase space. Supposing a two state process from state $A$ to 
+$B$, in the \ac{CV} space, if the deposited energy is sufficient to fill the energy well of state $A$, the system 
+can overcome the barrier and go to the state $B$. In figure~(\ref{fig:fancyMetadyn}) a simple cartoon is shown. 
 \begin{SCfigure}[][hb]
 	\includegraphics[width=0.35\textwidth]{./img/fancyMetadyn}
-	\caption{Schematic cartoon of the energy well filling by the history--dependent bias potential and the consequently transition from state $A$ to state $B$.}
+	\caption{Schematic cartoon of the energy well filling by the history--dependent bias potential and the consequently transition from state $A$ to state $B$.}%
 	\label{fig:fancyMetadyn}
 \end{SCfigure}
 
@@ -961,7 +963,7 @@ history--dependent potential acting on the system at a time $t$ is given by
 \end{equation*}
 where $t$ is the time in unit of \ac{MD} time step. The time dependence in the bias potential $w(\vec s, t)$ is
 needed since it has to depend on the values assumed by the \acp{CV} at some previous \ac{MD} steps. The 
-Parrinello and Laio assumption yields to the following expression
+Parrinello and Laio assumption yields the following expression
 \begin{equation}
 	\lim_{t\to + \infty} w_M(\vec s, t)  \simeq -G(\vec s) + C
 	\label{eq:metadfes}
@@ -969,7 +971,7 @@ Parrinello and Laio assumption yields to the following expression
 where $C$ is an addictive constant. Since the history--dependent potential iteratively compensates the underlying
 \ac{FES}, the system evolved with metadynamics \textit{tends to escape from any energy minima via the lowest
 saddle point}. Thus, to the contrary of umbrella sampling metadynamics is suitable, not only to compute
-efficiently \ac{FES}, but also to explore new reaction path and accelerate the observation of rare events. If the
+efficiently \ac{FES}, but also to explore new reaction paths and accelerate the observation of rare events. If the
 \acp{CV} are chosen sensibly the system will quickly find its way over the lowest free energy saddle point and
 evolve over the next minimum as it would do in a \textit{very long} \ac{MD} simulation.
 
@@ -983,27 +985,27 @@ then substituting in equation~\eqref{eq:CVprobabilityAve} we have
 	Q(s) = \frac{1}{\sqrt{2\pi}}\lim_{t\to +\infty}\ \lim_{\sigma\to 0} \frac{1}{\sigma t}\int_0^t \exp{ \left ( -\frac{(s(\vec r(\tau))-s)^2}{2\sigma^2} \right )} \ d\tau
 \end{equation*}
 the equation above suggests the use of a Gaussian function centered around the values assumed by the \ac{CV} at a
-time $t$. Then the bias potential component, extended to multiple \acp{CV}, is chosen as follow
+time $t$. Then the bias potential component, extended to multiple \acp{CV}, is chosen as follows
 \begin{equation*}
 	w(\vec s, t) = w\ \exp\left ({-\sum_{i=0}^n \frac{(s_i - s_i(\vec r(t)))^2}{2{\delta s_i}^2} }\right )
 \end{equation*}
 where $w$ is the height and $\delta s_i$ is the width of the deposited Gaussians.
 
-For setting up a metadynamics simulation, there are three parameters to choose carefully: the height $w$ and the
-width $\delta s_i$ of the deposited Gaussians and the stride of deposition $\tau$. All these parameters affect
-the accuracy and the efficiency of the free energy profile reconstruction. Clearly if the Gaussians are big and
-large or placed too quickly the \ac{FES} will be explored at a fast pace but the reconstructed profile will be
-affected by large errors. Instead if they are small or placed infrequently the reconstruction will be accurate
-but will take a longer time. Moreover the time required to escape from a local minimum is determined by the
-number of Gaussians necessary to fill the well. This number is proportional to $(1/\delta s)^n$
-\cite{MetadReview}, hence the necessity to maintain the number $n$ of \acp{CV} as small as possible or increase
-the Gaussian width. On the other hand the history--dependent potential can only reproduce features of the
-\ac{FES} on a scale larger then $\sim \delta s$. Empirical criteria can be used to choose the $\delta s$ and
-$\tau$ parameters; the former by monitoring the standard deviation of the \acp{CV} in an unbiased \ac{MD}
-simulation and the latter by considering the relaxation time of the system after a Gaussian is deposited: clearly
-the bigger is the Gaussian the more time is needed by the system to relax. However it does not exist an universal
-and general recipe to choose these parameters, only some knowledge of the system and process under study can give
-useful hints. They can certainly be fine tuned in successive steps.
+\paragraph{\textbf{bias parameters}} For setting up a metadynamics simulation, there are three parameters to 
+choose carefully: the height $w$ and the width $\delta s_i$ of the deposited Gaussians and the stride of 
+deposition $\tau$. All these parameters affect the accuracy and the efficiency of the free energy profile 
+reconstruction. Clearly if the Gaussians are big and large or placed too quickly the \ac{FES} will be explored at 
+a fast pace but the reconstructed profile will be affected by large errors. Instead if they are small or placed 
+infrequently the reconstruction will be accurate but will take a longer time. Moreover the time required to escape 
+from a local minimum is determined by the number of Gaussians necessary to fill the well. This number is 
+proportional to $(1/\delta s)^n$ \cite{MetadReview}, hence the necessity to maintain the number $n$ of \acp{CV} as 
+small as possible or increase the Gaussian width. On the other hand the history--dependent potential can only 
+reproduce features of the \ac{FES} on a scale larger then $\sim \delta s$. Empirical criteria can be used to 
+choose the $\delta s$ and $\tau$ parameters; the former by monitoring the standard deviation of the \acp{CV} in an 
+unbiased \ac{MD} simulation and the latter by considering the relaxation time of the system after a Gaussian is 
+deposited: clearly the bigger is the Gaussian the more time is needed by the system to relax. However it does not 
+exist an universal and general recipe to choose these parameters, only some knowledge of the system and process 
+under study can give useful hints. They can certainly be fine tuned in successive steps.
 
 In figure~(\ref{fig:metadEs}) an example of the time evolution of a metadynamics simulation is shown. We can see
 that as the number of deposited Gaussians increases the system is able to visit more regions of the phase space.
@@ -1013,7 +1015,7 @@ unbiased \ac{FES} as in equation~\eqref{eq:metadfes}.
 \begin{SCfigure}
 	\centering
 	\includegraphics[width=0.55\textwidth]{./img/metadEs}
-	\caption{Example of a time evolution of a metadynamics simulation. Top: time evolution of the \acs{CV} of a system evolved on the 3--minima \acs{FES} represented by the black thick line in the lower panel. Middle: time evolution of $w_M$, the history--dependent bias potential. Blue line: $w_M$ when the first minimum is filled and the system escapes to the second minimum; red line: $w_M$ when also the second minimum is filled; yellow line: when the entire profile is filled and the dynamics becomes diffusive on the whole energy landscape. Lower panel: time evolution of the sum of $w_M$ (same color scheme). Taken from \cite{MetadReview}.}
+	\caption{Example of a time evolution of a metadynamics simulation. Top: time evolution of the \acs{CV} of a system evolved on the 3--minima \acs{FES} represented by the black thick line in the lower panel. Middle: time evolution of $w_M$, the history--dependent bias potential. Blue line: $w_M$ when the first minimum is filled and the system escapes to the second minimum; red line: $w_M$ when also the second minimum is filled; yellow line: when the entire profile is filled and the dynamics becomes diffusive on the whole energy landscape. Lower panel: time evolution of the sum of $w_M$ (same color scheme). Taken from \cite{MetadReview}.}%
 	\label{fig:metadEs}
 \end{SCfigure}
 
@@ -1028,19 +1030,15 @@ flat and we can say that the system becomes diffusive in the region explored by 
 region, the placement of new Gaussians is no more affected by the difference between $G(\vec s)$ and
 $w_M(\vec s, t)$ and they are deposited randomly over the flat free energy profile. The \acp{FES} reconstructed
 after that point, as visible in figure~(\ref{fig:metadEs}), are affected by some corrugations, due to newly
-deposited Gaussians, of the order of $w$. From that point the metadynamics has reached the \textit{convergence}
+deposited Gaussians, of the order of $w$. From that point on the metadynamics has reached the \textit{convergence}
 in the sampled region.
 
 \paragraph{\textbf{convergence}} As just explained before, the convergence of the metadynamics in a specific
-region of the \acp{CV} space is reached when the system become diffusive in this region, i.e. when the \acp{CV}
-can assume all possible values compatible to the sampled region. This is a crucial point for the metadynamics
-method in order to obtain the best possible estimator of the \ac{FES}, in the sampled region. Clearly, in order
-to save computational time, if one want only to give the possibility to the system to escape from an energy
-minimum is not necessary to reach the convergence otherwise it is an important point. Unfortunately in most
-systems it is not trivial to identify precisely when the diffusive regime has been reached. In most cases a
-practical method to assess the convergence of metadynamics simulations is based on monitoring the free energy
-difference between two reference point: when the difference is approximately flat then the convergence should be
-reached.
+region of the \acp{CV} space is reached when the system becomes diffusive in this region, i.e. when the \acp{CV}
+can assume all possible values in the sampled region. Unfortunately in most systems it is not trivial to identify 
+precisely when the diffusive regime has been reached. In most cases a practical method to assess the convergence 
+of metadynamics simulations is based on monitoring the free energy difference between two reference points: when 
+the difference is approximately flat then the convergence has been reached.
 
 \paragraph{\textbf{error estimation}} After convergence is reached the error on the \ac{FES} estimator is clearly
 dependent on the chosen parameters. The best way to estimate the statistical error introduced by the metadynamics
@@ -1054,7 +1052,7 @@ $G(\vec s) \sim - \overline{w_M(\vec s,t)}$ and average it over the whole \acp{C
 \end{equation*}
 where $\Omega_s$ is the whole \acp{CV} space. Laio \etal in \cite{MetadError}, by performing extensive
 numerical simulations of a Langevin stochastic system, have derived an approximate expression for the error
-estimator in function of the system and metadynamics parameters, as follow
+estimator in function of the system and metadynamics parameters, as follows
 \begin{equation*}
 	\overline{\epsilon}^2 \propto \frac{LT}{D}\frac{w}{\tau} \delta s
 \end{equation*}
@@ -1066,22 +1064,22 @@ statistical error. Despite this, it is commonly accepted to follow a procedure f
 estimators:
 \begin{itemize}
 	\item Several statistically independent metadynamics simulations are performed;
-	\item After the convergence is reached for each run, the estimator of the \ac{FES} is the arithmetic average of the \ac{FES} obtained from equation~\eqref{eq:fes} for each simulations (each free energy profile appropriately normalized);
+	\item After the convergence is reached for each run, the estimator of the \ac{FES} is the arithmetic average of the \ac{FES} obtained from equation~\eqref{eq:fes} for each simulations (each free energy profile appropriately normalized);%
 	\item The statistical error on the averaged \ac{FES} is performed considering its standard deviation.
 \end{itemize}
-Alternatively one can perform a very long metadynamics run in which, for example, the system is diffusive for
-half simulation. Then one can chose as statistically independent history--dependent potentials some of them
+Alternatively one can perform a very long metadynamics run in which, for example, the system is diffusive for one
+half of the simulation. Then one can chose as statistically independent history--dependent potentials some of those
 computed at different times in the diffusive region and follow the above procedure from the second point. Clearly
 one has to be careful about the decorrelation time between the chosen profiles, otherwise they are not
 statistically independent due the continuos nature of the metadynamics algorithm.
 
 \paragraph{\textbf{performance optimization}} In general the computational overhead of adding metadynamics to an
-\ac{MD} simulation is usually not excessive, even if it depends on the implemented algorithms. However as the
-number of deposited Gaussians increases, in each \ac{MD} step a larger and larger number of exponential terms
+\ac{MD} simulation is usually not excessive, even if it depends on the implemented algorithms. As the
+number of deposited Gaussians increases, in each \ac{MD} step, a larger and larger number of exponential terms
 have to be computed and summed in order to calculate the derivative of the history--dependent potential, i.e. the
 forces due to the metadynamics. Thus if the Gaussians are big or frequently deposited or the system takes a lot
 of time to reach the convergence, the computational overhead scales as the number of the deposited Gaussians.
-This can clearly lead to a loss of performance as the simulation time increase. A simple solution is to implement
+This can clearly lead to a loss of performance as the simulation time increases. A simple solution is to implement
 a discrete mesh grid on the \acp{CV} space in which the history--dependent potential is spread and stored. When a
 new Gaussian is added the potential is updated in the whole grid. While, at each \ac{MD} step, in order to
 compute the derivative, the potential in a non--grid point is only estimated from an interpolation of some
@@ -1097,10 +1095,10 @@ and coarse exploration of the energy landscape to an accurate evaluation of the 
 stable configurations and structures, new reaction pathways, calculate free energy profiles and free energy
 differences.
 
-The main difference of metadynamics respect to umbrella sampling is the process of reconstruction of the free
+The main difference between metadynamics and umbrella sampling is the process of reconstruction of the free
 energy profile. In the latter it follows a predefined scheme designed for covering only the \ac{CV} space along
-the chosen path. In contract a well implemented metadynamics reconstruct efficiently the free energy profile:
-starting from the current minimum it explore a larger and larger region of the \acp{CV} space in order to
+the chosen path. In contrast, a well implemented metadynamics reconstructs efficiently the free energy profile:
+starting from the current minimum it explores a larger and larger region of the \acp{CV} space in order to
 recursively reconstruct the \ac{FES}. However a careful choice of the \acp{CV} is needed, otherwise the
 history--dependent potential and the \ac{FES} can evolve in an unphysical manner.
 

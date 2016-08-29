@@ -1,5 +1,5 @@
 % !TEX root = ./../main.tex
-\chapter{Empirical Force--Field model}
+\chapter{Empirical force field model}
 \label{chap:EmpiricalFF}
 As we have seen in the previous section \ac{MD} provides a variety of tools for solving the time evolution of a
 $N$--particle system. Due to the possibility to capture different length and time scales \ac{MD} simulations can
@@ -7,9 +7,10 @@ be used in a variety of systems, such as set of atoms, molecules or more complex
 macromolecules systems. In each of these systems, depending on the \textit{interaction model} and its
 \textit{parametrization}, we will be able to describe crucial molecular--level processes, such as hydrogen bond
 formation in organic molecules, which happen on the picoseconds time scale; or study slow processes such as the
-diffusion of massive colloidal particles, taking place on time scales of milliseconds if not seconds. Considering soft or condensed mater, the most relevant for this thesis, the main processes of interest
-ranging from protein folding to glass transitions, from surface diffusion to ligand--receptor binding take place
-on longer time scales (several ns) and involve a larger number of atoms ($N \gg 10^4$).
+diffusion of massive colloidal particles, taking place on time scales of milliseconds if not seconds. Considering 
+soft or condensed mater, the most relevant for this thesis, the main processes of interest ranging from protein 
+folding to glass transitions, from surface diffusion to ligand--receptor binding take place on longer time scales 
+(several ns) and involve a larger number of atoms ($N \gg 10^4$).
 
 Hence with soft or condensed matter systems, in order to remove some \ac{DOF} due to the necessity to increase
 the time step and speed up the simulation, a crucial role is played by the \textit{Born--Oppenheimer
@@ -40,10 +41,10 @@ particles are atoms, and the \textit{\ac{CG}} \acp{FF} in which the basic partic
 small chemical moieties. In this case, even the way to realize the grouping, called \textit{mapping}, is part of
 the \ac{FF} itself. Different \ac{CG} \acp{FF} can use different mapping methods even with the same functional forms.
 
-In the following we will add some other information about \acp{FF} and describe the principal functional forms
-for modeling the inter--particle interactions and how to treat them in an \ac{MD} simulation. While in the next
-section we will focus on the main \ac{CG} \ac{FF} used in this thesis work: the \textacr{MARTINI} \ac{FF}
-developed by Marrink \etal \cite{Martini}.
+In this chapter we will describe atomistic and \ac{CG} \acp{FF} in detail. We will describe the most common 
+functional forms for modeling the inter--particle interactions and how to treat them in an \ac{MD} simulation. In 
+the last part of the chapter we will focus on the main \ac{CG} \ac{FF} used in this thesis work: the 
+\martini \ac{FF} developed by Marrink \etal \cite{Martini}.
 
 \paragraph{\textbf{\textacr{parameterization}}} In general the functional forms for potential interactions are
 common to all particles in the system. The \ac{FF} is completed by a set of empirical parameters that
@@ -55,12 +56,13 @@ measurements or from finer--level calculations or simulations. Nowadays, atomist
 variety of chemical compounds in the liquid and solid phases.
 
 \paragraph{\textbf{\textacr{transferability}}} As described above the parameterization of a \ac{FF} involves a
-small set of test systems for which some set of target proprieties are reproduced. The main characteristic of a
-\ac{FF} is the \textit{transferability} that means the ability of the model to describe different situations that
-differ from those used at the parameterization stage. Of course one would expect to be able to make some
-predictions for a bigger variety of systems and for other proprieties not used in the parametrization stage.
-Common faults of organic \acp{FF} concern, for example, phase transitions of organic compounds and phase
-transition temperatures.
+small set of test systems for which some set of target proprieties are reproduced. An important characteristic of a
+\ac{FF} is its \textit{transferability} that means the ability of the model to describe situations that
+differ from those used at the parameterization stage. For example, a \ac{FF} parameterized to reproduce the 
+physical properties of liquid water in standard ambient conditions should also reproduce other properties such as 
+water melting point, liquid--vapor surface tension, and so on. This is the most challenging aspect of model 
+development, and it relies on a very accurate choice of the target properties used during the parameterization 
+stage.
 
 \section{Inter--particle interactions}
 For biomolecular applications the inter--particle interaction potentials are divided into two main classes: the
@@ -833,5 +835,6 @@ table~(\ref{tab:martiniEpsilon}) for the interaction level). Marrink \etal sugge
 $n_{\text{af}} = 0.1$ is sufficient to prevent freezing without affecting the other properties of water.
 %Some other properties of water are not accurate described such us the surface tension of air/water interface that leads in problem to water/oil interfaces formation.
 Using the \ac{PW} model these properties improve slightly, see table~(\ref{tab:PWRes}). For a more comprehensive
-discussion about the limitations of the \martini \ac{FF} the reader is addressed to the review by Marrink \etal \cite{MartiniReview}.
+discussion about the limitations of the \martini \ac{FF} the reader is addressed to the review by Marrink \etal 
+\cite{MartiniReview}.
 

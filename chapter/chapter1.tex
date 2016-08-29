@@ -595,7 +595,7 @@ are available. Some are based acting on particle velocities (Anderson, Berendsen
 more \ac{DOF} in the system that take into account a real temperature bath coupling (Nosé--Hoover). We will
 describe in more detail the one used in this thesis work.
 
-As suggested by Bussi \etal\, \cite{Bussi}, a common practice to implement a thermostat acting on particle
+As suggested by Bussi \etal \cite{Bussi}, a common practice to implement a thermostat acting on particle
 velocities is related to a \textit{velocity rescale} algorithm in which the velocities of all particles are
 scaled by some factor. The simplest way is to consider the total kinetic energy $K$ of the system as in
 equation~\eqref{eq:kinetic} and the average kinetic energy $\ave{K}$ obtained from equation~\eqref{eq:kineticT}
@@ -617,7 +617,7 @@ useful results. Despite this, for small systems or when the observables of inter
 fluctuations rather than on the averages or when other methods assume a canonical sampling, this method cannot be
 safely used.
 
-In order to obtain the correct canonical sampling Bussi \etal\, \cite{Bussi} modify the way to calculate
+In order to obtain the correct canonical sampling Bussi \etal \cite{Bussi} modify the way to calculate
 $\alpha_T$ so as to enforce a canonical distribution for the kinetic energy. The new scaling factor is obtained
 from
 \begin{equation*}
@@ -633,7 +633,7 @@ where $P(K_T)dK_T$ is probability that the system has a kinetic energy between $
 Since velocities are scaled only after some \ac{MD} steps this can cause a discontinuity in the particle
 velocities just before and after the scaling step. To avoid this problem, the authors suggest that the choice of
 $K_T$ can be based on the previous value of $K$ so as to obtain a smoother evolution. The procedure proposed by
-Bussi \etal\, consists in the following steps
+Bussi \etal consists in the following steps
 \begin{itemize}
 	\item Evolve the system for a single time step solving the equations of motion, so as to be in an $NVE$ ensemble;
 	\item Calculate the total kinetic energy and evolve it for a single time step using an auxiliary continuous stochastic dynamics;
@@ -707,7 +707,7 @@ where $\leftidx{^t}{(\cdot)}{}$ denote the transpose operation.
 In order to write the Lagrangian of the system the particle coordinates must be expressed in terms of
 $\mathbold{H}$. This can be done defining the vector $\vec s_i$ so that $\vec r_i =  \mathbold{H} \vec s_i$. The
 square displacement can be obtained as $\vec r_i \cdot \vec r_i = \leftidx{^t}{ (\mathbold{H} \vec s_i)}{}  \mathbold{H} \vec s_i = \leftidx{^t}{\vec s_i}{} \leftidx{^t}{ \mathbold{H}}{}  \mathbold{H} \vec s_i$, often
-$\mathbold{G} = \leftidx{^t}{ \mathbold{H}}{} \mathbold{H}$. Parrinello \etal\, write the Lagrangian as follow
+$\mathbold{G} = \leftidx{^t}{ \mathbold{H}}{} \mathbold{H}$. Parrinello \etal write the Lagrangian as follow
 \begin{equation*}
 	\mathcal{L} = \frac{1}{2}\sum_{i=1}^N m_i \dot{\vec s}_i \leftidx{^t}{\mathbold{G}}{} \dot{\vec s}_i - \sum_{i=1}^N \sum_{j=i+1}^N U_{ij}(\vec r) +  \frac{1}{2} M_h \text{Tr}(\leftidx{^t}{\mathbold{\dot H}}{} \mathbold{\dot H} ) -  p_0 |\det \mathbold{H}|
 \end{equation*}
@@ -1052,7 +1052,7 @@ $G(\vec s) \sim - \overline{w_M(\vec s,t)}$ and average it over the whole \acp{C
 \begin{equation*}
 \overline{\epsilon}^2 = \frac{1}{\Omega_s} \int_{\Omega_s}  \overline{(w_M(\vec s,t) - \overline{w_M(\vec s,t)})^2}\ ds
 \end{equation*}
-where $\Omega_s$ is the whole \acp{CV} space. Laio \etal\, in \cite{MetadError}, by performing extensive
+where $\Omega_s$ is the whole \acp{CV} space. Laio \etal in \cite{MetadError}, by performing extensive
 numerical simulations of a Langevin stochastic system, have derived an approximate expression for the error
 estimator in function of the system and metadynamics parameters, as follow
 \begin{equation*}
@@ -1104,7 +1104,7 @@ starting from the current minimum it explore a larger and larger region of the \
 recursively reconstruct the \ac{FES}. However a careful choice of the \acp{CV} is needed, otherwise the
 history--dependent potential and the \ac{FES} can evolve in an unphysical manner.
 
-In a recent work by Davide Bochicchio \etal\, \cite{metaUSComparison} both methods for the \ac{FES} estimation
+In a recent work by Davide Bochicchio \etal \cite{metaUSComparison} both methods for the \ac{FES} estimation
 included the error estimation, performance and accuracy are extensively compared with \ac{MD} simulations
 involving the transfer of hydrophobic oligomers from the water phase to the hydrophobic core of a lipid membrane.
 The authors consider the system both at atomistic and \ac{CG} levels (\martini \ac{FF}). They found that, if the

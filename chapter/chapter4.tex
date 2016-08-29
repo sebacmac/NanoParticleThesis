@@ -9,7 +9,7 @@ the cell membrane. Then we will summarize the characteristics of the \ac{CG} mod
 will describe the interaction mechanism and some preliminary thermodynamic results about the interaction of the 
 \ac{AuNP} and the model cell membrane, as outlined in \cite{ourPaper}. For a more precise discussion about the 
 \ac{NP}--membrane interaction and the models parameterization the reader is addressed to the work of Federica 
-Simonelli \etal\, \cite{ourPaper} and her thesis work \cite{simonelliThesis}. For more details about the gold core used, its properties, equilibrium structure and so forth, the reader is addressed to the work of Lopez-Acevedo \etal\, \cite{clusterEquilibrium} while for a general discussion about thiolated \acp{AuNP} to the work of Häkkinen \cite{corePassivated}. For what concerns cell membranes and biological lipids the reader is addressed to the book of Yeagle \cite{yeagle}.
+Simonelli \etal \cite{ourPaper} and her thesis work \cite{simonelliThesis}. For more details about the gold core used, its properties, equilibrium structure and so forth, the reader is addressed to the work of Lopez-Acevedo \etal \cite{clusterEquilibrium} while for a general discussion about thiolated \acp{AuNP} to the work of Häkkinen \cite{corePassivated}. For what concerns cell membranes and biological lipids the reader is addressed to the book of Yeagle \cite{yeagle}.
 
 \section{NanoParticle model}
 % gold core --> Thyiol passivated --> ligands
@@ -38,7 +38,7 @@ on. In particular, as we shall see, in the model we will use we consider only \a
 cover the \ac{NP} gold core with a monolayer with different compositions and surface arrangements. 
 %To overcome the computational cost of an atomistic model we use a \martini \ac{CG} model of the \ac{OT} and \ac{MUS} ligands. 
 
-%The model of the \ac{AuNP} and the \martini model of the \ac{OT} and \ac{MUS} ligands are developed by Federica Simonelli \etal\, in \cite{ourPaper}, and the reader is addressed to it for a more detail discussion about the model and the parameterization.
+%The model of the \ac{AuNP} and the \martini model of the \ac{OT} and \ac{MUS} ligands are developed by Federica Simonelli \etal in \cite{ourPaper}, and the reader is addressed to it for a more detail discussion about the model and the parameterization.
 
 \subsection{Passivated gold core}
 % some information about gold core: dimensions, number of atoms, model used, elastic network, shel construction
@@ -132,7 +132,7 @@ backbone and their hydrogen atoms. The chemical structure and the resulting \ac{
 figure~(\ref{fig:ot}). The first bead of each \ac{OT} ligand is bound to a sulphur atom via a harmonic potential 
 with a bond constant of $1250$~kJ/(mol\,nm$^2$) and equilibrium length of $0.47$~nm. The second bead is connected 
 to the first by the same bond potential. An angle potential as in equation~\eqref{eq:martiniAngle} is used among 
-the three particles. Parameters are fixed in accordance with the standard \martini parameters for alkanes. 
+the three particles. Parameters are fixed in accordance with the \ac{STD} \martini parameters for alkanes. 
 %Moreover a purely repulsive potential, as described previously, is used between C$_1$ beads and gold and sulfur 
 %atoms to prevent the penetration of the \ac{NP} core.
 
@@ -143,7 +143,7 @@ resulting \ac{CG} \martini model is shown in figure~(\ref{fig:mus}). Even in thi
 of $1250$~kJ/(mol\,nm$^2$) and equilibrium length of $0.47$~nm. The same potential is used to bind all other 
 beads to the previous one. An angle potential as in equation~\eqref{eq:martiniAngle} is used among the sulfur 
 atom, the first C$_1$ and second C$_1$, among the first, the second and the third C$_1$ beads and so on for all 
-four beads. Parameters are fixed in accordance with the standard \martini parameters for alkanes.
+four beads. Parameters are fixed in accordance with the \ac{STD} \martini parameters for alkanes.
 %As in the \ac{OT} ligand 
 %model, a purely repulsive potential, as described previously, is used between C$_1$ beads and gold and sulfur 
 %atoms to prevent the \ac{NP} penetration. The same applies between Qda bead and gold and sulfur atoms.
@@ -270,14 +270,14 @@ C$_1$ while the unsaturated tail is built up of four C$_1$ beads and one C$3$ be
 unsaturated group of atoms. The glycerol group is modeled with two beads of type N$_\text{a}$. A comparison 
 between the chemical structure and \ac{CG} model is shown in figure~(\ref{fig:popc}).
 
-\paragraph{\textbf{model accuracy}} The standard \martini \ac{FF} is able to capture the main physical properties 
+\paragraph{\textbf{model accuracy}} The \ac{STD} \martini \ac{FF} is able to capture the main physical properties 
 of a lipid bilayer. These properties include the area per lipid, the distribution of groups across the membrane, 
 the trend of the bending and the area compression moduli in function of the lipids composition and the 
 unsaturation degree of the lipids, the stress profile across the membrane, the process of lipid desorption and 
 flip--flopping, and many other as better described in \cite{Martini} and \cite{MartiniReview}. Nevertheless many 
 other properties, prevalently mediated by the electrostatic interaction, are not well described. As we have seen 
 in chapter~\ref{chap:EmpiricalFF}, this is because the \martini \ac{FF} does not take into account the long range 
-treatment of the electrostatic interaction and because the standard \martini water is prevalently insensible to 
+treatment of the electrostatic interaction and because the \ac{STD} \martini water is prevalently insensible to 
 the electrostatic interaction\footnote{Moreover we can not forget that the \martini water bead takes into account 
 four real water molecules. Hence the probability for a \martini water bead to permeate the hydrophobic region of 
 the membrane is much less then for a water molecule in an atomistic \ac{FF}.}. To overcome to this problem the 
@@ -314,9 +314,9 @@ known, on thermodynamic basis, that the most stable state for the \ac{AuNP} corr
 while the charged ligands stably interact with the lipid heads of both leaflets, 
 figure~(\ref{fig:threeProcess}f). 
 
-In the work of Federica Simonelli \etal\, \cite{ourPaper}, using the standard \martini \ac{FF}, the authors found 
+In the work of Federica Simonelli \etal \cite{ourPaper}, using the \ac{STD} \martini \ac{FF}, the authors found 
 and characterized a possible mechanism of the interaction process, as better detailed in the next paragraph. In 
-the next paragraph we summarized the findings of Simonelli \etal\,, which constitute the starting point of the 
+the next paragraph we summarized the findings of Simonelli \etal, which constitute the starting point of the 
 development of my thesis work.
 
 \subsection{Three--stage process}
@@ -385,7 +385,7 @@ former than that for the latter.
 
 \subsection{Preliminary metadynamics results}
 \label{sec:preliminaryMetadyn}
-To quantify the thermodynamic behavior, Simonelli \etal\, performed metadynamics calculations. In particular, in 
+To quantify the thermodynamic behavior, Simonelli \etal performed metadynamics calculations. In particular, in 
 order to estimate the energy barrier for the anchoring process, metadynamics was used to enhance the sampling of 
 the transition of the first anchoring ligand from the entrance leaflet to the opposite one. The metadynamics bias potential was applied to the $z$ component of the distance between the center of one charged ligand terminal and the \ac{COM} of the \ac{POPC} bilayer, as shown in figure~(\ref{fig:CVRappresentation}). This distance is thus the \ac{CV}.
 \begin{figure}[ht!]
@@ -400,12 +400,12 @@ the membrane. As the size and the complexity of the system does not allow to ach
 \ac{CG} level, the authors decided to perform different statistically independent metadynamics runs and stop each 
 simulation at the recrossing process of the biased ligand. A recrossing is determined when the charged bead is 
 $0.5$~nm above the \ac{COM} of the membrane in the leaflet of entrance. The resulting \ac{FES} profile, shown in 
-figure~(\ref{fig:NPFES}), is obtained averaging the statistically independent runs. The errorbars are the 
+figure~(\ref{fig:NPFES}), is obtained averaging the statistically independent runs. The error bars are the 
 standard error of the independent runs, as described in \ref{sec:metadynamics}.
 \begin{figure}[!th]
 	\centering
 	\includegraphics[width=0.6\textwidth]{./img/NPFES}
-	\caption{Free energy profile related to the transfer of a negatively charged ligand from the entrance leaflet to the opposite one. The blue is related to the striped (\ac{MUS}:\ac{OT} $1$:$1$) configuration while the red to the random (\ac{MUS}:\ac{OT} $1$:$1$) configuration. Metadynamics data are shown with errorbars, while the red dashed line are hypothesized profiles for the stage $2$ to stage $3$ transition of random \acp{NP}. Gray shades show the position of the polar head beads (AU). Taken from \cite{ourPaper}.}
+	\caption{Free energy profile related to the transfer of a negatively charged ligand from the entrance leaflet to the opposite one. The blue is related to the striped (\ac{MUS}:\ac{OT} $1$:$1$) configuration while the red to the random (\ac{MUS}:\ac{OT} $1$:$1$) configuration. Metadynamics data are shown with error bars, while the red dashed line are hypothesized profiles for the stage $2$ to stage $3$ transition of random \acp{NP}. Gray shades show the position of the polar head beads (AU). Taken from \cite{ourPaper}.}
 	\label{fig:NPFES}
 \end{figure}
 

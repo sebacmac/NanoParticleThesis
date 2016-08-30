@@ -3,48 +3,34 @@
 \label{chap:EmpiricalFF}
 As we have seen in the previous section \ac{MD} provides a variety of tools for solving the time evolution of a
 $N$--particle system. Due to the possibility to capture different length and time scales \ac{MD} simulations can
-be used in a variety of systems, such as set of atoms, molecules or more complex system such as protein and
-macromolecules systems. In each of these systems, depending on the \textit{interaction model} and its
-\textit{parametrization}, we will be able to describe crucial molecular--level processes, such as hydrogen bond
-formation in organic molecules, which happen on the picoseconds time scale; or study slow processes such as the
-diffusion of massive colloidal particles, taking place on time scales of milliseconds if not seconds. Considering 
-soft or condensed mater, the most relevant for this thesis, the main processes of interest ranging from protein 
-folding to glass transitions, from surface diffusion to ligand--receptor binding take place on longer time scales 
-(several ns) and involve a larger number of atoms ($N \gg 10^4$).
+be used to study a variety of systems, such as set of atoms, molecules or more complex systems such as proteins and
+macromolecular systems. Biomolecular simulations, especially when requiring the explicit treatment of solvent molecules, often deal with a very large number of particles $(10^4 < N < 10^6)$. As for the time scales, they can span a broad range depending on the process under study: hydrogen bond formation in organic molecules, for example, happens on the picosecond time scale; slow processes such as the diffusion of massive colloidal particles take place on time scales of milliseconds if not seconds. 
 
-Hence with soft or condensed matter systems, in order to remove some \ac{DOF} due to the necessity to increase
-the time step and speed up the simulation, a crucial role is played by the \textit{Born--Oppenheimer
-approximation}. It says that we can separate the motion of the electrons by the motion of the atomic nuclei. This
-is done in order to integrate out the high frequency electrons' motions. If, for some particular system, we want
-to know precisely the dynamics of the electrons we have to introduce quantum mechanical methods that are, even
-for a small number of particles ($N\sim 10^2$), very computationally time consuming. In the following, when we
-speak about atoms or chemical moieties we refer to it as for nuclei coordinates only without considering
-electrons at all.
+% In each of these systems, depending on the \textit{interaction model} and its
+% \textit{parametrization}, we will be able to describe crucial molecular--level processes, such as hydrogen bond
+% formation in organic molecules, which happen on the picoseconds time scale; or study slow processes such as the
+% diffusion of massive colloidal particles, taking place on time scales of milliseconds if not seconds. Considering
+% soft or condensed mater, the most relevant for this thesis, the main processes of interest ranging from protein
+% folding to glass transitions, from surface diffusion to ligand--receptor binding take place on longer time scales
+% (several ns) and involve a larger number of atoms ($N \gg 10^4$).
 
-Nevertheless atom or molecule interactions, such as bond formation, are mediated by the electron interactions.
-Thus, to describe the dynamics of such a system with a classical \ac{MD} tools and the Born--Oppenheimer
-approximation, it is necessary to develop an \textit{empirical model of the inter--atom interactions} that mimics
-the interactions behavior. Since forces are derived from the \ac{PEF}, a typical choice, when it is possible, for
-example with organic systems, is to model the inter--particle interactions by a set of pairwise addictive
-potentials that avoid any many--body calculations. Nevertheless for some systems this is impracticable, for
-example, for metal cores we need to consider the many--body calculations or an effective many--body potential
-that take into account the behavior of all metal atoms in the core. A typical solution is to use the many--body
-potential developed by Gupta (see \cite{Leach} for more details about metals treatment at \ac{MD} level). The set
-of functional forms of the inter--particle interaction potentials and its parameterization are collected into the
-so called empirical \acf{FF}. The meaning of \textit{empirical} is that most of the functional forms of the
-interactions has no ``first principle'' justification: they are chosen as a compromise between accuracy and
-computational efficiency.
-%Further it is necessary to stress out that a \ac{FF} is a well defined single entity containing the simulation parameters, the functional models of the interactions and also its parameterizations (and the way to obtain it). All the parameters of a \ac{FF} are in harmony to each other thus changing some parameters without retesting whole \ac{FF} is not allowed because, maybe, one can destroy the whole \ac{FF}.
+The possibility to achieve the description of such a variety of systems by the same tool, \ac{MD}, relies on the existence of appropriate models of the interactions between atoms and molecules. In soft or condensed matter systems these interaction models always rely on the \textit{Born--Oppenheimer approximation}. It consists in separating the motion of the electrons by the motion of the atomic nuclei. This is done in order to integrate out the high frequency electrons' motions. Indeed, the explicit treatment of the electronic \ac{DOF} limits the applicability of \ac{MD} to very small systems ($N$ of the order of $10^2$ atoms). Nevertheless, this type of calculations often called \textit{ab--initio} calculations, despite they are computationally time consuming, can be used to parametrize the model of interactions between atoms and molecules. In the following, when we speak about atoms or chemical moieties we refer to nuclei coordinates only without considering electrons at all.
 
-For biomolecular applications two main classes of \acp{FF} exist: the \textit{atomistic} \acp{FF} in which basic
+%If, for some particular system, we want to know precisely the dynamics of the electrons we have to introduce quantum mechanical methods that are, even for a small number of particles ($N\sim 10^2$), very computationally time consuming. 
+
+Hence, to describe the dynamics of a biomolecular system it is necessary to develop a \textit{model of the inter--atom interactions} that mimics the interactions behavior. The set of functional forms of the interaction potentials between atoms and molecules and they parameterization are collected into the so called \textit{empirical \acf{FF}}. The meaning of \textit{empirical} is that most of the functional forms of the interaction potentials has no ``first principle'' justification: they are chosen as a compromise between accuracy and computational efficiency. For biomolecular applications two main classes of \acp{FF} exist: the \textit{atomistic} \acp{FF} in which basic
 particles are atoms, and the \textit{\ac{CG}} \acp{FF} in which the basic particles represent atom groups or
-small chemical moieties. In this case, even the way to realize the grouping, called \textit{mapping}, is part of
-the \ac{FF} itself. Different \ac{CG} \acp{FF} can use different mapping methods even with the same functional forms.
+small chemical moieties.
 
-In this chapter we will describe atomistic and \ac{CG} \acp{FF} in detail. We will describe the most common 
-functional forms for modeling the inter--particle interactions and how to treat them in an \ac{MD} simulation. In 
-the last part of the chapter we will focus on the main \ac{CG} \ac{FF} used in this thesis work: the 
-\martini \ac{FF} developed by Marrink \etal \cite{Martini}.
+% Nevertheless atom or molecule interactions, such as bond formation, are mediated by the electron interactions.
+% Thus, to describe the dynamics of such a system with a classical \ac{MD} tools and the Born--Oppenheimer
+% approximation, it is necessary to develop an  Since forces are derived from the \ac{PEF}, a typical choice, when it is possible, for
+% example with organic systems, is to model the inter--particle interactions by a set of pairwise addictive
+% potentials that avoid any many--body calculations. Nevertheless for some systems this is impracticable, for
+% example, for metal cores we need to consider the many--body calculations or an effective many--body potential
+% that take into account the behavior of all metal atoms in the core. A typical solution is to use the many--body
+% potential developed by Gupta (see \cite{Leach} for more details about metals treatment at \ac{MD} level).
+%Further it is necessary to stress out that a \ac{FF} is a well defined single entity containing the simulation parameters, the functional models of the interactions and also its parameterizations (and the way to obtain it). All the parameters of a \ac{FF} are in harmony to each other thus changing some parameters without retesting whole \ac{FF} is not allowed because, maybe, one can destroy the whole \ac{FF}.
 
 \paragraph{\textbf{\textacr{parameterization}}} In general the functional forms for potential interactions are
 common to all particles in the system. The \ac{FF} is completed by a set of empirical parameters that
@@ -62,7 +48,12 @@ differ from those used at the parameterization stage. For example, a \ac{FF} par
 physical properties of liquid water in standard ambient conditions should also reproduce other properties such as 
 water melting point, liquid--vapor surface tension, and so on. This is the most challenging aspect of model 
 development, and it relies on a very accurate choice of the target properties used during the parameterization 
-stage.
+stage.\\\medskip
+
+In this chapter we will describe atomistic and \ac{CG} \acp{FF} in detail. We will describe the most common 
+functional forms for modeling the inter--particle interactions and how to treat them in an \ac{MD} simulation. In 
+the last part of the chapter we will focus on the main \ac{CG} \ac{FF} used in this thesis work: the 
+\martini \ac{FF} developed by Marrink \etal in \cite{Martini}.
 
 \section{Inter--particle interactions}
 For biomolecular applications the inter--particle interaction potentials are divided into two main classes: the

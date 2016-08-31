@@ -4,12 +4,12 @@
 The results summarized in section~\ref{sec:NPMembraneInt} were obtained using the \ac{STD} \martini \ac{FF}, with a cut--off method for treating the electrostatic interactions. Unfortunately, as we have seen in chapter~\ref{chap:EmpiricalFF}, such method poorly describes the processes that involve the transfer of a charged moiety from a polar (e.g. water) environment to an non--polar one (e.g. the membrane core).
 
 Our aim is thus to perform a comparison between the \ac{STD} \martini model and two versions of \martini that better take into account electrostatic interactions. We will consider 
-\begin{enumerate}[label=\alph*.]
+\begin{enumerate}[label=\roman*.]
 	\item the \martini \ac{FF} with long range electrostatics (\martini + \ac{PME});
 	\item the \martini \ac{FF} with long range electrostatics and \ac{PW} (\martini + \ac{PME}/\acs{PW}).
 \end{enumerate}
 
-In this chapter we present the main results of this thesis. In section~\ref{sec:resultsBiased} we calculate, using the metadynamics method, the free energy barrier for the \ac{NP} anchoring (and dis--anchoring) process using versions a. and b. of the \martini \ac{FF}, and compare the outcomes to those obtained with the \ac{STD} \martini model and with atomistic simulations. The introduction of long--range electrostatics has the overall effect of increasing the energy barriers for the translocation of charged ligands.
+In this chapter we present the main results of this thesis. In section~\ref{sec:resultsBiased} we calculate, using the metadynamics method, the free energy barrier for the \ac{NP} anchoring (and dis--anchoring) process using versions \textit{i}. and \textit{ii}. of the \martini \ac{FF}, and compare the outcomes to those obtained with the \ac{STD} \martini model and with atomistic simulations. The introduction of long--range electrostatics has the overall effect of increasing the energy barriers for the translocation of charged ligands.
 
 In section~\ref{sec:resultsUnBiased} we focus on the description of the molecular processes that take place during the anchoring/dis--anchoring of the \ac{NP}. This analysis will be applied to both biased (metadynamics) trajectories and unbiased \ac{MD} runs, and it will allow to quantify the degree of alteration of the membrane structural properties during the interaction with the \ac{NP}.
 
@@ -25,8 +25,8 @@ The process that I will consider for the \ac{FES} estimation of the ligand ancho
 \paragraph{\textbf{system set--up}} In all of my biased and unbiased \ac{MD} runs the membrane bilayer is made of $256$ \ac{POPC} lipids per leaflet. I will consider both the striped (\ac{MUS}:\ac{OT} $1$:$1$) and the random (\ac{MUS}:\ac{OT} $1$:$1$) \acp{NP}. The simulation box is neutralized with $30$ counteracting Na$^+$ ions\footnote{The \martini model for ions, especially for Na$^+$ and Cl$^-$, associates the ion plus the hydration shell to a bead of type Qd positively charged and Qa negatively charged, respectively.} and filled by water. In figure~(\ref{fig:startFrameHydro}) it is shown an example of the starting configuration for a striped (\ac{MUS}:\ac{OT} $1$:$1$) \ac{NP} in the hydrophobic state. The initial configuration frames with the \ac{PW} are obtained from the initial configuration frames with the \ac{STD} \martini water using a python script that converts the \ac{STD} \martini water to the \ac{PW} bead. With the \ac{PW} an equilibration run with the parameters shown in the third column of table~(\ref{tab:inputParam}) is necessary to stabilize the system. As already shown in figure~(\ref{fig:CVRappresentation}), our metadynamics runs use as \ac{CV} the distance between one single charged ligand terminal and the \ac{COM} of \ac{POPC} along the normal. The charged ligand for the anchoring process is chosen so as to be the lowest charged ligand attached to the \ac{NP} core. For what concerns the metadynamics input parameters used to perform my \ac{MD} runs, if not differently specified, they are summarized in table~(\ref{tab:metadynParam}).
 \begin{SCfigure}[][!ht]
 	\centering
-	\includegraphics[width=0.4\textwidth]{./img/patchedHydrophobic}
-	\caption{Example of a starting configuration of a metadynamics run of a striped (\ac{MUS}:\ac{OT} $1$:$1$) \ac{NP} in the hydrophobic state. Color code as in figure~(\ref{fig:threeProcess}). The charged ligand chosen for the anchoring process is in orange. The blue contour is the simulation box. Water beads and lipid tails are not shown.}%
+	\includegraphics[width=0.42\textwidth]{./img/patchedHydrophobic.pdf}
+	\caption{Example of a starting configuration of a metadynamics run of a striped (\ac{MUS}:\ac{OT} $1$:$1$) \ac{NP} in the hydrophobic state. Color code as in figure~(\ref{fig:threeProcess}). The charged ligand chosen for the anchoring process is in orange. The dashed line is the center of the bilayer. The blue contour is the simulation box. Water beads and lipid tails are not shown.}%
 	\label{fig:startFrameHydro}
 \end{SCfigure}
 
@@ -154,8 +154,8 @@ As for the forward energy wall, the same procedure was followed in order to calc
 
 \begin{SCfigure}[][!ht]
 	\centering
-	\includegraphics[width=0.48\textwidth]{./img/patchedAnchored}
-	\caption{Example of a starting frame of a metadynamics run of a striped (\ac{MUS}:\ac{OT} $1$:$1$) \ac{NP} in a one anchor state. Color code as in figure~(\ref{fig:threeProcess}). The charged ligand chosen for the anchoring process is in orange. The blue contour is the simulation box. Water beads and lipid tails are not shown.}%
+	\includegraphics[width=0.44\textwidth]{./img/patchedAnchored.pdf}
+	\caption{Example of a starting frame of a metadynamics run of a striped (\ac{MUS}:\ac{OT} $1$:$1$) \ac{NP} in a one anchor state. Color code as in figure~(\ref{fig:threeProcess}). The charged ligand chosen for the anchoring process is in orange. The dashed line is the center of the bilayer. The blue contour is the simulation box. Water beads and lipid tails are not shown.}%
 	\label{fig:startFrameAnchored}
 \end{SCfigure}
 

@@ -44,31 +44,27 @@ cover the \ac{NP} gold core with a monolayer with different compositions and sur
 % some information about gold core: dimensions, number of atoms, model used, elastic network, shel construction
 The gold core is composed of $144$ atoms, it has icosahedral symmetry and it is made of three bulk shell with 
 $12$, $42$ and $60$ atoms, respectively. A surface shell of $30$ atoms completes the gold cluster structure. Then 
-$60$ sulphur atoms, which bind the aliphatic chains (R) to the gold core, are bounded to the gold atoms on the 
+$60$ sulfur atoms, which bind the aliphatic chains (R) to the gold core, are bounded to the gold atoms on the 
 surface through the typical bond structure RS--Au--SR. The shell construction is shown in 
 figure~(\ref{fig:goldShell}).
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[width=0.8\textwidth]{./img/goldShell}
-	\caption{First three frame: the concentric $12$--(yellow), $42$--(red) and $60$--(blue) atom gold internal shell, surrounded (last frame) by $30$ gold (red small) and $60$ sulphur (yellow small) surface atoms. The R chains are not shown. Taken from \cite{corePassivated}.}
+	\caption{First three frame: the concentric $12$--(yellow), $42$--(red) and $60$--(blue) atom gold internal shell, surrounded (last frame) by $30$ gold (red small) and $60$ sulfur (yellow small) surface atoms. The R chains are not shown. Taken from \cite{corePassivated}.}
 	\label{fig:goldShell}
 \end{figure}
 
 The resulting diameter of the gold core is about $2$~nm. When passivated by thiols, its overall size depends on 
-the length of the aliphatic chains bound to the sulphur atoms. The monolayer--protected \acp{AuNP} we will 
+the length of the aliphatic chains bound to the sulfur atoms. The monolayer--protected \acp{AuNP} we will 
 consider have a total diameter of about $4$~nm.
 
 Despite the computational cost associated to atomistically describe the \ac{NP} core, all gold and sulfur atoms 
-are taken into account. Bonds between gold atoms and sulfur atoms are allowed to vibrate. As we have seen in a 
-previous section, a many--body potential should be used. Instead, as we are interested in the vibrational modes of the core atoms, 
-%Federica Simonelli in her thesis work, found that
-a more efficient way, as shown in figure~(\ref{fig:coreNetwork}), is to use an elastic network associate the 
-potential energy
+are taken into account. As shown in figure~(\ref{fig:coreNetwork}), bonds between gold and sulfur atoms are described with an elastic network potential of the form
 \begin{equation*}
 	U = \frac{1}{2}\sum_i \sideset{}{'}\sum_{j\ne i}k_{ij}(r_{ij} - r_{ij}^0)^2
 \end{equation*}
 where $r_{ij}$ is the distance, $k_{ij}$ is the bond constant for $i-j$ atom pair and the prime indicates that 
-only neighbor atoms within a certain cutoff are considered. 
+only neighbor atoms within a certain cutoff are considered. Thus, the atoms of the \ac{NP} core are allowed to vibrate.
 \begin{figure}[h!t]
 	\centering%
 	\subfloat[Gold elastic network]{%
@@ -129,7 +125,7 @@ hydrophobic groups guarantees that \acp{NP} are stable, that is, they do not agg
 
 \paragraph{\textbf{OT Model}} Two \martini beads of type C$_1$ model the eight carbon atoms of the \ac{OT} 
 backbone and their hydrogen atoms. The chemical structure and the resulting \ac{CG} \martini model is shown in 
-figure~(\ref{fig:ot}). The first bead of each \ac{OT} ligand is bound to a sulphur atom via a harmonic potential 
+figure~(\ref{fig:ot}). The first bead of each \ac{OT} ligand is bound to a sulfur atom via a harmonic potential 
 with a bond constant of $1250$~kJ/(mol\,nm$^2$) and equilibrium length of $0.47$~nm. The second bead is connected 
 to the first by the same bond potential. An angle potential as in equation~\eqref{eq:martiniAngle} is used among 
 the three particles. Parameters are fixed in accordance with the \ac{STD} \martini parameters for alkanes. 
@@ -139,7 +135,7 @@ the three particles. Parameters are fixed in accordance with the \ac{STD} \marti
 \paragraph{\textbf{MUS Model}} Three \martini beads of type C$_1$ model the hydrophobic chain of the \ac{MUS} 
 ligand. The charged group is modeled as a Qda bead with a charge of $-\mathsf{e}$. The chemical structure and the 
 resulting \ac{CG} \martini model is shown in figure~(\ref{fig:mus}). Even in this case the first bead of a 
-\ac{MUS} ligand is bound to the sulphur atom through a harmonic potential with the same parameter: bond constant 
+\ac{MUS} ligand is bound to the sulfur atom through a harmonic potential with the same parameter: bond constant 
 of $1250$~kJ/(mol\,nm$^2$) and equilibrium length of $0.47$~nm. The same potential is used to bind all other 
 beads to the previous one. An angle potential as in equation~\eqref{eq:martiniAngle} is used among the sulfur 
 atom, the first C$_1$ and second C$_1$, among the first, the second and the third C$_1$ beads and so on for all 

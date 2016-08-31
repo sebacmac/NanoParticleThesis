@@ -29,7 +29,7 @@
 
 \usepackage{tikz,pgfplots}
 \usetikzlibrary{positioning}
-\usetikzlibrary{decorations.pathmorphing}
+%\usetikzlibrary{decorations.pathmorphing}
 
 
 % Alinea il numero di pagina sulla destra e filla con puntini
@@ -51,7 +51,9 @@
 \newcommand{\plumed}{\textacr{PLUMED} }
 
 %Command for the introduction style
-\newcommand\introductionStyle{\titleformat{\section}{\normalfont\large\sffamily}{\textsc{\MakeTextLowercase{\Roman{section}\ \ --\!\!\!}}}{1em}{\spacedlowsmallcaps}}%
+\newcommand\introductionStyle{\titleformat{\section}{\normalfont\large\sffamily}{\textsc{\MakeTextLowercase{\Roman{section}\ \ --\!\!\!}}}{1em}{\spacedlowsmallcaps}%
+\titlespacing*{\section}{0pt}{2\baselineskip}{0.2\baselineskip}[\marginparsep]}%
+
 \newcommand\toclesssection{\addtocontents{toc}{\protect\setcounter{tocdepth}{-10}}}
 \newcommand\restoretoc{\addtocontents{toc}{\protect\setcounter{tocdepth}{2}}}
 

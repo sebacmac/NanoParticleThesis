@@ -20,3 +20,5 @@ chapter/.tm_properties
 *.bbl
 
 *.blg
+
+chapter/.DS_Store

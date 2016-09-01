@@ -3,8 +3,12 @@
 \label{chap:EmpiricalFF}
 As we have seen in the previous section \ac{MD} provides a variety of tools for solving the time evolution of a
 $N$--particle system. Due to the possibility to capture different length and time scales \ac{MD} simulations can
-be used to study a variety of systems, such as set of atoms, molecules or more complex systems such as proteins and
-macromolecular systems. Biomolecular simulations, especially when requiring the explicit treatment of solvent molecules, often deal with a very large number of particles $(10^4 < N < 10^6)$. As for the time scales, they can span a broad range depending on the process under study: hydrogen bond formation in organic molecules, for example, happens on the picosecond time scale; slow processes such as the diffusion of massive colloidal particles take place on time scales of milliseconds if not seconds. 
+be used to study a variety of systems, such as set of atoms, molecules or more complex systems such as proteins 
+and macromolecular systems. Biomolecular simulations, especially when requiring the explicit treatment of 
+solvent molecules, often deal with a very large number of particles $(10^4 < N < 10^6)$. As for the time scales, 
+they can span a broad range depending on the process under study: hydrogen bond formation in organic molecules, 
+for example, happens on the picosecond time scale; slow processes such as the diffusion of massive colloidal 
+particles take place on time scales of milliseconds if not seconds.
 
 % In each of these systems, depending on the \textit{interaction model} and its
 % \textit{parametrization}, we will be able to describe crucial molecular--level processes, such as hydrogen bond
@@ -14,11 +18,23 @@ macromolecular systems. Biomolecular simulations, especially when requiring the 
 % folding to glass transitions, from surface diffusion to ligand--receptor binding take place on longer time scales
 % (several ns) and involve a larger number of atoms ($N \gg 10^4$).
 
-The possibility to achieve the description of such a variety of systems by the same tool, \ac{MD}, relies on the existence of appropriate models of the interactions between atoms and molecules. In soft or condensed matter systems these interaction models always rely on the \textit{Born--Oppenheimer approximation}. It consists in separating the motion of the electrons by the motion of the atomic nuclei. This is done in order to integrate out the high frequency electrons' motions. Indeed, the explicit treatment of the electronic \ac{DOF} would limits the applicability of \ac{MD} to very small systems ($N$ of the order of $10^2$ atoms). In the following, when we speak about atoms or chemical moieties we refer to nuclei coordinates only without considering electrons at all.
+The possibility to achieve the description of such a variety of systems by the same tool, \ac{MD}, relies on the 
+existence of appropriate models of the interactions between atoms and molecules. In soft or condensed matter 
+systems these interaction models always rely on the \textit{Born--Oppenheimer approximation}. It consists in 
+separating the motion of the electrons by the motion of the atomic nuclei. This is done in order to integrate 
+out the high frequency electrons' motions. Indeed, the explicit treatment of the electronic \ac{DOF} would 
+limits the applicability of \ac{MD} to very small systems ($N$ of the order of $10^2$ atoms). In the following, 
+when we speak about atoms or chemical moieties we refer to nuclei coordinates only without considering electrons 
+at all.
 
 %If, for some particular system, we want to know precisely the dynamics of the electrons we have to introduce quantum mechanical methods that are, even for a small number of particles ($N\sim 10^2$), very computationally time consuming. 
 
-Hence, to describe the dynamics of a biomolecular system it is necessary to develop a classical \textit{model of the inter--atom interactions}. The set of functional forms of the interaction potentials between atoms and molecules and they parameterization are collected into the so called \textit{empirical \acf{FF}}. The meaning of \textit{empirical} is that most of the functional forms of the interaction potentials has no ``first principle'' justification: they are chosen as a compromise between accuracy and computational efficiency. For biomolecular applications two main classes of \acp{FF} exist: the \textit{atomistic} \acp{FF} in which basic
+Hence, to describe the dynamics of a biomolecular system it is necessary to develop a classical \textit{model of 
+the inter--atom interactions}. The set of functional forms of the interaction potentials between atoms and 
+molecules and they parameterization are collected into the so called \textit{empirical \acf{FF}}. The meaning of 
+\textit{empirical} is that most of the functional forms of the interaction potentials has no ``first principle'' 
+justification: they are chosen as a compromise between accuracy and computational efficiency. For biomolecular 
+applications two main classes of \acp{FF} exist: the \textit{atomistic} \acp{FF} in which basic
 particles are atoms, and the \textit{\ac{CG}} \acp{FF} in which the basic particles represent atom groups or
 small chemical moieties.
 
@@ -42,18 +58,18 @@ measurements or from finer--level calculations or simulations. Nowadays, atomist
 variety of chemical compounds in the liquid and solid phases.
 
 \paragraph{\textbf{\textacr{transferability}}} As described above the parameterization of a \ac{FF} involves a
-small set of test systems for which some set of target properties are reproduced. An important characteristic of a
-\ac{FF} is its \textit{transferability} that means the ability of the model to describe situations that
+small set of test systems for which some set of target properties are reproduced. An important characteristic of 
+a \ac{FF} is its \textit{transferability} that means the ability of the model to describe situations that
 differ from those used at the parameterization stage. For example, a \ac{FF} parameterized to reproduce the 
-physical properties of liquid water in standard ambient conditions should also reproduce other properties such as 
-water melting point, liquid--vapor surface tension, and so on. This is the most challenging aspect of model 
+physical properties of liquid water in standard ambient conditions should also reproduce other properties such 
+as water melting point, liquid--vapor surface tension, and so on. This is the most challenging aspect of model 
 development, and it relies on a very accurate choice of the target properties used during the parameterization 
 stage.\\\medskip
 
 In this chapter we will describe atomistic and \ac{CG} \acp{FF} in detail. We will describe the most common 
-functional forms for modeling the inter--particle interactions and how to treat them in an \ac{MD} simulation. In 
-the last part of the chapter we will focus on the main \ac{CG} \ac{FF} used in this thesis work: the 
-\martini \ac{FF} developed by Marrink \etal in \cite{Martini}.
+functional forms for modeling the inter--particle interactions and how to treat them in an \ac{MD} simulation. 
+In the last part of the chapter we will focus on the main \ac{CG} \ac{FF} used in this thesis work: the 
+\martini{} \ac{FF} developed by Marrink \etal{} in \cite{Martini}.
 
 \section{Inter--particle interactions}
 For biomolecular applications the inter--particle interaction potentials are divided into two main classes: the
@@ -76,12 +92,12 @@ The bonded contribution is generally described by the following terms
 \end{equation}
 the first two terms are harmonic potentials which model respectively the energy contribution due to the deviation
 from reference bond length $l_{i0}$ and a bond angle $\theta_{i0}$. $k_{bi}$ and $k_{ia}$ are the bond and angle
-elastic constants. The bond contribution involves a set of two adjacent particles while the angle contribution a set 
-of three consecutive particles in the same molecule. The last term in equation~\eqref{eq:bondPEF} concerns the 
-energy contribution due to the bond torsional change. It involves four consecutive particles in the same molecule 
-and mimic the energy barrier needed to torsion the bond along the bond axis. $\omega$ is the torsional angle,
-$\gamma$ is a phase factor, $V_n$ qualitatively describes the energy barrier for each $n$--th components and $n$ is 
-defined as the number of minima for each components.
+elastic constants. The bond contribution involves a set of two adjacent particles while the angle contribution a 
+set of three consecutive particles in the same molecule. The last term in equation~\eqref{eq:bondPEF} concerns 
+the energy contribution due to the bond torsional change. It involves four consecutive particles in the same 
+molecule and mimic the energy barrier needed to torsion the bond along the bond axis. $\omega$ is the torsional 
+angle, $\gamma$ is a phase factor, $V_n$ qualitatively describes the energy barrier for each $n$--th components 
+and $n$ is defined as the number of minima for each components.
 
 The non--bonded contribution is described by the following terms
 \begin{equation}
@@ -90,11 +106,11 @@ The non--bonded contribution is described by the following terms
 \end{equation}
 The first term is the energy contribution due to the Van der Waals interactions modeled as a Lennard--Jones
 $12-6$ potential, fully characterized by the constants $\sigma_{ij}$ and $\epsilon_{ij}$ assigned to each
-pair of particles. The last term is the electrostatic energy contribution described by the particle charge $q$. The
-non--bonded interactions involve obviously all particles in the system, but for particles belonging to same
-molecule they are usually computed only if they are separated by at least three bonds, i.e. if their interactions 
-are not described by bonded terms. The various contributions described above are schematically represented in
-figure~(\ref{fig:FFInteraction}).
+pair of particles. The last term is the electrostatic energy contribution described by the particle charge $q$. 
+The non--bonded interactions involve obviously all particles in the system, but for particles belonging to same
+molecule they are usually computed only if they are separated by at least three bonds, i.e. if their 
+interactions are not described by bonded terms. The various contributions described above are schematically 
+represented in figure~(\ref{fig:FFInteraction}).
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[width=0.8\textwidth]{./img/interPartInt/interPartInt}
@@ -103,17 +119,15 @@ figure~(\ref{fig:FFInteraction}).
 \end{figure}
 
 \subsection{Cut--off, shift and switch methods}
-%\subsection{Non--bonded interactions}
 The bonded interactions, as we can see in equation~\eqref{eq:bondPEF}, have a \textit{fixed range} of action, 
-meaning that they depend, for example, on the equilibrium bond length that is fixed. Moreover, usually in standard 
-\ac{MD} simulations bond breaking is not taken into account. The non--bonded interactions, instead, depend on the 
-inter--particles distance $r_{ij}$ and decay to zero as a power of $r_{ij}^{-d}$. Depending on the power order $d$ 
-compared to the dimensionality $s$ of the system they are split into \textit{short range} if $d>s$ and \textit{long 
-range} interactions if $1 \le d < s$. For example, as we shall see later, the Lennard--Jones $12-6$ potential decays 
-to zero as $r^{-6}$ then it is a short range interaction, while the electrostatic is a long range interaction since 
-it decays to zero as $r$.
+meaning that they depend, for example, on the equilibrium bond length that is fixed. Moreover, usually in 
+standard \ac{MD} simulations bond breaking is not taken into account. The non--bonded interactions, instead, 
+depend on the inter--particles distance $r_{ij}$ and decay to zero as a power of $r_{ij}^{-d}$. Depending on the 
+power order $d$ compared to the dimensionality $s$ of the system they are split into \textit{short range} if 
+$d>s$ and \textit{long range} interactions if $1 \le d < s$. For example, as we shall see later, the 
+Lennard--Jones $12-6$ potential decays to zero as $r^{-6}$ then it is a short range interaction, while the 
+electrostatic is a long range interaction since it decays to zero as $r$.
 
-%\subsection{Cut--off, shift and switch methods}
 As we have mentioned in section~\ref{sec:neighbor} the calculations of non--bonded interaction energy
 contributions is one of the most time consuming part of an \ac{MD} simulation. Even if we use a simple pairwise
 additive potential their calculation scale as $\sim N^2$. Thus, especially for short range interactions, various
@@ -172,10 +186,10 @@ forces), dipole--induced dipole interactions (Debye forces), induced dipole--ind
 dispersion forces, hydrogen bonding and entropy effects, that involves both polar and non--polar atoms.
 
 The usual way to treat the Van der Waals interactions is to use a pairwise Lennard--Jones potential. The most
-common exponents for the attractive and repulsive contributions are $6$ and $12$, respectively. The former exponent 
-has physical meaning, as it describe the attractive term of dipole--dipole interactions. The latter, instead,
-is chosen for computational reasons: giving the $r^{-6}$ term it is efficient to calculate $r^{-12}$ as the square
-of $r^{-6}$. The general form for a $12-6$ Lennard--Jones potential is the following
+common exponents for the attractive and repulsive contributions are $6$ and $12$, respectively. The former 
+exponent has physical meaning, as it describe the attractive term of dipole--dipole interactions. The latter, 
+instead, is chosen for computational reasons: giving the $r^{-6}$ term it is efficient to calculate $r^{-12}$ as 
+the square of $r^{-6}$. The general form for a $12-6$ Lennard--Jones potential is the following
 \begin{equation}
 	v(r) = 4\epsilon\left ( \left ( \frac{\sigma}{r}\right )^{12}  - \left ( \frac{\sigma}{r} \right )^6 \right ) = \frac{C_{12}}{r^{12}} - \frac{C_{6}}{r^{6}}
 	\label{eq:lj126}
@@ -183,7 +197,8 @@ of $r^{-6}$. The general form for a $12-6$ Lennard--Jones potential is the follo
 where $C_{12} = 4\epsilon\sigma^{12}$, $C_{6} = 4\epsilon\sigma^{6}$ and $r$ is the pairwise particles distance.
 $\epsilon$ is related to the absolute value of minimum while $\sigma$ is related to the position of the minimum
 of the potential: $r_{\text{min}} = 2^{\nicefrac{1}{6}}\sigma$, often referred to by Van der Waals radius. These
-constants are assigned to each particle pair. In figure~(\ref{fig:LG12511}) a plot of the function~\eqref{eq:lj126} with $\epsilon = \sigma = 1$ is shown.
+constants are assigned to each particle pair. In figure~(\ref{fig:LG12511}) a plot of the 
+function~\eqref{eq:lj126} with $\epsilon = \sigma = 1$ is shown.
 \begin{figure}[!ht]
 \centering
 	\includegraphics[width=0.6\textwidth]{./img/LJ126/LJ126}
@@ -234,17 +249,18 @@ equation~\eqref{eq:electrostaticImage} is \textit{conditionally convergent}
 negative term alone form both a divergent series. The sum of a conditionally convergent series depends on the 
 order in which the positive and negative terms are considered.} 
 and converges extremely slowly so that it would need so many terms to converge that its computational cost would 
-be too high, especially for large systems (of the order of $N \gg 10^4$). However, the increasing of computer power 
-has led to develop more rigorous methods to solve equation~\eqref{eq:electrostaticImage}, even for very large 
-systems. The most important methods developed to solve this problem are based on the \ac{ESM}. We shall describe 
-those used in this thesis work: the \ac{ESM} itself and the \ac{PME} method. For a more complete discussion about 
-the advanced methods developed to treat the electrostatic interaction, for biological applications, the reader is 
-addressed to the review by Cisneros \etal \cite{Cisneros}.
+be too high, especially for large systems (of the order of $N \gg 10^4$). However, the increasing of computer 
+power has led to develop more rigorous methods to solve equation~\eqref{eq:electrostaticImage}, even for very 
+large systems. The most important methods developed to solve this problem are based on the \ac{ESM}. We shall 
+describe those used in this thesis work: the \ac{ESM} itself and the \ac{PME} method. For a more complete 
+discussion about the advanced methods developed to treat the electrostatic interaction, for biological 
+applications, the reader is addressed to the review by Cisneros \etal{} \cite{Cisneros}.
 
 \subsection{Ewald summation method} %Molecular Modelling, 334
 The \acf{ESM} is the first method introduced by Ewald for a correct treatment of the electrostatic energy
 contribution in an ionic crystal. The basic idea is to split the summation in equation~
-\eqref{eq:electrostaticImage} in two series both rapidly convergent. The method is based on the following identity
+\eqref{eq:electrostaticImage} in two series both rapidly convergent. The method is based on the following 
+identity
 \begin{equation}
 	\frac{1}{r} = \frac{f(r)}{r} + \frac{1 - f(r)}{r}
 	\label{eq:ewaldTrick}
@@ -254,7 +270,7 @@ and the slow decay at long $r$; in that case the two series can rapidly converge
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[width=0.8\textwidth]{./img/EwaldSum/EwaldSum}
-	\caption{Schematic illustration of the \acs{ESM} charge distribution: in (a) point charges (represented by vertical lines) and the neutralizing Gaussian charge distribution; in (b) the counteracting Gaussian distribution.}
+	\caption{Schematic illustration of the \acs{ESM} charge distribution: in (a) point charges (represented by vertical lines) and the neutralizing Gaussian charge distribution; in (b) the counteracting Gaussian distribution.}%
 	\label{fig:ewald}
 \end{figure}
 
@@ -337,16 +353,15 @@ $\phi(\vec r)$ can be calculated solving the Poisson's equation
 $\displaystyle \nabla^2\phi(\vec r) = -\frac{1}{\varepsilon_0} \rho(\vec r)$. If a charge $q$ is at position 
 $\vec r$ its electrostatic potential energy is given by $U = q\phi(\vec r)$.}
 using fast Poisson solver together with the \ac{FFT} method. This can be done, for example, exploiting the
-\ac{PBC} in order to discretize and make periodic the Poisson's equation.
-%\footnote{It is generally true that the Poisson's equation become ``easily'' solvable in Fourier space. Considering a one dimensional Poisson's equation, its Fourier transform is $k^2\varepsilon_0\tilde\phi(k) = \tilde \rho(k)$ where $\tilde\phi(k)$ and $\tilde\rho(k)$ are, respectively, the Fourier transform of the electrostatic potential and charge distribution.}.
-Such algorithms include the \textit{particle--particle particle--mesh} method, \textit{particle mesh Ewald}
-method, \textit{fast--Fourier Poisson} method and a recent methodology based on multi--scale mesh grid. The
-efficiency and accuracy of such mesh--based algorithms depend strongly on the way in which the charges are
-attributed to the mesh points (and it is also what makes the methods differ from each other). In the following we 
-will describe the one used in this thesis work, the \acf{PME} method.
+\ac{PBC} in order to discretize and make periodic the Poisson's equation. Such algorithms include the 
+\textit{particle--particle particle--mesh} method, \textit{particle mesh Ewald} method, 
+\textit{fast--Fourier Poisson} method and a recent methodology based on multi--scale mesh grid. The efficiency 
+and accuracy of such mesh--based algorithms depend strongly on the way in which the charges are attributed to 
+the mesh points (and it is also what makes the methods differ from each other). In the following we will 
+describe the one used in this thesis work, the \acf{PME} method.
 
 \subsection{Particle mesh Ewald method}
-The \acf{PME} method developed by Darden \etal \cite{DardenPME} is based on the \ac{ESM} so the starting point
+The \acf{PME} method developed by Darden \etal{} \cite{DardenPME} is based on the \ac{ESM} so the starting point
 is equation~\eqref{eq:EwaldEnergy}. As described above, the first part of the Ewald summation is computed in the
 real space together with the Van der Waals contribution using the same cut--off radius. The reciprocal part,
 instead, is computed using \ac{FFT} method, in order to have a gain of performance. First, we need to
@@ -354,8 +369,8 @@ consider a grid mesh onto which the Gaussian counteracting charge distribution i
 is to calculate the electrostatic energy solving Poisson's equation through \ac{FFT} methods. The efficiency and
 accuracy depend on the way the charges are distributed onto the grid. To do this a \textit{charge assignment
 function}, $W(r)$ is introduced in such a way that, considering for simplicity a one dimensional system, the 
-fraction of a charge at position $r$ assigned to a grid point at position $r_p$ is given by $W(r_p - r)$. Hence, if 
-we have a charge density $\rho(r)$ then the charges at the grid point $r_p$ are given by
+fraction of a charge at position $r$ assigned to a grid point at position $r_p$ is given by $W(r_p - r)$. Hence, 
+if we have a charge density $\rho(r)$ then the charges at the grid point $r_p$ are given by
 \begin{equation}
 	q_M(r_p) = \int_0^L\ W(r_p - r) \rho (r)\ dr
 	\label{eq:meshAssign}
@@ -402,7 +417,7 @@ We clearly see that the charge assignment problem is now shifted to the complex 
 are two main methods to make the interpolation: the \textit{Lagrange interpolation method} and the \textit{Euler
 SPLINE interpolation method}. The basic idea of the former is to use, as interpolating function, a polynomial
 function of degree $ \le (n-1)$ where $n$ is the number of points to interpolate, that passes through all the $n$
-points, and which is constructed with a summation over the \textit{Lagrange basis polynomials} as follow
+points, and which is constructed with a summation over the \textit{Lagrange basis polynomials} as follows
 \begin{equation*}
 	P(x) = \sum_{i=1}^n y_i \prod_{\substack{k=1\\k\ne i}}^n \frac{x-x_k}{x_i - x_k}
 \end{equation*}
@@ -422,7 +437,7 @@ following equation
 where $\lambda$ is a complex parameter and $z$ is a complex variable. The main properties of such SPLINE is that,
 it is $n-1$ times analytic, continuously differentiable and then can solve the instability problem of the
 Lagrange interpolation method. In literature the Euler SPLINE method is referred to as \textit{smooth} \ac{PME}
-and the reader is addressed to the article by Essmann \etal \cite{EssmannSPME} for more technical details about
+and the reader is addressed to the article by Essmann \etal{} \cite{EssmannSPME} for more technical details about
 the interpolation procedure.
 
 Summarizing, the \ac{PME} method is implemented with the following scheme
@@ -531,7 +546,7 @@ parameterization need to be adjusted so as to reproduce the desired target prope
 \begin{figure}[h!t]
 	\centering
 	\includegraphics[width=0.7\textwidth]{./img/CGMapping}
-	\caption{Different levels of the coarse--graining of a phospholipid. From left to right increasing levels of coarse--graining. Taken from \cite{CoarseGrainingMapping}.}
+	\caption{Different levels of the coarse--graining of a phospholipid. From left to right increasing levels of coarse--graining. Taken from \cite{CoarseGrainingMapping}.}%
 	\label{fig:CGLevels}
 \end{figure}
 
@@ -545,17 +560,17 @@ polymer science) often use as a target the material structural properties.
 
 In general a \ac{CG} \ac{FF} is more computationally efficient than an atomistic one for the following reasons
 \begin{itemize}
-\item the \ac{DOF} of the system are reduced due to the \ac{CG} procedure with the consequence that a smaller number of interactions and forces has to be computed;
-\item bead--bead interactions, which result from the removal of finer structural details, are softer than atom--atom interactions;
-\item vibrational modes are slower, and their sampling can be achieved using larger \ac{MD} time steps than in atomistic simulations;
-\item softer interactions imply a smoother \ac{PEF} which leads to faster diffusion.
+	\item the \ac{DOF} of the system are reduced due to the \ac{CG} procedure with the consequence that a smaller number of interactions and forces has to be computed;%
+	\item bead--bead interactions, which result from the removal of finer structural details, are softer than atom--atom interactions;%
+	\item vibrational modes are slower, and their sampling can be achieved using larger \ac{MD} time steps than in atomistic simulations;%
+	\item softer interactions imply a smoother \ac{PEF} which leads to faster diffusion.
 \end{itemize}
 
 \section{MARTINI: a Coarse--Grained Force--Field}
 \label{sec:martini}
-\martini is a \ac{CG} \ac{FF} developed by Marrink \etal \cite{Martini} for organic solvents and lipids and
+\martini{} is a \ac{CG} \ac{FF} developed by Marrink \etal{} \cite{Martini} for organic solvents and lipids and
 then extended to proteins \cite{MartiniProtein}, carbohydrates \cite{MartiniCarbo} and a broad class of polymers
-\cite{MartiniPolymers}. \martini is based on a chemical building block approach. Such \martini blocks or beads
+\cite{MartiniPolymers}. \martini{} is based on a chemical building block approach. Such \martini{} blocks or beads
 represent small chemical moieties and they are extensively calibrated in order to construct a large variety of
 organic molecules. As we shall see in section~\ref{sec:martiniParam}, the \ac{FF} is based on accurately
 reproducing the interaction between polar and non--polar chemical compounds. The main target property is intact
@@ -563,14 +578,14 @@ the \textit{partitioning free energy} between water and a large number of organi
 of transfer of chemical moieties from polar and non--polar solvents.
 
 \subsection{Mapping}
-The mapping of the \martini beads is based on a four--to--one scheme that groups four heavy atoms like C, S, O
+The mapping of the \martini{} beads is based on a four--to--one scheme that groups four heavy atoms like C, S, O
 and so on, plus their associated hydrogen atoms, into a single interaction site. Consistently four water
-molecules are modeled with one \martini bead. An example of the mapping procedure including both atomistic and
+molecules are modeled with one \martini{} bead. An example of the mapping procedure including both atomistic and
 \ac{CG} descriptions is shown in figure~(\ref{fig:martiniMapping}).
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[width=0.5\textwidth]{img/martiniMapping}
-	\caption{\martini mapping and atomistic structures compares of some molecules: (A) Standard water bead, (B) polarizable water bead, (C) \acs{DMPC} lipid, (D) Polysaccharide fragment, (E) Peptide, (F) DNA fragment, (G) Polystyrene fragment and (H) Fullerene molecule. In all cases \martini \acs{CG} beads are shown as cyan transparent beads overlaying the atomistic structure. Taken from \cite{MartiniReview}.}
+	\caption{\martini{} mapping and atomistic structures compares of some molecules: (A) Standard water bead, (B) polarizable water bead, (C) \acs{DMPC} lipid, (D) Polysaccharide fragment, (E) Peptide, (F) DNA fragment, (G) Polystyrene fragment and (H) Fullerene molecule. In all cases \martini{} \acs{CG} beads are shown as cyan transparent beads overlaying the atomistic structure. Taken from \cite{MartiniReview}.}%
 	\label{fig:martiniMapping}
 \end{figure}
 
@@ -606,23 +621,23 @@ is a Lennard--Jones $12-6$ potential as in equation~\eqref{eq:lj126}. For most b
 set equal to $0.47~$nm except for the Q--C$_1$ and Q--C$_2$ interactions for which $\sigma = 0.62$~nm. This is
 consistent with reproducing the hydration shell when a charged bead (Q) is dragged into an apolar medium. The
 strength of the interactions is instead dived into ten levels, reported in table~(\ref{tab:martiniEpsilon}). The
-association of the interaction strength with each \martini beads is shown in
+association of the interaction strength with each \martini{} beads is shown in
 figure~(\ref{fig:martiniInteractions}).
 \begin{figure}[h!t]%
 	\center
 	\includegraphics[width=\textwidth]{img/martiniInteractions.pdf}%
-	\caption{Interaction strength association matrix for the \martini bead types and subtypes. Taken from \cite{Martini}.}
+	\caption{Interaction strength association matrix for the \martini{} bead types and subtypes. Taken from \cite{Martini}.}
 	\label{fig:martiniInteractions}
 \end{figure}
 
 \paragraph{\textbf{electrostatic interactions}} Electrostatic charges are assigned using the atom--centered
-approximation, as described in~\ref{sec:chargeRep}. The charges of the \martini beads are empirically assigned at
+approximation, as described in~\ref{sec:chargeRep}. The charges of the \martini{} beads are empirically assigned at
 the center of the beads and correspond to the net charge of the chemical moiety they represent. Water, for
 example, is described by a neutral P$_4$ beads. Van der Waals interactions are responsible for take into account,
 effectively, the effects of polarizability together with the use of an implicit medium with a dielectric constant
 $\varepsilon_r = 15$. However, as we shall see in section~\ref{sec:pw}, to avoid the problems with the implicit
 medium described in~\ref{sec:polarization}, especially for lipid membranes for which the dielectric constant in
-the hydrophobic region is much smaller, Yesylevskyy \etal \cite{PW} have developed a more sophisticated \ac{CG}
+the hydrophobic region is much smaller, Yesylevskyy \etal{} \cite{PW} have developed a more sophisticated \ac{CG}
 water model, called \ac{PW}, to take into account a better water behavior.
 
 \paragraph{\textbf{bonded interactions}} They include only bond length and an angle harmonic contributions. The
@@ -644,25 +659,25 @@ where $\theta_{ijkl}$ denotes the angle between the planes described by atoms $i
 $\theta_0$ are, as usual, the force constant and equilibrium angle.
 
 \subsection{Simulation parameters}
-The \martini \ac{FF} was originally developed using a shifted cut--off scheme for both Lennard--Jones and
+The \martini{} \ac{FF} was originally developed using a shifted cut--off scheme for both Lennard--Jones and
 electrostatic potentials with a cut--off radius $r_c = 1.2$~nm. The Lennard--Jones potential was shifted from
 $r_s = 0.9$~nm to $r_c$ while from $r_s = 0.0$~nm to $r_c$ for the electrostatic potential. The neighbor list is
 constructed as described in the first part of~\ref{sec:neighbor} with a refresh rate of $10$ \ac{MD} steps.
-Recently the more efficient Verlet cut--off scheme was tested by Marrink \etal \cite{MartiniReview} and used
-with the \martini \ac{FF} with a cut--off radius of $r_c = 1.1$~nm, a Verlet buffer tolerance of $0.005$~kJ/(mol\
+Recently the more efficient Verlet cut--off scheme was tested by Marrink \etal{} \cite{MartiniReview} and used
+with the \martini{} \ac{FF} with a cut--off radius of $r_c = 1.1$~nm, a Verlet buffer tolerance of $0.005$~kJ/(mol\
 ps) and a minimum refresh rate of $10$ \ac{MD} steps (often, depending on the hardware, it can be dynamically
 increased to $30$ or $40$ \ac{MD} steps getting better performances).  Moreover, the treatment of the
 electrostatic interaction can be safely updated to the \ac{PME} method together with the Verlet cut--off scheme.
-This new set--up was largely tested by Yesylevskyy \etal \cite{PW}. In this case the cut--off radius was set to
+This new set--up was largely tested by Yesylevskyy \etal{} \cite{PW}. In this case the cut--off radius was set to
 $r_c = 1.2$~nm with the same Verlet buffer tolerance; the \ac{PME} grid spacing was set to have a lower bound of
 $0.12$~nm and the interpolation was set to a fourth-order. Moreover, with the use of \ac{PW}, as we shall see,
 the dielectric constant should be reduced to $\varepsilon_r = 2.5$. In all cases a time step
 $20\le\delta t\le 40$ is suitable for a great number of applications. It should be clear that changing these
-simulation parameters must be followed by a retest of the main properties of the \martini \ac{FF}.
+simulation parameters must be followed by a retest of the main properties of the \martini{} \ac{FF}.
 
 \subsection{Parametrization}
 \label{sec:martiniParam}
-In order to parametrize the \martini \ac{CG} \ac{FF} a set of thermodynamics properties, obtained from \ac{MD}
+In order to parametrize the \martini{} \ac{CG} \ac{FF} a set of thermodynamics properties, obtained from \ac{MD}
 simulations, are compared and fitted against those experimentally measured. These properties are the \textit{free
 energies of vaporization}, \textit{hydration} and \textit{partitioning} between water and a set of organic
 compounds such as hexadecane (H), chloroform (C), ether (E) and octanol (O). The free energy of hydration was
@@ -693,14 +708,14 @@ different degrees of hydrophobicity.
 \begin{figure}[h!t]%
 	\center
 	\includegraphics[width=\textwidth]{img/martiniTarget}%
-	\caption{Results summary: free energies of vaporization $\Delta G^\text{vap}$, hydration $\Delta G^\text{hydr}$ and partitioning $\Delta G^\text{part}$ between water (W) and organic solvents (hexadecane (H), chloroform (C), ether (E) and octanol(O)) compared to experimental values. Experimental properties in parentheses are estimates obtained from comparison to similar compounds. The statistical accuracy of the free energies obtained from the simulations is $\pm 1$~kJ/mol. $^b$ The temperature for the experimental data is $273$~K. Taken from \cite{Martini}.}
+	\caption{Results summary: free energies of vaporization $\Delta G^\text{vap}$, hydration $\Delta G^\text{hydr}$ and partitioning $\Delta G^\text{part}$ between water (W) and organic solvents (hexadecane (H), chloroform (C), ether (E) and octanol(O)) compared to experimental values. Experimental properties in parentheses are estimates obtained from comparison to similar compounds. The statistical accuracy of the free energies obtained from the simulations is $\pm 1$~kJ/mol. $^b$ The temperature for the experimental data is $273$~K. Taken from \cite{Martini}.}%
 	\label{fig:martiniTarget}
 \end{figure}
 
 \subsection{Polarizable Water model}
 \label{sec:pw}
 Water plays a crucial role in any biomolecular system. It is important thus to correctly describe its behavior.
-Since the \martini water model does not directly take into account the electrostatic interaction between water
+Since the \martini{} water model does not directly take into account the electrostatic interaction between water
 and water and other environment because it does not have any charge and it interact only via Van der Waals
 interaction, a simple implicit medium is used to take into account the main electrostatic effects of water,
 screening and polarizability. In reality, however, any biomolecular process involves charged species moving
@@ -711,13 +726,13 @@ inhomogeneous nature of the dielectric response an explicit medium has to be use
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[width=0.7\textwidth]{./img/PWModel/PWModel}
-	\caption{Schematic representation of the \acs{PW} bead. Shaded orange spheres correspond to the Van der Walls radii of the central neutral particle $W$. The blue particle is the positively charged while the red is the negatively charged.}
+	\caption{Schematic representation of the \acs{PW} bead. Shaded orange spheres correspond to the Van der Walls radii of the central neutral particle $W$. The blue particle is the positively charged while the red is the negatively charged.}%
 	\label{fig:PW}
 \end{figure}
 
-In the same fashion of the \martini philosophy, Yesylevskyy \etal \cite{PW} have developed a \acf{PW} model
+In the same fashion of the \martini{} philosophy, Yesylevskyy \etal{} \cite{PW} have developed a \acf{PW} model
 that better describes the real behavior of water. As before one \ac{PW} bead is associated to four water
-molecules. The new water bead consists of three particles instead of one in the \ac{STD} \martini model. In
+molecules. The new water bead consists of three particles instead of one in the \ac{STD} \martini{} model. In
 figure~(\ref{fig:PW}) the topology of the \ac{PW} and a comparison with the old model is shown. The central
 particle $W$ is neutral and interacts with other particles in the system with the only Lennard--Jones potential.
 There are two additional particles, namely $WP$ and $WM$, that are bound to the central particle and carry a
@@ -734,23 +749,31 @@ of the equilibrium angle is consistent with the fact that in an apolar medium th
 water molecule is zero.
 
 Since in this model the screening and polarization effects are treated explicitly the global dielectric constant
-is then reduced from $\varepsilon_r = 15$, used in the \ac{STD} \martini, to $\varepsilon_r = 2.5$. Moreover,
-since the \ac{PW} beads attract each other stronger then the standard water beads (P$_4$ type), because of the additional electrostatic interactions, the strength $\epsilon_{WW}$ of the Lennard--Jones interaction between $W$ particles must be reduced. Water properties, especially the hydration free energy compared to the standard water model, and the lipid membrane behavior are reproduced satisfactory if the Lennard--Jones strength is changed from a
-$I$ level (see table~(\ref{tab:martiniEpsilon})) to a $95\% $ of it. Since even in this case the hydration free energy was too high, the same apply to the cross interaction terms between $W$ particle and the other \martini beads. Instead, $\sigma$ remains unchanged to $0.47$~nm. In addition to this, in order to recover the correct partitioning behavior, the self terms between Q type beads are generally decreased; while the cross terms are generally increased. In figure~(\ref{fig:PWMartini}) a summary of the new interaction terms between Q type beads and the other beads is shown.
+is then reduced from $\varepsilon_r = 15$, used in the \ac{STD} \martini{}, to $\varepsilon_r = 2.5$. Moreover,
+since the \ac{PW} beads attract each other stronger then the standard water beads (P$_4$ type), because of the 
+additional electrostatic interactions, the strength $\epsilon_{WW}$ of the Lennard--Jones interaction between 
+$W$ particles must be reduced. Water properties, especially the hydration free energy compared to the standard 
+water model, and the lipid membrane behavior are reproduced satisfactory if the Lennard--Jones strength is 
+changed from a $I$ level (see table~(\ref{tab:martiniEpsilon})) to a $95\%{}$ of it. Since even in this case the 
+hydration free energy was too high, the same apply to the cross interaction terms between $W$ particle and the 
+other \martini{} beads. Instead, $\sigma$ remains unchanged to $0.47$~nm. In addition to this, in order to recover 
+the correct partitioning behavior, the self terms between Q type beads are generally decreased; while the cross 
+terms are generally increased. In figure~(\ref{fig:PWMartini}) a summary of the new interaction terms between Q 
+type beads and the other beads is shown.
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[width=\textwidth]{./img/PWMartini}
-	\caption{New interaction strength between Q type beads and the other beads. New values in bold font, old values in normal font. See table~(\ref{tab:martiniEpsilon}) for the interaction levels. POL is the name of the \martini bead type associated to particle $W$ inside a $PW$ bead. Taken from \cite{PW}.}
+	\caption{New interaction strength between Q type beads and the other beads. New values in bold font, old values in normal font. See table~(\ref{tab:martiniEpsilon}) for the interaction levels. POL is the name of the \martini{} bead type associated to particle $W$ inside a $PW$ bead. Taken from \cite{PW}.}%
 	\label{fig:PWMartini}
 \end{figure}
 
 The parametrization of $q$, $k_\theta$ and $\epsilon_{WW}$ are obtained, in addition to the basic target
-properties of the \martini \ac{FF}, also trying to reproduce the dielectric constant $\varepsilon_{W}$, density
+properties of the \martini{} \ac{FF}, also trying to reproduce the dielectric constant $\varepsilon_{W}$, density
 $\rho$ and dipole momentum of a pure water phase. The above parameters of the \ac{PW} model are summarized in
-table~(\ref{tab:PWParam}) while a comparison of the results obtained with the \ac{PW}, the \ac{STD} \martini
+table~(\ref{tab:PWParam}) while a comparison of the results obtained with the \ac{PW}, the \ac{STD} \martini{}
 water and the experimental data are summarized in table~(\ref{tab:PWRes}). For more details about the
 parameterizations and testing methods the reader is
-addressed to the article by Yesylevskyy \etal\cite{PW}.
+addressed to the article by Yesylevskyy \etal{} \cite{PW}.
 
 Moreover, the authors found that, in addition to the \ac{PW} model, the use of \ac{PME} method contributes to a
 more realistic description of the processes involved in biomolecular environments. In particular, some
@@ -776,7 +799,7 @@ membranes, as we shall see in chapter~\ref{chap:membraneNP}.
 	\centering
 	\begin{tabular}{lrrr}
 		\toprule
-		\,	& \acs{PW} &  \martini water & Experimental \\ \toprule
+		\,	& \acs{PW} &  \martini{} water & Experimental \\ \toprule
 		$\rho$~[kg/m$^3$]				& $1043$  & $1013$  & $997$		\\ \midrule
 		$\overline{p}$~[D] 				& $4.9$   & $-$ 	& $4.4^a$		\\ \midrule
 		$\varepsilon_{W}$ 				& $75.6$  & $-$ 	& $78.4$	\\ \midrule
@@ -784,18 +807,16 @@ membranes, as we shall see in chapter~\ref{chap:membraneNP}.
 		$\Delta G^\text{hyd}$~[kJ/mol] 	& $-18.7$ &	$-18$	& $-27$		\\ \midrule%\subsection{Applications}
 		$D_{WW}~[10^{-5}$~cm$^2$/s]		& $2.5$   & $2.0$   & $2.3$		\\ \bottomrule
 	\end{tabular}
-	\caption{Summary of the results obtained with the \acs{PW}, \acs{STD} \martini water and the experimental data at $T=300$~K. $\overline{p}$ is the average dipole momentum of a pure water box and $D_{WW}$ is the self--diffusion coefficient. $^a$ In order for a comparison to be made, this data is obtained from an atomistic simulation of $1600$ SPC/E water molecules and the average dipole momentum $\overline{p}$ is obtained averaging over a groups of four molecules, randomly chosen; see \cite{PW} for more details.}
+	\caption{Summary of the results obtained with the \acs{PW}, \acs{STD} \martini{} water and the experimental data at $T=300$~K. $\overline{p}$ is the average dipole momentum of a pure water box and $D_{WW}$ is the self--diffusion coefficient. $^a$ In order for a comparison to be made, this data is obtained from an atomistic simulation of $1600$ SPC/E water molecules and the average dipole momentum $\overline{p}$ is obtained averaging over a groups of four molecules, randomly chosen; see \cite{PW} for more details.}%
 	\label{tab:PWRes}
 \end{table}
 
-%One is the translocation of charged ions through a lipid bilayer that is described in a more realistic detail: the authors found that the simulations with \ac{PW} and \ac{PME} are approaching the atomistic results better then the standard \martini \ac{FF}. Another important phenomenon about lipid membranes consist in the electroporation of membrane by \ac{PW} beads due to an electric field across the membrane (for example, created by a cross membrane ions imbalance) and, related to this, the translocation of ions across the membrane helped by a so called ``\textit{water finger}'' a water defect inside the membrane that seems to be the trigger of the ions translocation. Such phenomenons are clearly evident in atomistic simulations however never occurred using the standard \martini \ac{FF} thus the importance to use the \ac{PW} model together with \ac{PME} method.
-
 \subsection{Limitations of MARTINI FF}
 As we have seen in~\ref{sec:CGModel} the \ac{CG} \acp{FF} are computationally advantageous, still a price has to
-be paid. Although the \martini \ac{FF} is still a fine \ac{CG} \ac{FF}, some limitations are shared with other
+be paid. Although the \martini{} \ac{FF} is still a fine \ac{CG} \ac{FF}, some limitations are shared with other
 \ac{CG} models at a fundamental level, such as the chemical and spatial resolution, which are both limited
 compared to atomistic models. An important issue is the underestimation of the entropy which respect to the
-atomistic case, that is a consequence of the \ac{DOF} reduction process. Since in the \martini \ac{FF} the
+atomistic case, that is a consequence of the \ac{DOF} reduction process. Since in the \martini{} \ac{FF} the
 partitioning free energy $\Delta G = \Delta H - T\Delta S$ must be consistent which the experimental data, the
 intrinsic loss of entropy imply a reduction of the enthalpy contribution, generating an imbalance between them.
 If a $NVT$ ensemble is used the correct potential is the Helmholtz free energy $\Delta A = \Delta U - T\Delta S$,
@@ -808,22 +829,21 @@ the atomistic case. This effectively results in more sampling of the energy land
 speeding up the dynamics of the system. Moreover even the \ac{PEF} becomes smoother, in particular the bonded
 contributions, allowing the use of an higher time steps with longer simulation times. However the speed--up is
 not easily predictable and is not likely to be the same for different systems and maybe it is dependent on the
-type of molecule. Nevertheless for the \martini \ac{FF} an average scaling factor of four, based on lateral
+type of molecule. Nevertheless for the \martini{} \ac{FF} an average scaling factor of four, based on lateral
 diffusion coefficients of lipids in membranes, is commonly used, of course with some care. Another smaller source
 of errors is due to the choice of masses: since ensemble properties are not affected by particle masses, in order
-to increase the efficiency, all the \martini beads have the same mass of $72$~amu. This leads in some uncertainty
+to increase the efficiency, all the \martini{} beads have the same mass of $72$~amu. This leads in some uncertainty
 in the dynamics of the system making the time scaling for different beads non--trivial.
 
-A problem involving the Lennard--Jones potential as a model of Van der Waals interactions in \martini, is that
+A problem involving the Lennard--Jones potential as a model of Van der Waals interactions in \martini{}, is that
 the steep repulsion leads to an over--structuring of fluids compared to atomistic models. As we can see from
-table~(\ref{tab:PWRes}) the direct and most evident implication is the melting point of the \acs{STD} \martini
+table~(\ref{tab:PWRes}) the direct and most evident implication is the melting point of the \acs{STD} \martini{}
 water that is $290 \pm 5$~K. A practical partial solution is the use of the so called ``anti--freeze'' particles
 named BP$_4$ type. The Lennard--Jones interaction between these particles and water is modified with a slightly
 larger Van der Waals radius parameter, $\sigma = 0.57$~nm and a stronger interaction to be a level $O$ (see
-table~(\ref{tab:martiniEpsilon}) for the interaction level). Marrink \etal suggest that a mole fraction of
+table~(\ref{tab:martiniEpsilon}) for the interaction level). Marrink \etal{} suggest that a mole fraction of
 $n_{\text{af}} = 0.1$ is sufficient to prevent freezing without affecting the other properties of water.
-%Some other properties of water are not accurate described such us the surface tension of air/water interface that leads in problem to water/oil interfaces formation.
 Using the \ac{PW} model these properties improve slightly, see table~(\ref{tab:PWRes}). For a more comprehensive
-discussion about the limitations of the \martini \ac{FF} the reader is addressed to the review by Marrink \etal 
-\cite{MartiniReview}.
+discussion about the limitations of the \martini{} \ac{FF} the reader is addressed to the review by Marrink 
+\etal{} \cite{MartiniReview}.
 

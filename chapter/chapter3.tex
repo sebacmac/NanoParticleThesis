@@ -3,8 +3,8 @@
 \label{chap:software}
 %Manuale GROMACS 3.17.5 PP/PME ranks
 %http://www.gromacs.org
-In this chapter we present the main tools used in this thesis: the \href{http://www.gromacs.org}{\gromacs} 
-package for \ac{MD} and the \href{http://www.plumed.org}{\plumed} tool for metadynamics. These techniques are 
+In this chapter we present the main tools used in this thesis: the \href{http://www.gromacs.org}{\gromacs{}} 
+package for \ac{MD} and the \href{http://www.plumed.org}{\plumed{}} tool for metadynamics. These techniques are 
 nowadays implemented according to parallel scheme that allow to exploit all the computational resources of the 
 modern multi--core CPUs and multi--node cluster. These parallelization scheme are fundamental to deal with large 
 biological system, and we shall describe here the main used in this thesis work. Eventually, we provide the main 
@@ -13,10 +13,10 @@ input parameters used to setup the \ac{MD} and metadynamics runs.
 
 \section{GROMACS package}
 The \ac{MD} software and the main analysis tools used in this thesis work are part of the 
-\href{http://www.gromacs.org}{\gromacs}\cite{gromacsManual} package. It is compatible with both atomistic and 
+\href{http://www.gromacs.org}{\gromacs{}}\cite{gromacsManual} package. It is compatible with both atomistic and 
 \ac{CG} \acp{FF} and supports a variety of options and parameters such as different thermostat and barostat 
 algorithms, different methods to treat the electrostatic interaction such as the \ac{ESM} and the \ac{PME} 
-method, different integrators, cut--off schemes and so on. \gromacs supports different kind of parallelization 
+method, different integrators, cut--off schemes and so on. \gromacs{} supports different kind of parallelization 
 techniques, that is, it is compatible with both multi--core single processor (home PC) and multi--core 
 multi--processor (cluster) architectures with the support of both 
 \href{https://computing.llnl.gov/tutorials/mpi/}{MPI}
@@ -48,7 +48,7 @@ neighbor cells (cores). In order to minimize the communication between different
 its surface--to--volume ratio. When using orthogonal simulations box, this requirement means that the cells have 
 to be as cubic as possible. Moreover, if the cells are not too small, the particle update can be carried out 
 every time the neighbor list is updated and not at avery \ac{MD} step. A common choice is to use cells greater 
-than two times the cut-off radius. \gromacs reaches its scaling limit when each cell contains about 
+than two times the cut-off radius. \gromacs{} reaches its scaling limit when each cell contains about 
 $100 \div 200$ particles.
 
 \subsection{PP and PME nodes}
@@ -57,7 +57,7 @@ to speed up the simulation. The reason is related to the fact that the \ac{PME} 
 section~\ref{sec:electrostaticInt}, intrinsically need to know all the particle positions in the whole simulation 
 box. In a domain decomposition scheme this results in a massive use of the so called \textit{all--to--all} 
 communications, i.e. all cores have to communicate to each other. This leads to a loss of computational 
-performance. In order to minimize the all--to--all communications, \gromacs implement the possibility to assign a 
+performance. In order to minimize the all--to--all communications, \gromacs{} implement the possibility to assign a 
 subset of the cores exclusively to the calculation of the energy contribution of electrostatic interactions using 
 the \ac{PME} method, while the rest of the work is assigned to the remaining cores, called the \ac{PP} cores. 
 \begin{figure}[h!t]
@@ -86,20 +86,20 @@ parallelization. Moreover the number of domains along the $x$ axis have to be eq
 the \ac{PP} decomposition and eventually a $1$D scheme can be used along the $y$ axis only if the \ac{PP} 
 decomposition has one domain along $x$ axis. To avoid superfluous communication of coordinates and forces between 
 the \ac{PP} and \ac{PME} cores, the number of cells along the $x$ axis should ideally be the same or a multiple 
-of the number of the \ac{PME} cores. Most of this issues are taken into account automatically by \gromacs at the 
+of the number of the \ac{PME} cores. Most of this issues are taken into account automatically by \gromacs{} at the 
 beginning of the simulation.
 
 \paragraph{\textbf{PP -- PME load balancing}} In order to achieve the best performance a good balancing of the 
-load between \ac{PP} and \ac{PME} cores is needed, i.e. no core should wait for any other. In \gromacs this is 
+load between \ac{PP} and \ac{PME} cores is needed, i.e. no core should wait for any other. In \gromacs{} this is 
 done balancing the real part and the \ac{PME} part of the electrostatic interaction. Since the real part is 
 computed on \ac{PP} cores as non--bonded interaction, changing the Coulomb cut--off between the real and the 
 \ac{PME} part will adjust the load balancing between \ac{PP} and \ac{PME} cores. Of course this has to be done 
-keeping unchanged the desired accuracy of the electrostatic energy contribution. In \gromacs the ratio between 
+keeping unchanged the desired accuracy of the electrostatic energy contribution. In \gromacs{} the ratio between 
 the starting cut-off radius and the \ac{PME} grid spacing gives the accuracy of the electrostatic energy 
 contribution. Then changing both the Coulomb cut--off and \ac{PME} grid spacing, leaving the ratio unchanged, 
 will adjust the \ac{PP} -- \ac{PME} load without affecting the accuracy. We have to stress out that at the 
 beginning of the simulation the Coulomb, the Van der Waals and the pair list cut--off radii are set equal. Then 
-\gromacs only adjust the ratio between the Coulomb cut--off and the \ac{PME} grid spacing, without affecting the 
+\gromacs{} only adjust the ratio between the Coulomb cut--off and the \ac{PME} grid spacing, without affecting the 
 cut--off of the pair list or of the Van der Waals interaction.
 
 \subsection{Hardware acceleration}
@@ -107,7 +107,7 @@ Excluding the \ac{PME}, another very time consuming part of an \ac{MD} simulatio
 non--bonded interactions. The way to speed up the simulation without recur to more cores, because, for example, 
 the system has reached its scaling limit or there are no more cores available, is to use an hardware accelerator. 
 By offloading the computation of the non--bonded interactions to the hardware accelerator, the CPU has the 
-possibility to do \textit{in concurrency} other calculations such as the \ac{PME} calculations. \gromacs support 
+possibility to do \textit{in concurrency} other calculations such as the \ac{PME} calculations. \gromacs{} support 
 completely the NVIDIA GPU with the NVIDIA CUDA\textsuperscript{®} framework acceleration together with the use of 
 the Verlet cut--off scheme. Other GPUs or other cut-off scheme are partially supported with OpenCL or OpenACC 
 libraries. 
@@ -163,14 +163,14 @@ four sums of two numbers
 i.e. the sum of each cell of the two vectors, is shown. Essentially this is possible thinking a $32$--bit register as vector of four $8$--bit or two $16$--bit numbers, then the same instruction is applied to each cell pair of the vectors. Even a modern CPU has the possibility of \ac{SIMD} computation but the goal of the GPU implementation is the extremely high number of modules arranged in a efficiency pipeline, respect to CPU one. Hence the \textit{concurrency} calculations on a streamed data are much faster if executed on a GPU then on a CPU. On the contrary the CPU has the ability to perform several task in parallel (or approximately in parallel).
 
 \section{PLUMED package}
-The tool used for setting up and analyze a metadynamics simulation is the \href{http://www.plumed.org}{\plumed} 
+The tool used for setting up and analyze a metadynamics simulation is the \href{http://www.plumed.org}{\plumed{}} 
 package. It is an open source project composed by a set of libraries used for analyze the data obtained with a 
 metadynamics simulation (first all, for obtaining the \ac{FES} from the history--dependent bias potential) or 
 other advanced sampling techniques, such as umbrella sampling. Moreover it works together with the most popular 
-\ac{MD} tools, \gromacs included. In that sense it is a sort of plug--in that inserts the advanced sampling code 
+\ac{MD} tools, \gromacs{} included. In that sense it is a sort of plug--in that inserts the advanced sampling code 
 and algorithms inside the main \ac{MD} loop of the used \ac{MD} tool.
 
-For setting up a metadynamics simulation \plumed requires an input file in which we have to specify what are the 
+For setting up a metadynamics simulation \plumed{} requires an input file in which we have to specify what are the 
 \acp{CV} and the parameters to be used in the metadynamics run. Moreover there is the possibility to add more 
 features such as, online analysis or more output files and options.
 
@@ -207,7 +207,7 @@ un--biased \ac{MD} simulation.
 
 \newpage
 \section{Simulation parameters}
-To set up an \ac{MD} run, \gromacs needs the following input files and information:
+To set up an \ac{MD} run, \gromacs{} needs the following input files and information:
 \begin{itemize}
 	\item the initial configuration file in which the position and eventually the velocity of all particles and the three box dimensions are saved;
 	\item the input parameters file in which, following the \ac{FF} recipe, all the \ac{MD} parameters are given;

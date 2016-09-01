@@ -185,7 +185,7 @@ equilibrium observable $A$ can be expressed as
 	\ave{A} = \frac{1}{\mathcal{Z}} \int_\Omega A(\vec x, t) \mathit{f}(\mathcal{H}(\vec x))\ dx
 \end{equation*}
 where $\mathcal{Z}$, known as \textit{partition function}, is specific for the ensemble in exam and it is defined
-as follow
+as follows
 \begin{equation*}
 	\mathcal{Z} = \int_\Omega \mathit{f}(\mathcal{H}(\vec x))\ dx
 \end{equation*}
@@ -193,7 +193,7 @@ as follow
 In order to compute the partition function we need to specify the thermodynamic observables, called
 \textit{control variables}, that characterize the ensemble itself. By definition of an ensemble at thermodynamic
 equilibrium those control variables must be constant in time. The main ensembles used in statistical mechanics
-and the related control variables are summarized as follow
+and the related control variables are summarized as follows
 \begin{itemize}
 	\item \textit{microcanonical ensemble}: constant--$NVE$
 	\item \textit{canonical ensemble}: constant--$NVT$
@@ -235,7 +235,7 @@ The microcanonical ensemble is composed of the systems whose number of particles
 \begin{equation*}
 	\mathcal{H}(\vec x) = E
 \end{equation*}
-this let us to define the partition function as follow
+this let us to define the partition function as follows
 \begin{equation}
 	\mathcal{Z}_{NVE} = \frac{1}{N!h^{3N}}\int_\Omega \delta(\mathcal{H}(\vec x) - E)\ dx
 	\label{eq:micropartition}
@@ -595,7 +595,7 @@ are available. Some act directly on particle velocities (Anderson, Berendsen, Bu
 more \ac{DOF} in the system that take into account a real temperature bath coupling (Nosé--Hoover). We will
 describe in more detail the one used in this thesis work.
 
-As suggested by Bussi \etal \cite{Bussi}, a common practice to implement a thermostat acting on particle
+As suggested by Bussi \etal{} \cite{Bussi}, a common practice to implement a thermostat acting on particle
 velocities consists in a \textit{velocity rescale} algorithm in which the velocities of all particles are
 scaled by some factor. The simplest way is to consider the total kinetic energy $K$ of the system as in
 equation~\eqref{eq:kinetic} and the average kinetic energy $\ave{K}$ obtained from equation~\eqref{eq:kineticT}
@@ -617,7 +617,7 @@ can be used to produce useful results. Despite this, for small systems or when t
 dependent on the fluctuations rather than on the averages or when other methods assume a canonical sampling, this 
 method cannot be safely used.
 
-In order to obtain the correct canonical sampling Bussi \etal \cite{Bussi} modify the way to calculate
+In order to obtain the correct canonical sampling Bussi \etal{} \cite{Bussi} modify the way to calculate
 $\alpha_T$ so as to enforce a canonical distribution for the kinetic energy. The new scaling factor is obtained
 from
 \begin{equation*}
@@ -633,7 +633,7 @@ where $P(K_T)dK_T$ is probability that the system has a kinetic energy between $
 Since velocities are scaled only after some \ac{MD} steps this can cause a discontinuity in the particle
 velocities just before and after the scaling step. To avoid this problem, the authors suggest that the choice of
 $K_T$ can be based on the previous value of $K$ so as to obtain a smoother evolution. The procedure proposed by
-Bussi \etal consists in the following steps
+Bussi \etal{} consists in the following steps
 \begin{itemize}
 	\item Evolve the system for a single time step solving the equations of motion, so as to be in an $NVE$ ensemble;%
 	\item Calculate the total kinetic energy and evolve it for a single time step using an auxiliary continuous stochastic dynamics;%
@@ -690,11 +690,11 @@ ensemble, has been derived by Parrinello and Rahman.
 The Parrinello--Rahman barostat \cite{ParrinelloBarostat1}\cite{ParrinelloBarostat2} is based on genuinely treat
 the coupling of the system to an external piston of ``mass'' $M_h$ through a Lagrangian method in which the
 volume becomes a Lagrangian variable of the system and its time evolution can be computed solving the
-Euler--Lagrange equations. Both the size and the shape of the simulation box are allowed to fluctuate, so that the 
-method is compatible with the treatment of anisotropic systems. The shape and size of the simulation box are 
-described by the volume matrix $ \mathbold{H}$ in equation~\eqref{eq:volumeMatrix} such that $V = 
-|\det\mathbold{H}|$. $\mathbold{H}$ is the Lagrangian coordinate of the external piston. If the external pressure 
-$p_0$ is applied to the piston then its potential energy is given by
+Euler--Lagrange equations. Both the size and the shape of the simulation box are allowed to fluctuate, so that 
+the method is compatible with the treatment of anisotropic systems. The shape and size of the simulation box are 
+described by the volume matrix $ \mathbold{H}$ in equation~\eqref{eq:volumeMatrix} such that 
+$V = |\det\mathbold{H}|$. $\mathbold{H}$ is the Lagrangian coordinate of the external piston. If the external 
+pressure $p_0$ is applied to the piston then its potential energy is given by
 \begin{equation*}
 	U_p = p_0 |\det  \mathbold{H}|
 \end{equation*}
@@ -706,8 +706,9 @@ where $\leftidx{^t}{(\cdot)}{}$ denote the transpose operation.
 
 In order to write the Lagrangian of the system the particle coordinates must be expressed in terms of
 $\mathbold{H}$. This can be done defining the vector $\vec s_i$ so that $\vec r_i =  \mathbold{H} \vec s_i$. The
-square displacements can be obtained as $\vec r_i \cdot \vec r_i = \leftidx{^t}{ (\mathbold{H} \vec s_i)}{}  \mathbold{H} \vec s_i = \leftidx{^t}{\vec s_i}{} \leftidx{^t}{ \mathbold{H}}{}  \mathbold{H} \vec s_i$. Using the 
-notation $\mathbold{G} = \leftidx{^t}{ \mathbold{H}}{} \mathbold{H}$, Parrinello \etal write the Lagrangian as 
+square displacements can be obtained as $\vec r_i \cdot \vec r_i = \leftidx{^t}{ (\mathbold{H} \vec s_i)}{}  
+\mathbold{H} \vec s_i = \leftidx{^t}{\vec s_i}{} \leftidx{^t}{ \mathbold{H}}{} \mathbold{H} \vec s_i$. Using the 
+notation $\mathbold{G} = \leftidx{^t}{ \mathbold{H}}{} \mathbold{H}$, Parrinello \etal{} write the Lagrangian as 
 follows
 \begin{equation*}
 	\mathcal{L} = \frac{1}{2}\sum_{i=1}^N m_i \dot{\vec s}_i \leftidx{^t}{\mathbold{G}}{} \dot{\vec s}_i - \sum_{i=1}^N \sum_{j=i+1}^N U_{ij}(\vec r) +  \frac{1}{2} M_h \text{Tr}(\leftidx{^t}{\mathbold{\dot H}}{} \mathbold{\dot H} ) -  p_0 |\det \mathbold{H}|
@@ -729,8 +730,8 @@ that is the enthalpy. Since the Hamiltonian is a constant of motion the correct 
 the system is also coupled to a thermostat, the $-TS$ term must be added, so the constant of motion become the
 Gibbs free energy $G = H - TS$ and the isobaric--isotherm ensemble is correctly sampled.
 
-In order to understand the meaning of the $M_h$ parameter (the piston ``mass'') we report the dynamic equation of 
-$\mathbold H$
+In order to understand the meaning of the $M_h$ parameter (the piston ``mass'') we report the dynamic equation 
+of $\mathbold H$
 \begin{equation*}
 	M_h \mathbold{\ddot H} = V (p - p_0) (\leftidx{^t}{\mathbold{H}}{})^{-1}
 \end{equation*}
@@ -745,8 +746,8 @@ order of $L/c$ where $L$ is simulation box size and $c$ is the sound velocity.
 Interesting is the fact that this algorithm can be generalized to an anisotropic pressure coupling making use of
 the theory of elasticity. Differently from the Berendsen algorithm, Parrinello--Rahman method is much slower in
 changing the volume until the equilibrium value is reached and it is less stable: if the system is not well
-equilibrated it can lead to large volume fluctuations that can compromise the simulation success. On the other hand
-the Parrinello--Rahman samples correctly the isobaric ensemble. A common strategy is to use the Berendsen
+equilibrated it can lead to large volume fluctuations that can compromise the simulation success. On the other 
+hand the Parrinello--Rahman samples correctly the isobaric ensemble. A common strategy is to use the Berendsen
 barostat to reach equilibrium then switch to the Parrinello--Rahman algorithm to correctly sample the phase space
 associated to the isobaric ensemble.
 
@@ -885,7 +886,7 @@ partition function $Q(s)$ from the set of biased partition functions $\{Q^n_i(s)
 global \ac{FES} $G(s)$. The most commonly used method is the \ac{WHAM} \cite{WHAM}, \cite{gWHAM}. The philosophy
 behind it is to minimize the statistical error in the calculation of $Q(s)$. For each of the $N_w$ biased windows
 a set of histograms $\{h_i(s)\}$ with $n_i$ bins, representing the set $\{Q^b_i(s)\}$, is recorded. The global
-distribution function is computed as follow
+distribution function is computed as follows
 \begin{equation}
 	Q(s) = \sum_{i=0}^{N_w} p_i h_i(s), \qquad \sum_{i=0}^{N_w} p_i = 1
 	\label{eq:whan1}
@@ -898,7 +899,7 @@ where $p_i$ are weights chosen to minimize statistical error on $Q(s)$. Those le
 where $n_i$ is the total number of independent bins in the $i-$th histogram. The problem now is to compute the
 set of constants $\{C_i\}$. We can not use the integrals in equation~\eqref{eq:windowPartFunc} for the problems
 already described at the begging of this section, but the second line give us an idea. The ensemble average can
-be computed using the global distribution function $Q(s)$ as follow
+be computed using the global distribution function $Q(s)$ as follows
 \begin{equation}
 	e^{-\beta C_i} = \ave{e^{-\beta w_i(s)}} = \int Q(s) e^{-\beta w_i(s)}\ ds
 	\label{eq:whan2}
@@ -1046,11 +1047,11 @@ is to perform several statistically independent metadynamics runs. The arithmeti
 history--dependent potentials taken at the same time, after the convergence is reached, is equal to the best
 estimate of the \ac{FES}. The statistical error of the \ac{FES} of a run can be considered as the standard
 deviation between the history--dependent potential $w_M(s,t)$ of that run and the averaged \ac{FES}
-$G(\vec s) \sim - \overline{w_M(\vec s,t)}$ and average it over the whole \acp{CV} space, as follow
+$G(\vec s) \sim - \overline{w_M(\vec s,t)}$ and average it over the whole \acp{CV} space, as follows
 \begin{equation*}
 	\overline{\epsilon}^2 = \frac{1}{\Omega_s} \int_{\Omega_s}  \overline{(w_M(\vec s,t) - \overline{w_M(\vec s,t)})^2}\ ds%
 \end{equation*}
-where $\Omega_s$ is the whole \acp{CV} space. Laio \etal in \cite{MetadError}, by performing extensive
+where $\Omega_s$ is the whole \acp{CV} space. Laio \etal{} in \cite{MetadError}, by performing extensive
 numerical simulations of a Langevin stochastic system, have derived an approximate expression for the error
 estimator in function of the system and metadynamics parameters, as follows
 \begin{equation*}
@@ -1102,7 +1103,7 @@ starting from the current minimum it explores a larger and larger region of the 
 recursively reconstruct the \ac{FES}. However a careful choice of the \acp{CV} is needed, otherwise the
 history--dependent potential and the \ac{FES} can evolve in an unphysical manner.
 
-In a recent work by Davide Bochicchio \etal \cite{metaUSComparison} both methods for the \ac{FES} estimation
+In a recent work by Davide Bochicchio \etal{} \cite{metaUSComparison} both methods for the \ac{FES} estimation
 included the error estimation, performance and accuracy are extensively compared with \ac{MD} simulations
 involving the transfer of hydrophobic oligomers from the water phase to the hydrophobic core of a lipid membrane.
 The authors consider the system both at atomistic and \ac{CG} levels (\martini \ac{FF}). They found that, if the

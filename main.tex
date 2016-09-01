@@ -3,6 +3,7 @@
 \usepackage[eulermath,pdfspacing,beramono,dottedtoc,subfig,linedheaders,eulerchapternumbers]{classicthesis}
 \usepackage{arsclassica}
 \PassOptionsToPackage{hyperfootnotes=true}{hyperref}
+%\hypersetup{urlcolor=black,linkcolor=black}
 \hypersetup{colorlinks=false}
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -29,8 +30,6 @@
 
 \usepackage{tikz,pgfplots}
 \usetikzlibrary{positioning}
-%\usetikzlibrary{decorations.pathmorphing}
-
 
 % Alinea il numero di pagina sulla destra e filla con puntini
 \makeatletter
@@ -43,12 +42,12 @@
 
 \newcommand{\textacr}[1]{\spacedlowsmallcaps{\large #1}\normalfont}
 \newcommand{\ave}[1]{\left \langle #1 \right \rangle}
-\newcommand{\etal}{\textit{et al.} }
-\newcommand{\erf}[1]{\text{erf}#1 }
-\newcommand{\erfc}[1]{\text{erfc}#1 }
-\newcommand{\martini}{\textacr{MARTINI} }
-\newcommand{\gromacs}{\textacr{GROMACS} }
-\newcommand{\plumed}{\textacr{PLUMED} }
+\newcommand{\etal}{\textit{et al.}}
+\newcommand{\erf}[1]{\text{erf}#1}
+\newcommand{\erfc}[1]{\text{erfc}#1}
+\newcommand{\martini}{\textacr{MARTINI}}
+\newcommand{\gromacs}{\textacr{GROMACS}}
+\newcommand{\plumed}{\textacr{PLUMED}}
 
 %Command for the introduction style
 \newcommand\introductionStyle{\titleformat{\section}{\normalfont\large\sffamily}{\textsc{\MakeTextLowercase{\Roman{section}\ \ --\!\!\!}}}{1em}{\spacedlowsmallcaps}%
@@ -148,6 +147,9 @@
 
 \include{./chapter/chapter5} %Results
 
+%*--------------------------------------*
+%|**************CONCLUSION**************|
+%*--------------------------------------*
 \clearscrheadfoot
 \rohead{\pagemark}
 \lehead{\pagemark\qquad\leftmark}

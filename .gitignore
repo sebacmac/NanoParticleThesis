@@ -15,10 +15,10 @@
 
 *.lb
 
-chapter/.tm_properties
+*.tm_properties
 
 *.bbl
 
 *.blg
 
-chapter/.DS_Store
+*.DS_Store

@@ -7,10 +7,10 @@ classical laws of motion have proved to be a good approximation also at the mole
 as atoms are massive enough.
 
 In order to predict the time evolution of a system composed by a large number of atoms and molecules, such as the
-biomolecular system we will treat in this thesis, Newton’s equations of motion need to be integrated numerically. 
-The necessity of a numerical integration arises from the complexity of the interactions involved in realistic 
-systems, often nonlinear functions of positions and momenta of the particles, which makes it impossible to obtain 
-an analytical solution for the equations of motion.
+biomolecular system we will treat in this thesis, Newton’s equations of motion need to be integrated 
+numerically. The necessity of a numerical integration arises from the complexity of the interactions involved in 
+realistic systems, often nonlinear functions of positions and momenta of the particles, which makes it 
+impossible to obtain an analytical solution for the equations of motion.
 
 In the first part of this chapter the laws of classical and statistical mechanics will be briefly summarized.
 Then we will introduce the computational \acf{MD} method and the \textit{empirical} \acf{FF}, that is the 
@@ -40,8 +40,8 @@ system; integrating them, with the sets of the \textit{initial conditions} at st
 $t_0$ $\vec r_1(t_0),\dots,\vec r_N(t_0)$ and $\dot{\vec{r}}_1(t_0),\dots,\dot{\vec{r}}_N(t_0)$, the positions
 and the velocities of all the particles in the system at any time are known.
 
-Another way to write the equations of motion is to use particles momenta $\vec p_i = m_i \dot{\vec{r}}_i$ and then
-the equations~\eqref{eq:newtonLaw} become
+Another way to write the equations of motion is to use particles momenta $\vec p_i = m_i \dot{\vec{r}}_i$ and 
+then the equations~\eqref{eq:newtonLaw} become
 \begin{equation}
 	\frac{d\vec p_i}{dt} = \vec F_i(\vec r_1,\dots,\vec r_N)
 	\label{eq:newtonLawMom}

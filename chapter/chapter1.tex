@@ -997,16 +997,16 @@ choose carefully: the height $w$ and the width $\delta s_i$ of the deposited Gau
 deposition $\tau$. All these parameters affect the accuracy and the efficiency of the free energy profile 
 reconstruction. Clearly if the Gaussians are big and large or placed too quickly the \ac{FES} will be explored at 
 a fast pace but the reconstructed profile will be affected by large errors. Instead if they are small or placed 
-infrequently the reconstruction will be accurate but will take a longer time. Moreover the time required to escape 
-from a local minimum is determined by the number of Gaussians necessary to fill the well. This number is 
-proportional to $(1/\delta s)^n$ \cite{MetadReview}, hence the necessity to maintain the number $n$ of \acp{CV} as 
-small as possible or increase the Gaussian width. On the other hand the history--dependent potential can only 
+infrequently the reconstruction will be accurate but will take a longer time. Moreover the time required to 
+escape from a local minimum is determined by the number of Gaussians necessary to fill the well. This number is 
+proportional to $(1/\delta s)^n$ \cite{MetadReview}, hence the necessity to maintain the number $n$ of \acp{CV} 
+as small as possible or increase the Gaussian width. On the other hand the history--dependent potential can only 
 reproduce features of the \ac{FES} on a scale larger then $\sim \delta s$. Empirical criteria can be used to 
-choose the $\delta s$ and $\tau$ parameters; the former by monitoring the standard deviation of the \acp{CV} in an 
-unbiased \ac{MD} simulation and the latter by considering the relaxation time of the system after a Gaussian is 
-deposited: clearly the bigger is the Gaussian the more time is needed by the system to relax. However it does not 
-exist an universal and general recipe to choose these parameters, only some knowledge of the system and process 
-under study can give useful hints. They can certainly be fine tuned in successive steps.
+choose the $\delta s$ and $\tau$ parameters; the former by monitoring the standard deviation of the \acp{CV} in 
+an unbiased \ac{MD} simulation and the latter by considering the relaxation time of the system after a Gaussian 
+is deposited: clearly the bigger is the Gaussian the more time is needed by the system to relax. However it does 
+not exist an universal and general recipe to choose these parameters, only some knowledge of the system and 
+process under study can give useful hints. They can certainly be fine tuned in successive steps.
 
 In figure~(\ref{fig:metadEs}) an example of the time evolution of a metadynamics simulation is shown. We can see
 that as the number of deposited Gaussians increases the system is able to visit more regions of the phase space.
@@ -1069,9 +1069,9 @@ estimators:
 	\item The statistical error on the averaged \ac{FES} is performed considering its standard deviation.
 \end{itemize}
 Alternatively one can perform a very long metadynamics run in which, for example, the system is diffusive for one
-half of the simulation. Then one can chose as statistically independent history--dependent potentials some of those
-computed at different times in the diffusive region and follow the above procedure from the second point. Clearly
-one has to be careful about the decorrelation time between the chosen profiles, otherwise they are not
+half of the simulation. Then one can chose as statistically independent history--dependent potentials some of 
+those computed at different times in the diffusive region and follow the above procedure from the second point. 
+Clearly one has to be careful about the decorrelation time between the chosen profiles, otherwise they are not
 statistically independent due the continuos nature of the metadynamics algorithm.
 
 \paragraph{\textbf{performance optimization}} In general the computational overhead of adding metadynamics to an

@@ -1,15 +1,23 @@
 % !TEX root = ./../main.tex
 \chapter{Results}
 \label{chap:results}
-The results summarized in section~\ref{sec:NPMembraneInt} were obtained using the \ac{STD} \martini{} \ac{FF}, with a cut--off method for treating the electrostatic interactions. Unfortunately, as we have seen in chapter~\ref{chap:EmpiricalFF}, such method poorly describes the processes that involve the transfer of a charged moiety from a polar (e.g. water) environment to an non--polar one (e.g. the membrane core).
+The results summarized in section~\ref{sec:NPMembraneInt} were obtained using the \ac{STD} \martini{} \ac{FF}, 
+with a cut--off method for treating the electrostatic interactions. Unfortunately, as we have seen in 
+chapter~\ref{chap:EmpiricalFF}, such method poorly describes the processes that involve the transfer of a charged 
+moiety from a polar (e.g. water) environment to an non--polar one (e.g. the membrane core).
 
-Our aim is thus to perform a comparison between the \ac{STD} \martini{} model and two versions of \martini{} that better take into account electrostatic interactions. We will consider
+Our aim is thus to perform a comparison between the \ac{STD} \martini{} model and two versions of \martini{} that 
+better take into account electrostatic interactions. We will consider
 \begin{enumerate}[label=\itshape\roman*.]
 	\item the \martini{} \ac{FF} with long range electrostatics (\martini{} + \ac{PME});
 	\item the \martini{} \ac{FF} with long range electrostatics and \ac{PW} (\martini{} + \ac{PME}/\acs{PW}).
 \end{enumerate}
 
-In this chapter we present the main results of this thesis. In section~\ref{sec:resultsBiased} we calculate, using the metadynamics method, the free energy barrier for the \ac{NP} anchoring (and dis--anchoring) process using versions \textit{i}. and \textit{ii}. of the \martini{} \ac{FF}, and compare the outcomes to those obtained with the \ac{STD} \martini{} model and with atomistic simulations. The introduction of long--range electrostatics has the overall effect of increasing the energy barriers for the translocation of charged ligands.
+In this chapter we present the main results of this thesis. In section~\ref{sec:resultsBiased} we calculate, using 
+the metadynamics method, the free energy barrier for the \ac{NP} anchoring (and dis--anchoring) process using 
+versions \textit{i}. and \textit{ii}. of the \martini{} \ac{FF}, and compare the outcomes to those obtained with 
+the \ac{STD} \martini{} model and with atomistic simulations. The introduction of long--range electrostatics has 
+the overall effect of increasing the energy barriers for the translocation of charged ligands.
 
 In section~\ref{sec:resultsUnBiased} we focus on the description of the molecular processes that take place during the anchoring/dis--anchoring of the \ac{NP}. This analysis will be applied to both biased (metadynamics) trajectories and unbiased \ac{MD} runs, and it will allow to quantify the degree of alteration of the membrane structural properties during the interaction with the \ac{NP}.
 
@@ -20,9 +28,25 @@ In section~\ref{sec:resultsUnBiased} we focus on the description of the molecula
 
 \section{Thermodynamic results}
 \label{sec:resultsBiased}
-The process that I will consider for the \ac{FES} estimation of the ligand anchoring is composed of two steps: the forward process: from the hydrophobic state to the state with one anchor; the backward process: from the anchored state to the hydrophobic state again.
+The process that I will consider for the \ac{FES} estimation of the ligand anchoring is composed of two steps: the 
+forward process: from the hydrophobic state to the state with one anchor; the backward process: from the anchored 
+state to the hydrophobic state again.
 
-\paragraph{\textbf{system set--up}} In all of my biased and unbiased \ac{MD} runs the membrane bilayer is made of $256$ \ac{POPC} lipids per leaflet. I will consider both the striped (\ac{MUS}:\ac{OT} $1$:$1$) and the random (\ac{MUS}:\ac{OT} $1$:$1$) \acp{NP}. The simulation box is neutralized with $30$ counteracting Na$^+$ ions\footnote{The \martini{} model for ions, especially for Na$^+$ and Cl$^-$, associates the ion plus the hydration shell to a bead of type Qd positively charged and Qa negatively charged, respectively.} and filled by water. In figure~(\ref{fig:startFrameHydro}) it is shown an example of the starting configuration for a striped (\ac{MUS}:\ac{OT} $1$:$1$) \ac{NP} in the hydrophobic state. The initial configuration frames with the \ac{PW} are obtained from the initial configuration frames with the \ac{STD} \martini{} water using a python script that converts the \ac{STD} \martini{} water to the \ac{PW} bead. With the \ac{PW} an equilibration run with the parameters shown in the third column of table~(\ref{tab:inputParam}) is necessary to stabilize the system. As already shown in figure~(\ref{fig:CVRappresentation}), our metadynamics runs use as \ac{CV} the distance between one single charged ligand terminal and the \ac{COM} of \ac{POPC} along the normal. The charged ligand for the anchoring process is chosen so as to be the lowest charged ligand attached to the \ac{NP} core. For what concerns the metadynamics input parameters used to perform my \ac{MD} runs, if not differently specified, they are summarized in table~(\ref{tab:metadynParam}).
+\paragraph{\textbf{system set--up}} In all of my biased and unbiased \ac{MD} runs the membrane bilayer is made of 
+$256$ \ac{POPC} lipids per leaflet. I will consider both the striped (\ac{MUS}:\ac{OT} $1$:$1$) and the random 
+(\ac{MUS}:\ac{OT} $1$:$1$) \acp{NP}. The simulation box is neutralized with $30$ counteracting Na$^+$ 
+ions\footnote{The \martini{} model for ions, especially for Na$^+$ and Cl$^-$, associates the ion plus the 
+hydration shell to a bead of type Qd positively charged and Qa negatively charged, respectively.} and filled by 
+water. In figure~(\ref{fig:startFrameHydro}) it is shown an example of the starting configuration for a striped 
+(\ac{MUS}:\ac{OT} $1$:$1$) \ac{NP} in the hydrophobic state. The initial configuration frames with the \ac{PW} are 
+obtained from the initial configuration frames with the \ac{STD} \martini{} water using a python script that 
+converts the \ac{STD} \martini{} water to the \ac{PW} bead. With the \ac{PW} an equilibration run with the 
+parameters shown in the third column of table~(\ref{tab:inputParam}) is necessary to stabilize the system. As 
+already shown in figure~(\ref{fig:CVRappresentation}), our metadynamics runs use as \ac{CV} the distance between 
+one single charged ligand terminal and the \ac{COM} of \ac{POPC} along the normal. The charged ligand for the 
+anchoring process is chosen so as to be the lowest charged ligand attached to the \ac{NP} core. For what concerns 
+the metadynamics input parameters used to perform my \ac{MD} runs, if not differently specified, they are 
+summarized in table~(\ref{tab:metadynParam}).
 \begin{SCfigure}[][!ht]
 	\centering
 	\includegraphics[width=0.42\textwidth]{./img/patchedHydrophobic.pdf}
@@ -53,7 +77,11 @@ The process that I will consider for the \ac{FES} estimation of the ligand ancho
 %la usiamo per stimare la barriera di andata e ritorno
 
 \subsection{Forward process}
-I have performed ten metadynamics runs starting from the hydrophobic state for each of the following ``configurations'': striped (\ac{MUS}:\ac{OT} $1$:$1$) with \ac{PME}; striped (\ac{MUS}:\ac{OT} $1$:$1$) with \ac{PME} and \ac{PW}; random (\ac{MUS}:\ac{OT} $1$:$1$) with \ac{PME} and \ac{PW}. In figure~(\ref{fig:metaFrame}) is shown a series of sequential frames of a metadynamics run of a striped \ac{NP} with \ac{PME}$+$\ac{PW} in which we can see the anchoring and dis--anchoring processes.
+I have performed ten metadynamics runs starting from the hydrophobic state for each of the following 
+``configurations'': striped (\ac{MUS}:\ac{OT} $1$:$1$) with \ac{PME}; striped (\ac{MUS}:\ac{OT} $1$:$1$) with 
+\ac{PME} and \ac{PW}; random (\ac{MUS}:\ac{OT} $1$:$1$) with \ac{PME} and \ac{PW}. In figure~(\ref{fig:metaFrame}) 
+is shown a series of sequential frames of a metadynamics run of a striped \ac{NP} with \ac{PME}$+$\ac{PW} in which 
+we can see the anchoring and dis--anchoring processes.
 \begin{figure}[t!]
 	\centering
 		\subfloat[]{
@@ -78,11 +106,25 @@ I have performed ten metadynamics runs starting from the hydrophobic state for e
 	\label{fig:metaFrame}
 \end{figure}
 
-For a comparison between our \ac{CG} models and the atomistic model to be made all the distance variables involving the bilayer (e.g. the chosen \ac{CV}) are scaled by the ratio between the thickness of a pure \ac{POPC} bilayer as obtained with the atomistic \ac{FF} and the one obtained with the \ac{CG} \ac{FF}. This ratio is calculated from the bilayer's thickness shown in table~(\ref{tab:POPCData}).
+For a comparison between our \ac{CG} models and the atomistic model to be made all the distance variables 
+involving the bilayer (e.g. the chosen \ac{CV}) are scaled by the ratio between the thickness of a pure \ac{POPC} 
+bilayer as obtained with the atomistic \ac{FF} and the one obtained with the \ac{CG} \ac{FF}. This ratio is 
+calculated from the bilayer's thickness shown in table~(\ref{tab:POPCData}).
 
-A comparison of the forward barrier obtained for the striped (\ac{MUS}:\ac{OT} $1$:$1$) \ac{NP} with different models is shown in figure~(\ref{fig:forwardWall}a) and in table~(\ref{tab:hydroTime}) the average height of the barrier with the \ac{CG} models are summarized. The error is estimated using the standard error as in the procedure described in section~\ref{sec:metadynamics}. As we can see, increasing the accuracy of the \ac{CG} model, in particular with the use of the \ac{PW} model, the \ac{CG} results are approaching the atomistic one. The \ac{CG} and atomistic models differ also in terms of position of the minimum, which in the atomistic case is shifted by a few \r{A} towards the center of the membrane.
+A comparison of the forward barrier obtained for the striped (\ac{MUS}:\ac{OT} $1$:$1$) \ac{NP} with different 
+models is shown in figure~(\ref{fig:forwardWall}a) and in table~(\ref{tab:hydroTime}) the average height of the 
+barrier with the \ac{CG} models are summarized. The error is estimated using the standard error as in the 
+procedure described in section~\ref{sec:metadynamics}. As we can see, increasing the accuracy of the \ac{CG} 
+model, in particular with the use of the \ac{PW} model, the \ac{CG} results are approaching the atomistic one. The 
+\ac{CG} and atomistic models differ also in terms of position of the minimum, which in the atomistic case is 
+shifted by a few \r{A} towards the center of the membrane.
 
-As we shall see later, the order of magnitude of the energy barrier is consistence with my unbiased simulations of all \acp{NP} with the \ac{PW} in which for ten of microseconds no anchor process is observed. This suggest that the energy wall is much higher than what is observed in \cite{ourPaper}. Another sign of the increasing of the energy wall as the \ac{CG} model accuracy increase, is the time spent by the \ac{NP} in the hydrophobic state. In table~(\ref{tab:hydroTime}) is shown a comparison of the average time spent by the \ac{NP} in the hydrophobic state between different \ac{CG} models.
+As we shall see later, the order of magnitude of the energy barrier is consistence with my unbiased simulations of 
+all \acp{NP} with the \ac{PW} in which for ten of microseconds no anchor process is observed. This suggest that 
+the energy wall is much higher than what is observed in \cite{ourPaper}. Another sign of the increasing of the 
+energy wall as the \ac{CG} model accuracy increase, is the time spent by the \ac{NP} in the hydrophobic state. In 
+table~(\ref{tab:hydroTime}) is shown a comparison of the average time spent by the \ac{NP} in the hydrophobic 
+state between different \ac{CG} models.
 \begin{table}[h!t]
 	\centering\footnotesize
 	\begin{tabular}{lccccc}
@@ -123,22 +165,22 @@ As we shall see later, the order of magnitude of the energy barrier is consisten
 \end{figure}
 
 %\subsection{Striped and random comparison}
-The metadynamics runs performed allow us for a comparison of the forward energy barrier for the striped (\ac{MUS}:\ac{OT} $1$:$1$) and the random (\ac{MUS}:\ac{OT} $1$:$1$) \acp{NP} with the \ac{PW}. The comparison is shown in figure~(\ref{fig:forwardWall}b) and in table~(\ref{tab:hydroTime}). We can confirm the trend observed in \cite{ourPaper}: the striped (\ac{MUS}:\ac{OT} $1$:$1$) \ac{NP} has an higher energy barrier for the hydrophobic to one anchor state transition than the random (\ac{MUS}:\ac{OT} $1$:$1$) \ac{NP}. Moreover in table~(\ref{tab:hydroTime}) we can see that the different height of the energy barriers is reflected by the time spent by the two types of \acp{NP} in the hydrophobic state.
-% \begin{table}[h!t]
-% 	\centering
-% 	\begin{tabular}{lcccc}
-% 		\toprule
-% 		\,					& striped		& random		\\ \toprule
-% 	$\overline{t_{h}}$ [ns]	& $\sim 982$	& $\sim 413$	\\ \midrule
-% 	$\Delta G$ [kJ/mol] 	& $100 \pm 5$ 	& $61 \pm 2$	\\ \bottomrule
-% 	\end{tabular}
-% 	\caption{Comparison of the metadynamics result with the \ac{PW} model for the striped and random \acp{NP}. $\overline{t_h}$ is average time spent by the \acs{NP} in the hydrophobic state. $\Delta G$ is the average height of the forward energy wall; the error is the error standard. Data obtained from my \acs{MD} runs.}
-% 	\label{tab:hydroTimeRP}
-% \end{table}
-
+The metadynamics runs performed allow us for a comparison of the forward energy barrier for the striped 
+(\ac{MUS}:\ac{OT} $1$:$1$) and the random (\ac{MUS}:\ac{OT} $1$:$1$) \acp{NP} with the \ac{PW}. The comparison is 
+shown in figure~(\ref{fig:forwardWall}b) and in table~(\ref{tab:hydroTime}). We can confirm the trend observed in 
+\cite{ourPaper}: the striped (\ac{MUS}:\ac{OT} $1$:$1$) \ac{NP} has an higher energy barrier for the hydrophobic 
+to one anchor state transition than the random (\ac{MUS}:\ac{OT} $1$:$1$) \ac{NP}. Moreover in 
+table~(\ref{tab:hydroTime}) we can see that the different height of the energy barriers is reflected by the time 
+spent by the two types of \acp{NP} in the hydrophobic state.
 
 \subsection{Backward process}
-As for the forward energy wall, the same procedure was followed in order to calculate the backward energy wall. This time the metadynamics runs have to start from the anchored state, as an example in figure~(\ref{fig:startFrameAnchored}). Since the available machine time, I have performed eight metadynamics runs for the striped (\ac{MUS}:\ac{OT} $1$:$1$) \ac{NP} with the \ac{STD} \martini{} models; nine metadynamics runs for the striped (\ac{MUS}:\ac{OT} $1$:$1$) \ac{NP} with \ac{PME} and \ac{PW} and five metadynamics runs for the random (\ac{MUS}:\ac{OT} $1$:$1$) \ac{NP} with \ac{PME} and \ac{PW}. The achieved results are shown in figure~(\ref{fig:backwardWall}).
+As for the forward energy wall, the same procedure was followed in order to calculate the backward energy wall. 
+This time the metadynamics runs have to start from the anchored state, as an example in 
+figure~(\ref{fig:startFrameAnchored}). Since the available machine time, I have performed eight metadynamics runs 
+for the striped (\ac{MUS}:\ac{OT} $1$:$1$) \ac{NP} with the \ac{STD} \martini{} models; nine metadynamics runs for 
+the striped (\ac{MUS}:\ac{OT} $1$:$1$) \ac{NP} with \ac{PME} and \ac{PW} and five metadynamics runs for the random 
+(\ac{MUS}:\ac{OT} $1$:$1$) \ac{NP} with \ac{PME} and \ac{PW}. The achieved results are shown in 
+figure~(\ref{fig:backwardWall}).
 \begin{table}[h!t]
 	\centering
 	\begin{tabular}{lcccc}
@@ -159,14 +201,29 @@ As for the forward energy wall, the same procedure was followed in order to calc
 	\label{fig:startFrameAnchored}
 \end{SCfigure}
 
-This results suggest that the for- and backward processes for the striped \ac{NP} are more similar and symmetrical to each other than what is observed in \cite{ourPaper}. The random \ac{NP}, instead, shows a more stable configuration in the anchored state since the backward energy wall is higher for the random \ac{NP} then that for the striped one.
+This results suggest that the for- and backward processes for the striped \ac{NP} are more similar and symmetrical 
+to each other than what is observed in \cite{ourPaper}. The random \ac{NP}, instead, shows a more stable 
+configuration in the anchored state since the backward energy wall is higher for the random \ac{NP} then that for 
+the striped one.
 
-In table~(\ref{tab:anchorTime}) is shown the energy wall and the average time spent by the \ac{NP} in the anchored state in a comparison between different models and configurations.
+In table~(\ref{tab:anchorTime}) is shown the energy wall and the average time spent by the \ac{NP} in the anchored 
+state in a comparison between different models and configurations.
 
 \subsection{Discussion of the results}
-The process of the charged ligand translocation through the membrane can be thermodynamically compared to two other relevant processes for biological membranes: the ion membrane translocation and the lipid flip--flopping.
+The process of the charged ligand translocation through the membrane can be thermodynamically compared to two 
+other relevant processes for biological membranes: the ion membrane translocation and the lipid flip--flopping.
 
-For the first comparison, in \cite{PW} the authors have computed the \ac{FES} of the translocation of one Na$^+$ and one Cl$^-$ ion across a \acs{DPPC} membrane using umbrella sampling and the \ac{WHAM} procedure with the \ac{STD} \martini{} \ac{FF}. The calculations were performed with the \ac{PW} alone and with \ac{PW}$+$\ac{PME}. The height of the barriers are reported in table~(\ref{tab:ionTranslocation}). The same \ac{FES} for a \acs{DMPC} membrane was calculated by Khavrutskii \etal{} \cite{atomisticTranslocation} with an atomistic \ac{FF}. Since the \martini{} model for the \acs{DPPC} lipid also model the \acs{DMPC} lipid a comparison can be made and it is shown in table~(\ref{tab:ionTranslocation}). As one can see, from left to right, increasing the accuracy of the treatment of the electrostatic interactions the \martini{} \ac{FF} approaches the results of the atomistic \ac{FF}, as we have observed for the charged ligand translocation, see figure~(\ref{fig:forwardWall}). Moreover, the energy barrier for ion translocation is quantitatively comparable to those we have calculated for the forward and backward translocation of the charged ligand.
+For the first comparison, in \cite{PW} the authors have computed the \ac{FES} of the translocation of one Na$^+$ 
+and one Cl$^-$ ion across a \acs{DPPC} membrane using umbrella sampling and the \ac{WHAM} procedure with the 
+\ac{STD} \martini{} \ac{FF}. The calculations were performed with the \ac{PW} alone and with \ac{PW}$+$\ac{PME}. 
+The height of the barriers are reported in table~(\ref{tab:ionTranslocation}). The same \ac{FES} for a \acs{DMPC} 
+membrane was calculated by Khavrutskii \etal{} \cite{atomisticTranslocation} with an atomistic \ac{FF}. Since the 
+\martini{} model for the \acs{DPPC} lipid also model the \acs{DMPC} lipid a comparison can be made and it is shown 
+in table~(\ref{tab:ionTranslocation}). As one can see, from left to right, increasing the accuracy of the 
+treatment of the electrostatic interactions the \martini{} \ac{FF} approaches the results of the atomistic 
+\ac{FF}, as we have observed for the charged ligand translocation, see figure~(\ref{fig:forwardWall}). Moreover, 
+the energy barrier for ion translocation is quantitatively comparable to those we have calculated for the forward 
+and backward translocation of the charged ligand.
 %Moreover in \cite{PW}, in accordance with the atomistic results in \cite{atomisticTranslocation}, for small cross membrane ions imbalance and only with the use of the \ac{PW} model and the \ac{PME} method, they observe some ion leakage without pore formation but still mediated by a water defect inside the membrane, called \textit{water finger} that help the ions to cross the hydrophobic region of the membrane.
 %We remark that, these kind of phenomena, are totally absent using the \ac{STD} \martini{} \ac{FF}. Hence, as already outlined, the importance to use a better treatment of the electrostatic interaction and a better model for water solvent.
 \begin{table}[h!t]
@@ -181,14 +238,30 @@ For the first comparison, in \cite{PW} the authors have computed the \ac{FES} of
 	\label{tab:ionTranslocation}
 \end{table}
 
-For the second comparison, we refer to the work of Sapay \etal{} in \cite{Sapay2009}, in which the authors have calculated, using an atomistic \ac{FF} and through umbrella sampling, the \acp{FES} of a flip--flopping process of a lipid in several pure bilayers with different lipid composition, including a pure \ac{POPC} membrane. They pull a lipid head inside the hydrophobic core via a bias potential and found that the energy barrier of a lipid flip--flop in a \ac{POPC} membrane is of the order of $\sim 90$~kJ/mol. Moreover they observe that the flip--flopping process occurs without a water pore formation, as in our case: the  ligand translocation occurs without a pore formation. Maybe this kind of comparison is more realistic than the previous one. This because the charged ligand has an hydrophobic chain, like a lipid, and because, the ions penetrate the membrane from the water phase while our ligand starts in the lipid heads region of the entrance leaflet and in most cases the hydrophobic beads are already in contact with the hydrophobic region of the membrane. Instead, there is an important difference: the lipid has a natural polar head while the ligand is charged.
+For the second comparison, we refer to the work of Sapay \etal{} in \cite{Sapay2009}, in which the authors have 
+calculated, using an atomistic \ac{FF} and through umbrella sampling, the \acp{FES} of a flip--flopping process of 
+a lipid in several pure bilayers with different lipid composition, including a pure \ac{POPC} membrane. They pull 
+a lipid head inside the hydrophobic core via a bias potential and found that the energy barrier of a lipid 
+flip--flop in a \ac{POPC} membrane is of the order of $\sim 90$~kJ/mol. Moreover they observe that the 
+flip--flopping process occurs without a water pore formation, as in our case: the  ligand translocation occurs 
+without a pore formation. Maybe this kind of comparison is more realistic than the previous one. This because the 
+charged ligand has an hydrophobic chain, like a lipid, and because, the ions penetrate the membrane from the water 
+phase while our ligand starts in the lipid heads region of the entrance leaflet and in most cases the hydrophobic 
+beads are already in contact with the hydrophobic region of the membrane. Instead, there is an important 
+difference: the lipid has a natural polar head while the ligand is charged.
 
 \section{Molecular description of the process}
 \label{sec:resultsUnBiased}
 %Introduzione a seguito dei risultati con la metadinamica: run unbiased con PW striped, random11, random 12 e POPC
-In the previous paragraphs we have characterized the anchoring and dis--anchoring process from a thermodynamic point of view. In the following we will instead focus on the molecular processes that occur during anchoring and dis--anchoring.
+In the previous paragraphs we have characterized the anchoring and dis--anchoring process from a thermodynamic 
+point of view. In the following we will instead focus on the molecular processes that occur during anchoring and 
+dis--anchoring.
 
-To this aim, we will analyze both biased (via metadynamics) and unbiased \ac{MD} trajectories. We remark that the unbiased \ac{MD} simulations we have performed with the \ac{PW}+\ac{PME} model concern the \ac{NP} in the hydrophobic state only. Indeed, the high energy barriers that need to be overcome to get to the anchored state make the spontaneous anchoring process too slow to be observed on the microsecond time scale. Unbiased \ac{MD} simulations are nevertheless useful to characterize the hydrophobic state in absence of any biasing potential.
+To this aim, we will analyze both biased (via metadynamics) and unbiased \ac{MD} trajectories. We remark that the 
+unbiased \ac{MD} simulations we have performed with the \ac{PW}+\ac{PME} model concern the \ac{NP} in the 
+hydrophobic state only. Indeed, the high energy barriers that need to be overcome to get to the anchored state 
+make the spontaneous anchoring process too slow to be observed on the microsecond time scale. Unbiased \ac{MD} 
+simulations are nevertheless useful to characterize the hydrophobic state in absence of any biasing potential.
 
 % In view of the results obtained with metadynamics, shown in the previous chapter, and in order to try to see the anchoring process to spontaneously occur, we decide to perform unbiased runs starting from the hydrophobic state for all the anionic \ac{AuNP} configurations: the striped (\ac{MUS}:\ac{OT} $1$:$1$), the random (\ac{MUS}:\ac{OT} $1$:$1$) and the random (\ac{MUS}:\ac{OT} $2$:$1$), with both \ac{PME} and \ac{PW} model. This runs are suitable to get some useful information about the molecular processes involved and about the hydrophobic state with a more realistic \ac{CG} description.
 %
@@ -197,7 +270,17 @@ To this aim, we will analyze both biased (via metadynamics) and unbiased \ac{MD}
 \subsection{Water dragging}
 \label{sec:WDragging}
 %Trascinamento delle PW nelle varie salse
-In order to quantify the amount of water dragged within the membrane core during the charged ligand translocation, I calculated the number of contacts between the (biased) charged ligand terminal and the solvent particles. At \ac{CG} level, I considered two beads to be in contact whenever their distance was found to be shorter than $0.6$~nm. In figure~(\ref{fig:PWDragging}) it is shown an example of the dragging effect for a metadynamics run of a striped \ac{NP} with \ac{PME}$+$\ac{PW} while in figure~(\ref{fig:WContact}) the number of ligand--water contacts are plotted as a function of the $z$ distance between the charged ligand terminal and the \ac{COM} of the membrane. In particular, in figure~(\ref{fig:WContact}a) it is shown a comparison between different \ac{CG} \martini{} models: the \ac{STD}, with \ac{PME} alone and with both \ac{PME}$+$\ac{PW}. Instead, in figure~(\ref{fig:WContact}b) it is shown a comparison between the striped and the random \acp{NP} with both \ac{PME}$+$\ac{PW}. For the number of contacts with the \ac{PW} bead, since the ligand is negatively charged, only the contacts with the $WP$ particle of the \ac{PW} bead are considered.
+In order to quantify the amount of water dragged within the membrane core during the charged ligand translocation, 
+I calculated the number of contacts between the (biased) charged ligand terminal and the solvent particles. At 
+\ac{CG} level, I considered two beads to be in contact whenever their distance was found to be shorter than 
+$0.6$~nm. In figure~(\ref{fig:PWDragging}) it is shown an example of the dragging effect for a metadynamics run of 
+a striped \ac{NP} with \ac{PME}$+$\ac{PW} while in figure~(\ref{fig:WContact}) the number of ligand--water 
+contacts are plotted as a function of the $z$ distance between the charged ligand terminal and the \ac{COM} of the 
+membrane. In particular, in figure~(\ref{fig:WContact}a) it is shown a comparison between different \ac{CG} 
+\martini{} models: the \ac{STD}, with \ac{PME} alone and with both \ac{PME}$+$\ac{PW}. Instead, in 
+figure~(\ref{fig:WContact}b) it is shown a comparison between the striped and the random \acp{NP} with both 
+\ac{PME}$+$\ac{PW}. For the number of contacts with the \ac{PW} bead, since the ligand is negatively charged, only 
+the contacts with the $WP$ particle of the \ac{PW} bead are considered.
 %	WPatchedComparison		WRPComparison
 \begin{figure}[!ht]
 	\center
@@ -237,7 +320,22 @@ In order to quantify the amount of water dragged within the membrane core during
 	\label{fig:WContact}
 \end{figure}
 
-As we can see from figure~(\ref{fig:WContact}a) for the \ac{STD} \martini{} model and for the model with \ac{PME} alone we observe that the number of water contacts drops to zero in the core of the hydrophobic region. For the model with the \ac{PME}+\ac{PW} there is at least one contact per ns even in the core of the bilayer. This does not necessary mean that some \ac{PW} beads eventually cross the bilayer. Instead, they are bound to choline groups and to the charged ligand terminal. When the ligand tend to approach the core of the bilayer, or when it try to dis--anchor from the opposite leaflet, occurs a small deformation of the leaflet it self, as we better see from figures~(\ref{fig:NC3Dragging}b) and~(\ref{fig:engulfmentFrame}f), thus some water can penetrate inside the hollow following the choline groups and the charged ligand terminal, see figure~(\ref{fig:PWDragging}e). Also we have to remark that the time spent by the charged bead in the hydrophobic region is no more than $1$ or $2$~ns. The same behavior with the \ac{PW} model is observed also for the random \ac{NP}, shown in figure~(\ref{fig:WContact}b). In figure~(\ref{fig:WContact}c) it is plotted the number of water contacts as obtained from atomistic metadynamics runs. While crossing the membrane center, the atomistic charged ligand retains up to about $10-12$ contacts per ns with water molecules, that would correspond to $2.5-3$ contacts per ns with \martini{} \ac{CG} water beads. The results obtained with the \ac{PME}$+$\ac{PW} \ac{CG} model, while still underestimating the number of water beads dragged to the membrane center during translocation, are more consistent with the atomistic simulations than those obtained with the \ac{STD} \martini{} model.
+As we can see from figure~(\ref{fig:WContact}a) for the \ac{STD} \martini{} model and for the model with \ac{PME} 
+alone we observe that the number of water contacts drops to zero in the core of the hydrophobic region. For the 
+model with the \ac{PME}+\ac{PW} there is at least one contact per ns even in the core of the bilayer. This does 
+not necessary mean that some \ac{PW} beads eventually cross the bilayer. Instead, they are bound to choline groups 
+and to the charged ligand terminal. When the ligand tend to approach the core of the bilayer, or when it try to 
+dis--anchor from the opposite leaflet, occurs a small deformation of the leaflet it self, as we better see from 
+figures~(\ref{fig:NC3Dragging}b) and~(\ref{fig:engulfmentFrame}f), thus some water can penetrate inside the hollow 
+following the choline groups and the charged ligand terminal, see figure~(\ref{fig:PWDragging}e). Also we have to 
+remark that the time spent by the charged bead in the hydrophobic region is no more than $1$ or $2$~ns. The same 
+behavior with the \ac{PW} model is observed also for the random \ac{NP}, shown in figure~(\ref{fig:WContact}b). In 
+figure~(\ref{fig:WContact}c) it is plotted the number of water contacts as obtained from atomistic metadynamics 
+runs. While crossing the membrane center, the atomistic charged ligand retains up to about $10-12$ contacts per ns 
+with water molecules, that would correspond to $2.5-3$ contacts per ns with \martini{} \ac{CG} water beads. The 
+results obtained with the \ac{PME}$+$\ac{PW} \ac{CG} model, while still underestimating the number of water beads 
+dragged to the membrane center during translocation, are more consistent with the atomistic simulations than those 
+obtained with the \ac{STD} \martini{} model.
 % \begin{figure}[ht]
 % 	\center
 % 	\includegraphics[width=0.9\textwidth]{./img/results/wCorrelation}
@@ -246,9 +344,18 @@ As we can see from figure~(\ref{fig:WContact}a) for the \ac{STD} \martini{} mode
 
 \subsection{Lipid heads dragging}
 %Trascinamento delle teste dei lipidi nelle varie salse
-The same dragging effect of the water beads during the forward process is also noticed for the choline groups (NC$3$ \martini{} bead) of the lipids of the entrance leaflet. When the charged ligand terminal approaches the hydrophobic core of the bilayer it tends to drag the choline groups, as a result the entrance leaflet slightly deforms producing a small hollow. An example of this phenomenon is shown in figure~(\ref{fig:NC3Dragging}).
+The same dragging effect of the water beads during the forward process is also noticed for the choline groups 
+(NC$3$ \martini{} bead) of the lipids of the entrance leaflet. When the charged ligand terminal approaches the 
+hydrophobic core of the bilayer it tends to drag the choline groups, as a result the entrance leaflet slightly 
+deforms producing a small hollow. An example of this phenomenon is shown in figure~(\ref{fig:NC3Dragging}).
 
-In order to investigate the process, in figure~(\ref{fig:NC3Correlation}) I have plotted the \ac{CV}, which is the distance of the charged ligand terminal from the bilayer \ac{COM} (red); and $d_\text{min}^{\text{NC}3}$, which is the minimum distance of the choline groups from the bilayer \ac{COM} (blue) as a function of time. We can see an evident correlation: when the ligand tends to approach the center of the membrane the minimum distance between the choline groups and the center of the membrane decreases, as well. This suggests that some choline groups are strongly bound to the charged ligand terminal while the latter tries to penetrate into the membrane hydrophobic region.
+In order to investigate the process, in figure~(\ref{fig:NC3Correlation}) I have plotted the \ac{CV}, which is the 
+distance of the charged ligand terminal from the bilayer \ac{COM} (red); and $d_\text{min}^{\text{NC}3}$, which is 
+the minimum distance of the choline groups from the bilayer \ac{COM} (blue) as a function of time. We can see an 
+evident correlation: when the ligand tends to approach the center of the membrane the minimum distance between the 
+choline groups and the center of the membrane decreases, as well. This suggests that some choline groups are 
+strongly bound to the charged ligand terminal while the latter tries to penetrate into the membrane hydrophobic 
+region.
 \begin{figure}[!ht]
 	\center
 	\subfloat[]{%
@@ -271,7 +378,12 @@ In order to investigate the process, in figure~(\ref{fig:NC3Correlation}) I have
 \end{figure}
 Since the flip-flopping energy for a \ac{POPC} lipid is too high, when the charged bead is too far from the entrance leaflet the choline groups detaches and goes back to the entrance leaflet.
 
-To better investigate such process, in figure~(\ref{fig:NC3minDist}) I show an histogram of the distribution of $d_\text{min}^{\text{NC}3}$ in the entrance leaflet. The distribution of the choline groups in the \ac{NP} entrance leaflet are compared to that obtained from a reference pure \ac{POPC} membrane. All the data are from runs with both \ac{PME} and \ac{PW} and were obtained via both biased and unbiased \ac{MD} simulations. In both the metadynamics and unbiased \ac{MD} runs, i.e. when the \ac{NP} is present, we can observe that the distribution of the lipid heads shifts towards the membrane center.
+To better investigate such process, in figure~(\ref{fig:NC3minDist}) I show an histogram of the distribution of 
+$d_\text{min}^{\text{NC}3}$ in the entrance leaflet. The distribution of the choline groups in the \ac{NP} 
+entrance leaflet are compared to that obtained from a reference pure \ac{POPC} membrane. All the data are from 
+runs with both \ac{PME} and \ac{PW} and were obtained via both biased and unbiased \ac{MD} simulations. In both 
+the metadynamics and unbiased \ac{MD} runs, i.e. when the \ac{NP} is present, we can observe that the distribution 
+of the lipid heads shifts towards the membrane center.
 % 	minDistPatched			minDistRandom11
 \begin{figure}[th!]
 	\center
@@ -300,13 +412,27 @@ To better investigate such process, in figure~(\ref{fig:NC3minDist}) I show an h
 	\caption{Number of contacts per ns between the choline groups in the entrance leaflet and the charged ligand terminal subject to the metadynamics bias potential in function of the position of the charged ligand terminal. For $z<0$ the ligand is in the entrance leaflet. (a) For the striped \acs{NP} with different models. (b) For the striped and the random \acs{NP}s with \acs{PME} and \acs{PW}. (c) For the striped \ac{NP} with the atomistic model, (data courtesy of F. Simonelli). The \ac{CG} data are binned with a bin width of $0.08$~nm while the atomistic with a bin width of $0.05$~nm. For each histogram, the total number of counts per bin is normalized with the number of the bin entries. The error bar is the standard error of the mean value.}%
 	\label{fig:NC3Contact}
 \end{figure}
-Moreover, the same analysis for the water contacts as described in~\ref{sec:WDragging}, is made even for the contacts of the choline groups in the entrance leaflet within $0.6$~nm from the charged ligand terminal. The results, referred to our metadynamics runs, are shown in figure~(\ref{fig:NC3Contact}). In particular, in figure~(\ref{fig:NC3Contact}a) is shown a comparison of the striped \ac{NP} with different \ac{CG} \martini{} models: the \ac{STD}, with \ac{PME} alone and with both \ac{PME} and \ac{PW}. Instead, in figure~(\ref{fig:NC3Contact}b) is shown a comparison between the striped and the random \acp{NP} with \ac{PME} and \ac{PW} and in figure~(\ref{fig:NC3Contact}c) the atomistic results for a striped \ac{NP}. We see that with the \ac{PW} model the contacts per ns are still appreciable even near the core of the membrane. This and the previous results confirm the dragging effect of the lipid heads of the entrance leaflet by the charged bead during the forward process. In the random--striped comparison we see that this effect is less noticeable for the random \ac{NP} and the number of contacts is globally lower than for the striped one. This can be consistent with the fact that the average $z$ distance of the \ac{NP} \ac{COM} from the bilayer \ac{COM} is shorter for the striped than that for the random one, as shown in table~(\ref{tab:NPMembProperties}).
+Moreover, the same analysis for the water contacts as described in~\ref{sec:WDragging}, is made even for the 
+contacts of the choline groups in the entrance leaflet within $0.6$~nm from the charged ligand terminal. The 
+results, referred to our metadynamics runs, are shown in figure~(\ref{fig:NC3Contact}). In particular, in 
+figure~(\ref{fig:NC3Contact}a) is shown a comparison of the striped \ac{NP} with different \ac{CG} \martini{} 
+models: the \ac{STD}, with \ac{PME} alone and with both \ac{PME} and \ac{PW}. Instead, in 
+figure~(\ref{fig:NC3Contact}b) is shown a comparison between the striped and the random \acp{NP} with \ac{PME} and 
+\ac{PW} and in figure~(\ref{fig:NC3Contact}c) the atomistic results for a striped \ac{NP}. We see that with the 
+\ac{PW} model the contacts per ns are still appreciable even near the core of the membrane. This and the previous 
+results confirm the dragging effect of the lipid heads of the entrance leaflet by the charged bead during the 
+forward process. In the random--striped comparison we see that this effect is less noticeable for the random 
+\ac{NP} and the number of contacts is globally lower than for the striped one. This can be consistent with the 
+fact that the average $z$ distance of the \ac{NP} \ac{COM} from the bilayer \ac{COM} is shorter for the striped 
+than that for the random one, as shown in table~(\ref{tab:NPMembProperties}).
 
 \clearpage
 \subsection{Effects of metadynamics}
 %Quanto la metadinamica sia distrittiva: comparazione tra rum unbiased e biased
 % 	minDistHydroPatched		minDistHydroRandom11
-We have used metadynamics to observe the crossing of the energy barriers separating the hydrophobic contact stage from the anchored stage, both in forward and backward direction. It is nevertheless necessary to understand to what extent the
+We have used metadynamics to observe the crossing of the energy barriers separating the hydrophobic contact stage 
+from the anchored stage, both in forward and backward direction. It is nevertheless necessary to understand to 
+what extent the
 \begin{figure}[hb!]
 	\center
 	\subfloat[Striped NP]{
@@ -318,7 +444,20 @@ We have used metadynamics to observe the crossing of the energy barriers separat
 	\caption{Distribution of $d_\text{min}^{\text{NC}3}$ in the entrance leaflet. The red curve is from an average over the metadynamics runs considering only the portion of the trajectory in which the \acs{NP} is in the hydrophobic state. The blue curve is from the unbiased run and the green one is from a pure \acs{POPC} membrane. (a) For the striped \acs{NP}. (b) For the random \acs{NP}. The bin width is $0.02$~nm for all curves and each histogram is normalized to the total number of entries. The error bar for the metadynamics runs is calculated as the standard error of the mean value.}%
 	\label{fig:NC3minDistUn}
 \end{figure}
-metadynamics biasing potential affects the molecular mechanism of the transition. In this section we are going to compare the structural properties of the membrane, in presence of the \ac{NP}, as measured from our metadynamics runs and from the unbiased runs. In figure~(\ref{fig:NC3minDistUn}) it is shown an histogram of the distribution of $d_\text{min}^{\text{NC}3}$ in the \ac{NP} entrance leaflet. The distribution is compared to that obtained from a reference pure \ac{POPC} membrane, an unbiased run and an average over the biased runs for which only the portion of the trajectory in which the \ac{NP} is in the hydrophobic state are considered. We observe an appreciable count near the hydrophobic core of the bilayer, even if only the hydrophobic state is considered. This suggests that the lipid head dragging is present due to the oscillation of the charged bead exploring a bigger area of the \ac{CV} phase space when the \ac{NP} is still in the hydrophobic state. Then, in figure~(\ref{fig:contactsUn}) it is shown the number of contacts per ns between the \ac{PW} beads and the charged ligand terminal and between the choline groups and the charged ligand terminal of a striped and a random \acp{NP} for the biased runs in comparison with the unbiased runs. These analysis are made considering only the \ac{PME}+\ac{PW} model. From figure~(\ref{fig:contactsUn}) we see that the number of contacts are almost equal in the hydrophobic state for all plots, suggesting that the metadynamics is non--destructive.
+metadynamics biasing potential affects the molecular mechanism of the transition. In this section we are going to 
+compare the structural properties of the membrane, in presence of the \ac{NP}, as measured from our metadynamics 
+runs and from the unbiased runs. In figure~(\ref{fig:NC3minDistUn}) it is shown an histogram of the distribution 
+of $d_\text{min}^{\text{NC}3}$ in the \ac{NP} entrance leaflet. The distribution is compared to that obtained from 
+a reference pure \ac{POPC} membrane, an unbiased run and an average over the biased runs for which only the 
+portion of the trajectory in which the \ac{NP} is in the hydrophobic state are considered. We observe an 
+appreciable count near the hydrophobic core of the bilayer, even if only the hydrophobic state is considered. This 
+suggests that the lipid head dragging is present due to the oscillation of the charged bead exploring a bigger 
+area of the \ac{CV} phase space when the \ac{NP} is still in the hydrophobic state. Then, in 
+figure~(\ref{fig:contactsUn}) it is shown the number of contacts per ns between the \ac{PW} beads and the charged 
+ligand terminal and between the choline groups and the charged ligand terminal of a striped and a random \acp{NP} 
+for the biased runs in comparison with the unbiased runs. These analysis are made considering only the 
+\ac{PME}+\ac{PW} model. From figure~(\ref{fig:contactsUn}) we see that the number of contacts are almost equal in 
+the hydrophobic state for all plots, suggesting that the metadynamics is non--destructive.
 %	patchedPWContact	randon11PWContact
 % 	patchedNC3Contact	random11NC3Contact
 \begin{figure}[ht!]
@@ -345,11 +484,23 @@ metadynamics biasing potential affects the molecular mechanism of the transition
 \section{NP and membrane properties}
 %Proprietà generali
 %Coef di diffusione stato ancorato, stato idrofobico
-To complete the set of analysis on the interaction between the \acp{NP} and the model lipid membrane with the \martini{} \ac{FF} with \ac{PME}$+$\ac{PW} model, we investigate the effect on the membrane properties, such as the lipid diffusion coefficient and the density map of the lipids treating the \ac{NP} entrance leaflet and the anchoring leaflet, separately. Eventually, we consider also the \ac{NP}--lipid heads and the \ac{NP}--lipid tails $2$D--\ac{RDF} along the $xy$--plane, separately for the two leaflets.
+To complete the set of analysis on the interaction between the \acp{NP} and the model lipid membrane with the 
+\martini{} \ac{FF} with \ac{PME}$+$\ac{PW} model, we investigate the effect on the membrane properties, such as 
+the lipid diffusion coefficient and the density map of the lipids treating the \ac{NP} entrance leaflet and the 
+anchoring leaflet, separately. Eventually, we consider also the \ac{NP}--lipid heads and the \ac{NP}--lipid tails 
+$2$D--\ac{RDF} along the $xy$--plane, separately for the two leaflets.
 
 In the following first some general analysis of the \acp{NP} and the bilayer lipids are given. Then we investigate the membrane properties.
 
-\paragraph{\textbf{General properties}} For each of the unbiased runs of the different \ac{NP} configurations in the hydrophobic state, I show in table~(\ref{tab:NPMembProperties}) some general properties about the \ac{NP} and the bilayer. In particular, $\overline{d_z}$ is the average over time of the $z$ component of the distance between the \ac{COM} of the \ac{NP} and the \ac{COM} of the bilayer: the striped configuration is the one closest to the bilayer center. Moreover, I have calculated the lateral diffusion coefficient of the \ac{NP} and of the \ac{POPC} lipids separately for the two leaflets. We see that the striped \ac{NP} shows the fastest diffusion rate. For what concern the lipids, if we compare this result to the one showed in table~(\ref{tab:POPCData}), we see a general slow down of the diffusion rate of the lipids in presence of the \ac{NP}, with the slowest diffusion rate of the lipids in the \ac{NP} entrance leaflet.
+\paragraph{\textbf{General properties}} For each of the unbiased runs of the different \ac{NP} configurations in 
+the hydrophobic state, I show in table~(\ref{tab:NPMembProperties}) some general properties about the \ac{NP} and 
+the bilayer. In particular, $\overline{d_z}$ is the average over time of the $z$ component of the distance between 
+the \ac{COM} of the \ac{NP} and the \ac{COM} of the bilayer: the striped configuration is the one closest to the 
+bilayer center. Moreover, I have calculated the lateral diffusion coefficient of the \ac{NP} and of the \ac{POPC} 
+lipids separately for the two leaflets. We see that the striped \ac{NP} shows the fastest diffusion rate. For what 
+concern the lipids, if we compare this result to the one showed in table~(\ref{tab:POPCData}), we see a general 
+slow down of the diffusion rate of the lipids in presence of the \ac{NP}, with the slowest diffusion rate of the 
+lipids in the \ac{NP} entrance leaflet.
 \begin{table}[h!t]
 	\centering\footnotesize
 	\begin{tabular}{lcccc}
@@ -368,13 +519,34 @@ In the following first some general analysis of the \acp{NP} and the bilayer lip
 \paragraph{\textbf{Bilayer structural properties}}
 %Risucchio delle membrane al recrossing
 %Deformazione del leaflet di ancoraggio: RDF e densitymap 2D
-In my biased and unbiased \ac{MD} runs with the \martini{} \ac{PME}$+$\ac{PW} model, the main membrane structural deformation is related to an evident distortion of the leaflet that does not host the \ac{NP}, as it is shown in figure~(\ref{fig:engulfmentFrame}). This effect is in agree with the atomistic simulation. The opposite leaflet deformation related to the metadynamics run, figure~(\ref{fig:engulfmentFrame}e-f), is clearly more accentuated due to the strong electrostatic interaction between the charged ligand terminal and the choline groups of the anchoring leaflet. As a consequence, during the backward process, the charged ligand terminal drag the anchoring leaflet before the dis--anchor can occurs. Moreover, as one can see from figure~(\ref{fig:engulfmentFrame}), the leaflet deformation seems to be clearly related to the distance between the \ac{COM} of the \ac{NP} and the lipid membrane along the bilayer normal.
+In my biased and unbiased \ac{MD} runs with the \martini{} \ac{PME}$+$\ac{PW} model, the main membrane structural 
+deformation is related to an evident distortion of the leaflet that does not host the \ac{NP}, as it is shown in 
+figure~(\ref{fig:engulfmentFrame}). This effect is in agree with the atomistic simulation. The opposite leaflet 
+deformation related to the metadynamics run, figure~(\ref{fig:engulfmentFrame}e-f), is clearly more accentuated 
+due to the strong electrostatic interaction between the charged ligand terminal and the choline groups of the 
+anchoring leaflet. As a consequence, during the backward process, the charged ligand terminal drag the anchoring 
+leaflet before the dis--anchor can occurs. Moreover, as one can see from figure~(\ref{fig:engulfmentFrame}), the 
+leaflet deformation seems to be clearly related to the distance between the \ac{COM} of the \ac{NP} and the lipid 
+membrane along the bilayer normal.
 
-For the striped (\ac{MUS}:\ac{OT} $1$:$1$), the random (\ac{MUS}:\ac{OT} $1$:$1$) and the random (\ac{MUS}:\ac{OT} $2$:$1$) \acp{NP} in the hydrophobic state of my unbiased runs the numerical density of lipids in the \ac{NP} entrance leaflet and in the opposite one is considered separately. In figures~(\ref{fig:stripedDensity}), (\ref{fig:randomDensity}) and~(\ref{fig:random21Density}) the $2$D--density plots are obtained from averages of the number density values in the box volume over time and $z$--axis. Instead, figure~(\ref{fig:RDF}) shows the $2$D--\ac{RDF} along the $xy$--plane of the \ac{NP}--lipid heads and the \ac{NP}--lipid tails, separately for both leaflets. For all the \ac{NP} configurations we see an increase of the density of the lipid heads in the opposite leaflet as a result of the lipid heads clustering under the \ac{NP}. As a consequence, the lipid tails of the opposite leaflet accumulate in a circular corona around the \ac{NP}. For what concerns the entrance leaflet we observe an opposite behavior. The lipid heads, especially the positively charged choline groups, are electrostatically attracted to the negatively charged \ac{MUS} ligands, hence the choline groups cluster in a circular corona at the edge of the \ac{NP}. The lipid tails of the entrance leaflet, instead, are placed immediately below the \ac{NP} since they are strongly attracted to the hydrophobic \ac{OT} ligands attached to the \ac{NP} core. This behavior produces the opposite leaflet deformation as shown in figure~(\ref{fig:engulfmentFrame}).
+For the striped (\ac{MUS}:\ac{OT} $1$:$1$), the random (\ac{MUS}:\ac{OT} $1$:$1$) and the random (\ac{MUS}:\ac{OT} 
+$2$:$1$) \acp{NP} in the hydrophobic state of my unbiased runs the numerical density of lipids in the \ac{NP} 
+entrance leaflet and in the opposite one is considered separately. In figures~(\ref{fig:stripedDensity}), 
+(\ref{fig:randomDensity}) and~(\ref{fig:random21Density}) the $2$D--density plots are obtained from averages of 
+the number density values in the box volume over time and $z$--axis. Instead, figure~(\ref{fig:RDF}) shows the 
+$2$D--\ac{RDF} along the $xy$--plane of the \ac{NP}--lipid heads and the \ac{NP}--lipid tails, separately for both 
+leaflets. For all the \ac{NP} configurations we see an increase of the density of the lipid heads in the opposite 
+leaflet as a result of the lipid heads clustering under the \ac{NP}. As a consequence, the lipid tails of the 
+opposite leaflet accumulate in a circular corona around the \ac{NP}. For what concerns the entrance leaflet we 
+observe an opposite behavior. The lipid heads, especially the positively charged choline groups, are 
+electrostatically attracted to the negatively charged \ac{MUS} ligands, hence the choline groups cluster in a 
+circular corona at the edge of the \ac{NP}. The lipid tails of the entrance leaflet, instead, are placed 
+immediately below the \ac{NP} since they are strongly attracted to the hydrophobic \ac{OT} ligands attached to the 
+\ac{NP} core. This behavior produces the opposite leaflet deformation as shown in 
+figure~(\ref{fig:engulfmentFrame}).
 
 \begin{figure}[ht!]
 	\center
-%	\begin{adjustwidth}{-0.5cm}{-1.5cm}
 		\subfloat[\ac{CG} unbiased run]{%
 			\includegraphics[width=0.47\linewidth]{./img/engulfmentFrame/a.png}%
 		}\ %
@@ -395,12 +567,10 @@ For the striped (\ac{MUS}:\ac{OT} $1$:$1$), the random (\ac{MUS}:\ac{OT} $1$:$1$
 		}%
 		\caption{Snapshots from unbiased and biased simulations showing the deformation of the anchoring leaflet. The top panels refer to my unbiased run of a \acs{CG} striped \acs{NP} with \acs{PME}$+$\acs{PW}, the middle panels refer to an unbiased run of a striped \acs{NP} with atomistic model (figures courtesy of F. Simonelli) and the bottom panels refer to a biased run of a \acs{CG} striped \acs{NP} with \acs{PME}$+$\acs{PW}. In the left panels we see the anchoring leaflet with no appreciable deformation while in the right panels we see the distortion of the anchoring leaflet. Color code as in figure~(\ref{fig:threeProcess}). The surface in blue is the surface representation of the choline and phosphate groups. The charged ligand chosen for the metadynamics is in orange. Water beads, lipid tails and the other \acs{NP} ligands are not shown.}%
 		\label{fig:engulfmentFrame}
-%	\end{adjustwidth}
 \end{figure}
 
 \begin{figure}[p]
 	\centering
-%	\begin{adjustwidth}{-0.5cm}{-1.5cm}
 		\subfloat[Entrance leaflet: POPC]{
 		\includegraphics[width=0.5\textwidth]{./img/density_RDF/patched/down.png}
 		}%
@@ -419,14 +589,12 @@ For the striped (\ac{MUS}:\ac{OT} $1$:$1$), the random (\ac{MUS}:\ac{OT} $1$:$1$
 		\subfloat[Opposite leaflet: lipid tail]{
 		\includegraphics[width=0.5\textwidth]{./img/density_RDF/patched/tailUp.png}
 		}%
-%	\end{adjustwidth}
 	\caption{Density map for the striped (\acs{MUS}:\acs{OT} $1$:$1$) \acs{NP} in the hydrophobic state of my unbiased run. Left (a), (c) and (e) panels refer to the entrance leaflet. Right (b), (d) and (f) panels refer to the opposite leaflet.}%
 	\label{fig:stripedDensity}
 \end{figure}
 
 \begin{figure}[p]
 	\centering
-%	\begin{adjustwidth}{-1.5cm}{-0.5cm}
 		\subfloat[Entrance leaflet: POPC]{
 		\includegraphics[width=0.5\textwidth]{./img/density_RDF/random/up.png}
 		}%
@@ -445,14 +613,12 @@ For the striped (\ac{MUS}:\ac{OT} $1$:$1$), the random (\ac{MUS}:\ac{OT} $1$:$1$
 		\subfloat[Opposite leaflet: lipid tail]{
 		\includegraphics[width=0.5\textwidth]{./img/density_RDF/random/tailDown.png}
 		}
-%	\end{adjustwidth}
 	\caption{Density map for the random (\acs{MUS}:\acs{OT} $1$:$1$) \acs{NP} in the hydrophobic state of my unbiased run. Left (a), (c) and (e) panels refer to the entrance leaflet. Right (b), (d) and (f) panels refer to the opposite leaflet.}%
 	\label{fig:randomDensity}
 \end{figure}
 
 \begin{figure}[p]
 	\centering
-%	\begin{adjustwidth}{-0.5cm}{-1.5cm}
 		\subfloat[Entrance leaflet: POPC]{
 		\includegraphics[width=0.5\textwidth]{./img/density_RDF/random21/up.png}
 		}%
@@ -471,14 +637,12 @@ For the striped (\ac{MUS}:\ac{OT} $1$:$1$), the random (\ac{MUS}:\ac{OT} $1$:$1$
 		\subfloat[Opposite leaflet: lipid tail]{
 		\includegraphics[width=0.5\textwidth]{./img/density_RDF/random21/tailDown.png}
 		}
-%	\end{adjustwidth}
 	\caption{Density map for the random (\acs{MUS}:\acs{OT} $2$:$1$) \acs{NP} in the hydrophobic state of my unbiased run. Left (a), (c) and (e) panels refer to the entrance leaflet. Right (b), (d) and (f) panels refer to the opposite leaflet.}%
 	\label{fig:random21Density}
 \end{figure}
 
 \begin{figure}[p]
 	\centering
-%	\begin{adjustwidth}{-1.5cm}{-0.5cm}
 		\subfloat[Striped($1$:$1$): Entrance leaflet]{%
 		\includegraphics[width=0.5\textwidth]{./img/density_RDF/patched/lipidBottomRDF}
 		}%
@@ -499,5 +663,4 @@ For the striped (\ac{MUS}:\ac{OT} $1$:$1$), the random (\ac{MUS}:\ac{OT} $1$:$1$
 		}%
 		\caption{\acs{RDF} centered to the \acs{NP} \acs{COM} of the lipid tails (green) and the lipid heads (violet). The left panels refer to the entrance leaflet, the right to the opposite one. (a) and (b) panels refer to the striped (\acs{MUS}:\acs{OT} $1$:$1$) \acs{NP}. (c) and (d) panels refer to the random (\acs{MUS}:\acs{OT} $1$:$1$) \acs{NP}. (e) and (f) panels refers to the random (\acs{MUS}:\acs{OT} $2$:$1$) \acs{NP}. All \acp{NP} are in the hydrophobic state and refers to my unbiased runs.}%
 		\label{fig:RDF}
-%	\end{adjustwidth}
 \end{figure}

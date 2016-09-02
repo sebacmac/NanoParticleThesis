@@ -75,7 +75,6 @@ only neighbor atoms within a certain cutoff are considered. Thus, the atoms of t
 	\label{fig:coreNetwork}
 \end{figure}
 
-%The bond constants is assigned so as to reproduce the vibrational spectrum of the gold core as provided by the many--body Gupta potential. 
 The bond constant is assigned to $k = 32500$~kJ/(mol\,nm$^2$) for Au\,--\,Au surface atoms, $k = 11000$ 
 kJ/(mol\,nm$^2$) for Au\,--\,Au bulk atoms, $k = 1250$~kJ/(mol\,nm$^2$) for S\,--\,S atoms and 
 $k = 32500$~kJ/(mol\,nm$^2$) Au\,--\,S bonds, as summarized in table~(\ref{tab:NPConstants}). Instead, the 
@@ -120,7 +119,7 @@ that \acp{NP} are stable, that is, they do not aggregate in aqueous environments
 		\includegraphics[width=0.35\textwidth]{./img/MUS/MUS}%
 		\label{fig:mus}%
 	}%
-	\caption{Top: chemical structure. Bottom: \acs{CG} \martini{} model (red: C$_1$ bead, green: Qda negatively charged bead and yellow: sulfur atom).}
+	\caption{Top: chemical structure. Bottom: \acs{CG} \martini{} model (red: C$_1$ bead, green: Qda negatively charged bead and yellow: sulfur atom).}%
 	\label{fig:figands}
 \end{figure}
 
@@ -173,7 +172,7 @@ coatings are shown.
 	\subfloat[random ($2$:$1$)]{
 		\includegraphics[width=2.7cm]{./img/coatings/random21}
 	}%
-	\caption{Au\acs{NP} with different ligand surface arrangements and composition. From left to right: striped (\ac{MUS}:\ac{OT} $1$:$1$), random (\ac{MUS}:\ac{OT} $1$:$1$) and random (\ac{MUS}:\ac{OT} $2$:$1$). Hydrophobic beads are shown in red while the negatively charged beads are green.}
+	\caption{Au\acs{NP} with different ligand surface arrangements and composition. From left to right: striped (\ac{MUS}:\ac{OT} $1$:$1$), random (\ac{MUS}:\ac{OT} $1$:$1$) and random (\ac{MUS}:\ac{OT} $2$:$1$). Hydrophobic beads are shown in red while the negatively charged beads are green.}%
 	\label{fig:coating}
 \end{figure}
 
@@ -187,7 +186,9 @@ evolutionary point of view, it is believed that the appearance of the cell membr
 ingredients to the development of life.
 
 \subsection{Real cell membranes}
-As we can see from a cartoon of a real cell membrane in figure~(\ref{fig:cellMembrane}), the biological membrane is a crowded environment consisting of phospholipids, glycolipids, carbohydrates, proteins and other organic molecules.
+As we can see from a cartoon of a real cell membrane in figure~(\ref{fig:cellMembrane}), the biological membrane 
+is a crowded environment consisting of phospholipids, glycolipids, carbohydrates, proteins and other organic 
+molecules.
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[width=0.9\textwidth]{./img/cellMembrane}
@@ -195,18 +196,30 @@ As we can see from a cartoon of a real cell membrane in figure~(\ref{fig:cellMem
 	\label{fig:cellMembrane}
 \end{figure}
 
-The plasma membrane by mass is essentially composed by half lipids and half proteins. Most of the lipids that constitute animal membranes are a particular type of lipids, called \textit{phospholipids}. They are made of a neutral (polar) or charged head, which is hydrophilic and one or two fatty acid hydrocarbon chains, often called lipid tails, which are instead hydrophobic, as shown schematically on the left of figure~(\ref{fig:phospho}).  Phospholipids are \textit{amphiphilic} molecules. This amphiphilic nature, through the \textit{hydrophobic effect}, plays a key role in the membrane formation. In fact when we put a relevant concentration of phospholipids in a water solution the lipid tails tend to cluster in order to minimize the hydrophobic surface in contact with water. Instead, the polar heads tend to make favorable bonds with water molecules. The resultant bilayer configuration, proper of the biological membrane, is shown schematically on the right of figure~(\ref{fig:phospho}).
+The plasma membrane by mass is essentially composed by half lipids and half proteins. Most of the lipids that 
+constitute animal membranes are a particular type of lipids, called \textit{phospholipids}. They are made of a 
+neutral (polar) or charged head, which is hydrophilic and one or two fatty acid hydrocarbon chains, often called 
+lipid tails, which are instead hydrophobic, as shown schematically on the left of figure~(\ref{fig:phospho}).  
+Phospholipids are \textit{amphiphilic} molecules. This amphiphilic nature, through the \textit{hydrophobic 
+effect}, plays a key role in the membrane formation. In fact when we put a relevant concentration of phospholipids 
+in a water solution the lipid tails tend to cluster in order to minimize the hydrophobic surface in contact with 
+water. Instead, the polar heads tend to make favorable bonds with water molecules. The resultant bilayer 
+configuration, proper of the biological membrane, is shown schematically on the right of 
+figure~(\ref{fig:phospho}).
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[width=0.6\textwidth]{./img/phospholipids}
-	\caption{Left: schematic representation of a phospholipid. Right: self--assembled bilayer configuration assumed by an aqueous solution of phospholipids.}
+	\caption{Left: schematic representation of a phospholipid. Right: self--assembled bilayer configuration assumed by an aqueous solution of phospholipids.}%
 	\label{fig:phospho}
 \end{figure}
-The phospholipids in a water solution tend to \textit{spontaneously} self--organize in a \textit{ordered} state that minimizes the Gibbs free energy and that depends on the lipid concentration and on the temperature of the solution. In figure~(\ref{fig:lipidsStructures}) one can see three possible configurations resulting from this self--assembly process: the bilayer sheet, a liposome and a micelle.
+The phospholipids in a water solution tend to \textit{spontaneously} self--organize in a \textit{ordered} state 
+that minimizes the Gibbs free energy and that depends on the lipid concentration and on the temperature of the 
+solution. In figure~(\ref{fig:lipidsStructures}) one can see three possible configurations resulting from this 
+self--assembly process: the bilayer sheet, a liposome and a micelle.
 \begin{SCfigure}[][!ht]
 	\centering
 	\includegraphics[width=0.35\textwidth]{./img/lipidsStructures}
-	\caption{Cross--sectional view of the structures that can be formed by a self--assembly process of a phospholipid aqueous solution.}
+	\caption{Cross--sectional view of the structures that can be formed by a self--assembly process of a phospholipid aqueous solution.}%
 	\label{fig:lipidsStructures}
 \end{SCfigure}
 
@@ -241,7 +254,13 @@ their degree of unsaturation. Typically the hydrophobic region is $\sim 3$~nm th
 region is $\sim 1$~nm thick. Hence the typical bilayer thickness is around $\sim 4\div 5$~nm.
 
 \subsection{Model cell membrane}
-As we have seen above, the cell membrane is an extremely complex environment due to the large number of different biological molecules (lipids, proteins and so on) which compose and reside in the membrane. The model membranes we will consider in this thesis will be composed of lipids only. This choice is dictated by three main reasons. First, current models and computational power can not aim at reproducing the complexity of a real plasma membrane. Second, the use of a model system allows to tackle fundamental questions concerning the physical and molecular mechanisms of interaction between \acp{NP} and membranes. Last but not least, the model membrane we will consider resembles closely the model membranes used in a number of experimental and simulations results.  
+As we have seen above, the cell membrane is an extremely complex environment due to the large number of different 
+biological molecules (lipids, proteins and so on) which compose and reside in the membrane. The model membranes we 
+will consider in this thesis will be composed of lipids only. This choice is dictated by three main reasons. 
+First, current models and computational power can not aim at reproducing the complexity of a real plasma membrane. 
+Second, the use of a model system allows to tackle fundamental questions concerning the physical and molecular 
+mechanisms of interaction between \acp{NP} and membranes. Last but not least, the model membrane we will consider 
+resembles closely the model membranes used in a number of experimental and simulation results.  
 
 In the bilayer model we will use, we consider a model biological membrane consisting of \ac{POPC} lipids; the 
 chemical structure is shown in the top of figure~(\ref{fig:popc}). It is a zwitterionic glycerophospholipid of 
@@ -251,7 +270,7 @@ groups. It has two hydrocarbon chains: one is a saturated chain (palmitoyl) and 
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[width=0.7\textwidth]{./img/POPC/popc}
-	\caption{Top: chemical structure of a \acs{POPC} lipid. Bottom: \martini{} \acs{CG} model. The tan bead is the phosphate group, choline is in blue, the two pink beads represent the glycerol group and the hydrophobic chains in cyan.}
+	\caption{Top: chemical structure of a \acs{POPC} lipid. Bottom: \martini{} \acs{CG} model. The tan bead is the phosphate group, choline is in blue, the two pink beads represent the glycerol group and the hydrophobic chains in cyan.}%
 	\label{fig:popc}
 \end{figure}
 
@@ -264,21 +283,27 @@ $26\cdot 10^3$ plus the water molecules ($\sim 7\cdot 10^4$). This has a very ex
 the range of phenomena which can be studied on these time and length scales are very limited, calling for the 
 adoption of a \ac{CG} approach.
 
-\paragraph{\textbf{martini model}} As described in section \ref{sec:martini}, we will use the 
-\ac{CG} \martini{} \ac{FF} for lipids \cite{Martini}.
-%We consider a lipid bilayer made of $512$ \ac{POPC} lipids which extend on a surface of about $160$~nm$^2$ and whose thickness is about $4$~nm. 
-The \martini{} model for the \ac{POPC} lipid maps the choline and the phosphate groups into two beads of type Q$_0$ 
-and Qa negatively and positively charged, respectively. The saturated tail is modeled with four beads of type 
-C$_1$ while the unsaturated tail is built up of four C$_1$ beads and one C$_3$ bead that corresponds to the 
-unsaturated group of atoms. The glycerol group is modeled with two beads of type N$_\text{a}$. A comparison 
-between the chemical structure and \ac{CG} model is shown in figure~(\ref{fig:popc}).
+\paragraph{\textbf{martini model}} As described in section \ref{sec:martini}, we will use the \ac{CG} \martini{} 
+\ac{FF} for lipids \cite{Martini}. The \martini{} model for the \ac{POPC} lipid maps the choline and the phosphate 
+groups into two beads of type Q$_0$ and Qa negatively and positively charged, respectively. The saturated tail is 
+modeled with four beads of type C$_1$ while the unsaturated tail is built up of four C$_1$ beads and one C$_3$ 
+bead that corresponds to the unsaturated group of atoms. The glycerol group is modeled with two beads of type 
+N$_\text{a}$. A comparison between the chemical structure and \ac{CG} model is shown in figure~(\ref{fig:popc}).
 
-\paragraph{\textbf{model accuracy}} The \ac{STD} \martini{} \ac{FF} is able to capture the main physical properties 
-of a lipid bilayer. These properties include the area per lipid, the distribution of groups across the membrane, 
-the trend of the bending and the area compression moduli in function of the lipid composition and the 
+\paragraph{\textbf{model accuracy}} The \ac{STD} \martini{} \ac{FF} is able to capture the main physical 
+properties of a lipid bilayer. These properties include the area per lipid, the distribution of groups across the 
+membrane, the trend of the bending and the area compression moduli in function of the lipid composition and the 
 unsaturation degree of the lipids, the stress profile across the membrane, and many other as better described in 
 \cite{Martini} and \cite{MartiniReview}. Some of the main properties of a pure \ac{POPC} bilayer are shown in 
-table~(\ref{tab:POPCData}) in a comparison with different models. Nevertheless many other properties, prevalently mediated by the electrostatic interaction, are not well described. As we have seen in chapter~\ref{chap:EmpiricalFF}, this is because the \ac{STD} \martini{} \ac{FF} does not take into account the long range treatment of the electrostatic interaction. To overcome this problem the use of the \ac{PME} method and the \ac{PW} model, as outlined in sections~\ref{sec:electrostaticInt} and~\ref{sec:pw}, are crucial to better describe the processes that involve the interaction between ions, water and lipid bilayer. These are ion translocation; electroporation of the membrane by water, due to a cross membrane ion imbalance; water--helped ion permeation and many other water defects inside the membrane as better described in the works of Marrink \cite{MartiniReview} and Yesylevskyy \cite{PW}. 
+table~(\ref{tab:POPCData}) in a comparison with different models. Nevertheless many other properties, prevalently 
+mediated by the electrostatic interaction, are not well described. As we have seen in 
+chapter~\ref{chap:EmpiricalFF}, this is because the \ac{STD} \martini{} \ac{FF} does not take into account the 
+long range treatment of the electrostatic interaction. To overcome this problem the use of the \ac{PME} method and 
+the \ac{PW} model, as outlined in sections~\ref{sec:electrostaticInt} and~\ref{sec:pw}, are crucial to better 
+describe the processes that involve the interaction between ions, water and lipid bilayer. These are ion 
+translocation; electroporation of the membrane by water, due to a cross membrane ion imbalance; water--helped ion 
+permeation and many other water defects inside the membrane as better described in the works of Marrink 
+\cite{MartiniReview} and Yesylevskyy \cite{PW}. 
 \begin{table}[h!t]
 	\centering
 	\begin{tabular}{lcccc}
@@ -313,7 +338,8 @@ point of the development of my thesis work.
 
 \subsection{Three--stage process}
 %\paragraph{\textbf{Three--stage process}} 
-The authors found a three--stage mechanism that regulates the insertion of the \ac{AuNP} into the core of a planar membrane: from the adsorbed state, figure~(\ref{fig:threeProcess}a), to the snorkeling configuration, 
+The authors found a three--stage mechanism that regulates the insertion of the \ac{AuNP} into the core of a planar 
+membrane: from the adsorbed state, figure~(\ref{fig:threeProcess}a), to the snorkeling configuration, 
 figure~(\ref{fig:threeProcess}f). When the \ac{NP} in the water phase is approaching the surface of the membrane 
 it enters in the stage $1$, the adsorbed state, in which the charged ligands interact with the polar lipid heads. 
 The stage $2$ is the hydrophobic contact, figure~(\ref{fig:threeProcess}d), in which the hydrophobic beads of the 
@@ -351,14 +377,20 @@ leaflet bringing the \ac{NP} in the anchored state, figure~(\ref{fig:threeProces
 	\subfloat[]{
 		\includegraphics[width=4cm]{./img/threeProcess/f}
 	}%
-	\caption{\acs{AuNP}--membrane interaction. (a) stage $1$, adsorption of the \acs{NP} at membrane surface; (b) to (d) stage $2$, the protrusion of a lipid tail initiates the hydrophobic contact that leads to partial embedding of the \acs{NP} in the membrane core; (e) the \ac{NP} binds to the opposite leaflet throwing a charged ligand; (f), stage $3$, snorkeling configuration (five anchors shown). The hydrophobic beads of the ligands are shown in red and the charged beads in green. Lipid heads are blue (choline) and tan (phosphate), lipid tails are not shown, expect for (b) and (c), where the protruding lipid is shown with yellow tails. Water beads are not shown. All snapshot refer to a random (\ac{MUS}:\ac{OT} $1$:$1$) configuration. Taken from \cite{ourPaper}.}
+	\caption{\acs{AuNP}--membrane interaction. (a) stage $1$, adsorption of the \acs{NP} at membrane surface; (b) to (d) stage $2$, the protrusion of a lipid tail initiates the hydrophobic contact that leads to partial embedding of the \acs{NP} in the membrane core; (e) the \ac{NP} binds to the opposite leaflet throwing a charged ligand; (f), stage $3$, snorkeling configuration (five anchors shown). The hydrophobic beads of the ligands are shown in red and the charged beads in green. Lipid heads are blue (choline) and tan (phosphate), lipid tails are not shown, expect for (b) and (c), where the protruding lipid is shown with yellow tails. Water beads are not shown. All snapshot refer to a random (\ac{MUS}:\ac{OT} $1$:$1$) configuration. Taken from \cite{ourPaper}.}%
 	\label{fig:threeProcess}
 \end{figure}
-According to the \ac{STD} \martini{} model, the anchored state is thermodynamically favorable with respect to the hydrophobic state. Indeed, in the unbiased \ac{MD} simulations performed by Simonelli \etal{}\!, after the first anchor had been dropped, more and more ligands would anchor to the head region of the opposite leaflet, approaching step--by--step the snorkeling configuration, figure~(\ref{fig:threeProcess}f). 
+According to the \ac{STD} \martini{} model, the anchored state is thermodynamically favorable with respect to the 
+hydrophobic state. Indeed, in the unbiased \ac{MD} simulations performed by Simonelli \etal{}, after the first 
+anchor had been dropped, more and more ligands would anchor to the head region of the opposite leaflet, 
+approaching step--by--step the snorkeling configuration, figure~(\ref{fig:threeProcess}f). 
 
-Eventually, and consistently with previous thermodynamics--based models \cite{VanLehn2013}, Simonelli \etal{} found that the energy cost associated with the extraction of the \ac{NP} out of the membrane core is very high, making the anchoring process, and the snorkeling configuration, almost irreversible. We want to stress out that all the aforementioned transitions 
-are triggered by rare molecular events: the lipid tail protrusion and the membrane translocation of a charged 
-bead. Hence they could be observed to happen spontaneously only thanks to the use of a \ac{CG} \ac{FF}. 
+Eventually, and consistently with previous thermodynamics--based models \cite{VanLehn2013}, Simonelli \etal{} 
+found that the energy cost associated with the extraction of the \ac{NP} out of the membrane core is very high, 
+making the anchoring process, and the snorkeling configuration, almost irreversible. We want to stress out that 
+all the aforementioned transitions are triggered by rare molecular events: the lipid tail protrusion and the 
+membrane translocation of a charged bead. Hence they could be observed to happen spontaneously only thanks to the 
+use of a \ac{CG} \ac{FF}. 
  
 Simonelli \etal{} performed \ac{MD} simulations for the three different \ac{NP} configurations showed in 
 figure~(\ref{fig:coating}): the striped (\ac{MUS}:\ac{OT} $1$:$1$), the random (\ac{MUS}:\ac{OT} $1$:$1$) and the 
@@ -373,24 +405,29 @@ former than that for the latter.
 \label{sec:preliminaryMetadyn}
 To quantify the thermodynamic behavior, Simonelli \etal{} performed metadynamics calculations. In particular, in 
 order to estimate the energy barrier for the anchoring process, metadynamics was used to enhance the sampling of 
-the transition of the first anchoring ligand from the entrance leaflet to the opposite one. The metadynamics bias potential was applied to the $z$ component of the distance between the center of one charged ligand terminal and the \ac{COM} of the \ac{POPC} bilayer, as shown in figure~(\ref{fig:CVRappresentation}). This distance is thus the \ac{CV}.
+the transition of the first anchoring ligand from the entrance leaflet to the opposite one. The metadynamics bias 
+potential was applied to the $z$ component of the distance between the center of one charged ligand terminal and 
+the \ac{COM} of the \ac{POPC} bilayer, as shown in figure~(\ref{fig:CVRappresentation}). This distance is thus the 
+\ac{CV}.
 
 \begin{figure}[ht]
 	\center
 	\includegraphics[width=0.7\textwidth]{./img/CV/CV}
-	\caption{Schematic representation of the chosen \acs{CV} and the bias potential deposition along the \acs{CV} space. The thicker dashed line is the center of the bilayer. The charged ligand chosen for the anchoring process is in orange. Other ligands, lipid tails and water are not shown. Color code as in figure~(\ref{fig:threeProcess}).}
+	\caption{Schematic representation of the chosen \acs{CV} and the bias potential deposition along the \acs{CV} space. The thicker dashed line is the center of the bilayer. The charged ligand chosen for the anchoring process is in orange. Other ligands, lipid tails and water are not shown. Color code as in figure~(\ref{fig:threeProcess}).}%
 	\label{fig:CVRappresentation}
 \end{figure}
 
 \begin{SCfigure}[][!b]
 	\includegraphics[width=0.6\textwidth]{./img/NPFES}
-	\caption{\acs{FES} for the anchoring and dis--anchoring process. The blue curve is related to the striped (\ac{MUS}:\ac{OT} $1$:$1$) \acs{NP} while the red one to the random (\ac{MUS}:\ac{OT} $1$:$1$) \acs{NP}. Metadynamics data are shown with error bars, while the red dashed lines are hypothesized profiles for the stage $2$ to stage $3$ transition of the random \acp{NP}. Gray shades show the position of the polar head beads (arbitrary units). Taken from \cite{ourPaper}.}
+	\caption{\acs{FES} for the anchoring and dis--anchoring process. The blue curve is related to the striped (\ac{MUS}:\ac{OT} $1$:$1$) \acs{NP} while the red one to the random (\ac{MUS}:\ac{OT} $1$:$1$) \acs{NP}. Metadynamics data are shown with error bars, while the red dashed lines are hypothesized profiles for the stage $2$ to stage $3$ transition of the random \acp{NP}. Gray shades show the position of the polar head beads (arbitrary units). Taken from \cite{ourPaper}.}%
 	\label{fig:NPFES}
 \end{SCfigure}
 The convergence of such a run is achieved when the charged bead is able to freely diffuse across 
 the membrane. As the size and the complexity of the system does not allow to achieve the convergence, not even at 
 \ac{CG} level, the authors decided to perform different statistically independent metadynamics runs and stop each 
-simulation at the recrossing process of the biased ligand. A recrossing is determined when, after the anchoring has taken place, the charged bead returns towards the entrance leaflet. The transition back to the hydrophobic state typically require the ligand to reach $z=-0.5$~nm on the way back. The resulting \ac{FES} profile, shown in 
+simulation at the recrossing process of the biased ligand. A recrossing is determined when, after the anchoring 
+has taken place, the charged bead returns towards the entrance leaflet. The transition back to the hydrophobic 
+state typically require the ligand to reach $z=-0.5$~nm on the way back. The resulting \ac{FES} profile, shown in 
 figure~(\ref{fig:NPFES}), is obtained averaging the statistically independent runs. The error bars are the 
 standard error of the independent runs, as described in \ref{sec:metadynamics}.
 
@@ -400,4 +437,3 @@ high. The same is for the recrossing barrier of the random configuration. The ab
 \acp{NP} in the hydrophobic contact is due to the difficulty to sample the stage $2$, whose lifetime is too short 
 (few nanoseconds).
 
-%to the anchor state transition for only one charged ligand. This is because, while the metadynamics is running on a specific charged ligand, other charged ligands spontaneously anchor to the opposite leaflet, making the free energy sampling of the first anchor impossible. Hence, together with the kinematic, for which the average lifetime of stage $2$ for random \acp{NP} is three order of magnitude shorter than for striped, the authors confirm the very low energy barrier, of the order of few $k_B T$, for the anchor process of the random \acp{NP}.

@@ -5,10 +5,10 @@
 %http://www.gromacs.org
 In this chapter we present the main tools used in this thesis: the \href{http://www.gromacs.org}{\gromacs{}} 
 package for \ac{MD} and the \href{http://www.plumed.org}{\plumed{}} tool for metadynamics. These techniques are 
-nowadays implemented according to parallel scheme that allow to exploit all the computational resources of the 
+nowadays implemented according to parallel schemes that allow to exploit all the computational resources of the 
 modern multi--core CPUs and multi--node cluster. These parallelization scheme are fundamental to deal with large 
-biological system, and we shall describe here the main used in this thesis work. Eventually, we provide the main 
-input parameters used to setup the \ac{MD} and metadynamics runs. 
+biological systems, and we shall describe here the main ones used in this thesis work. Eventually, we provide the 
+main input parameters used to setup the \ac{MD} and metadynamics runs. 
 
 
 \section{GROMACS package}
@@ -33,42 +33,43 @@ accelerated frameworks such as \href{https://developer.nvidia.com/cuda-zone}{NVI
 
 \subsection{Parallelization}
 Parallelization refers to the possibility of running a program, in this case an \ac{MD} simulation, using more 
-then one CPUs or more then one cores per CPU or both. The efficiency of a parallelization scheme is mainly 
+then one CPU or more then one core per CPU or both. The efficiency of a parallelization scheme is mainly 
 determined by how much information each core and/or CPU has to exchange with the others, the least the better. 
-The reason is that the libraries (MPI and OpenMP) needed for the exchange of the information are not fast as the 
-cores are. Hence when the waiting time for the information exchange becomes higher than the total time spent in 
-executing the parallel code, the program has reached its scaling limit, that is, the use of more cores is no more 
-efficient.
+The reason is that the libraries (MPI and OpenMP) needed for the exchange of the information are not as fast as 
+the cores are. Hence when the waiting time for the information exchange becomes higher than the total time spent 
+in executing the parallel code, the program has reached its scaling limit, that is, the use of more cores is no 
+more efficient.
 
 \ac{MD} simulations are parallelized according to one main parallelization scheme: the domain decomposition. It 
-exploits the local character of most of the interactions used in common \acp{FF}. The simulation box is dived 
-into cells, each of which is assigned to a core. The core then menages all the particles that lie in that cell, 
+exploits the local character of most of the interactions used in common \acp{FF}. The simulation box is divided 
+into cells, each of which is assigned to a core. The core then manages all the particles that lie in that cell, 
 their mutual interactions and the interactions between them and their neighbors, that could reside in the 
 neighbor cells (cores). In order to minimize the communication between different cores each cell has to minimize 
 its surface--to--volume ratio. When using orthogonal simulations box, this requirement means that the cells have 
 to be as cubic as possible. Moreover, if the cells are not too small, the particle update can be carried out 
-every time the neighbor list is updated and not at avery \ac{MD} step. A common choice is to use cells greater 
+every time the neighbor list is updated and not at every \ac{MD} step. A common choice is to use cells greater 
 than two times the cut-off radius. \gromacs{} reaches its scaling limit when each cell contains about 
 $100 \div 200$ particles.
 
 \subsection{PP and PME nodes}
 When using the \ac{PME} method for electrostatic interactions a special parallelization scheme is needed in order 
-to speed up the simulation. The reason is related to the fact that the \ac{PME} methods, as described in 
+to speed up the simulation. The reason is related to the fact that the \ac{PME} method, as described in 
 section~\ref{sec:electrostaticInt}, intrinsically need to know all the particle positions in the whole simulation 
 box. In a domain decomposition scheme this results in a massive use of the so called \textit{all--to--all} 
-communications, i.e. all cores have to communicate to each other. This leads to a loss of computational 
-performance. In order to minimize the all--to--all communications, \gromacs{} implement the possibility to assign a 
-subset of the cores exclusively to the calculation of the energy contribution of electrostatic interactions using 
-the \ac{PME} method, while the rest of the work is assigned to the remaining cores, called the \ac{PP} cores. 
+communication, i.e. all cores have to communicate to each other. This leads to a loss of computational 
+performance. In order to minimize the all--to--all communications, \gromacs{} implement the possibility to assign 
+a subset of the cores exclusively to the calculation of the energy contribution of electrostatic interactions 
+using the \ac{PME} method, while the rest of the work is assigned to the remaining cores, called the \ac{PP} 
+cores. 
 \begin{figure}[h!t]
 	\centering
 	\includegraphics[width=0.8\textwidth]{./img/PMENodes}
-	\caption{Left: example of the use of $8$ cores for both \acs{PP} and \acs{PME}. Right: same but $2$ cores are used only for \acs{PME} and the other for the \acs{PP} contribution. Red arrows represent the all--to--all communications while the blu arrows are the communications between one \acs{PP} core and one \acs{PME} core. Taken from \cite{gromacsManual}.}
+	\caption{Left: example of the use of $8$ cores for both \acs{PP} and \acs{PME}. Right: same but $2$ cores are used only for \acs{PME} and the other for the \acs{PP} contribution. Red arrows represent the all--to--all communications while the blu arrows are the communications between one \acs{PP} core and one \acs{PME} core. Taken from \cite{gromacsManual}.}%
 	\label{fig:PMENodes}
 \end{figure} 
-In figure~(\ref{fig:PMENodes}) a schematic view of the all--to--all communications needed in a comparison between 
-\ac{PP}/\ac{PME} in the same cores and the use of the separate \ac{PME} cores is shown. As one can see the 
-all--to--all communications (red arrows) are smaller for the separate \acs{PME} scheme then that for 
+In figure~(\ref{fig:PMENodes}) a schematic comparison of the all--to--all communications needed in the case of 
+\ac{PP}/\ac{PME} in the same cores and that of separate \ac{PME} cores is shown. As one can see the 
+all--to--all communications (red arrows) are smaller for the separate \acs{PME} scheme than those for 
 \ac{PP}/\ac{PME} scheme. With this parallelization scheme the workflow of figure~(\ref{fig:PPCore}) is updated as 
 shown in figure~(\ref{fig:PPPMECores}). 
 \begin{figure}[h!t]
@@ -79,15 +80,15 @@ shown in figure~(\ref{fig:PPPMECores}).
 \end{figure}
 
 \paragraph{\textbf{PME Domain decomposition}} To optimize the load in the \ac{PME} cores a domain decomposition 
-is still used but with a $2$D or a ``pencil'' scheme. This because the \ac{FFT} method is very inefficient if 
-parallelized with too many cores due to the all--to--all communications, thus the domain decomposition acts on 
+is still used but with a $2$D or a ``pencil'' scheme. This is done because the \ac{FFT} method is very inefficient 
+if parallelized with too many cores due to the all--to--all communications, thus the domain decomposition acts on 
 the $xy$--plane while the $z$ axis is assigned to one core; pencil refers to the shape of the domain at high 
 parallelization. Moreover the number of domains along the $x$ axis have to be equal to the number of domains in 
 the \ac{PP} decomposition and eventually a $1$D scheme can be used along the $y$ axis only if the \ac{PP} 
-decomposition has one domain along $x$ axis. To avoid superfluous communication of coordinates and forces between 
-the \ac{PP} and \ac{PME} cores, the number of cells along the $x$ axis should ideally be the same or a multiple 
-of the number of the \ac{PME} cores. Most of this issues are taken into account automatically by \gromacs{} at the 
-beginning of the simulation.
+decomposition has one domain along the $x$ axis. To avoid superfluous communication of coordinates and forces 
+between the \ac{PP} and \ac{PME} cores, the number of cells along the $x$ axis should ideally be the same or a 
+multiple of the number of the \ac{PME} cores. Most of this issues are taken into account automatically by 
+\gromacs{} at the beginning of the simulation.
 
 \paragraph{\textbf{PP -- PME load balancing}} In order to achieve the best performance a good balancing of the 
 load between \ac{PP} and \ac{PME} cores is needed, i.e. no core should wait for any other. In \gromacs{} this is 
@@ -103,17 +104,19 @@ beginning of the simulation the Coulomb, the Van der Waals and the pair list cut
 cut--off of the pair list or of the Van der Waals interaction.
 
 \subsection{Hardware acceleration}
-Excluding the \ac{PME}, another very time consuming part of an \ac{MD} simulation is the computation of the 
-non--bonded interactions. The way to speed up the simulation without recur to more cores, because, for example, 
-the system has reached its scaling limit or there are no more cores available, is to use an hardware accelerator. 
+Excluding \ac{PME}, another very time consuming part of an \ac{MD} simulation is the computation of the 
+non--bonded interactions. The way to speed up a simulation when more cores cannot be used (e.g. the system has 
+reached its scaling limit or there are no more cores available) is to use hardware accelerator. 
 By offloading the computation of the non--bonded interactions to the hardware accelerator, the CPU has the 
-possibility to do \textit{in concurrency} other calculations such as the \ac{PME} calculations. \gromacs{} support 
-completely the NVIDIA GPU with the NVIDIA CUDA\textsuperscript{®} framework acceleration together with the use of 
-the Verlet cut--off scheme. Other GPUs or other cut-off scheme are partially supported with OpenCL or OpenACC 
-libraries. 
+possibility to do \textit{in concurrency} other calculations such as the \ac{PME} calculations. \gromacs{} 
+completely supports the NVIDIA GPU with the NVIDIA CUDA\textsuperscript{®} framework acceleration together with 
+the use of the Verlet cut--off scheme. Other GPUs or other cut--off schemes are partially supported with OpenCL or 
+OpenACC libraries. 
 
 The speed up of the simulation by offloading the non--bonded interactions to a GPU using NVIDIA 
-CUDA\textsuperscript{®} is of the order of from two to four times faster than that of a non accelerated simulation. In table~(\ref{tab:performance}) we report a comparison of the performance obtained with a \ac{CG} system composed by $128$ phospholipids and $2000$ \ac{PW} beads for a total of $7664$ particles.
+CUDA\textsuperscript{®} is of the order of $2-4$ times faster than that of a non accelerated simulation. In 
+table~(\ref{tab:performance}) we report a comparison of the performance obtained with a \ac{CG} system composed by 
+a total of $7664$ particles.
 \begin{table}[ht]
 	\centering
 	\begin{tabular}{lccc}
@@ -121,7 +124,7 @@ CUDA\textsuperscript{®} is of the order of from two to four times faster than t
 		\, 					& GPU\&\acs{PME} balance 	& GPU		& no GPU	\\ \midrule
 		Performance [ns/day]& $3466$					& $1388$	& $847$		\\ \bottomrule
 	\end{tabular}
-	\caption{Performance comparison obtained with a system composed by $128$ phospholipids and $2000$ \ac{PW} beads for a total of $7664$ particles. The used PC has a quad core CPU at $4.00$~GHz and the NVIDIA Titan X GPU card.}
+	\caption{Performance comparison obtained with a system composed of $128$ phospholipids and $2000$ \ac{PW} beads for a total of $7664$ particles. The used PC has a quad core CPU at $4.00$~GHz and the NVIDIA Titan X GPU card. \gromacs version $5.1.1$.}%
 	\label{tab:performance}
 \end{table}
 Moreover, to increase the performance, avoiding the waiting time of the CPU for the GPU to finish the non--bonded 
@@ -134,7 +137,7 @@ figure~(\ref{fig:GPU}).
 \begin{figure}[h!t]
 	\centering
 	\includegraphics[width=0.8\textwidth]{./img/Schemi/GPU}
-	\caption{Schematic workflow of the calculation of the interactions with the use of a GPU as hardware accelerator.}
+	\caption{Schematic workflow of the calculation of the interactions with the use of a GPU as hardware accelerator.}%
 	\label{fig:GPU}
 \end{figure}
 
@@ -148,7 +151,7 @@ the total number of
 \end{figure}
 \textit{computing modules} assigned to do vectorized calculations i.e. calculation that involve many vectors of 
 different length. Nowadays the total number of hardware cores in a high level CPU is eight cores. Instead, a 
-middle level GPU has a number of computing modules of the order of $ > 10^3$. In the GPU case, the computing 
+middle level GPU has a number of computing modules greater than $10^3$. In the GPU case, the computing 
 module is essentially a \ac{SIMD} computing unit which is composed by several cores, each one equipped with 
 several \acp{ALU} and \acp{FPU}. A \ac{SIMD} unit is a specific module for vector calculation: it gives several 
 instruction sets to perform the same instruction on a multiple data stream i.e. multiple data arranged in a 
@@ -160,14 +163,19 @@ four sums of two numbers
 	\caption{Block diagram of a \acs{SIMD} computation on a four element vectors.}
 	\label{fig:simd}
 \end{figure}
-i.e. the sum of each cell of the two vectors, is shown. Essentially this is possible thinking a $32$--bit register as vector of four $8$--bit or two $16$--bit numbers, then the same instruction is applied to each cell pair of the vectors. Even a modern CPU has the possibility of \ac{SIMD} computation but the goal of the GPU implementation is the extremely high number of modules arranged in a efficiency pipeline, respect to CPU one. Hence the \textit{concurrency} calculations on a streamed data are much faster if executed on a GPU then on a CPU. On the contrary the CPU has the ability to perform several task in parallel (or approximately in parallel).
+i.e. the sum of each cell of the two vectors, is shown. Essentially this is possible thinking of a $32$--bit 
+register as vector of four $8$--bit or two $16$--bit numbers, then the same instruction is applied to each cell 
+pair of the vectors. Even a modern CPU has the possibility of \ac{SIMD} computation but the goal of the GPU 
+implementation is the extremely high number of modules arranged in an efficient pipeline with respect to CPUs. 
+Hence the \textit{concurrency} calculations on streamed data are much faster if executed on a GPU than on a CPU. 
+On the contrary the CPU has the ability to perform several tasks in parallel (or approximately in parallel).
 
 \section{PLUMED package}
 The tool used for setting up and analyze a metadynamics simulation is the \href{http://www.plumed.org}{\plumed{}} 
-package. It is an open source project composed by a set of libraries used for analyze the data obtained with a 
-metadynamics simulation (first all, for obtaining the \ac{FES} from the history--dependent bias potential) or 
+package. It is an open source project composed by a set of libraries used to analyze the data obtained in a 
+metadynamics simulation (first of all, to obtain the \ac{FES} from the history--dependent bias potential) or 
 other advanced sampling techniques, such as umbrella sampling. Moreover it works together with the most popular 
-\ac{MD} tools, \gromacs{} included. In that sense it is a sort of plug--in that inserts the advanced sampling code 
+\ac{MD} tools, included \gromacs{}. In this sense it is a sort of plug--in that inserts the advanced sampling code 
 and algorithms inside the main \ac{MD} loop of the used \ac{MD} tool.
 
 For setting up a metadynamics simulation \plumed{} requires an input file in which we have to specify what are the 
@@ -181,42 +189,28 @@ one node of a cluster, we obtain worse computational performance. Moreover, depe
 parameters of the metadynamics, we observe a general decrease of computational performance compared to an 
 un--biased \ac{MD} simulation.
 
-% Below we show a typical input file used in this thesis work for a metadynamics simulation.
-% \begin{Verbatim}[fontsize=\scriptsize,xleftmargin=1cm]
-% # global variable: z distance from COM of particles 385-7040 and paticle 308
-% memb: COM ATOMS=385-7040
-% mus: COM ATOMS=308
-% dist: DISTANCE ATOMS=memb,mus COMPONENTS
-%
-% # Activate metadynamics in dist.z
-% METAD ...
-% LABEL=metad
-% ARG=dist.z
-% PACE=50000
-% HEIGHT=2.479
-% SIGMA=0.06
-% FILE=HILLS
-% GRID_MIN=-9
-% GRID_MAX=9
-% GRID_SPACING=0.005
-% ... METAD
-%
-% # monitor the two variables and the metadynamics bias potential
-% PRINT STRIDE=10000 ARG=dist.z,metad.bias FILE=COLVAR
-% \end{Verbatim}
-
 \newpage
 \section{Simulation parameters}
 To set up an \ac{MD} run, \gromacs{} needs the following input files and information:
 \begin{itemize}
-	\item the initial configuration file in which the position and eventually the velocity of all particles and the three box dimensions are saved;
+	\item the initial configuration file in which the position and eventually the velocity of all the particles and the three box dimensions are saved;%
 	\item the input parameters file in which, following the \ac{FF} recipe, all the \ac{MD} parameters are given;
-	\item the topology file in which all the particles of a system are described.%: what kind of forces act between them, the assigned charge, the mass and all the constant refer to the particles and the interactions between them, even this file, generally, is created under the receipt of the \ac{FF} used.
+	\item the topology file in which all the particles of a system are described.
 \end{itemize}
 
-In table~(\ref{tab:inputParam}) we report the most important \ac{MD} parameters used in this thesis work. In table~(\ref{tab:inputParam}) ``VbT'' means Verlet--buffer--tolerance; ``VdW'' means Van der Waals; $T$ and $p$ coupling are the thermostat and barostat algorithms used, respectively; $\tau_T$ and $\tau_p$ are the related time constants; $p$ type, is the pressure coupling type: semi--isotropic means two independent pressure coupling for $xy$ axes and for $z$ axis; $K$ is the related compressibility (in this case equal for both pressure coupling). In general when starting an \ac{MD} simulation, an equilibration run (Eq. in table~(\ref{tab:inputParam})) of few nanoseconds, that also generate the random velocities from the Maxwell–Boltzmann distribution at fixed temperature, is needed for equilibrating the volume of the simulation box and the whole system. Then one have to switch to the production run (Run in table~(\ref{tab:inputParam})) in which the correct ensemble is sampled. 
+In table~(\ref{tab:inputParam}) we report the most important \ac{MD} parameters used in this thesis work. In 
+table~(\ref{tab:inputParam}) ``VbT'' means Verlet--buffer--tolerance; ``VdW'' means Van der Waals; $T$ and $p$ 
+coupling are the used thermostat and barostat algorithms, respectively; $\tau_T$ and $\tau_p$ are the related time 
+constants; $p$ type, is the pressure coupling type: semi--isotropic means two independent pressure couplings for 
+the $xy$ axes and for the $z$ axis; $K$ is the related compressibility (in this case equal for both pressure 
+couplings). In general when starting an \ac{MD} simulation, an equilibration run (Eq. in 
+table~(\ref{tab:inputParam})) of few nanoseconds, which also generates random velocities from the 
+Maxwell–Boltzmann distribution at fixed temperature, is needed for equilibrating the volume of the simulation box 
+and the whole system. Then one has to switch to the production run (Run in table~(\ref{tab:inputParam})) in which 
+the chosen ensemble is sampled correctly. 
 
-For what concern the metadynamics parameters, in accordance with \cite{ourPaper}, in table~(\ref{tab:metadynParam}) we report the main input parameters used to set up a metadynamics run.
+For what concerns the metadynamics parameters, in accordance with \cite{ourPaper}, in 
+table~(\ref{tab:metadynParam}) we report the main input parameters used to set up a metadynamics run.
 
 \begin{table}[h!t]
 	\centering\footnotesize
@@ -243,7 +237,7 @@ For what concern the metadynamics parameters, in accordance with \cite{ourPaper}
 		$K$ [bar$^{-1}$]	& $4.5\cdot 10^{-5}$ & $3.0\cdot 10^{-4}$ & $4.5\cdot 10^{-5}$ & $3.0\cdot 10^{-4}$ \\ \midrule
 		$v$ random			& yes ($310$~K) & no & yes ($310$~K) & no \\ \bottomrule 
 	\end{tabular}
-	\caption{Summary of the main input parameters used in my \acs{MD} runs.}
+	\caption{Summary of the main input parameters used in our \acs{MD} runs.}
 	\label{tab:inputParam}
 \end{table}
 
@@ -254,8 +248,6 @@ For what concern the metadynamics parameters, in accordance with \cite{ourPaper}
 		Deposition pace ($\tau$) & Gaussian height ($w$)& Gaussian width ($\delta s$) & Grid spacing \\ \toprule
 		$50000$ \ac{MD} steps$^a$ & $2.479$~kJ$^b$ & $0.06$~nm & $0.005$~nm \\ \bottomrule
 	\end{tabular}
-	\caption{Main metadynamics parameters used in this thesis work. \footnotesize $^a$ With a $20$~fs time step it means a deposition of a Gaussian every nanoseconds. $^b$ At thermostat's temperature it is approximately equal to $1~k_BT$.}
+	\caption{Main metadynamics parameters used in this thesis work. $^a$ With a $20$~fs time step it means a deposition of a Gaussian every nanoseconds. $^b$ At thermostat temperature ($310$~K) it is approximately equal to $1~k_BT$.}%
 	\label{tab:metadynParam}
 \end{table}
-
-

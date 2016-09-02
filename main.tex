@@ -3,8 +3,8 @@
 \usepackage[eulermath,pdfspacing,beramono,dottedtoc,subfig,linedheaders,eulerchapternumbers]{classicthesis}
 \usepackage{arsclassica}
 \PassOptionsToPackage{hyperfootnotes=true,hidelinks=true}{hyperref}
-%\hypersetup{urlcolor=black,linkcolor=black}
-\hypersetup{colorlinks=false,hidelinks=true}
+\hypersetup{linkcolor=black}
+%\hypersetup{colorlinks=false,hidelinks=true}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage[english]{babel}
@@ -62,7 +62,7 @@
 \pagestyle{scrheadings}
 \clearscrheadfoot
 \rohead{\pagemark}
-\lehead{\pagemark\qquad\leftmark}
+\lehead{\pagemark\qquad\textcolor{gray}{\leftmark}}
 
 %*--------------------------------------*
 %|***************TITLEPAGE**************|
@@ -152,16 +152,16 @@
 %*--------------------------------------*
 \clearscrheadfoot
 \rohead{\pagemark}
-\lehead{\pagemark\qquad\leftmark}
+\lehead{\pagemark\qquad\spacedlowsmallcaps{\textcolor{gray}{\leftmark}}}
 \include{./chapter/chapter6} %Summary and conclusion
 
 %*--------------------------------------*
 %|*************BIBLIOGRAPHY*************|
 %*--------------------------------------*
-\clearscrheadfoot
-\pagestyle{scrheadings}
-\rohead{\pagemark}
-\lehead{\pagemark\qquad\leftmark}
+% \clearscrheadfoot
+% \pagestyle{scrheadings}
+% \rohead{\pagemark}
+% \lehead{\pagemark\qquad\leftmark}
 \printbibliography
 
 \end{document}
